@@ -1,0 +1,24 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+	int arr[100];
+  //创建一个长度为100的数组
+	int length = 0;
+  
+	while (1)
+  //死循环
+	{
+		cin >> arr[length];
+		length++;
+		if (cin.get() == '\n')break;
+    //当输入为回车键时，跳出循环，此时数组中有length+1个数，最后一个是回车键
+	}
+
+	for (int i = 0; i < length; i++)
+	{
+		cout << arr[i] << endl;
+	}
+
+	return 0;
+}
