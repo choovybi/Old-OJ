@@ -1,0 +1,68 @@
+//典型的动态规划问题
+
+#include<iostream>
+using namespace std;
+
+int dp[1000];
+//创建一个长度为1000的数列
+//dp[i]表示从第一个数到第i个数的最长单调子数列的长度
+
+int LIS(int arr[1000], int n)
+{
+	for (int i = 1; i <= n; ++i)
+		dp[i] = 0;
+    //将数列的每一个值都初始化为0
+    
+	int ans;
+	dp[1] = 1;
+  //从第一个数到第一个数的最长单调子数列的长度为1
+  
+	for (int i = 2; i <= n; ++i)
+	{
+		ans = dp[i];
+    //先将dp[i]重新初始化为0
+    
+		for (int j = 1; j<i; ++j)
+		{
+			if (arr[i]>arr[j] && dp[j]>ans)
+      //如果自身比前面的某一项大，并且那一项的dp值比现在的大
+				ans = dp[j];
+        //将那一项的dp赋值给ans，即ans是前面所有比自己小的项的最大dp值
+		}
+		dp[i] = ans + 1;
+    //当前项的dp值等于ans+1
+	}
+  
+	ans = 0;
+	for (int i = 1; i <= n; ++i)
+	{
+		if (dp[i] > ans)
+			ans = dp[i];
+      //找到所有项的最大dp值赋值给ans
+	}
+	return ans;
+}
+
+int main()
+{
+	int arr[1000];
+	int length = 1;
+  //初始长度为1
+	while (1)
+	{
+		cin >> arr[length];
+		if (cin.get() == '\n')break;
+    //当输入为回车键时停止输入，length不增加
+		length++;
+    //其余情况每输入一个数，长度length++
+	}
+  //输入以空格为间隔的一串数，并将其一一放入数组中
+	//cout << length << endl;
+
+	int max = 0;
+	max = LIS(arr, length);
+
+	cout << max << endl;
+
+	return 0;
+}
