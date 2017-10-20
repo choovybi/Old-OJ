@@ -1,0 +1,185 @@
+HuNan University ACM begining
+A+B for Input-Output Practice
+Please refer to https://vjudge.net/contest/183328 if you need it.
+
+1-1(A)
+#include<stdio.h>
+
+int main()
+{
+	int a = 0;
+	int b = 0;
+	int c = 0;
+
+	while (scanf("%d %d", &a, &b) != EOF)
+	{
+		printf("%d\n", a + b);
+	}
+
+	return 0;
+}
+//
+
+1-2(B)
+#include<stdio.h>
+
+int main()
+{
+	int num = 0;
+	int a = 0;
+	int b = 0;
+
+	scanf("%d", &num);
+
+	for (int i = 0; i < num; i++)
+	{
+		scanf("%d %d", &a, &b);
+		printf("%d\n", a + b);
+	}
+
+	return 0;
+}
+//
+
+1-3(C)
+#include<stdio.h>
+
+int main()
+{
+	int a = 0;
+	int b = 0;
+
+	while (scanf("%d %d", &a, &b) != EOF)
+	{
+		if (a == 0 && b == 0)break;
+		printf("%d\n", a + b);
+	}
+
+	return 0;
+}
+//
+
+1-4(D)
+#include<stdio.h>
+
+int main()
+{
+	int num = 0;
+	int a = 0;
+	int sum = 0;
+
+	while (scanf("%d", &num)==1)
+	{
+		sum = 0;
+		if (num == 0)break;
+		for (int i = 0; i < num; i++)
+		{
+			scanf("%d", &a);
+			sum += a;
+		}
+		printf("%d\n", sum);
+	}
+
+	return 0;
+}
+//
+
+1-5(E)
+#include<stdio.h>
+
+int main()
+{
+	int num = 0;
+	int a = 0;
+	int sum = 0;
+	int b = 0;
+
+	scanf("%d", &b);
+
+	for (int j = 0; j < b; j++)
+	{
+		scanf("%d", &num);
+
+		sum = 0;
+		for (int i = 0; i < num; i++)
+		{
+			scanf("%d", &a);
+			sum += a;
+		}
+		printf("%d\n", sum);
+	}
+	
+	return 0;
+}
+//
+
+1-6(F)
+#include<stdio.h>
+
+int main()
+{
+	int num = 0;
+	int a = 0;
+	int sum = 0;
+
+	while (scanf("%d", &num) != EOF)
+	{
+		sum = 0;
+		for (int i = 0; i < num; i++)
+		{
+			scanf("%d", &a);
+			sum += a;
+		}
+		printf("%d\n", sum);
+	}
+	
+	return 0;
+}
+//
+
+1-7(G)
+#include<stdio.h>
+
+int main()
+{
+	int a = 0;
+	int b = 0;
+
+	while (scanf("%d %d", &a , &b) != EOF)
+	{
+		printf("%d\n\n", a + b);
+	}
+	
+	return 0;
+}
+//
+
+1-8(H)
+#include<stdio.h>
+
+int main()
+{
+	int num = 0;
+	int a = 0;
+	int b = 0;
+	int c = 0;
+
+	scanf("%d", &num);
+
+	for (int i = 0; i < num; i++)
+	{
+		int sum = 0;
+		scanf("%d", &a);
+		for (int j = 0; j < a; j++)
+		{
+			scanf("%d", &b);
+			sum += b;
+		}
+		printf("%d\n", sum);
+		if(i!=num-1)
+		printf("\n");
+	}
+	scanf("%d", &c);
+	
+	return 0;
+}
