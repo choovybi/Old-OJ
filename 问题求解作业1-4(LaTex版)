@@ -1,0 +1,648 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第四讲：基本的算法结构}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.1]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+The algorithm for summing the salaries of $N$ employees presented in the text performs a loop that consists
+of adding one salary to the total and advancing a pointer on the employee list $N-1$ times.The last salary is added
+separately.What is the reason for this?Why don't we perform the loop $N$ times? 
+\end{problem}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+\begin{solution}
+%
+%  %插入图片：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+因为如果perform the loop $N$次就会导致``point to the next salary''被执行$N$次，而一开始指针指的是第一个salary，所以就会导致执行最后一次循环后指针指向没有定义的内容,这样计算出来的工资总量就会出现问题。
+\end{solution}
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[DH: 2.2]
+Consider the bubblesort algorithm presented in the text.
+
+(a)Explain why the outer loop is performed only $N-1$ times.
+
+(b)Improve the algorithm so that on every repeated execution of the outer loop,the inner loop checks one element less.
+\end{problem}
+
+\begin{solution}
+%\begin{remark}
+%
+% \noindent ``anagram''意为``相同字母异序词''即相同字母按照不同顺序构成的词
+%\end{remark}
+
+(a)因为每执行一次循环后，就有至少一个数的位置被确定，当执行$N-1$次循环后，$N-1$个数的位置被确定，而总共就有$N$个数，所以剩下的一个数的位置也自然被确定，无需进行第$N$次，而一开始指针指的是第一个salary，所以就会导致执行最后一次循环后指针指向没有定义的内容。
+
+\noindent(b)
+
+(1)creat a number ``n'' to represnt the times of the outer loop excution;
+
+(2)initialize $n$ to ``0''.
+
+(3)do the following $N-1$ times:
+
+(3.1)point to the first element;
+
+(3.2)do the following $(N-1-n)$ times:
+
+(3.2.1) point to the first element;
+
+(3.2.2)if the compared elements are in the wrong roder,exchange them;
+
+(3.2.3)point to the next element.
+
+(3.2.4)n++.
+
+\end{solution}
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+\begin{problem}[DH: 2.3]
+Prepare flowcharts for the bubblesort algorithm presented int the text and for the improved version you were
+asked to design in Exercise 2.2
+\end{problem}
+
+\begin{solution}
+
+ %插入图片：
+ \begin{figure}[H]
+	\includegraphics[width =1\textwidth]{hello.pdf}
+	%\caption{PDF}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+ \end{figure}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+
+\begin{problem}[DH: 2.4]
+Write algorithms that,given an integer $N$ and a list $L$ of $N$ integers,produce in $S$ and $P$ the sum
+of the even numbers appearing in $L$ and the product of the odd ones,respectively.
+
+(a)Using bounded iteration.
+
+(b)Using ``goto'' statements.
+\end{problem}
+
+\begin{solution}
+
+(a)
+
+(1)make a note $P$ of 0;make a note $Q$ of 0;
+
+(2)point to the first element of the list $L$;
+
+(3)do the following $N-1$ times:
+
+(3.1)judge the pointed element is even or odd
+
+(3.1.1)if the pointed element is even,add it to the $P$;
+
+(3.1.2)if the pointed element is odd,add it to the $Q$;
+
+(3.2)point to the next element;
+
+(4)judge the pointed element is even or odd
+
+(4.1)if the pointed element is even,add it to the $P$;
+
+(4.2)if the pointed element is odd,add it to the $Q$;
+
+(5)produce the noted number $Q$ and $P$ as output.
+
+\noindent(b)
+
+(1)make a note $P$ of 0;make a note $Q$ of 0;
+
+(2)point to the first element of the list $L$;
+
+(3)judge the pointed element is even or odd
+
+(3.1)if the pointed element is even,add it to the $P$;
+
+(3.2)if the pointed element is odd,add it to the $Q$;
+
+(4)point to the next element;
+
+(5)judge whether the pointed element is the last element of the list $L$,if not goto(3);
+
+(6)judge the pointed element is even or odd
+
+(6.1)if the pointed element is even,add it to the $P$;
+
+(6.2)if the pointed element is odd,add it to the $Q$;
+
+(7)produce the noted number $Q$ and $P$ as output.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.5]
+Show how to perform the following simulations of some control constructs by others.The sequencing construct
+``and-then''is implicitly available for all the simulations.You may introduce and use new variables and labels
+if necessary.
+
+(a)Simulate a ``for-do''loop by a ``while-do''loop.
+
+(b)Simulate the ``if-then-else''statements by ``while-do''loops.
+
+(c)Simulate a ``while-do''loop by ``if-then''and ``goto''statements.
+
+(d)Simulate a ``while-do''loop by a ``repeat-until''loop and ``if-then''statements.
+\end{problem}
+
+\begin{solution}
+(a)
+
+Origin : for $i$ from $M$ to $N$ do $S$.
+
+Change : i=$M$;while $i<=N$ do $S$ and $i$++.
+
+\noindent(b)
+
+Origin : while $M$ is true do $S$.
+
+Change : call a recuisive procedure $A$ which is defined as follows
+
+$A$ : if $M$ is ture then do the following:do $S$ and call $A$.
+
+else return.
+
+\noindent(c)
+
+Origin : while $M$ is ture do $S$.
+
+Change : creat two procedures $A$ and $B$ which are defined as follows:
+
+$A$ : if $M$ is true do $S$ and goto $A$;
+
+goto $B$;
+
+$B$ : return.
+
+call procedure $A$.
+
+\noindent(d)
+
+Origin : while $M$ is true do $S$.
+
+Change : if $M$ is true then call $A$ which is defined as follows:
+
+$A$ : repeat doing $S$ until $M$ is flase.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.6]
+Write dowm the sequence of moves resolving the Towers of Hanoi problem for five rings.
+
+\begin{remark}
+The $factorial$ of a non-negative integer $N$ is the product of all positive
+integers smaller than or equal to $N$.More formally,the expression $N factotial$,denoted by $N!$,is recursively
+defined by $0!=1$ and $(N+1)!=N!\times(N+1)$.For example,$1!=1$ and $4!=3!\times4=\cdots=1\times2\times3\times4=24$.
+\end{remark}
+
+\end{problem}
+
+\begin{solution}
+
+%\begin{remark}
+%
+%\end{remark}
+
+move 1 from A to B;
+
+\noindent move 2 from A to C;
+
+\noindent move 1 from B to C;
+
+\noindent move 3 from A to B;
+
+\noindent move 1 from C to A;
+
+\noindent move 2 from C to B;
+
+\noindent move 1 from A to B;
+
+\noindent move 4 from A to C;
+
+\noindent move 1 from B to C;
+
+\noindent move 2 from B to A;
+
+\noindent move 1 from C to A;
+
+\noindent move 3 from B to C;
+
+\noindent move 1 from A to B;
+
+\noindent move 2 from A to C;
+
+\noindent move 1 from B to C;
+
+\noindent move 5 from A to B;
+
+\noindent move 1 from C to A;
+
+\noindent move 2 from C to B;
+
+\noindent move 1 from A to B;
+
+\noindent move 3 from C to A;
+
+\noindent move 1 from B to C;
+
+\noindent move 2 from B to A;
+
+\noindent move 1 from C to A;
+
+\noindent move 4 from C to B;
+
+\noindent move 1 from A to B;
+
+\noindent move 2 from A to C;
+
+\noindent move 1 from B to C;
+
+\noindent move 3 from A to B;
+
+\noindent move 1 from C to A;
+
+\noindent move 2 from C to B;
+
+\noindent move 1 from A to B;
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH: 2.7]
+Write algorithms that compute $N!$,given a non-negative integer $N$.
+
+(a)Using iteration statements.
+
+(b)Using recursion.
+\end{problem}
+
+\begin{solution}
+
+(a)iteration
+
+make a note $sum$ of 1;
+
+for $i$ from $N$ to 1 do the following:
+
+$sum=sum \times N$;
+
+N--.
+
+\noindent(b)recursion
+
+make a note $sum$ of 1;
+
+call a recursion statement $S(N)$ which is defined as follows:
+
+$S(N)$ ； $sum=sum \times N$;
+
+$N--$;
+
+if(N==0) return $sum$;
+
+else call $S(N)$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH: 2.8]
+Show how to simulate a ``while-do''loop by conditional statements and
+recursive procedure.
+
+\begin{remark}
+For a positive integer $N$,denote by $A_N$ the set of integers 1 through $N$,
+A $permutation$ of the $A_N$ is an ordered sequence $(a_1 , a_2 , \cdots ,a_n)$in which each integer from the set $A_N$
+appears exactly once.For example,(2,3,1)and(1,2,3)are two different permutations of the set $A_3$.
+\end{remark}
+\end{problem}
+
+\begin{solution}
+
+Origin : while $M$ is true do $S$.
+
+Change : if $M$ is true call a recursion statement $A$ which is defined as follows:
+
+$A$ : do $S$ and call $A$.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
+\begincorrection	% begin the ``correction'' part (Optional)
+% %
+% %%%%%%%%%%%
+\begin{problem}[第一讲:UD 1.8]
+写一个判断12个小球中哪个小球重量不同的流程
+\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+\begin{revision}
+\begin{remark}
+以为只说了这个小球defferent而没有具体说是轻还是重，所以需要先进行判断，然后找出这个小球
+\end{remark}
+(1)把小球分成数量相等的3份(每份4个小球)
+
+(2)将前两份小球放在天平上
+
+(2.1)如果天平平衡，那么不同的小球在剩下的那份中，用剩下的那份小球替换天平一边的小球，根据称量的结果可以判断小球是轻还是重
+
+(2.2)如果天平不平衡，那么用剩下的那份小球替换天平一边的小球
+
+(2.2.1)如果此时天平平衡，那么不同的小球在被替换下去的那份小球当中，根据第一次称量的结果可以判断小球是轻还是重
+
+(2.2.2)如果此时天平不平衡，那么不同的小球在留在天平上的那份小球当中，根据第一次称量的结果可以判断小球是轻还是重
+
+(3)将可疑的那堆小球分成2份放在天平上(每份2个小球)，根据(2)中判断出来的小球的轻重情况可以判断不同的小球在天平的哪一边
+
+(4)将可疑的那堆小球分成2份放在天平上(每份1个小球)，根据(2)中判断出来的小球的轻重情况可以哪一个是与众不同的小球。
+\end{revision}
+% %%%%%%%%%%%
+
+% %%%%%%%%%%%
+\begin{problem}[第二讲:UD 2.1]
+判断命题的条件和结论
+\end{problem}
+%     %
+%     %\begin{cause}
+%     %%  简述错误原因（可选）。
+%     %\end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+    \begin{revision}
+\begin{table}[h]
+\begin{tabular}{|c|c|c|}
+	\hline number & antecedent & conclusion\tabularnewline
+	\hline 
+	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+	\hline 
+	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+	\hline 
+	\textcircled{c} & I wake up & only if the fire alarm goes off\tabularnewline
+	\hline 
+	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+	\hline 
+	\textcircled{e} & The number $x$ is prime & only if $x$ is odd\tabularnewline
+	\hline 
+	\textcircled{f }& You can come to the party & only if you have an invitation\tabularnewline
+	\hline 
+	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+	\hline
+\end{tabular}
+\end{table}
+    \end{revision}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD:2.10]
+Consider the statement ``It snows or it is not sunny''.
+
+(a)Find a different statement that is equivalent to the given one.
+
+(b)Find a different statement that is equivalent to the negation of the given one.
+
+\end{problem}
+%
+%\begin{cause}
+%%  简述错误原因（可选）。
+%\end{cause}
+%
+%% Or use the ``solution'' environment
+\begin{revision}
+
+  (a)If it is sunny then it snows.
+
+  \noindent(b)It is sunny and it doesn't snow.
+
+\end{revision}
+%%%%%%%%%%
+
+\begin{problem}[UD:3.10]
+Let $n$ be an integer.Prove that if $3n$ is odd,then $n$ is odd
+  \end{problem}
+  %
+  %\begin{cause}
+  %%  简述错误原因（可选）。
+  %\end{cause}
+  %
+  %% Or use the ``solution'' environment
+\begin{revision}
+因为$3n$是奇数，所以可以得$(3n-1)/2=k k\in mathbb{Z}$
+
+\noindent即$3n=2k+1 k\in mathbb{Z}$
+
+\noindent假设$n$为偶数，那么左式$3n$为偶数，而右式$2k+1 k\in mathbb{Z}$为奇数，所以矛盾
+
+\noindent所以假设不成立，$n$一定为奇数。
+\end{revision}
+%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}[UD:4.1]
+ 使用符号来改写命题 
+\end{problem}
+    %
+    %\begin{cause}
+    %%  简述错误原因（可选）。
+    %\end{cause}
+    %
+    %% Or use the ``solution'' environment
+  \begin{revision}
+(a)$\forall x,\exists y,x=2y$
+
+\noindent(b)$\forall y,\exists x,x=2y$
+
+\noindent(c)$\forall x \forall y,x=2y$
+
+\noindent(d)$\exists x, \exists y,x=2y$
+
+\noindent(e)$\exists x \exists y,x=2y$
+  \end{revision}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[UD:4.5]
+否定命题
+ \end{problem}
+     %
+     %\begin{cause}
+     %%  简述错误原因（可选）。
+     %\end{cause}
+     %
+     %% Or use the ``solution'' environment
+   \begin{revision}
+ (f)There exists a $x$ for all the $y$ that $xy\ne 1$
+
+ \noindent(g)There exists a $x$ for all the $y$ that $xy\ne 0$
+
+ \noindent(h)$x\ne 0$ and for all $y$ $xy\ne 1$
+
+ \noindent(i)$x>0$ and there exists $y$ $xy_2<0$
+   \end{revision}
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[UD:4.7]
+命题的转换
+ \end{problem}
+       %
+       %\begin{cause}
+       %%  简述错误原因（可选）。
+       %\end{cause}
+       %
+       %% Or use the ``solution'' environment
+     \begin{revision}
+(a)$\exists x,((x\in \mathbb{Z}\land(\forall y,(y\notin \mathbb{Z}\lor x\ne 7y)))\land(\forall z,(z\notin \mathbb{Z}\lor x\ne 2z)))$
+
+\noindent(b)For all $x$,x doesn't belong to $\mathbb{Z}$ or there exists y that y belongs to $\mathbb{Z} and x=7y$ or there exists z,z belongs to $\mathbb{Z}$ and $x=2z$
+
+\noindent(c)原命题为真，因为$\forall x,x\in \mathbb{Z}$为假，所以前提为假，根据善意推定，所以命题为真。
+     \end{revision}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[UD:4.13]
+一直命题12为真，判断命题3是否为真
+ \end{problem}
+       %
+       %\begin{cause}
+       %%  简述错误原因（可选）。
+       %\end{cause}
+       %
+       %% Or use the ``solution'' environment
+     \begin{revision}
+(b)命题3的真假不确定，因为命题1的前提为false所以我可以随便待不待在家里，命题1都为true
+
+\noindent(c)命题3的真假不确定，因为l和m的具体范围
+
+\noindent(e)命题3的真假不确定，因为命题1的前提为false所以随便有没有黑房子，命题1都为true
+
+\noindent(g)命题3的真假不确定
+     \end{revision}
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \newfontfamily\menlo{Menlo}
+% \begin{lstlisting}[language={[ANSI]C},%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
