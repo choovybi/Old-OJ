@@ -1,3 +1,33 @@
+	int c = 0;//是int类型，不是char类型
+	while ((c = getchar()) != EOF)//EOF是一个宏定义的实数，一般为-1，但是不同条件下的值不同，所以一般不推荐用-1
+		putchar(c);
+	EOF是表示的字符流的结束，虽然它的名字是文件结束
+	当输入ctrl+z时，就表示在控制台结束
+
+	格式化输出
+		int printf(const char* format, ...);
+		format:%[flage][width][.precision][length]specifier
+		常用的输出格式
+		整型 %d
+		浮点型
+		printf("Character:%c %c \n", 'a', 65);
+
+	格式化输入
+		int scanf(const char *format, ...);
+		输入的返回值(较重要)
+		Failure的话返回EOF
+		Success的话返回成功输入的变量的个数
+
+	char str[80];
+	int i = 0;
+	printf("Enter your family name:");
+	scanf("%79s", str);//长为79的字符串，将输入的字符串赋值给str
+	printf("Enter your age:");
+	scanf("%d", &i);
+	printf("Mr. %s ,%d years old", str, i);
+
+
+
 HuNan University ACM begining
 A+B for Input-Output Practice
 Please refer to https://vjudge.net/contest/183328 if you need it.
