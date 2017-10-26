@@ -1,0 +1,68 @@
+今天好友突然发布了一个小任务，所以就即兴做了一下，感觉好久没打代码了有点手生了。。。
+
+#include<iostream>
+using namespace std;
+
+class Date
+{
+public:
+	Date(int i, int y, int z)
+	{
+		year = i;
+		if (y < 1 || y>12)month = 1;
+		else month = y;
+		day = z;
+	}
+
+	void setYear(int i)
+	{
+		year = i;
+	}
+	int getYear()
+	{
+		return year;
+	}
+
+	void setMonth(int i)
+	{
+		month = i;
+	}
+	int getMonth()
+	{
+		return month;
+	}
+
+	void setDay(int i)
+	{
+		day = i;
+	}
+	int getDay()
+	{
+		return day;
+	}
+
+	void diaplayDate()
+	{
+		cout << year << "/" << month << "/" << day << endl;
+	}
+private:
+	int month = 0;
+	int day = 0;
+	int year = 0;
+};
+
+int main()
+{
+	Date dat(2017, 13, 1);
+
+	dat.diaplayDate();
+
+	dat.setYear(2018);
+	dat.setMonth(11);
+	dat.setDay(10);
+
+	cout << dat.getYear() << "/" << dat.getMonth() << "/" << dat.getDay() << endl;
+
+	system("pause");
+	return 0;
+}
