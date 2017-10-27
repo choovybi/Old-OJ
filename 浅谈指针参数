@@ -1,0 +1,24 @@
+//swap功能函数的实现
+//需要使用指针，不能直接用变量，因为这样只是对数据的副本进行操作
+
+swap(a,b);
+//这是函数swap的调用
+
+void swap(int a,int b)
+{
+  int temp = a;
+  a = b;
+  b = temp;
+}
+//这串代码是起不到交换a和b的值的目的的，因为这个操作的只是swap里面的a和b，并不是主函数当中的a和b
+
+swap(&a,&b);
+//这是新的swap函数的调用，传入的参数为&a,&b即为a和b的地址
+
+void swap(int *a,int *b)
+{
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+//这串代码操作的是原来的真实的a和b的值，而不是swap这个函数中的a和b的值
