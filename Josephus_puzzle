@@ -1,0 +1,65 @@
+//Created by bqy1999 on 17-10-27
+//Solving the josephus puzzle
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int solve_josephus(int n);
+int survive(int*soldiers, int n);
+int next_alive(int *soldiers, int n, int pos);
+
+int main()
+{
+	int n = 0;//建议手动初始化
+	printf("%s\n", "Please enter the number of the soldiers:");
+	scanf("%d", &n);//一定要加上取地址符
+
+	int survivor = 0;
+	survivor=solve_josephus(n) + 1;
+	printf("%d", survivor);
+
+	system("pause");
+	return 0;
+}
+
+int solve_josephus(int n)
+{
+	//使用链表最简单，此处使用数组
+	//int soldier[n]; //这种申请动态数组的方式在c99中可以，但是在c11中不推荐，会报错。
+	//使用指针来完成
+	int *soldiers = (int*)malloc(sizeof(int)*n);
+	//malloc的作用是给指针soldiers分配内存！
+
+	for (int i = 0; i < n; i++)
+	{
+		soldiers[i] = i + 1;
+	}
+
+	return survive(soldiers, n);//返回的时候进行调用，要输入首地址和数组大小，防止数组内存访问越界。
+								//soldiers表示数组的首地址，n表示数组的大小
+}
+
+int survive(int *soldiers, int n)
+{
+	int killer = 0;//killer表示的应该是士兵的下标
+	int killed = 0;//killed表示的应该也是士兵的下标
+
+	for (int i = 0; i < n - 1; i++)//这里是只要循环到n-1个人，0到n-2是n-1个人，最后还要活一个人，不能把人全部干光！！！
+	{
+		killed = next_alive(soldiers, n, killer);//找到killer后面第一个还活着的人，作为下一个killed
+		soldiers[killed] = 0;//将数值置为0表示这个人已经死了
+		killer = next_alive(soldiers, n, killed);//找到killed后面第一个还活着的人，作为下一个killer
+	}
+
+	return killer;
+}
+
+int next_alive(int *soldiers, int n, int pos)
+{
+	//pos表示士兵的下标
+	do {
+		pos = (pos + 1) %n;
+	} while (soldiers[pos] == 0);
+
+	return pos;
+}
