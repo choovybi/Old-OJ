@@ -29,6 +29,7 @@ int soldiers[5] = {1};
 int *soldiers = (int*)malloc(sizeof(int) * n);
 
 //其中使用malloc需要用到<stdlib.h>这个头文件
+//在C++的头文件<iostream>里面也含有malloc这个函数
 //因为malloc是void*类型的数据，所以它无法直接用来初始化int*类型的数据，必须要进行强制类型转换(int*)
 //这条语句的意思是给soldiers这个数组分配可存放n个元素的内存空间
 
