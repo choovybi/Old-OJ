@@ -1,0 +1,104 @@
+    //二叉树的右侧优先的遍历
+    //独特性质：右侧优先遍历得出的是一个递减数列
+    
+    //create by bqy1999 17/10/31
+    //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+    #include<iostream>
+    #include<math.h>
+    using namespace std;
+    
+    
+    void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000]);
+    void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000]);
+    void traversal_next(int bi_Tree[2000],int cur,int judge[2000]);
+    
+    
+    int main()
+    {
+        int length=0;
+        int arr[100]={0};
+        while(1)
+        {
+            cin>>arr[length];
+            length++;
+            if(cin.get()=='\n')break;
+        }
+        //cout<<length<<endl;
+    
+        int bi_Tree[2000]={0};
+        bi_Tree[0]=arr[0];
+        //cout<<bi_Tree[0]<<endl;
+        create_next(0,0,length,arr,bi_Tree);
+    
+        for(int i=0;i<pow(2,length-1);i++)
+        {
+            cout<<bi_Tree[i]<<endl;
+        }
+        cout<<endl;
+    
+        int judge[2000]={0};
+        traversal_Tree(bi_Tree,0,judge);
+    
+    
+        return 0;
+    }
+    
+
+    void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000])
+    {
+        if(cur==length)return;
+    
+        if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的右边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+
+            else if(bi_Tree[(pos+1*2)-1+1]==0)
+            {
+                bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+        }
+
+        if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的左边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+
+            else if(bi_Tree[(pos+1)*2-1]==0)
+            {
+                bi_Tree[(pos+1)*2-1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+        }
+    }
+    
+
+    void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000])
+    {
+        if(bi_Tree[(cur+1)*2-1+1]!=0)traversal_next(bi_Tree,(cur+1)*2-1+1,judge);
+        judge[cur]++;
+        //`先遍历右侧的结点`
+    
+        if(bi_Tree[cur]!=0)cout<<bi_Tree[cur]<<endl;
+        judge[cur]++;
+        //`当第二次访问当前结点的时候将其输出`
+    
+        if(bi_Tree[(cur+1)*2-1]!=0)traversal_next(bi_Tree,(cur+1)*2-1,judge);
+        judge[cur]++;
+        //`后遍历左侧的结点`
+    
+        if(judge[0]==3)return;
+        //`如果根结点被访问了三次，那么程序就停止!`
+    }
+    //`从当前结点开始进行右侧优先的遍历`
+    
+
+    void traversal_next(int bi_Tree[2000],int cur,int judge[2000])
+    {
+        if(bi_Tree[cur]==0)return;
+    
+        else traversal_Tree(bi_Tree,cur,judge);
+    }
+    //`遍历当前下一个结点`
