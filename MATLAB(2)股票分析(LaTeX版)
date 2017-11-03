@@ -1,0 +1,176 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+% MATLAB(2)股票分析的习题
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item ������ӱ���е�����
+   \item ��������
+   \item �����������
+   \item ������
+   \item ����������������б�������
+   \item �����ʱ����
+   \item MATLAB ���Ű���
+   \item ��������
+   \item ����̽��
+   \item ��Ʊ��ֵ������
+   \item ��Ʊ���յ�����
+\end{itemize}
+
+
+\subsection*{������ӱ���е�����}
+
+\begin{par}
+���ڴ����µ��ӱ�������ݵĽű�:
+\end{par} \vspace{1em}
+
+\begin{verbatim}  ������: C:\Users\85977\Desktop\pack\MATLAB��ѧ��ģר��ϵ�н������ݺͳ���\�ڶ���\sz000004.xls
+  ������: Sheet1\end{verbatim}
+    \begin{par}
+Ҫ��չ�����Թ�����ѡ�����ݻ��������ӱ��ʹ�ã������ɺ���������ű���
+\end{par} \vspace{1em}
+\begin{verbatim}
+% �� MATLAB �Զ������� 2017/11/03 11:36:14
+\end{verbatim}
+
+
+\subsection*{��������}
+
+\begin{verbatim}
+[~, ~, raw] = xlsread('C:\Users\85977\Desktop\pack\MATLAB��ѧ��ģר��ϵ�н������ݺͳ���\�ڶ���\sz000004.xls','Sheet1','A2:H99');
+\end{verbatim}
+
+
+\subsection*{�����������}
+
+\begin{verbatim}
+data = reshape([raw{:}],size(raw));
+\end{verbatim}
+
+
+\subsection*{������}
+
+\begin{verbatim}
+sz1 = table;
+\end{verbatim}
+
+
+\subsection*{����������������б�������}
+
+\begin{verbatim}
+sz1.Date = data(:,1);
+sz1.DateNum = data(:,2);
+sz1.Popen = data(:,3);
+sz1.Phigh = data(:,4);
+sz1.Plow = data(:,5);
+sz1.Pclose = data(:,6);
+sz1.Volum = data(:,7);
+sz1.Turn = data(:,8);
+\end{verbatim}
+
+
+\subsection*{�����ʱ����}
+
+\begin{verbatim}
+clearvars data raw;
+\end{verbatim}
+
+
+\subsection*{MATLAB ���Ű���}
+
+
+
+\subsection*{��������}
+
+\begin{verbatim}
+clc, clear, close all
+% ��������
+[~, ~, raw] = xlsread('sz000004.xls','Sheet1','A2:H99');
+
+% �����������
+data = reshape([raw{:}],size(raw));
+
+% ����������������б�������
+Date = data(:,1);
+DateNum = data(:,2);
+Popen = data(:,3);
+Phigh = data(:,4);
+Plow = data(:,5);
+Pclose = data(:,6);
+Volum = data(:,7);
+Turn = data(:,8);
+% �����ʱ����
+ clearvars data raw;
+\end{verbatim}
+
+
+\subsection*{����̽��}
+
+\begin{verbatim}
+figure % ����һ���µ�ͼ�񴰿�
+plot(DateNum,Pclose,'k') % ����ͼ�ĵ���ɫ�ĺ�ɫ����ӡ��ʧ�棩
+datetick('x','mm');% ����������ʾ����
+xlabel('����'); % x��˵��
+ylabel('���̼�'); % y��˵��
+figure
+bar(Pclose) % ��Ϊ����ͼ��
+\end{verbatim}
+
+\includegraphics [width=4in]{Untitled_01.eps}
+
+\includegraphics [width=4in]{Untitled_02.eps}
+
+
+\subsection*{��Ʊ��ֵ������}
+
+\begin{verbatim}
+p = polyfit(DateNum,Pclose,1); % ����ʽ���,
+% �ֺ�����Ϊ�����������ʾִ�н��
+P1 = polyval(p,DateNum); % �õ�����ʽģ�͵Ľ��
+figure
+plot(DateNum,P1,DateNum,Pclose,'*g'); % ģ����ԭʼ���ݵĶ���
+value = p(1) % ��б�ʸ�ֵ��value����Ϊ��Ʊ�ļ�ֵ��
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}����: ����ʽδ��ȷ��������������Ӿ��в�ͬ X ֵ�ĵ㣬���ٶ���ʽ�Ľ��������߳��԰��� HELP
+POLYFIT ���������о��к����š� 
+
+value =
+
+    0.1212
+
+\end{verbatim} \color{black}
+    
+\includegraphics [width=4in]{Untitled_03.eps}
+
+
+\subsection*{��Ʊ���յ�����}
+
+\begin{verbatim}
+MaxDD = maxdrawdown(Pclose); % �������س�
+risk = MaxDD  % �����س���ֵ��risk����Ϊ��Ʊ�ķ���
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+risk =
+
+    0.1155
+
+\end{verbatim} \color{black}
+    
+\end{document}
