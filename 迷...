@@ -1,0 +1,57 @@
+//created by bqy1999 2017/11/3
+//Tromino Puzzle and the solution of it
+
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+void generate_checkerboard(int size,int checkerboard[][size],int x,int y);
+void show_checkerboard(int size,int checkerboard[][size],int x,int y);
+
+//int (*checkerboard)[size]=malloc(sizeof(int[m][n]));如果这么写那么二维数组的大小就已经固定了，将来size再变化棋盘大小也不会变化了
+
+int main()
+{
+    int power=0;
+    printf("%s","Please enter the power k:");
+    scanf("%d",&power);
+
+    int size=(int)pow(2,power);//size表示棋盘的大小，在所有的函数中都会用到，所以每一个函数中都要将其作为参数传入
+
+    printf("Please enter the position(x,y) of the removed cell(0<=x,y<%d)",size);
+    int x=0;int y=0;
+    scanf("%d,%d",&x,&x);//这里的取地址符不可以少
+    int(*checkerboard)[size]=(int*)malloc(sizeof(int[size][size]));//用指针来创建一个棋盘
+
+
+    generate_checkerboard(size,checkerboard,x,y);
+    show_checkerboard(size,checkerboard,x,y);
+}
+
+void generate_checkerboard(int size,int checkerboard[][size],int x,int y)
+{
+    int i;
+    for(i=0;i<size;++i)
+    {
+        int j;
+        for(j=0;j<size;++j)
+        {
+            checkerboard[i][j]=-1;
+        }
+    }
+    checkerboard[x][y]=0;
+}
+
+void show_checkerboard(int size,int checkerboard[][size],int x,int y)
+{
+    int i;
+    for(i=0;i<size;++i)
+    {
+        int j;
+        for(j=0;j<size;++j)
+        {
+            printf("%d\t",checkerboard[i][j]);//"\t"的意思是type空三个字符
+        }
+        printf("%s","\n");//输出完一行之后换行
+    }
+}
