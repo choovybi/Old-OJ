@@ -1,0 +1,63 @@
+//主文件
+//created by bqy1999 in 2017/11/4
+
+#include<iostream>
+using namespace std;
+
+#include "Helloworld.h"
+
+int main()
+{
+	Account a(50);
+	Account b(100);
+
+	a.credit(10);
+	a.debit(5);
+	cout << a.getBalance() << endl;
+
+	system("pause");
+	return 0;
+}
+
+//头文件 Helloworld.h
+
+#include<iostream>
+using namespace std;
+
+class Account
+{
+public:
+    Account(int balance)
+    {
+        account_balance=balance;
+        if(account_balance<0)
+        {
+            account_balance=0;
+            cout<<"the initial balance is invalid"<<endl;
+        }
+    }
+
+    void credit(int money)
+    {
+        account_balance+=money;
+    }
+
+    void debit(int money)
+    {
+        if(money>account_balance)
+        {
+            cout<<"Debit amount exceeded account balance."<<endl;
+        }
+        else
+        {
+            account_balance-=money;
+        }
+    }
+
+    int getBalance()
+    {
+        return account_balance;
+    }
+private:
+    int account_balance=0;
+};
