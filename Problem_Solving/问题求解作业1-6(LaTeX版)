@@ -1,0 +1,737 @@
+//created by bqy1999 2017/11/6
+
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第六讲：如何将算法告诉计算机}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[1]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+C++的文法
+\end{problem}
+
+\begin{solution}
+C++四则运算和括号的BNF如下:
+
+    $\langle$ 算术表达式 $\rangle$ ::= $\langle$ 加减表达式 $\vert$ $\langle$ 乘除表达式 $\rangle$
+    
+    $\langle$ 乘除表达式 $\rangle$
+    ::= $\langle$ 标识符 $\rangle$ *$\vert$/ $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 标识符 $\rangle$ *$\vert$/ $\langle$ 数字$\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$ *$\vert$/ $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$ *$\vert$/ $\langle$ 数字 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ *$\vert$/ $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ *$\vert$/ $\langle$ 数字 $\rangle$;
+    
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ *$\vert$/ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$  *$\vert$/ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 标识符 $\rangle$  *$\vert$/ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+
+    $\langle$ 加减表达式 $\rangle$
+    ::= $\langle$ 标识符 $\rangle$ +$\vert$- $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 标识符 $\rangle$ +$\vert$- $\langle$ 数字$\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$ +$\vert$- $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$ +$\vert$- $\langle$ 数字 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ +$\vert$- $\langle$ 标识符 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ +$\vert$- $\langle$ 数字 $\rangle$;
+    
+    \noindent$\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ +$\vert$- $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 数字 $\rangle$  +$\vert$- $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+
+    \noindent$\vert$ $\langle$ 标识符 $\rangle$  +$\vert$- $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$;
+      
+    $\langle$ 标识符 $\rangle$ ::= $\langle $ 字母 $\rangle$ $\vert$ $\langle$标识符 $\rangle$$\langle$字母数字串$\rangle$
+    
+    $\langle$ 字母数字串 $\rangle$ ::= $\langle$ 字母 $\rangle$ $\vert$ $\langle$十进制数字 $\rangle$ $\vert$ $\langle$字母数字串 $\rangle$$\langle$字母 $\rangle$ $\vert$ $\langle$ 字母数字串 $\rangle$$\langle$十进制数字 $\rangle$
+
+    \newpage
+    
+    $\langle$ 字母 $\rangle$ ::= $\textbf{one of}$ a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F 
+    
+    \noindent G H I J K L M N O P Q R S T U V W X Y Z 
+    
+    $\langle$ 数字 $\rangle$ ::= $\langle$ 十六进制数字串$\rangle$ $\vert$ $\langle$ 八进制数字串 $\rangle$ $\vert$ $\langle$ 十进制数字串 $\rangle$ $\vert$ 
+    
+    \noindent$\langle$ 负号 $\rangle$ $\langle$ 十六进制数字串$\rangle$ $\vert$ $\langle$ 负号 $\rangle$ $\langle$ 八进制数字串 $\rangle$ $\vert$ $\langle$ 负号 $\rangle$ $\langle$ 十进制数字串 $\rangle$
+    
+    $\langle$ 十六进制数字串 $\rangle$ ::= $\langle$ 十六进制数字 $\rangle$ $\vert$ $\langle$ 十六进制数字串 $\rangle$ $\langle$ 十六进制数字 $\rangle$
+    
+    $\langle$ 十进制数字串 $\rangle$ ::= $\langle$ 十进制数字 $\rangle$ $\vert$ $\langle$ 十进制数字串 $\rangle$$\langle$ 十进制数字 $\rangle$
+    
+    $\langle$ 八进制数字串 $\rangle$ ::= $\langle$ 八进制数字 $\rangle$ $\vert$ $\langle$ 八进制数字串 $\rangle$$\langle$ 八进制数字 $\rangle$
+    
+    $\langle$ 十六进制数字 $\rangle$ ::= $\langle$ 十进制数字$\rangle$ $\vert A \vert B \vert C \vert D \vert E \vert F$
+
+    $\langle$ 十进制数字 $\rangle$ ::= $\langle$ 八进制数字$\rangle$ $\vert 8 \vert 9$
+    
+    $\langle$ 八进制数字 $\rangle$ ::= $0\vert 1\vert 2\vert 3\vert 4\vert 5\vert 6\vert 7$
+
+    $\langle$ 负号 $\rangle$ ::= - $\langle$标识符 $\rangle$ $\vert$ - $\langle$ 数字 $\rangle$ $\vert$ - $\langle$ 算术表达式 $\rangle$
+
+    $\langle$ 小括号 $\rangle$ ::= $\langle$ 小括号 $\rangle$ $\langle$ 标识符 $\rangle$ $\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 数字 $\rangle$ $\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 算术表达式 $\rangle$ $\vert$ $\langle$ 小括号 $\rangle$ $\langle$ 小括号 $\rangle$ 
+
+\end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+% \begin{problem}[2]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+
+% %%%%%%%%%
+% %\newpage  % page-break; comment it out if not necessarily
+% %这个的作用是主动开始新的一页
+% %%%%%%%%%
+% \begin{problem}[3]
+
+% \end{problem}
+
+% \begin{solution}
+    
+% \end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+
+% \begin{problem}[4]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+% \begin{problem}[5]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+% \begin{problem}[6]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[DH: 2.16]
+% Consider the treesort algorithm described in the text.
+
+% (a)Construct an algorithm that transforms a given list of integers into a binary search tree.
+
+% (b)What would the output of treesort look like if we were to reverse the order in which the subroutine
+% \textbf{second-visit-traversal} calls itself recursively?In other words,we consistently visit the right
+% offspring of a node before we visit the left one.
+% \end{problem}
+
+% \begin{solution}
+
+% (a)
+% 基本思路：
+% 先创建一个列表来存放用来创建二叉树的数，
+% 将第一个数创建为根结点，从列表的第二个数开始判断，
+% 如果当前的数大于根结点的数，那么将这个数赋值给根结点的左孩子，
+% 如果当前的数小于根结点的数，那么将这个数赋值给根结点的右孩子；
+% 再利用一个递归程序来进行上面的判断，每次都从根结点开始判断，
+% 如果当前数要赋值的子结点已经被别的数占据，那么就搜寻这个子结点的子子结点，如此就可以找到当前这个数在二叉树中的恰当位置。
+% \
+
+% \noindent具体代码如下：
+% \
+
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+%     //create by bqy1999 17/10/31
+%     //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+%     #include<iostream>
+%     #include<math.h>
+%     using namespace std;
+    
+%     void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000]);
+    
+%     int main()
+%     {
+%         int arr[1000]={0};
+%         int length=0;
+%         while(1)
+%         {
+%             cin>>arr[length];
+%             length++;
+%             if(cin.get()=='\n')break;
+%         }
+%         //cout<<length<<endl;
+    
+%         int bi_Tree[2000]={0};
+%         bi_Tree[0]=arr[0];
+%         //cout<<bi_Tree[0]<<endl;
+%         create_next(0,0,length,arr,bi_Tree);
+    
+%     //   for(int i=0;i<pow(2,length-1);i++)
+%     //   {
+%     //       cout<<bi_Tree[i]<<endl;
+%     //   }
+    
+%         return 0;
+%     }
+    
+%     void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000])
+%     {
+%         if(cur==length)return;
+    
+%         if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的左边添加`
+%         //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+%         {
+%             if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+%             //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+%             else if(bi_Tree[(pos+1*2)-1]==0)
+%             {
+%                 bi_Tree[(pos+1)*2-1]=arr[cur+1];
+%                 if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+%             }
+%             //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+%         }
+
+%         if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的右边添加`
+%         //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+%         {
+%             if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+%             //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+%             else if(bi_Tree[(pos+1)*2-1+1]==0)
+%             {
+%                 bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+%                 if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+%             }
+%             //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+%         }
+%     }
+
+% \end{lstlisting}
+
+% \noindent(b)
+% 在(a)问的基础上进行扩展
+
+% \noindent基本思路：
+% 从根结点开始进行右侧优先的遍历，当结点所有的左孩子和右孩子都被遍历过时，
+% 就放回当前结点的父结点。
+% 当一个结点被第一次访问时会去寻找它的右孩子，
+% 当它第二次被访问时，
+% 会进行输出，
+% 当第三次被访问时就会return到它的父结点。
+% 如果连根结点都被访问了3次，
+% 那么可以得出所有的结点都已经别遍历输出过了，所以就可以退出遍历程序。
+% \
+
+% \noindent具体代码如下：
+% \
+
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+%     //create by bqy1999 17/10/31
+%     //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+%     #include<iostream>
+%     #include<math.h>
+%     using namespace std;
+    
+    
+%     void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000]);
+%     void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000]);
+%     void traversal_next(int bi_Tree[2000],int cur,int judge[2000]);
+    
+    
+%     int main()
+%     {
+%         int length=0;
+%         int arr[100]={0};
+%         while(1)
+%         {
+%             cin>>arr[length];
+%             length++;
+%             if(cin.get()=='\n')break;
+%         }
+%         //cout<<length<<endl;
+    
+%         int bi_Tree[2000]={0};
+%         bi_Tree[0]=arr[0];
+%         //cout<<bi_Tree[0]<<endl;
+%         create_next(0,0,length,arr,bi_Tree);
+    
+%         for(int i=0;i<pow(2,length-1);i++)
+%         {
+%             cout<<bi_Tree[i]<<endl;
+%         }
+%         cout<<endl;
+    
+%         int judge[2000]={0};
+%         traversal_Tree(bi_Tree,0,judge);
+    
+    
+%         return 0;
+%     }
+    
+
+%     void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000])
+%     {
+%         if(cur==length)return;
+    
+%         if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的右边添加`
+%         //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+%         {
+%             if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+
+%             else if(bi_Tree[(pos+1*2)-1+1]==0)
+%             {
+%                 bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+%                 if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+%             }
+%         }
+
+%         if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的左边添加`
+%         //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+%         {
+%             if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+
+%             else if(bi_Tree[(pos+1)*2-1]==0)
+%             {
+%                 bi_Tree[(pos+1)*2-1]=arr[cur+1];
+%                 if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+%             }
+%         }
+%     }
+    
+
+%     void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000])
+%     {
+%         if(bi_Tree[(cur+1)*2-1+1]!=0)traversal_next(bi_Tree,(cur+1)*2-1+1,judge);
+%         judge[cur]++;
+%         //`先遍历右侧的结点`
+    
+%         if(bi_Tree[cur]!=0)cout<<bi_Tree[cur]<<endl;
+%         judge[cur]++;
+%         //`当第二次访问当前结点的时候将其输出`
+    
+%         if(bi_Tree[(cur+1)*2-1]!=0)traversal_next(bi_Tree,(cur+1)*2-1,judge);
+%         judge[cur]++;
+%         //`后遍历左侧的结点`
+    
+%         if(judge[0]==3)return;
+%         //`如果根结点被访问了三次，那么程序就停止!`
+%     }
+%     //`从当前结点开始进行右侧优先的遍历`
+    
+
+%     void traversal_next(int bi_Tree[2000],int cur,int judge[2000])
+%     {
+%         if(bi_Tree[cur]==0)return;
+    
+%         else traversal_Tree(bi_Tree,cur,judge);
+%     }
+%     //`遍历当前下一个结点`
+
+% \end{lstlisting}
+
+% \end{solution}
+% %%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[DH: 2.8]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
+ \begincorrection	% begin the ``correction'' part (Optional)
+% % %
+% % %%%%%%%%%%%
+% \begin{problem}[第三讲:UD 5.14]
+% Consider the following statement.
+
+% \[\forall x,(x\in\mathbb{Z_+}\to \exists y,\exists z,((y\in\mathbb{Q}\land(z\in\mathbb{Q})\land(yz\ne0)\land(x^2=y^2+z^2))).\]
+
+% (a)Change this symbolic statement to an English sentence.
+% \end{problem}
+% % %
+% \begin{cause}
+% 没有看到是``English sentence''
+% \end{cause}
+
+
+% % %
+% % %% Or use the ``solution'' environment
+% \begin{revision}
+% (a)for all x,x belongs to $\mathbb{Z^+}$ can get that there exists x and y belonging to $\mathbb{Q}\backslash \{0\}$ and $x^2=y^2+z^2$.
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+% \begin{problem}[UD 17.11]
+% Let $g$:$\mathbb{N}\to\mathbb{R^+}$ and let $a$ be a positive teal number.Suppose that $g$ has the properties that $g(1)=a$
+% and $g(m+n)=g(m)g(n)$ for all natural numbers $n$ and $m$.
+
+% (a)Prove that $g(0)=1$.
+% \end{problem}
+%     %     %% Or use the ``solution'' environment
+% \begin{revision}
+% (a)
+
+% $g(1)=g(1+0)=g(1)g(0)=a$
+
+% 因为题中说明``$a$ be a positive teal number''所以$g(1)=a\ne 0$
+
+% 所以$g(0)=1$
+
+% \end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+% \begin{problem}[ES 24.4]
+% Consider a square whose side ha length one.Suppose we select five points from this square.Prove that there are two points whose distance is at most $\frac{\sqrt{2}}{2}$
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+% 一个大正方形可以被分隔成四个$\frac{1}{2}\times\frac{1}{2}$的小正方形，
+
+% \noindent在每个小正方形中，距离最长的点为对角线的两个顶点，其距离为$\frac{\sqrt{2}}{2}$
+
+% \noindent因为在大正方形中选取5个点，所以肯定有两个点在同一个小正方形内，所以肯定有两个点的距离小于等于$\frac{\sqrt{2}}{2}$，
+
+% \noindent得证. $\blacksquare$
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+\begin{problem}[DH 2.4]
+%  这是一个错题订正的模板
+Write algorithms that,given an integer $N$ and a list $L$ of $N$ integers, prudoce
+in $S$ and $P$ the sum of the even numbers appearing in $L$ and product of the odd ones,respectively.
+
+(a)Using bounded iteration
+
+(b)Using ``goto'' statement
+\end{problem}
+%
+\begin{cause}
+    没有看清是奇数的积和偶数的和，认为都是和了
+%  简述错误原因（可选）。
+\end{cause}
+%
+%% Or use the ``solution'' environment
+\begin{revision}
+\
+
+\noindent(a)
+
+(1)make a note $P$ of 0; make a note $Q$ of 1;
+
+(2)point to the first element of the list $L$;
+
+(3)do the following $N-1$ times;
+
+\indent\indent(3.1)judge the pointed element is even or odd;
+
+\indent\indent\indent(3.1.1)if the pointed element is even, add it to the $P$;
+
+\indent\indent\indent(3.1.2)if the pointed element is odd, multiply it to the $Q$;
+
+\indent\indent(3.2)point to the next element;
+
+(4)judge the pointed element is even or odd;
+
+\indent\indent(4.1)if the pointed element is even, add it to the $P$;
+
+\indent\indent(4.2)if the pointed element is odd, multiply it to the $Q$;
+
+(5)produce the noted number $P$ and $Q$ as output.
+
+\noindent(b)
+
+(1)make a note $P$ of 0; make a note $Q$ of 1;
+
+(2)point to the first element of the list $L$;
+
+(3)judge the pointed element is even or odd;
+
+\indent\indent(3.1)if the pointed element is even, add it to the $P$;
+
+\indent\indent(3.2)if the pointed element is odd, multiply it to the $Q$;
+
+(4)judge the pointed element is the last element of the list $L$ or not;
+
+\indent\indent(4.1)if the pointed element is not the last element of the list $L$, point to the next element, goto (3);
+
+\indent\indent(4.1)if the pointed element is the last element of the list $L$, goto (5);
+
+(5)produce the noted number $Q$ and $P$ as output.
+
+\end{revision}
+
+%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%
+\begin{problem}[DH 2.5]
+    %  这是一个错题订正的模板
+Show how to perform the following simulations of some control constructs by others.The sequencing construct ``and-then'' is implicitly available for
+all the simulations.You may introduce and use new variables and labels if necessary.
+    
+(b)Simulate the ``if-then-else'' statement by ``while-do'' loops.
+
+(c)Simualte a ``while-do'' loop by ``if-then'' and ``goto'' statements.
+\end{problem}
+    %
+    % \begin{cause}
+        
+    % %  简述错误原因（可选）。
+    % \end{cause}
+    %
+    %% Or use the ``solution'' environment
+\begin{revision}
+    \
+    
+    (b)
+
+    int flag=1;
+
+    while($M$ is true)
+
+    \{
+
+        \indent\indent do $S$;
+
+        \indent\indent flag=0;
+
+    \}
+
+    while(flag==1)
+
+    \{
+
+        \indent\indent do something else;
+        
+        \indent\indent flag=0;
+
+    \}
+
+    \
+    
+    (c)
+
+    label;
+
+    if($M$ is true)
+
+    \{
+
+    \indent do $S$;
+
+    \indent goto label;
+
+    \}
+\end{revision}
+
+\begin{problem}[DH 2.8]
+    %  这是一个错题订正的模板
+Show how to simulate a ``while-do'' loop by condintional statements and recursive procedure.
+\end{problem}
+\begin{revision}
+    \
+    
+    int flag=1;
+
+    void $A$()
+
+    \{
+        
+    \indent\indent if(flag==1)
+
+    \indent\indent \{
+
+    \indent\indent\indent do $S$;
+
+    \indent\indent\indent call $A$();
+
+    \indent\indent \}
+
+    \indent\indent else return;
+
+    \}
+
+    if($M$ is true)
+
+    \{
+
+    \indent\indent call $A$();
+
+    \}
+
+\end{revision}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+   
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
