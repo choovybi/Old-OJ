@@ -1,0 +1,147 @@
+//create by bqy1999 17/10/31
+//extend the algorithm to print the series of operations on two stacks that will generate it
+
+#include<iostream>
+using namespace std;
+#include<stdlib.h>
+
+void check(int arr[1000],int judge[1000],int *stack,int length);
+
+void check_next(int top,int cur,int arr[1000],int judge[1000],int *stack,int length);
+//top`表示栈顶的数`
+//cur`表示当前要输出的数在arr数组中是第几个位置，如果要显示下标的话要`cur-1
+//arr[]`是用来存放要进行判断的数列的数组`
+//judge[]`是用来判断当前数是否被输出过的数组`
+//stack[]`表示栈数列`
+
+int main()
+{
+    int arr[1000] = { 0 };
+    int length = 0;
+    while (1)
+    {
+        cin >> arr[length];
+        length++;
+        if (cin.get() == '\n')break;
+    }
+
+    int judge[1000] = { 0 };
+
+    int *stack=(int*)malloc(sizeof(int) * length);
+
+    check(arr, judge, stack, length);//`这里不需要加数据类型比如void之类的！！！`
+
+    system("pause");
+    return 0;
+}
+
+void check(int arr[1000],int judge[1000], int *stack, int length)
+{
+    if (arr[0] == 0)cout << "`序列为空！请重新输入！`" << endl;
+    int top = 0;
+    if (arr[0] != 1)
+    {
+        for (int i = 1; i < arr[0]; ++i)
+        {
+            stack[i - 1] = i;
+            cout << "read(" << i << "), " << "push(" << i << ",S), ";
+            top = i;//top`表示栈里面有多少个数`
+        }
+        cout << "read(" << arr[0] << "), " << "print(" << arr[0] << "), ";
+        judge[arr[0] - 1] = 1;
+    }
+    else if (arr[0] == 1)
+    {
+        cout << "read(1), print(1), ";
+        judge[0] = 1;
+    }
+
+    check_next(top, 1, arr, judge, stack,length);//`检查下一个数是否符合特征`
+
+    cout<<"output ending!"<<endl;
+}
+
+//`使用一个迭代结构来判断接下来一个要输出的数能否得到，如果可以如何得到，是否要入栈等...`
+void check_next(int top,int cur, int arr[1000],int judge[1000], int *stack, int length)
+{
+    int flag=0;
+    for(int i=0;i<length;i++)flag+=judge[i];
+    if(top==0&&flag==length)return;
+
+    if (top == 0&&flag!=length)//`如果栈中没有数`
+    {
+        for (int i = 1; i < arr[cur]-1; ++i)//`就是这里错了！！！不能把要输出的数也放到栈里面这样多此一举`
+        {
+            if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+            {
+                cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                stack[top] = i+1;
+                top++;
+            }
+        }
+        cout << "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+        judge[arr[cur] - 1] = 1;
+
+        check_next(top, cur + 1, arr, judge, stack, length);
+    }
+
+
+    //`如果要输出的数，还没有读取到，那么将前面的数都先读到栈中`
+    else if (arr[cur] > stack[top-1])
+    {
+        for (int i = stack[top-1]; i < arr[cur]-1; ++i)//`这里也要改成arr[cur]-1不能把要输出的也放到栈里面了`
+        {
+            if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+            {
+                cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                stack[top] = i+1;
+                top++;
+            }
+        }
+        cout<< "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+        judge[arr[cur] - 1] = 1;
+
+        check_next(top, cur + 1, arr, judge, stack, length);
+    }
+
+    //`如果要输出的数就是栈的顶，那么pop出栈顶，并且栈顶--`
+    else if (arr[cur] == stack[top-1])
+    {
+        if (judge[arr[cur] - 1] == 0)
+        {
+            cout << "pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+            judge[arr[cur] - 1] = 1;
+
+            check_next(--top, cur + 1, arr, judge, stack, length);
+        }
+    }
+
+    //如果要输出的数在栈1的内部，那么将它前面的数pop出来到栈2里面，然后输出它，再立马将栈2里面的数返回到栈1里面
+     else if(arr[cur]<stack[top-1])
+     {
+         int num=0;
+         for(int i=0;i<top-1;++i)
+         {
+             if(arr[cur]==stack[i])num=i;
+         }
+         //找到当前数在栈1中的位置
+
+         for(int i=top-1;i>num;--i)
+         {
+             cout<<"pop("<<stack[i]<<",S), "<<"push("<<stack[i]<<",S2), "<<endl;
+         }
+         //将它前面的数pop出来push到S2中
+         cout<<"pop("<<arr[cur]<<",S), "<<"print("<<arr[cur]<<"), "<<endl;
+         judge[arr[cur]-1]=1;
+         //将要输出的数输出出来
+         for(int i=num+1;i<=top-1;++i)
+         {
+             cout<<"pop("<<stack[i]<<",S2), "<<"push("<<stack[i]<<",S), "<<endl;
+             stack[i-1]=stack[i];
+             //push回去的时候要往前一个，栈顶下降一位
+         }
+         //将S2里面的数再按相反的顺序pop出来push回S1里
+        if(top==1)return;
+        else check_next(--top,cur+1,arr,judge,stack,length);
+     }
+}

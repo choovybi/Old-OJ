@@ -1,0 +1,22 @@
+//created by bqy1999 2017/11/3
+//Tromino Tiling puzzle
+
+#include<iostream>
+using namespace std;
+
+int main()
+{
+    f();
+    
+    return 0;
+}
+
+void f()
+{
+    int a=0;//automatic
+    static int b=0;//只会被初始化一次
+    
+    int *p=malloc(sizeof(int)*n);//存放在HEAP这一段内存中
+}
+//Definition (Pointer(K&R))
+//A pointer is a variable that contains the address of a variable

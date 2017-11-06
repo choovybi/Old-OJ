@@ -1,0 +1,139 @@
+    //通常通过递归的方式来实现，如果这个排列能够通过一个栈来得到，那么输出具体的得到方法
+    //可以用的方法有：read(X);push(X,S);pop(X,S)和print(X)这四种
+    
+    //create by bqy1999 17/10/29
+    //an algorithm that checks whether a given permutation can be obtained by a stack
+    
+    #include<iostream>
+    using namespace std;
+    #include<stdlib.h>
+    
+    void check(int arr[1000],int judge[1000],int *stack,int length);
+    
+    void check_next(int top,int cur,int arr[1000],int judge[1000],int *stack,int length);
+    //top`表示栈顶的数`
+    //cur`表示当前要输出的数在arr数组中是第几个位置，如果要显示下标的话要`cur-1
+    //arr[]`是用来存放要进行判断的数列的数组`
+    //judge[]`是用来判断当前数是否被输出过的数组`
+    //stack[]`表示栈数列`
+    
+    int main()
+    {
+        int arr[1000] = { 0 };
+        int length = 0;
+        while (1)
+        {
+            cin >> arr[length];
+            length++;
+            if (cin.get() == '\n')break;
+        }
+    
+        int judge[1000] = { 0 };
+    
+        int *stack=(int*)malloc(sizeof(int) * length);
+    
+        check(arr, judge, stack, length);//`这里不需要加数据类型比如void之类的！！！`
+    
+        system("pause");
+        return 0;
+    }
+    
+    void check(int arr[1000],int judge[1000], int *stack, int length)
+    {
+        if (arr[0] == 0)cout << "`序列为空！请重新输入！`" << endl;
+        int top = 0;
+        if (arr[0] != 1)
+        {
+            for (int i = 1; i < arr[0]; ++i)
+            {
+                stack[i - 1] = i;
+                cout << "read(" << i << "), " << "push(" << i << ",S), ";
+                top = i;//top`表示栈里面有多少个数`
+            }
+            cout << "read(" << arr[0] << "), " << "print(" << arr[0] << "), ";
+            judge[arr[0] - 1] = 1;
+        }
+        else if (arr[0] == 1)
+        {
+            cout << "read(1), print(1), ";
+            judge[0] = 1;
+        }
+    
+        check_next(top, 1, arr, judge, stack,length);//`检查下一个数是否符合特征`
+    
+        //`将判断能否通过栈来输出这个序列的程序设置到最后。`
+        //`如果所有的数都被输出了那么就可以通过栈来得到，如果有的书没有被输出，那么就不可以通过栈来得到这个序列`
+
+        int flag=0;
+        for(int i=0;i<length;++i)
+        {
+            flag+=judge[i];
+        }
+        //`如果所有的数都被输出了那么flag==length否则不然`
+    
+        if(flag==length) cout << "output ending!" << endl;
+        else cout<< "this permutation can't be obtained by a stack!" << endl;
+    }
+    
+    //`使用一个迭代结构来判断接下来一个要输出的数能否得到，如果可以如何得到，是否要入栈等...`
+    void check_next(int top,int cur, int arr[1000],int judge[1000], int *stack, int length)
+    {
+        if(arr[cur]!=0)
+        {
+            if (arr[cur] == 1)//`第cur个数，表示的是arr[]数组里下标为cur+1的数`
+            {
+                cout <<"pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur]-1]=1;
+    
+                return;
+            }
+    
+            if (top == 0)//`如果栈中没有数`
+            {
+                for (int i = 1; i < arr[cur]-1; ++i)//`就是这里错了！！！不能把要输出的数也放到栈里面这样多此一举`
+                {
+                    if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                    {
+                        cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                        stack[top] = i+1;
+                        top++;
+                    }
+                }
+                cout << "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur] - 1] = 1;
+    
+                check_next(top, cur + 1, arr, judge, stack, length);
+            }
+    
+    
+        //`如果要输出的数，还没有读取到，那么将前面的数都先读到栈中`
+            if (arr[cur] > stack[top-1])
+            {
+                for (int i = stack[top-1]; i < arr[cur]-1; ++i)//`这里也要改成arr[cur]-1不能把要输出的也放到栈里面了`
+                {
+                    if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                    {
+                        cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                        stack[top] = i+1;
+                        top++;
+                    }
+                }
+                cout<< "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur] - 1] = 1;
+    
+                check_next(top, cur + 1, arr, judge, stack, length);
+            }
+    
+        //`如果要输出的数就是栈的顶，那么pop出栈顶，并且栈顶--`
+            if (arr[cur] == stack[top-1])
+            {
+                if (judge[arr[cur] - 1] == 0)
+                {
+                    cout << "pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+                    judge[arr[cur] - 1] = 1;
+    
+                    check_next(--top, cur + 1, arr, judge, stack, length);
+                }
+            }
+        }
+     } 

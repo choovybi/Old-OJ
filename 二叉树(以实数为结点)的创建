@@ -1,0 +1,70 @@
+//创建方式：
+//如果当前数比结点大，就当做结点的左孩子
+//如果当前数比结点小，就当做结点的右孩子
+
+//create by bqy1999 17/11/1
+    //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+    #include<iostream>
+    #include<math.h>
+    using namespace std;
+    
+    void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000]);
+    
+    int main()
+    {
+        int arr[1000]={0};
+        int length=0;
+        while(1)
+        {
+            cin>>arr[length];
+            length++;
+            if(cin.get()=='\n')break;
+        }
+        //cout<<length<<endl;
+    
+        int bi_Tree[2000]={0};
+        bi_Tree[0]=arr[0];
+        //cout<<bi_Tree[0]<<endl;
+        create_next(0,0,length,arr,bi_Tree);
+    
+    //   for(int i=0;i<pow(2,length-1);i++)
+    //   {
+    //       cout<<bi_Tree[i]<<endl;
+    //   }
+    
+        return 0;
+    }
+    
+    void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000])
+    {
+        if(cur==length)return;
+    
+        if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的左边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+            //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+            else if(bi_Tree[(pos+1*2)-1]==0)
+            {
+                bi_Tree[(pos+1)*2-1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+            //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+        }
+
+        if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的右边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+            //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+            else if(bi_Tree[(pos+1)*2-1+1]==0)
+            {
+                bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+            //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+        }
+    }

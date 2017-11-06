@@ -1,0 +1,1005 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第五讲：}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.10]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+A permutation$(a_1,\dots,a_N)$can be represented by a vector $P$ fo length $N$ with $P[I]=a_I$.
+Design an algorithm which,given an integer $N$ and a vector of integers $P$ of length $N$,checks
+whether $P$ represents any permutation of $A_N$.
+\end{problem}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+\begin{solution}
+%
+因为属于$A_n$的条件是``each integer from the set $A_n$ appears exactly once.''
+
+根据只出现一次的定义可以得出如下判断方式：
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+    for(int i=0;i<N;++i)
+    {
+        for(int j=i+1;j<N;++j)
+        {
+            if(P[i]==P[j])
+            cout<<"P doesn't belong to An"<<endl;
+            else
+            cout<<"P belongs to An"<<endl;
+        }
+    }
+\end{lstlisting}
+
+\end{solution}
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[DH: 2.11]
+Design an algorithm which,given a positive integer $N$,produces all the permutations of $A_N$.
+
+\noindent We say that a permutation $\sigma = (a_1,\dots,a_N) $can be obtained by a stack,if it is possible
+to start from the input sequence$(1,2,\dots,N)$ and an empty stack $S$,and produce the output $\sigma$
+using only the following types of operations:
+
+$\textbf{read(X)}$:Read an integer from the input into variable $X$.
+
+$\textbf{print(X)}$:Print the integer currently stored in variable $X$ on the output.
+
+$\textbf{push(X,S)}$:Push the integer currently stored in variable $X$ on the stack $S$.
+
+$\textbf{pop(X,S)}$:Pop the integer from the top of the stack $S$ into variable $X$.(This operation is illegal
+if $S$ is empty.)
+\end{problem}
+
+\begin{solution}
+找全排列的思路：
+给每一个数一个bool值，表示当前这个数有没有被输出过，
+通过递归方式找到所有可能的排列，
+如过所有的数都已经被输出过了，那就开始下一个排列，
+如果$N!$种排列都已经被输出过了，那么程序就终止。
+
+\
+具体代码如下：
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+    #include<iostream>
+    using namespace std;
+        
+    void have_permutation(int cur,int length,int * A,int * B);
+    
+    int main()
+    {
+        int length = 0;
+        cin >> length;
+        int *A = (int*)malloc(sizeof(int) * length);
+        int *B = (int*)malloc(sizeof(int) * length);//`B用来存放数`
+        
+        for (int i = 0; i < length; ++i)
+        {
+            A[i] = 1;//`A[i]用来表示当前这个数i是否已经被输出`
+        }
+        
+        have_permutation(0,length, A, B);
+        
+        system("pause");
+        return 0;
+    }
+    
+    void have_permutation(int cur,int length, int * A, int * B)
+    {
+        if (cur >= length)
+        {
+            cout << endl;
+            for (int i = 0; i < length; ++i)
+            {
+                cout << B[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < length; ++i)
+            {
+                if (A[i] == 1)//`已经赋值过了的不再赋值`
+                {
+                    B[cur] = i + 1;//`将数组中的每一个数据赋值，第cur+1个数据赋值i+1，如B[0]=1......`
+                    A[i] = 0;//`赋过了值的数据的bool值置为0，表示该数没有被输出过`
+                    have_permutation(cur + 1, length, A, B);//`通过cur+1保持每一个位置都能被赋上正确的值`
+                    A[i] = 1;
+                }
+            }
+        }
+    }
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+\begin{problem}[DH: 2.12]
+(a)Show that the following permutations can be obtained by a stack:
+
+i.(3,2,1).
+
+ii.(3,4,2,1).
+
+iii.(3,5,7,6,8,4,9,2,10,1).
+
+\noindent(b)Prove that the following permutations cannot be obtained by a stack:
+
+i.(3,1,2).
+
+ii.(4,5,3,7,2,1,6).
+
+\noindent(c)How many permutations of $A_4$ cannot be obtained by a stack?
+\end{problem}
+
+\begin{solution}
+(a)
+
+i. read(1), push(1,S), read(2), push(2,S), read(3), print(3),
+pop(2,S), print(2), pop(1,S), print(1)所以这串序列可以通过栈得到
+
+ii. read(1), push(1,S), read(2), push(2,S), read(3), print(3), read(4), print(4), pop(2,S), print(2), pop(1,S), print(1)所以这串序列可以通过栈得到
+
+iii.read(1), push(1,S), read(2), push(2,S), read(3), print(3), read(4), push(4,S), read(5), print(5), read(6), push(6,S), read(7), print(7), pop(6,S), print(6),
+read(8), print(8), pop(4,S), print(4), read(9), print(9), pop(2,S), print(2), read(10), print(10), pop(1,S), print(1)所以这串序列可以通过栈得到
+
+\noindent(b)
+
+i. read(1), push(1,S), read(2), push(2,S), read(3), print(3)这时输出的是3，在栈中的数是2在上1在下，无法在先输出1的时候将2保存下来(即2无法在最后输出)，因此这个排列不能通过栈来得到。
+
+ii. 与i同样的，无法将6的数据保存到最后再输出，因为如果将6放入栈中那么6底下一定有数据(1,2,3)不能在pop出它们的时候将6保存下来，而6又不能read到就输出，因为7要在6前面输出，所以6无法在最后输出，因此这个排列不能通过栈来得到。
+
+可以总结出规律：如果序列中出现$(\dots a_1,\dots a_2,\dots a_3,\dots)$其中$a_1>a_3>a_2$那么这个序列就不能够通过栈来得到；
+因为$a_1$最大，并且要最先输出，所以$a_2$和$a_3$都必须存入栈中，而$a_2<a_3$所以$a_2$应该先存入栈，
+但又要$a_2$在$a_3$之前输出，所以这个通过栈无法来完成。
+
+\noindent(c)
+
+总共10个序列不能够通过栈来得到
+
+$A_4$总共有24种序列，分别是：
+
+(4,3,2,1);(4,3,1,2);(4,2,3,1);(4,2,1,3);(4,1,3,2);(4,1,2,3)
+
+(3,4,2,1);(3,4,1,2);(3,2,4,1);(3,2,1,4);(3,1,4,2);(3,1,2,4)
+
+(2,4,3,1);(2,4,1,3);(2,3,4,1);(2,3,1,4);(2,1,4,3);(2,1,3,4)
+
+(1,4,3,2);(1,4,2,3);(1,3,4,2);(1,3,2,4);(1,2,4,3);(1,2,3,4)
+
+其中不能通过栈得到的有：(4,3,1,2);(4,2,3,1);(4,2,1,3);(4,1,3,2);(4,1,2,3);
+
+(3,4,1,2);(3,1,4,2);(3,1,2,4);(2,4,1,3);(1,4,2,3)这10种
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+
+\begin{problem}[DH: 2.13]
+Design an algorithm that checks whether a given permutation can be obtained by a stack.In case the answer
+is yes,the algorithm should also print the appropriate series of operations.In your algorithm,in addition to $\textbf{read,print,push,}$
+and $\textbf{pop}$,you may use the test $\textbf{is-empty}(S)$for testing the emptiness of the stack S.
+\end{problem}
+
+\begin{solution}
+
+基本思路：从第一个要输出的数开始，判断能否将其输出，并且将输出它的情况打印出来(比如要输出这个数哪些数需要入栈，那些数需要出栈等，将这个结果保留下来)，在通过一个递归来判断下一个数在当前情况下能否输出，
+最后判断是否所有的数都被输出过了，如果为真，那么可以得出结论：当前序列能够通过栈来得到；如果为假，可以得出结论：当前序列不能够通过栈来得到
+
+\
+
+代码如下：
+\
+
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+    //create by bqy1999 17/10/29
+    //an algorithm that checks whether a given permutation can be obtained by a stack
+    
+    #include<iostream>
+    using namespace std;
+    #include<stdlib.h>
+    
+    void check(int arr[1000],int judge[1000],int *stack,int length);
+    
+    void check_next(int top,int cur,int arr[1000],int judge[1000],int *stack,int length);
+    //top`表示栈顶的数`
+    //cur`表示当前要输出的数在arr数组中是第几个位置，如果要显示下标的话要`cur-1
+    //arr[]`是用来存放要进行判断的数列的数组`
+    //judge[]`是用来判断当前数是否被输出过的数组`
+    //stack[]`表示栈数列`
+    
+    int main()
+    {
+        int arr[1000] = { 0 };
+        int length = 0;
+        while (1)
+        {
+            cin >> arr[length];
+            length++;
+            if (cin.get() == '\n')break;
+        }
+    
+        int judge[1000] = { 0 };
+    
+        int *stack=(int*)malloc(sizeof(int) * length);
+    
+        check(arr, judge, stack, length);//`这里不需要加数据类型比如void之类的！！！`
+    
+        system("pause");
+        return 0;
+    }
+    
+    void check(int arr[1000],int judge[1000], int *stack, int length)
+    {
+        if (arr[0] == 0)cout << "`序列为空！请重新输入！`" << endl;
+        int top = 0;
+        if (arr[0] != 1)
+        {
+            for (int i = 1; i < arr[0]; ++i)
+            {
+                stack[i - 1] = i;
+                cout << "read(" << i << "), " << "push(" << i << ",S), ";
+                top = i;//top`表示栈里面有多少个数`
+            }
+            cout << "read(" << arr[0] << "), " << "print(" << arr[0] << "), ";
+            judge[arr[0] - 1] = 1;
+        }
+        else if (arr[0] == 1)
+        {
+            cout << "read(1), print(1), ";
+            judge[0] = 1;
+        }
+    
+        check_next(top, 1, arr, judge, stack,length);//`检查下一个数是否符合特征`
+    
+        //`将判断能否通过栈来输出这个序列的程序设置到最后。`
+        //`如果所有的数都被输出了那么就可以通过栈来得到，如果有的书没有被输出，那么就不可以通过栈来得到这个序列`
+
+        int flag=0;
+        for(int i=0;i<length;++i)
+        {
+            flag+=judge[i];
+        }
+        //`如果所有的数都被输出了那么flag==length否则不然`
+    
+        if(flag==length) cout << "output ending!" << endl;
+        else cout<< "this permutation can't be obtained by a stack!" << endl;
+    }
+    
+    //`使用一个迭代结构来判断接下来一个要输出的数能否得到，如果可以如何得到，是否要入栈等...`
+    void check_next(int top,int cur, int arr[1000],int judge[1000], int *stack, int length)
+    {
+        if(arr[cur]!=0)
+        {
+            if (arr[cur] == 1)//`第cur个数，表示的是arr[]数组里下标为cur+1的数`
+            {
+                cout <<"pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur]-1]=1;
+    
+                return;
+            }
+    
+            if (top == 0)//`如果栈中没有数`
+            {
+                for (int i = 1; i < arr[cur]-1; ++i)//`就是这里错了！！！不能把要输出的数也放到栈里面这样多此一举`
+                {
+                    if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                    {
+                        cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                        stack[top] = i+1;
+                        top++;
+                    }
+                }
+                cout << "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur] - 1] = 1;
+    
+                check_next(top, cur + 1, arr, judge, stack, length);
+            }
+    
+    
+        //`如果要输出的数，还没有读取到，那么将前面的数都先读到栈中`
+            if (arr[cur] > stack[top-1])
+            {
+                for (int i = stack[top-1]; i < arr[cur]-1; ++i)//`这里也要改成arr[cur]-1不能把要输出的也放到栈里面了`
+                {
+                    if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                    {
+                        cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                        stack[top] = i+1;
+                        top++;
+                    }
+                }
+                cout<< "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur] - 1] = 1;
+    
+                check_next(top, cur + 1, arr, judge, stack, length);
+            }
+    
+        //`如果要输出的数就是栈的顶，那么pop出栈顶，并且栈顶--`
+            if (arr[cur] == stack[top-1])
+            {
+                if (judge[arr[cur] - 1] == 0)
+                {
+                    cout << "pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+                    judge[arr[cur] - 1] = 1;
+    
+                    check_next(--top, cur + 1, arr, judge, stack, length);
+                }
+            }
+        }
+    }    
+
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.14]
+
+(a)  Give series of operations that show that each of the permutations given in Exercise \\
+2.12(b)can be obtained by a queue and also by two stacks.
+
+\noindent(b)Prove that every permutation can be obtained by a queue.
+
+\noindent(c)Prove that every permutation can be obtained by two stscks.
+\end{problem}
+
+\begin{solution}
+两个栈命名为S1，S2，队列命名为Q
+
+\noindent(a)
+
+\textcircled{i}
+
+(1)通过两个栈来得到：
+
+read(1), push(1,S1), read(2), push(2,S2), read(3), print(3), pop(1,S1), print(1), pop(2,S2), print(2)
+
+(2)通过队列来得到：
+
+read(1), push(1,Q), read(2), push(2,Q), read(3), print(3), pop(1,Q), print(1), pop(2,Q), print(2)
+
+\textcircled{ii}
+
+(1)通过两个栈来得到：
+
+read(1), push(1,S1), read(2), push(2,S1), read(3), push(3,S1), read(4), print(4), read(5), print(5), read(6), push(6,S2), pop(3,S1), print(3), read(7), print(7), pop(2,S1), print(2), pop(1,S1), print(1), pop(6,S2), print(6)
+
+(2)通过队列来得到：
+
+read(1), push(1,Q), read(2), push(2,Q), read(3), push(3,Q), read(4), print(4), read(5), print(5), read(6), push(6,Q), read(7), push(7,Q), pop(1,Q), push(1,Q), pop(2,Q), push(2,Q), pop(3,Q), print(3), pop(6,Q), push(6,Q), pop(7,Q), print(7), pop(1,Q), push(1,Q), pop(2,Q), print(2), pop(6,Q), push(6,Q), pop(1,Q), print(1), pop(6,Q), print(6)
+\\
+
+\noindent(b)
+任意的序列都可以使用队列来得到这个很明显，因为如果当前队列头的数不是要输出的数，那么可以把它pop出来再push到队列尾，如此循环，直到队列头的数是要print的数，将其pop出来print，这样不会有数据无处可放，因此可以print出任何顺序的数
+\\
+
+\noindent(c)
+任意的序列都可以通过两个栈来得到，因为如果当前需要输出的数在栈中的某个位置，那么可以把这个数所在的栈的上面数都一一pop出来，在push到另外一个栈中，这样所有的数都可以被保留下来输出，而不用担心没有地方存放这些数，因此任何顺序的数都可以通过两个栈来得到
+
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[DH: 2.15]
+Extend the algorithm you were asked to design in Exercise 2.13,so that if the given permutation cannot be obtained
+by a stack,the algorithm will print the series of operations on two stacks that will generate it.
+\end{problem}
+
+\begin{solution}
+对2.13代码的扩展
+基本思路：
+如果一串数列不能通过单个栈来得到，
+那么将栈中要输出的数上面的数从第一个栈中pop出来push到第二个栈中，
+然后将要输出的数从栈中pop出来print，
+再将从第一个栈中pop出来的数push回第一个栈，
+如此可以完成任何顺序的序列的输出。
+\
+
+\noindent具体代码如下：
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+    //create by bqy1999 17/10/31
+    //extend the algorithm to print the series of operations on two stacks that will generate it
+    #include<iostream>
+    using namespace std;
+    #include<stdlib.h>
+    
+    void check(int arr[1000],int judge[1000],int *stack,int length);
+    
+    void check_next(int top,int cur,int arr[1000],int judge[1000],int *stack,int length);
+    //top`表示栈顶的数`
+    //cur`表示当前要输出的数在arr数组中是第几个位置，如果要显示下标的话要`cur-1
+    //arr[]`是用来存放要进行判断的数列的数组`
+    //judge[]`是用来判断当前数是否被输出过的数组`
+    //stack[]`表示栈数列`
+    
+    int main()
+    {
+        int arr[1000] = { 0 };
+        int length = 0;
+        while (1)
+        {
+            cin >> arr[length];
+            length++;
+            if (cin.get() == '\n')break;
+        }
+    
+        int judge[1000] = { 0 };
+    
+        int *stack=(int*)malloc(sizeof(int) * length);
+    
+        check(arr, judge, stack, length);//`这里不需要加数据类型比如void之类的！！！`
+    
+        system("pause");
+        return 0;
+    }
+    
+    void check(int arr[1000],int judge[1000], int *stack, int length)
+    {
+        if (arr[0] == 0)cout << "`序列为空！请重新输入！`" << endl;
+        int top = 0;
+        if (arr[0] != 1)
+        {
+            for (int i = 1; i < arr[0]; ++i)
+            {
+                stack[i - 1] = i;
+                cout << "read(" << i << "), " << "push(" << i << ",S), ";
+                top = i;//top`表示栈里面有多少个数`
+            }
+            cout << "read(" << arr[0] << "), " << "print(" << arr[0] << "), ";
+            judge[arr[0] - 1] = 1;
+        }
+
+        else if (arr[0] == 1)
+        {
+            cout << "read(1), print(1), ";
+            judge[0] = 1;
+        }
+    
+        check_next(top, 1, arr, judge, stack,length);//`检查下一个数是否符合特征`
+    
+        cout<<"output ending!"<<endl;
+    }
+    
+    //`使用一个迭代结构来判断接下来一个要输出的数能否得到，如果可以如何得到，是否要入栈等...`
+    void check_next(int top,int cur, int arr[1000],int judge[1000], int *stack, int length)
+    {
+        int flag=0;
+        for(int i=0;i<length;i++)flag+=judge[i];
+        if(top==0&&flag==length)return;
+    
+        if (top == 0&&flag!=length)//`如果栈中没有数`
+        {
+            for (int i = 1; i < arr[cur]-1; ++i)//`就是这里错了！！！不能把要输出的数也放到栈里面这样多此一举`
+            {
+                if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                {
+                    cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                    stack[top] = i+1;
+                    top++;
+                }
+            }
+            cout << "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+            judge[arr[cur] - 1] = 1;
+    
+            check_next(top, cur + 1, arr, judge, stack, length);
+        }
+    
+    
+        //`如果要输出的数，还没有读取到，那么将前面的数都先读到栈中`
+        else if (arr[cur] > stack[top-1])
+        {
+            for (int i = stack[top-1]; i < arr[cur]-1; ++i)//`这里也要改成arr[cur]-1不能把要输出的也放到栈里面了`
+            {
+                if (judge[i] == 0)//`如果在栈顶和要输出的数之间的数还没有被输出，那么就将其放入栈中`
+                {
+                    cout << "read(" << i+1 << "), " << "push(" << i+1 << ",S), ";
+                    stack[top] = i+1;
+                    top++;
+                }
+            }
+            cout<< "read(" << arr[cur] << "), " << "print(" << arr[cur] << "), ";
+            judge[arr[cur] - 1] = 1;
+    
+            check_next(top, cur + 1, arr, judge, stack, length);
+        }
+    
+        //`如果要输出的数就是栈的顶，那么pop出栈顶，并且栈顶--`
+        else if (arr[cur] == stack[top-1])
+        {
+            if (judge[arr[cur] - 1] == 0)
+            {
+                cout << "pop(" << arr[cur] << ",S), " << "print(" << arr[cur] << "), ";
+                judge[arr[cur] - 1] = 1;
+    
+                check_next(--top, cur + 1, arr, judge, stack, length);
+            }
+        }
+    
+        //`如果要输出的数在栈1的内部，那么将它前面的数pop出来到栈2里面，然后输出它，再立马将栈2里面的数返回到栈1里面`
+        else if(arr[cur]<stack[top-1])
+        {
+            int num=0;
+            for(int i=0;i<top-1;++i)
+            {
+                if(arr[cur]==stack[i])num=i;
+            }
+            //`找到当前数在栈1中的位置`
+    
+            for(int i=top-1;i>num;--i)
+            {
+                cout<<"pop("<<stack[i]<<",S), "<<"push("<<stack[i]<<",S2), "<<endl;
+            }
+            //`将它前面的数pop出来push到S2中`
+            cout<<"pop("<<arr[cur]<<",S), "<<"print("<<arr[cur]<<"), "<<endl;
+            judge[arr[cur]-1]=1;
+            //`将要输出的数输出出来`
+            for(int i=num+1;i<=top-1;++i)
+            {
+                cout<<"pop("<<stack[i]<<",S2), "<<"push("<<stack[i]<<",S), "<<endl;
+                stack[i-1]=stack[i];
+                //`push回去的时候要往前一个，栈顶下降一位`
+            }
+            //`将S2里面的数再按相反的顺序pop出来push回S1里`
+            if(top==1)return;
+            else check_next(--top,cur+1,arr,judge,stack,length);
+        }
+    }
+
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH: 2.16]
+Consider the treesort algorithm described in the text.
+
+(a)Construct an algorithm that transforms a given list of integers into a binary search tree.
+
+(b)What would the output of treesort look like if we were to reverse the order in which the subroutine
+\textbf{second-visit-traversal} calls itself recursively?In other words,we consistently visit the right
+offspring of a node before we visit the left one.
+\end{problem}
+
+\begin{solution}
+
+(a)
+基本思路：
+先创建一个列表来存放用来创建二叉树的数，
+将第一个数创建为根结点，从列表的第二个数开始判断，
+如果当前的数大于根结点的数，那么将这个数赋值给根结点的左孩子，
+如果当前的数小于根结点的数，那么将这个数赋值给根结点的右孩子；
+再利用一个递归程序来进行上面的判断，每次都从根结点开始判断，
+如果当前数要赋值的子结点已经被别的数占据，那么就搜寻这个子结点的子子结点，如此就可以找到当前这个数在二叉树中的恰当位置。
+\
+
+\noindent具体代码如下：
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+    //create by bqy1999 17/10/31
+    //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+    #include<iostream>
+    #include<math.h>
+    using namespace std;
+    
+    void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000]);
+    
+    int main()
+    {
+        int arr[1000]={0};
+        int length=0;
+        while(1)
+        {
+            cin>>arr[length];
+            length++;
+            if(cin.get()=='\n')break;
+        }
+        //cout<<length<<endl;
+    
+        int bi_Tree[2000]={0};
+        bi_Tree[0]=arr[0];
+        //cout<<bi_Tree[0]<<endl;
+        create_next(0,0,length,arr,bi_Tree);
+    
+    //   for(int i=0;i<pow(2,length-1);i++)
+    //   {
+    //       cout<<bi_Tree[i]<<endl;
+    //   }
+    
+        return 0;
+    }
+    
+    void create_next(int cur,int pos,int length,int arr[1000],int bi_Tree[2000])
+    {
+        if(cur==length)return;
+    
+        if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的左边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+            //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+            else if(bi_Tree[(pos+1*2)-1]==0)
+            {
+                bi_Tree[(pos+1)*2-1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+            //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+        }
+
+        if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的右边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+            //`如果当前要占据的子结点已经被别的数占了，那么就搜索这个占了位置的结点的子结点`
+        
+            else if(bi_Tree[(pos+1)*2-1+1]==0)
+            {
+                bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+            //`如果当前要占据的字结点还没有被别的数占据，那么就占据这个子结点`
+        }
+    }
+
+\end{lstlisting}
+
+\noindent(b)
+在(a)问的基础上进行扩展
+
+\noindent基本思路：
+从根结点开始进行右侧优先的遍历，当结点所有的左孩子和右孩子都被遍历过时，
+就放回当前结点的父结点。
+当一个结点被第一次访问时会去寻找它的右孩子，
+当它第二次被访问时，
+会进行输出，
+当第三次被访问时就会return到它的父结点。
+如果连根结点都被访问了3次，
+那么可以得出所有的结点都已经别遍历输出过了，所以就可以退出遍历程序。
+\
+
+\noindent具体代码如下：
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+
+    //create by bqy1999 17/10/31
+    //Construct an algorithm that transforms a given list of integers in to a binary search tree
+    
+    #include<iostream>
+    #include<math.h>
+    using namespace std;
+    
+    
+    void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000]);
+    void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000]);
+    void traversal_next(int bi_Tree[2000],int cur,int judge[2000]);
+    
+    
+    int main()
+    {
+        int length=0;
+        int arr[100]={0};
+        while(1)
+        {
+            cin>>arr[length];
+            length++;
+            if(cin.get()=='\n')break;
+        }
+        //cout<<length<<endl;
+    
+        int bi_Tree[2000]={0};
+        bi_Tree[0]=arr[0];
+        //cout<<bi_Tree[0]<<endl;
+        create_next(0,0,length,arr,bi_Tree);
+    
+        for(int i=0;i<pow(2,length-1);i++)
+        {
+            cout<<bi_Tree[i]<<endl;
+        }
+        cout<<endl;
+    
+        int judge[2000]={0};
+        traversal_Tree(bi_Tree,0,judge);
+    
+    
+        return 0;
+    }
+    
+
+    void create_next(int cur,int pos,int length,int arr[100],int bi_Tree[2000])
+    {
+        if(cur==length)return;
+    
+        if(arr[cur+1]>bi_Tree[pos])//`如果当前的结点大，那么往当前结点的右边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1+1]!=0)create_next(cur,(pos+1)*2-1+1,length,arr,bi_Tree);
+
+            else if(bi_Tree[(pos+1*2)-1+1]==0)
+            {
+                bi_Tree[(pos+1)*2-1+1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+        }
+
+        if(arr[cur+1]<bi_Tree[pos])//`如果比当前的结点小，那么往当前结点的左边添加`
+        //`注意这里是将要入树的数，与当前结点的值相比较，所以应该是`bi_Tree[pos]
+        {
+            if(bi_Tree[(pos+1)*2-1]!=0)create_next(cur,(pos+1)*2-1,length,arr,bi_Tree);
+
+            else if(bi_Tree[(pos+1)*2-1]==0)
+            {
+                bi_Tree[(pos+1)*2-1]=arr[cur+1];
+                if(cur<length)create_next(cur+1,0,length,arr,bi_Tree);
+            }
+        }
+    }
+    
+
+    void traversal_Tree(int bi_Tree[2000],int cur,int judge[2000])
+    {
+        if(bi_Tree[(cur+1)*2-1+1]!=0)traversal_next(bi_Tree,(cur+1)*2-1+1,judge);
+        judge[cur]++;
+        //`先遍历右侧的结点`
+    
+        if(bi_Tree[cur]!=0)cout<<bi_Tree[cur]<<endl;
+        judge[cur]++;
+        //`当第二次访问当前结点的时候将其输出`
+    
+        if(bi_Tree[(cur+1)*2-1]!=0)traversal_next(bi_Tree,(cur+1)*2-1,judge);
+        judge[cur]++;
+        //`后遍历左侧的结点`
+    
+        if(judge[0]==3)return;
+        //`如果根结点被访问了三次，那么程序就停止!`
+    }
+    //`从当前结点开始进行右侧优先的遍历`
+    
+
+    void traversal_next(int bi_Tree[2000],int cur,int judge[2000])
+    {
+        if(bi_Tree[cur]==0)return;
+    
+        else traversal_Tree(bi_Tree,cur,judge);
+    }
+    //`遍历当前下一个结点`
+
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[DH: 2.8]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
+\begincorrection	% begin the ``correction'' part (Optional)
+% %
+% %%%%%%%%%%%
+\begin{problem}[第三讲:UD 5.14]
+Consider the following statement.
+
+\[\forall x,(x\in\mathbb{Z_+}\to \exists y,\exists z,((y\in\mathbb{Q}\land(z\in\mathbb{Q})\land(yz\ne0)\land(x^2=y^2+z^2))).\]
+
+(a)Change this symbolic statement to an English sentence.
+\end{problem}
+% %
+\begin{cause}
+没有看到是``English sentence''
+\end{cause}
+
+
+% %
+% %% Or use the ``solution'' environment
+\begin{revision}
+(a)for all x,x belongs to $\mathbb{Z^+}$ can get that there exists x and y belonging to $\mathbb{Q}\backslash \{0\}$ and $x^2=y^2+z^2$.
+\end{revision}
+% %%%%%%%%%%%
+
+% %%%%%%%%%%%
+\begin{problem}[UD 17.11]
+Let $g$:$\mathbb{N}\to\mathbb{R^+}$ and let $a$ be a positive teal number.Suppose that $g$ has the properties that $g(1)=a$
+and $g(m+n)=g(m)g(n)$ for all natural numbers $n$ and $m$.
+
+(a)Prove that $g(0)=1$.
+\end{problem}
+    %     %% Or use the ``solution'' environment
+\begin{revision}
+(a)
+
+$g(1)=g(1+0)=g(1)g(0)=a$
+
+因为题中说明``$a$ be a positive teal number''所以$g(1)=a\ne 0$
+
+所以$g(0)=1$
+
+\end{revision}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[ES 24.4]
+Consider a square whose side ha length one.Suppose we select five points from this square.Prove that there are two points whose distance is at most $\frac{\sqrt{2}}{2}$
+\end{problem}
+%
+%\begin{cause}
+%%  简述错误原因（可选）。
+%\end{cause}
+%
+%% Or use the ``solution'' environment
+\begin{revision}
+一个大正方形可以被分隔成四个$\frac{1}{2}\times\frac{1}{2}$的小正方形，
+
+\noindent在每个小正方形中，距离最长的点为对角线的两个顶点，其距离为$\frac{\sqrt{2}}{2}$
+
+\noindent因为在大正方形中选取5个点，所以肯定有两个点在同一个小正方形内，所以肯定有两个点的距离小于等于$\frac{\sqrt{2}}{2}$，
+
+\noindent得证. $\blacksquare$
+\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+% \begin{problem}[题号]
+% 这是一个错题订正的模板
+  
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+%%%%%%%%%%%%%%%%%%%
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+   
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}

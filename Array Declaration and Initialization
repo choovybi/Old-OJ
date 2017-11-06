@@ -1,0 +1,41 @@
+//C语言中声明和初始化数组的5种方法
+
+//form Ⅰ
+
+int soldiers[5]; 
+
+//external/automatic
+
+//form Ⅱ
+
+int soldiers[] = {1, 2, 3, 4, 5};
+
+//没有申明数组的长度，但计算机会根据后面{}内数据的个数自动给这个数组分配内存
+
+//form Ⅲ
+
+int soldiers[5] = {1, 2, 3};
+
+//创建一个长度为5的数组，前三个元素为1、2、3，后两个元素没有初始化，计算机自动初始化为0
+
+//form Ⅳ
+
+int soldiers[5] = {1};
+
+//创建一个长度为5的数组，表示的是这个数组中的每一个元素都为1(注意和Ⅲ的区别！)
+
+//form Ⅴ
+
+int *soldiers = (int*)malloc(sizeof(int) * n);
+
+//其中使用malloc需要用到<stdlib.h>这个头文件
+//在C++的头文件<iostream>里面也含有malloc这个函数
+//因为malloc是void*类型的数据，所以它无法直接用来初始化int*类型的数据，必须要进行强制类型转换(int*)
+//这条语句的意思是给soldiers这个数组分配可存放n个元素的内存空间
+
+//form Ⅵ
+//this from is not recommended and accepted by many IDEs,so use it carefully
+
+int soldiers[n];
+
+//其中n是一个变量而不是一个常数，这个叫做动态内存分配，在C99版本中可以使用，在C11版本中不推荐

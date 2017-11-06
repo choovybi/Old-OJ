@@ -1,0 +1,20 @@
+//create by bqy1999 17/10/29
+//check whether P represnets any permutations of A_N
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\tiny]
+ for(int i=0;i<N;++i)
+ {
+     for(int j=i+1;j<N;++j)
+     {
+         if(P[i]==P[j])
+         cout<<"P doesn't belong to An"<<endl;
+         else
+         cout<<"P belongs to An"<<endl;
+     }
+ }
+\end{lstlisting}
+
+//这段代码中重要的不是代码本身，而是再latex代码块中输入中文的命令行
+//在latex代码块中，想要输出中文注释，或者含有中文的代码，必须使用逃逸字符
+//在逃逸字符中的中文可以在代码块中被打印
+//在这一段代码中，逃逸字符为``，在``中的中文才能够不报错

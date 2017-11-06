@@ -1,0 +1,51 @@
+//create by bqy1999 17/10/29
+//produce all the permutations of the set A3.
+
+#include<iostream>
+using namespace std;
+
+void have_permutation(int cur,int length,int * A,int * B);
+
+int main()
+{
+	int length = 0;
+	cin >> length;
+	int *A = (int*)malloc(sizeof(int) * length);
+	int *B = (int*)malloc(sizeof(int) * length);//B用来存放数
+
+	for (int i = 0; i < length; ++i)
+	{
+		A[i] = 1;//A[i]用来表示当前这个数i是否已经被输出
+	}
+
+	have_permutation(0,length, A, B);
+
+	system("pause");
+	return 0;
+  
+}
+
+void have_permutation(int cur,int length, int * A, int * B)
+{
+	if (cur >= length)
+	{
+		cout << endl;
+		for (int i = 0; i < length; ++i)
+		{
+			cout << B[i];
+		}
+	}
+	else
+	{
+		for (int i = 0; i < length; ++i)
+		{
+			if (A[i] == 1)//已经赋值过了的不再赋值
+			{
+				B[cur] = i + 1;//将数组中的每一个数据赋值，第cur+1个数据赋值i+1，如B[0]=1......
+				A[i] = 0;//赋过了值的数据的bool值置为0，表示该数没有被输出过
+				have_permutation(cur + 1, length, A, B);//通过cur+1保持每一个位置都能被赋上正确的值
+				A[i] = 1;
+			}
+		}
+	}
+}
