@@ -1,0 +1,66 @@
+//created by bqy1999 2017/11/9
+//ACM.NJU Permutations
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+
+void have_permutation(int cur,int length,int counter,int Arr1[10],int Arr2[362880][10]);
+
+int main()
+{
+    int length=0;
+    int times=0;
+    int counter=0;
+    cin>>length;
+    cin>>times;
+
+    int Arr1[10];
+    int Arr2[362880][10];
+
+    for (int i = 0; i < length; ++i)
+	{
+		Arr1[i] = 1;
+	}
+
+    for(int i=0;i<times;i++)
+    {
+        have_permutation(0,length,i,Arr1,Arr2);
+        counter++;
+    }
+
+
+	for(int i=0;i<times;++i)
+    {
+        int temp=0;
+        cin>>temp;
+        cout<<'{';
+        for(int j=length-1;j>=0;--j)
+        {
+            cout<<Arr2[temp-1][j]<<',';
+        }
+        cout<<'}';
+    }
+
+	return 0;
+}
+
+void have_permutation(int cur,int length,int counter,int Arr1[10], int Arr2[362800][10])
+{
+	if (cur >= length)
+	{
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < length; ++i)
+		{
+			if (Arr1[i] == 1)//已经赋值过了的不再赋值
+			{
+				Arr2[counter][cur] = i + 1;//将数组中的每一个数据赋值，第cur+1个数据赋值i+1，如B[0]=1......
+				Arr1[i] = 0;//赋过了值的数据的bool值置为0，表示该数没有被输出过
+				have_permutation(cur + 1, length,counter,Arr1, Arr2);//通过cur+1保持每一个位置都能被赋上正确的值
+				Arr1[i] = 1;
+			}
+		}
+	}
+}
