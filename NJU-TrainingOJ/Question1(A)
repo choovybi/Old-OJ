@@ -1,1 +1,97 @@
+//create by bqy1999 17/11/12
+//produce all the permutations of the set A3.
 
+#include<iostream>
+using namespace std;
+
+int index=0;
+int needindex[101]={0};//emmmmm这个鬼东西可把我害惨了，没有指定大小的数组居然不是随机的！
+int count=0;
+//int (*get_temp)[10] = (int(*)[101])malloc(sizeof(int)*362880*10);
+
+void have_permutation(int cur,int length,int * A,int * B,int **get_temp);
+
+int main()
+{
+    int length = 0;
+    cin >> length;//输入数组的长度
+    int *A = (int*)malloc(sizeof(int) * length);
+    int *B = (int*)malloc(sizeof(int) * length);
+
+    int time=0;
+    cin>>time;//输入要查找的次数
+
+    int alltime=1;
+    for(int i=1;i<=length;++i){
+        alltime*=i;
+    }
+    //计算最多总共有多少种排列
+    //cout<<alltime<<endl;
+
+    for (int i = 0; i < length; ++i) {
+        A[i] = 1;
+    }
+
+    for(int i=0;i<time;++i){
+        cin>>needindex[i];
+    }
+    //将要查找的下标全部放入needindex中
+
+    int **get_temp;
+    get_temp = (int **)malloc(sizeof(int *)*alltime);//从堆中分配一段内存
+    for (int i=0; i<alltime; i++){
+        get_temp[i] = (int *)malloc(sizeof(int)*10);
+    }
+
+//    cout<<get_temp[23][1]<<endl;
+//    cout<<get_temp[1][23]<<endl;
+
+
+    have_permutation(0, length, A, B,get_temp);
+    //cout<<needindex[0]<<endl;
+
+    //count=0;
+    for(int j=0;j<time;++j){
+        for(int _index=0;_index<alltime;_index++){
+            if(needindex[j]==_index+1){
+                cout<<'{'<<get_temp[_index][0];
+                for (int i = 1; i < length-1; ++i) {
+                    cout <<','<<get_temp[_index][i];
+                }
+                cout<<','<<get_temp[_index][length-1]<<'}'<<endl;
+//                cout<<needindex[j]<<endl;
+//               cout<<_index<<endl;
+//                cout<<needindex[count]<<endl;
+//                count++;
+            }
+        }
+//        cout<<needindex[j]<<endl;
+    }
+
+    return 0;
+
+}
+
+//void have_permutation(int cur,int length, int * A, int * B,int *needindex,int *get_temp)
+void have_permutation(int cur,int length, int * A, int * B,int **get_temp)
+{
+    if (cur >= length) {
+        for(int i=0;i<length;i++){
+            get_temp[index][i]=B[i];
+        }
+        index++;
+        //cout<<"count:"<<count<<endl;
+        //cout<<"index:"<<index<<endl<<endl;
+        //isGo=1;
+    }
+    else {
+        for (int i = 0; i < length; ++i) {
+            if (A[i] == 1){
+                B[cur] = i + 1;
+                A[i] = 0;
+                have_permutation(cur + 1, length, A, B, get_temp);
+                A[i] = 1;
+            }
+        }
+    }
+}
