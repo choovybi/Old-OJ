@@ -5,10 +5,10 @@
 using namespace std;
 
 int index=0;
-int needindex[10]={0};//emmmmm这个鬼东西可把我害惨了，没有指定大小的数组居然不是随机的！
+int needindex[101]={0};//emmmmm这个鬼东西可把我害惨了，没有指定大小的数组居然不是随机的！
 int count=0;
 
-void have_permutation(int cur,int length,int * A,int * B,int *needindex,int alltime);
+void have_permutation(int cur,int length,int * A,int * B,int *needindex);
 
 int main()
 {
@@ -32,13 +32,13 @@ int main()
     for(int i=0;i<time;++i){
         cin>>needindex[i];
     }
-    have_permutation(0,length, A, B,needindex,alltime);
+    have_permutation(0,length, A, B,needindex);
     //cout<<needindex[0]<<endl;
     return 0;
 
 }
 
-void have_permutation(int cur,int length, int * A, int * B,int *needindex,int alltime)
+void have_permutation(int cur,int length, int * A, int * B,int *needindex)
 {
     if (cur >= length) {
         index++;
@@ -61,7 +61,7 @@ void have_permutation(int cur,int length, int * A, int * B,int *needindex,int al
             if (A[i] == 1){
                 B[cur] = i + 1;
                 A[i] = 0;
-                have_permutation(cur + 1, length, A, B,needindex,alltime);
+                have_permutation(cur + 1, length, A, B,needindex);
                 A[i] = 1;
             }
         }
