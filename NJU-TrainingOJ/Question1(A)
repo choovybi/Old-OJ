@@ -1,5 +1,6 @@
 //create by bqy1999 17/11/12
 //produce all the permutations of the set A3.
+//序列字典序全排列和查找
 
 #include<iostream>
 using namespace std;
