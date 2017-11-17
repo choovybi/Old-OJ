@@ -65,3 +65,12 @@ double getTaylor_(int valval,double val){
         return res2;
     }
 }
+/**************************************************************
+    Problem: 1054
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:1560 kb
+****************************************************************/
+
