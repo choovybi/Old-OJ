@@ -1,0 +1,67 @@
+//create by bqy1999 2017/11/17
+
+#include <iostream>
+using namespace std;
+#include "cmath"
+
+void doprint(double val);
+double getTaylor(int valval,double val);
+double getTaylor_(int valval,double val);
+double res1 = 0 ;
+double res2 = 1;
+
+int main(){
+    double num=0;
+
+    while(cin>>num){
+        //scanf("%lf ",&num);
+        printf("%.3f\n",exp(num));
+        doprint(num);
+    }
+
+    return 0;
+}
+
+void doprint(double val){
+    double *arr =new double[105];
+
+    for(int i=0;i<100;i++){
+        arr[i]=getTaylor(i+1,val);
+    }
+
+    for(int j=0;j<100;j++){
+        if(j%10==9)printf("%.3f\n",arr[j]);
+        else printf("%.3f ",arr[j]);
+    }
+}
+
+double getTaylor(int valval,double val){
+
+    //printf("%.3f\n",res1);
+    res1=0;
+    for(int i=valval;i>0;i--){
+        res1 += getTaylor_(i,val);
+        //printf("%.3f\n",res1);
+    }
+    return res1;
+}
+
+double getTaylor_(int valval,double val){
+    if(valval==1){
+        res2=1+val;
+        return res2;
+    }
+    else{
+        double upp=1;
+        for(int i=0;i<valval;i++){
+            upp*=val;
+        }
+        double dow=1;
+        for(int j=1;j<=valval;j++){
+            dow*=j;
+        }
+        res2= upp/dow;
+        //printf("%.3f\n",res2);
+        return res2;
+    }
+}
