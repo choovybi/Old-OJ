@@ -96,3 +96,11 @@ void have_permutation(int cur,int length, int * A, int * B,int **get_temp)
         }
     }
 }
+/**************************************************************
+    Problem: 1043
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:60 ms
+    Memory:19864 kb
+****************************************************************/
