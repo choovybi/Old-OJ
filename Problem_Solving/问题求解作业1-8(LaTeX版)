@@ -1,0 +1,536 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第八讲：集合及其运算}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[UD: 6.7]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+Fing an expression for each of the shaded sets in the Venn diagrams of Figure 6.5
+\end{problem}
+
+\begin{solution}
+
+
+\end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 6.16]
+In each part of this problem,two sets, $A$ and $B$,are defined.Prove that $A \subseteq B$ in each of the following:
+
+(a) $A=\{x^2 : x \in \mathbb{Z}\}$ and $B=\mathbb{Z}$;
+
+(b) $A=\mathbb{R}$ and $B=\{2x : x\in \mathbb{R}\}$;
+
+(c) $A=\{(x,y) \in \mathbb{R}^2 : y=(5-3x)/2\}$ and $B=\{(x,y)\in \mathbb{R}^2 : 2y+3x=5\}$.
+\end{problem}
+
+\begin{solution}
+    
+    
+
+\end{solution}
+
+% %%%%%%%%%
+% %\newpage  % page-break; comment it out if not necessarily
+% %这个的作用是主动开始新的一页
+% %%%%%%%%%
+\begin{problem}[UD: 6.17]
+Prove that one set is a proper subset of the other one in each of the following:
+
+(a)$A=\{(x,y)\in \mathbb{R}^2 : xy>0\}$ and $B=\{(x,y)\in \mathbb{R}^2 : x^2+y^2 > 0\}$;
+
+(b)$A=\emptyset$ and $B=\{(x,y)\in \mathbb{R}^2 : x^2+y^2\leqslant 0\}$.
+\end{problem}
+
+\begin{solution}
+\
+
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+
+\begin{problem}[UD: 7.1]
+In this problem we refer to statements of Theorem 7.4
+
+(a) Prove statement 2.
+
+(b) Prove statement 14.
+
+(c) Prove statement 16.
+
+(d) Prove statement 18.
+
+(e) Prove statement 20.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 7.8]
+Consider the following sets:
+
+(i) $(A \cap B)\backslash(A \cap B \cap C)$,
+
+(ii) $A \cap B \backslash (A \cap B \cap C)$,
+
+(iii) $A \cap B \cap C^c$,
+
+(iv) $(A \cap B)\backslash C$, and
+
+(v) $(A \backslash C) \cap (B \backslash C)$.
+
+(a) Whick of the sets above are written ambiguously, if any?
+
+(b) Of the sets above that make sense, which ones equal the set sketched in Figure 7.2?
+
+(c) Prove that $(A \cap B)\backslash C = (A \backslash C)\cap (B\backslash C)$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 7.9]
+Is this problem you will prove that the union of two sets can be rewritten as the union of two disjoint sets.
+
+(a) Prove that the two sets $A \backslash B$ and $B$ are disjoint.
+
+(b) Prove that $A \cup B = (A\backslash B)\cup B$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 7.10]
+Prove or disprove: If $A \cup B =A \cup C$, then $B=C$.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 7.11]
+Prove or give a counterexample for the following statement.
+
+Let $X$ be the universe and $A, B\subseteq X$, If $A \cap Y= B \cap Y$ for all $Y\subseteq X$, then $A=B$. 
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 8.1]
+Consider the intervals of real numbers given by $A_n = [0,1/n]$, $B_n = [0,1/n]$, and $C_n = [0,1/n]$.
+
+(a)Find $\bigcup_{n=1}^{\infty}A_n, \bigcup_{n=1}^{\infty}B_n$, and $\bigcup_{n=1}^{\infty}C_n$.
+
+(b)Find $\bigcap_{n=1}^{\infty}A_n, \bigcap_{n=1}^{\infty}B_n$, and $\bigcap_{n=1}^{\infty}C_n$.
+
+(c)Does $\bigcup_{n\in \mathbb{N}}A_n$ make sense? Why or why not?
+\end{problem}
+
+\begin{solution}
+    
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[UD: 8.4]
+Prove or give a counterexample: Let $\{A_n : n\in\mathbb{Z^+}\}$ and $\{B_n : n\in\mathbb{Z^+}\}$ eb two indexed families of sets. If $A_n\subset B_n$ for all $n\in\mathbb{Z^+}$,then
+\[\bigcup_{n=1}^{\infty}A_n \subset \bigcup_{n=1}^{\infty}B_n.\]  
+(Recall that $A\subset B$ means strict inclusion; that is, $A\subseteq B$ and $A \neq B$.)
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 8.7]
+Suppose that $\{A_\alpha : \alpha\in I\}$ is an indexed family of subsets of a set X, and that B is a subset of X.
+
+(a) If $A_\alpha = \emptyset$ for some $\alpha \in I$, prove that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$.
+
+(b) If $A_\alpha = X$ for some $\alpha \in I$, prove that $\bigcup_{\alpha\in I}A_\alpha = X$.
+
+(c) If $B\subseteq A_\alpha$ for every $\alpha \in I$, prove that $B\subseteq \bigcap_{\alpha\in I}A_\alpha$.
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 8.8]
+defined
+\[A= \mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\}).\]
+The set A should be familiar to you. Guess what it is and then prove that your guess is correct.
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 8.9]
+Guess a simpler way to express the set A defined as
+\[A =\mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\}),\]
+and then prove that your guess is correct.
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 8.11]
+A collection of sets $\{A_\alpha : \alpha \in I\}$ is said to be a \textbf{pairwise disjoint collection} if the following is satisfied: For all $\alpha$,$\beta\in I$, if $A_\alpha \cap A_\beta \neq \emptyset$, then $A_\alpha = A_\beta$. Suppose that each set $A_\alpha$ is nonempty.
+
+(a) Given an example of pairwise disjoint sets $A_1,A_2,A_3,\dots$.
+
+(b) What is the contrapositive of ``if $A_\alpha \cap A_\beta \neq \emptyset$, then $A_\alpha = A_\beta$''?
+
+(c) What is the converse of ``if $A_\alpha \cap A_\beta \neq \emptyset$, then $A_\alpha = A_\beta$''?
+
+(d) If $\{A_\alpha : \alpha\in I\}$ is a pairwise disjoint collection, does the assertion you found in (b) hold for all $\alpha$ and $\beta$ in I?
+
+(e) If the assertion that you found in (b) holds for all $\alpha$ and $\beta$ in I, is $\{A_\alpha : \alpha \in I\}$ a pairwise disjoint collection?
+
+(f) If $\{A_\alpha : \alpha\in I\}$ is a pairwise disjoint collection of sets, does it follow that $\bigcap_{\alpha\in I}A_\alpha=\emptyset$?
+
+(g) If $\bigcap_{\alpha\in I}A_\alpha = \emptyset$, is $\{A_\alpha : \alpha\in I\}$ necessarily a pairwise disjoint collection of sets?
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 9.2]
+    \
+    
+(a) Show that $P(A)\cup P(B)\subseteq P(A\cup B)$.
+
+(b) Show that $P(A)\cup P(B)\neq P(A\cup B)$ by exhibiting two concrete sets, A and B, for which the aforementioned inequality holds.
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 9.4]
+Show that $A\subseteq B$ if and only if $P(A)\subseteq P(B)$. 
+\end{problem}
+    
+\begin{solution}
+        
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 9.12]
+(a)Prove the following:
+
+Let A,B,C and D be nonempty sets. Then $A\times B=C\times D$ if and only if $A=C$ and $B=D$.
+
+\noindent(b) Where did your proof use the fact that the sets were nonempty?
+\end{problem}
+        
+\begin{solution}
+            
+\end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+\begin{problem}[UD: 9.13]
+Suppose A,B,C, and D are four sets. If $A\times B=C\times D$, must $A\subseteq C$ and $B\subseteq D$? Why or why not?
+\end{problem}
+            
+\begin{solution}
+                
+\end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+\begin{problem}[UD: 9.14]
+Let A,B, and C be sets. If the statements below are true prove them. If they are false, give a counterexample:
+
+(a) $A\times(B\cup C)=(A\times B)\cup(A\times C)$;
+
+(b) $A\times(B\cap C)=(A\times B)\cap(A\times C)$.
+\end{problem}
+                
+\begin{solution}
+                    
+\end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+\begin{problem}[UD: 9.16]
+This problem introduces rigorous definitions of an ordered pair and Cartesian product. Let $A$ be a set and $a,b\in A$. We define the ordered pair of $a$ and $b$ with first coordinate $a$ and second coordinate $b$ as
+\[(a,b)=\{\{a\}\{a,b\}\}\].
+Using this definitions prove the following.
+
+(a) If $(a,b) = (x,y)$, then $a=x$ and $b=y$.
+
+(b) If $a\in A$ and $b\in B$, then $(a,b)\in P(P(A\cup B))$.
+
+\noindent Now we are able to define the Cartesian product of the two sets $A$ and $B$ as the set
+\[A\times B=\{x\in P(P(A\cup B)): x= (a,b) \textnormal{ for some } a\in A\textnormal{ and some } b\in B\}.\]
+\indent (c) Use the above definitions to prove that if $A\subseteq C$ and $B\subseteq D$, then $A\times B \subseteq C \times D$.
+
+This is a pretty complicated definitions. It is also not our idea, but rather an idea that was born from axioms. P. Halmos' book,[31], is an excellent reference for this subject.
+\end{problem}
+                    
+\begin{solution}
+                        
+\end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % %
+% % % %%%%%%%%%%%
+% \begin{problem}[第五讲:UD 2.10]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+% \begin{problem}[UD 17.11]
+
+% \end{problem}
+%     %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+% \begin{problem}[ES 24.4]
+
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+% \begin{problem}[DH 2.4]
+% %  这是一个错题订正的模板
+
+% \end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+% \begin{problem}[DH 2.5]
+%     %  这是一个错题订正的模板
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% \begin{problem}[DH 2.8]
+
+% \end{problem}
+% \begin{revision}
+
+% \end{revision}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+   
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
