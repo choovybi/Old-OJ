@@ -1,0 +1,42 @@
+//created by bqy1999 2017/11/23
+#include <iostream>
+#include <math.h>
+using namespace std;
+ 
+double basal_metabolic_rate(double _weight);
+double physical_activity(int _intensity,double _weight, int _minutes);
+int main(){
+    double weight,calories=0;
+    int intensity,minutes=0;
+ 
+    cin>>weight>>intensity>>minutes>>calories;
+ 
+    double _basal_metabolic_rate=basal_metabolic_rate(weight);
+    double _physical_activity=physical_activity(intensity,weight,minutes);
+    double sum=_basal_metabolic_rate+_physical_activity;
+    //cout<<sum<<endl;
+    double all_calories=sum*10/9;
+    //cout<<sum*10/9<<endl;
+ 
+ 
+    printf("%.2f",all_calories/calories);
+    return 0;
+}
+ 
+double basal_metabolic_rate(double _weight){
+    //cout<<70*pow((_weight/2.2),0.756)<<endl;
+    return 70*pow((_weight/2.2),0.756);
+}
+ 
+double physical_activity(int _intensity,double _weight, int _minutes){
+    //cout<<0.0385 * _intensity * _weight * _minutes<<endl;
+    return 0.0385 * _intensity * _weight * _minutes;
+}
+/**************************************************************
+    Problem: 1055
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:1560 kb
+****************************************************************/
