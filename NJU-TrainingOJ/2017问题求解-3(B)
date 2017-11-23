@@ -1,0 +1,51 @@
+//create by bqy1999 2017/11/23
+#include <iostream>
+using namespace std;
+ 
+int main(){
+    cout<<"0.00 Please put dollar($3.50):"<<endl;
+ 
+    double sum=3.50;
+    double cur=0;
+    while(sum>=1){
+        double i=0;
+            cin>>i;
+            cur+=i;
+            sum-=i;
+        if(sum>=1)printf("%.2f Please put dollar($3.50):\n",cur);
+    }
+    while(sum>=0.25){
+        printf("%.2f Please put quarter($3.50):\n",cur);
+        double i=0;
+            cin>>i;
+            cur+=i;
+            sum-=i;
+    }
+    while(sum>=0.10){
+        printf("%.2f Please put dime($3.50):\n",cur);
+        double i=0;
+            cin>>i;
+            cur+=i;
+            sum-=i;
+    }
+    while(sum>0){
+        printf("%.2f Please put nickel($3.50):\n",cur);
+        double i=0;
+            cin>>i;
+            cur+=i;
+            sum-=i;
+    }
+    if(sum<0)sum=-sum;
+    if(sum==0)sum=sum;
+    printf("Enjoy your deep-fried twinkie, change:%.2f\n",sum);
+ 
+    return 0;
+}
+/**************************************************************
+    Problem: 1056
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:1548 kb
+****************************************************************/
