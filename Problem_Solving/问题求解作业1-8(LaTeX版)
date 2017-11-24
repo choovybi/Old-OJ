@@ -35,6 +35,17 @@ Fing an expression for each of the shaded sets in the Venn diagrams of Figure 6.
 \end{problem}
 
 \begin{solution}
+\
+
+(a) $B\backslash(A\cap B)$;
+
+(b) $(A\cup B)\backslash(A\cap B)$;
+
+(c) $A\cap B\cap C$;
+
+(d) $(B\cap C)\backslash(A\cap B\cap C)$;
+
+(e) $[(A\cap B)\cup(A\cap C)\cup(B\cap C)]\backslash(A\cap B\cap C)$;
 
 
 \end{solution}
@@ -65,7 +76,34 @@ In each part of this problem,two sets, $A$ and $B$,are defined.Prove that $A \su
 \end{problem}
 
 \begin{solution}
-    
+
+(a)if $S \in A, \exists x\in\mathbb{Z}\ S=x^2$ 
+
+because $x\in\mathbb{Z}$ so $x^2\in\mathbb{Z}$
+
+so $S=x^2\in\mathbb{Z}$
+
+so $S\in B$
+
+$A\subseteq B$
+
+\noindent(b) if $S\in A, S\in\mathbb{R}$
+
+$\exists n=\frac{S}{2}\in\mathbb{R}$
+
+$S=2\times\frac{S}{2}=2\times n$
+
+so $S\in B$
+
+$A\subseteq B$
+
+\noindent(c) if $S=(a,b)\in A,\ (a,b)\in\mathbb{R}^2 : b=\frac{5-3x}{2}$
+
+because $2b+3a=2(\frac{5-3a}{2})+3a=5$
+
+so $S=(a,b)\in B$
+
+$A\subseteq B$
     
 
 \end{solution}
@@ -83,7 +121,27 @@ Prove that one set is a proper subset of the other one in each of the following:
 \end{problem}
 
 \begin{solution}
-\
+(a)if $S=(a,b)\in A,\ (a,b)\in\mathbb{R}^2 : ab>0$
+
+\textcircled{1}ab均为负, $a^2+b^2>0$ $S\in B$ so$A\subseteq B$;
+
+\textcircled{2}ab均为正, $a^2+b^2>0$ $S\in B$ so$A\subseteq B$.
+
+又$\because(1,-1)\notin A, (1,-1)\in B$ so $A\neq B$
+
+$\therefore A\subset B $
+
+\noindent(b)if $S=(a,b)\in\emptyset$
+
+$\because$前提为否
+
+$\therefore S=(a,b)\in B$
+
+$\therefore A\subseteq B$
+
+又$\because(0,0)\notin A, (0,0)\in B$ so $A\neq B$
+
+$\therefore A\subset B $
 
 
 \end{solution}
@@ -107,7 +165,115 @@ In this problem we refer to statements of Theorem 7.4
 \end{problem}
 
 \begin{solution}
+(a)
 
+\noindent if $x\in(A^C)^C$, then $x\notin A^C$, then $x\in A$
+
+$\therefore (A^C)^C\subseteq A$
+
+\noindent if $x\in A$, then $x\notin A^C$, then $x\in(A^C)^C$
+
+$\therefore A\subseteq (A^C)^C$
+
+\noindent$\therefore (A^C)^C=A$
+
+\noindent(b)
+
+\noindent if $x\in A\cap(B\cup C)$, then $x\in A$ and $x\in B$ or $C$
+
+\textcircled{1} $x\in A$ and $x\in B$, then $x\in(A\cap B)$
+
+$\because (A\cap B)\subseteq(A\cap B)\cup(A\cap C)$
+
+$\therefore x\in(A\cap B)\cup(A\cap C)$
+
+\textcircled{2} $x\in A$ and $x\in C$, then $x\in(A\cap C)$
+
+$\because (A\cap C)\subseteq(A\cap B)\cup(A\cap C)$
+
+$\therefore x\in(A\cap B)\cup(A\cap C)$
+
+$\therefore A\cap(B\cup C)\subseteq (A\cap B)\cup(A\cap C)$
+
+\noindent if $x\in(A\cap B)\cup(A\cap C)$, then $x\in(A\cap B)$ or $x\in(A\cap C)$
+
+\textcircled{1} $x\in A\cap B$, then $x\in A$ and $x\in B$
+
+$\because B\subseteq B\cup C\ \therefore x\in A$ and $x\in B\cup C$ 即 $x\in A\cap(B\cup C)$
+
+\textcircled{2} $x\in A\cap C$, then $x\in A$ and $x\in C$
+
+$\because C\subseteq B\cup C\ \therefore x\in A$ and $x\in B\cup C$ 即 $x\in A\cap(B\cup C)$
+
+$\therefore (A\cap B)\cup(A\cap C)\subseteq A\cap(B\cup C)$
+
+\noindent$\therefore A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$
+
+\noindent(c)
+
+\noindent if $x\in X\backslash(A\cap B)$, then $x\in X$ and $x\notin A\cap B$
+
+\textcircled{1} $x\in A$ and $x\notin B$, 即 $x\in X\backslash B$, $\because X\backslash B\subseteq (X\backslash A)\cup(X\backslash B)\ \therefore x\in(X\backslash A)\cup(X\backslash B)$
+
+\textcircled{2} $x\in B$ and $x\notin A$, 即 $x\in X\backslash A$, $\because X\backslash A\subseteq (X\backslash A)\cup(X\backslash B)\ \therefore x\in(X\backslash A)\cup(X\backslash B)$
+
+\textcircled{3} $x\notin A$ and $x\notin B$, 即 $x\in (X\backslash A)\cap(X\backslash B)$, $\because (X\backslash A)\cap(X\backslash B)\subseteq (X\backslash A)\cup(X\backslash B)$
+
+$\therefore x\in(X\backslash A)\cup(X\backslash B)$
+
+$\therefore  X\backslash(A\cap B)\subseteq (X\backslash A)\cup(X\backslash B)$
+
+\noindent if $x\in (X\backslash A)\cup(X\backslash B)$
+
+\textcircled{1} $x\notin A$, $\therefore x\notin (A\cap B)\ \therefore x\in X\backslash(A\cap B)$
+
+\textcircled{2} $x\notin B$, $\therefore x\notin (A\cap B)\ \therefore x\in X\backslash(A\cap B)$
+
+$\therefore (X\backslash A)\cup(X\backslash B)\subseteq  X\backslash(A\cap B)$
+
+\noindent$\therefore (X\backslash A)\cup(X\backslash B)=X\backslash(A\cap B)$
+
+\noindent(d)
+
+\noindent assume $A\subseteq B$
+
+\noindent if $x\in (X\backslash B)$ 即 $x\notin B$ $\because A\subseteq B$ $\therefore x\notin A$
+
+$\therefore x\in (X\backslash A)$ 
+
+$\therefore (X\backslash B)\subseteq(X\backslash A)$
+
+\noindent assume $(X\backslash B)\subseteq(X\backslash A)$ 即 if $x\notin B$ then $x\notin A$
+
+\noindent if $x\in A$
+
+\textcircled{1} $x\in B$, then $A\subseteq B$
+
+\textcircled{2} $x\notin B$, then $x\notin A$, contradiction !
+
+\noindent$\therefore A\subseteq B$ if and only if $(X\backslash B)\subseteq(X\backslash A)$
+
+\noindent(e)
+
+\noindent assume $A\cap B=B$
+
+\noindent if $x\in B$, then $\because B=A\cap B$ $\therefore x\in(A\cap B)$
+
+$\therefore x\in A$
+
+$\therefore B\subseteq A$
+
+\noindent assume $B\subseteq A$
+
+\textcircled{1} $(A\cap B)\subseteq B$
+
+\textcircled{2} if $x\in B$, then $\because B\subseteq A$ $\therefore x\in A$
+
+$\therefore x\in(A\cap B)$
+
+$\therefore B\subseteq (A\cap B)$
+
+\noindent $\therefore(A\cap B)=B$ if and only if $B\subseteq A$
 \end{solution}
 % %%%%%%%%%%
 
@@ -134,6 +300,32 @@ Consider the following sets:
 
 \begin{solution}
 
+(a) (ii)is written ambiguously
+
+\noindent(b) (i)(iii)(iv)(v)
+
+\noindent(c)
+
+\noindent if $x\in(A\cap B)\backslash C$
+
+\textcircled{1} $\because (A\cap B)\subseteq A$ $\therefore x\in(A\backslash C)$
+
+\textcircled{2} $\because (A\cap B)\subseteq B$ $\therefore x\in(B\backslash C)$
+
+$\therefore x\in(A\backslash C)\cap(B\backslash C)$
+
+$\therefore (A\cap B)\backslash C\subseteq(A\backslash C)\cap(B\backslash C)$
+
+\noindent if $x\in(A\backslash C)\cap(B\backslash C)$ 即 $x\in A\ x\notin C$ and $x\in B\ x\notin C$
+
+$\because x\in A$ and $x\in B$ $\therefore x\in(A\cap B)$
+
+又$\because x\notin C\ \therefore x\in(A\cap B)\backslash C$
+
+$\therefore (A\backslash C)\cap(B\backslash C)\subseteq(A\cap B)\backslash C$
+
+\noindent$\therefore (A\cap B)\backslash C=(A\backslash C)\cap(B\backslash C)$
+
 \end{solution}
 % %%%%%%%%%%
 
@@ -147,6 +339,31 @@ Is this problem you will prove that the union of two sets can be rewritten as th
 \end{problem}
 
 \begin{solution}
+(a)if $x\in A\backslash B$ 即 $x\in A$ and $x\notin B$
+
+$\therefore x\notin B$
+
+\noindent$\therefore (A\backslash B)\cap B=\emptyset$ so $A\backslash B$ and $B$ are disjoint.
+
+\noindent(b)if $x\in A \cup B$, then $x\in A$ or $x\in B$
+
+\textcircled{1} $x\in A$ and $x\in B$ $\because B\subseteq B\cup(A\backslash B)$ $\therefore x\in B\cup(A\backslash B)$
+
+\textcircled{2} $x\notin A$ and $x\in B$ 同上
+
+\textcircled{3} $x\in A$ and $x\notin B$ so $x\in A\backslash B$ $\because A\backslash B\subseteq B\cup(A\backslash B)$  $\therefore x\in B\cup(A\backslash B)$
+
+$\therefore A \cup B\subseteq (A\backslash B)\cup B$
+
+\noindent if $x\in (A\backslash B)\cup B$
+
+\textcircled{1} $x\in A\backslash B $ $\because A\backslash B\subseteq A$ $A\subseteq A\cup B$ $\therefore x\in A\cup B$
+
+\textcircled{2} $x\in B$ $\because  B\subseteq A\cup B$ $\therefore x\in A\cup B$
+
+$\therefore (A\backslash B)\cup B\subseteq A\cup B$
+
+\noindent $\therefore A \cup B= (A\backslash B)\cup B$
 
 \end{solution}
 %%%%%%%%%%
@@ -158,7 +375,13 @@ Prove or disprove: If $A \cup B =A \cup C$, then $B=C$.
 \end{problem}
 
 \begin{solution}
+there is a counterexample
 
+$A=\{1,2,3\}$ $B=\{1\}$ $C=\{2\}$
+
+$A\cup B=A\cup C=\{1,2,3\}$
+
+but $A\neq C$
 \end{solution}
 %%%%%%%%%%
 
@@ -172,6 +395,27 @@ Let $X$ be the universe and $A, B\subseteq X$, If $A \cap Y= B \cap Y$ for all $
 
 \begin{solution}
 
+证明该命题的逆否命题：
+
+If $A\neq B $, then $\exists Y\subseteq X\  A\cap Y\neq B\cap Y$
+
+\textcircled{1} $A\cap B\neq \emptyset$
+
+let $Y=A\backslash(A\cap B)$
+
+$A\cap Y=A\backslash(A\cap B)$
+
+$B\cap Y=\emptyset$
+
+$\therefore A\cap Y\neq B\cap Y$得证
+
+\textcircled{2} $A\cap B=\emptyset$
+
+$\therefore A\neq B$
+
+$\therefore A\cap Y\neq B\cap Y$得证
+
+\noindent If $A\cap Y= B\cap Y$ for all $Y\subseteq X$, then $A=B$ 得证
 \end{solution}
 %%%%%%%%%%
 
@@ -188,7 +432,23 @@ Consider the intervals of real numbers given by $A_n = [0,1/n]$, $B_n = [0,1/n]$
 \end{problem}
 
 \begin{solution}
-    
+(a) $\bigcup_{n=1}^{\infty}=[0,1)$
+
+$\bigcup_{n=1}^{\infty}=[0,1]$
+
+$\bigcup_{n=1}^{\infty}=(0,1)$
+
+\noindent(b) $\bigcap_{n=1}^{\infty}=\{0\}$
+
+$\bigcap_{n=1}^{\infty}=\{0\}$
+
+$\bigcap_{n=1}^{\infty}=\emptyset$
+
+\noindent(C) $\bigcup_{n\in\mathbb{N}}A_n$ makes no sense
+
+because if $n=0$ then $\frac{1}{n}$ makes no sense.
+
+$\frac{1}{0}$ doesn't exist.
 \end{solution}
 %%%%%%%%%%
 
@@ -200,7 +460,11 @@ Prove or give a counterexample: Let $\{A_n : n\in\mathbb{Z^+}\}$ and $\{B_n : n\
 \end{problem}
     
 \begin{solution}
-        
+there is a counterexample $A_n=\emptyset$ $B_n=(0,\frac{1}{n})$
+
+$A_n\subset B_n$ for all $n\in\mathbb{Z^+}$
+
+\[\bigcap_{n=1}^{\infty}A_n=\emptyset = \bigcap_{n=1}^{\infty}B_n\]
 \end{solution}
 %%%%%%%%%%
     
@@ -216,7 +480,31 @@ Suppose that $\{A_\alpha : \alpha\in I\}$ is an indexed family of subsets of a s
 \end{problem}
     
 \begin{solution}
-        
+(a) 假设$A_{\alpha_{0}}=\emptyset$
+
+$\bigcap_{\alpha\in I}A_\alpha=\bigcap_{\alpha\in I\backslash \alpha_{0}}A_\alpha\cap A_{\alpha_{0}}=\emptyset$
+
+\noindent$\therefore \bigcap_{\alpha\in I}A_{\alpha}=\emptyset$
+
+\noindent(b) $\because A_{\alpha}\subseteq X$ and $A_{\alpha}=X$ for some $\alpha\in I$
+
+假设$A_{\alpha_{0}}=X$
+
+$\bigcup_{\alpha\in I}A_\alpha=\bigcup_{\alpha\in I\backslash \alpha_{0}}A_\alpha\cup A_{\alpha_{0}}=X$
+
+\noindent$\therefore \bigcup_{\alpha\in I}A_{\alpha}=X$
+
+\noindent(c) $\because B\subseteq A_{\alpha}$ for every $\alpha\in I$
+
+(1)当两个集合求交集时：$B\subseteq A_{\alpha_{0}}\ B\subseteq A_{\alpha_{1}}\ \therefore B\subseteq A_{\alpha_{0}}\cap A_{\alpha_{1}}$
+
+(2)假设k个集合交集时符合: $B\subseteq A_{\alpha_{0}}\cap\dots\cap A_{\alpha_{k-1}}$
+
+则k+1个集合交集时：$\because B\subseteq A_{\alpha_{k}}\  B\subseteq A_{\alpha_{0}}\cap\dots\cap A_{\alpha_{k-1}}$
+
+$\therefore B\subseteq A_{\alpha_{0}}\cap\dots\cap A_{\alpha_{k}}$
+
+\noindent$\therefore B\subseteq \bigcap_{\alpha\in I}A_{\alpha}$
 \end{solution}
 %%%%%%%%%%
     
@@ -228,7 +516,33 @@ The set A should be familiar to you. Guess what it is and then prove that your g
 \end{problem}
     
 \begin{solution}
-        
+$A= \mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})=\mathbb{Z}$
+
+\noindent\textcircled{1} if $x\in\mathbb{Z}\ x\in\bigcup_{n\in\mathbb{Z^+}}\{-n,-n+1,\dots,0,\dots,n-1,n\}$
+
+$\therefore x\notin\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\}$
+
+$\therefore x\notin\bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})$
+
+$\therefore x\in \mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})$
+
+\noindent$\therefore \mathbb{Z}\subseteq\mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})$
+
+\noindent\textcircled{2} if $x\in \mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})$
+
+$\therefore x\notin\bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})$
+
+$\because \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})\subseteq\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\}$
+
+$\therefore \forall n\in\mathbb{Z^+} x\notin\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\}$
+
+$\therefore x\notin\mathbb{R}\backslash\bigcup_{n\in\mathbb{Z^+}}\{-n,-n+1,\dots,0,\dots,n-1,n\}$
+
+$\therefore x\in\bigcup_{n\in\mathbb{Z^+}}\{-n,-n+1,\dots,0,\dots,n-1,n\}$ 即 $x\in\mathbb{Z}$
+
+\noindent$\therefore \mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})\subseteq \mathbb{Z}$
+
+\[\therefore\mathbb{R}\backslash \bigcap_{n\in\mathbb{Z^+}}(\mathbb{R}\backslash\{-n,-n+1,\dots,0,\dots,n-1,n\})=\mathbb{Z}=A\]
 \end{solution}
 %%%%%%%%%%
     
@@ -240,7 +554,36 @@ and then prove that your guess is correct.
 \end{problem}
     
 \begin{solution}
-        
+
+$\mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})=\bigcup_{n\in\mathbb{Z}}\{2n\}$
+
+\noindent\textcircled{1} if $x=2m\in \bigcup_{n\in\mathbb{Z}}\{2n\}$
+
+$x\notin\mathbb{R}\backslash\{2n\}$
+
+$\because \bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})\subseteq\mathbb{R}\backslash\{2n\}$
+
+$\therefore x\notin\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})$
+
+$\because x\in\mathbb{Q}$
+
+$\therefore x\in\mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})$
+
+\noindent$\therefore \bigcup_{n\in\mathbb{Z}}\{2n\}\subseteq\mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})$
+
+\noindent\textcircled{2} if $x\in\mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})$
+
+$\therefore x\notin\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})$
+
+$\because \bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})\subseteq(\mathbb{R}\backslash\{2n\})$
+
+$\therefore x\notin(\mathbb{R}\backslash\bigcup_{n\in\mathbb{Z}}\{2n\})$
+
+$\therefore x\in\bigcup_{n\in\mathbb{Z}}\{2n\}$
+
+\noindent$\therefore \mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})\subseteq\bigcup_{n\in\mathbb{Z}}\{2n\}$
+
+\[\therefore \mathbb{Q}\backslash\bigcap_{n\in\mathbb{Z}}(\mathbb{R}\backslash\{2n\})=\bigcup_{n\in\mathbb{Z}}\{2n\}=A\]
 \end{solution}
 %%%%%%%%%%
     
@@ -264,7 +607,19 @@ A collection of sets $\{A_\alpha : \alpha \in I\}$ is said to be a \textbf{pairw
 \end{problem}
     
 \begin{solution}
-        
+(a)$A_{\alpha}=(\alpha-1,\alpha)$
+
+\noindent(b)if $A_{\alpha}\neq A_{\beta}$ then $A_{\alpha}\cap A_{\beta}=\emptyset$
+
+\noindent(c)if $A_{\alpha}=A_{\beta}$ then $A_{\alpha}\cap A_{\beta}=\emptyset$
+
+\noindent(d)True
+
+\noindent(e)True
+
+\noindent(f)True
+
+\noindent(g)False
 \end{solution}
 %%%%%%%%%%
     
@@ -278,7 +633,21 @@ A collection of sets $\{A_\alpha : \alpha \in I\}$ is said to be a \textbf{pairw
 \end{problem}
     
 \begin{solution}
-        
+(a) $\because A\subseteq A\cup B$ and $B\subseteq A\cup B$
+
+$\therefore P(A)\cup P(B)\subseteq P(A\cup B)$
+
+\noindent(b) 假设 $A=\{1,2\}$ $B=\{3,4\}$
+
+$P(A)\cup P(B)=\{\emptyset,\{1\},\{2\},\{3\},\{4\},\{1,2\},\{3,4\}\}$
+
+$P(A\cup B)=\{\emptyset,\{1\},\{2\},\{3\},\{4\},$
+
+$\{1,2\},\{1,3\},\{1,4\},\{2,3\},\{2,4\},\{3,4\},$
+
+$\{1,2,3\},\{1,2,4\},\{1,3,4\},\{2,3,4\},\{1,2,3,4\}\}$
+
+\noindent$\therefore P(A)\cup P(B)\neq P(A\cup B)$
 \end{solution}
 %%%%%%%%%%
     
@@ -288,7 +657,29 @@ Show that $A\subseteq B$ if and only if $P(A)\subseteq P(B)$.
 \end{problem}
     
 \begin{solution}
-        
+assume $A\subseteq B$ so if $x\in A$ then $x\in B$
+
+if $\{x\}\in P(A)$ then $x\in A$
+
+$\therefore x\in B$ $\therefore \{x\}\subseteq B$
+
+$\therefore {x}\in P(B)$
+
+\noindent$\therefore P(A)\subseteq P(B)$
+
+\noindent assume $P(A)\subseteq P(B)$
+
+if $x\in A$ then $\{x\}\subseteq A\ \therefore \{x\}\subseteq P(A)$
+
+$\therefore \{x\}\subseteq P(B)$
+
+$\therefore \{x\}\subseteq B$
+
+$\therefore x\in B$
+
+\noindent$\therefore A\subseteq B$
+
+\noindent so $A\subseteq B$ if and only if $P(A)\subseteq P(B)$
 \end{solution}
 %%%%%%%%%%
     
@@ -302,7 +693,34 @@ Let A,B,C and D be nonempty sets. Then $A\times B=C\times D$ if and only if $A=C
 \end{problem}
         
 \begin{solution}
-            
+(a)assume $A\times B=C\times D$
+
+if $x\in A\ y\in B$ then $(x,y)\in A\times B=C\times D$
+
+$\therefore x\in C\ y\in D$
+
+$\therefore A\subseteq C$ and $B\subseteq D$
+
+if $x\in C\ y\in D$亦然
+
+\noindent$\therefore A=C$ and $B=D$
+
+\noindent assume $A\subseteq C$ and $B\subseteq D$
+
+if $S=(a,b)\subseteq A\times B$ then $a\in A\ b\in B$
+
+$\therefore a\in C\ b\in D$
+
+$\therefore S=(a,b)\subseteq C\times D$
+
+$\therefore A\times B\subseteq C\times D$
+
+if $S=(a,b)\subseteq C\times D$亦然
+
+\noindent$\therefore A\times B=C\times D$
+
+\noindent$\therefore A\times B=C\times D$ if and only if $A=C$ and $B=D$
+
 \end{solution}
 %%%%%%%%%%
         
@@ -312,7 +730,15 @@ Suppose A,B,C, and D are four sets. If $A\times B=C\times D$, must $A\subseteq C
 \end{problem}
             
 \begin{solution}
-                
+True 
+
+\noindent if $Z=(x,y)\in A\times B$ then $x\in A$ and $y\in B$
+
+$\because A\times B\subseteq C\times D$ $\therefore Z=(x,y)\in C\times D$
+
+$\therefore x\in C\ y\in D$
+
+$\therefore A\subseteq C$ and $B\subseteq D$
 \end{solution}
 %%%%%%%%%%
             
@@ -326,7 +752,53 @@ Let A,B, and C be sets. If the statements below are true prove them. If they are
 \end{problem}
                 
 \begin{solution}
-                    
+(a)True
+
+\noindent if $Z=(x,y)\in A\times(B\cup C)$ then $x\in A\ y\in B$ or $x\in A\ y\in C$
+
+\textcircled{1}$\because x\in A\ y\in B$ $\therefore Z=(x,y)\in A\times B$
+
+$\because A\times B\subseteq (A\times B)\cup(A\times C)$
+
+\textcircled{2}$\because x\in A\ y\in C$ $\therefore Z=(x,y)\in A\times C$
+
+$\because A\times C\subseteq (A\times B)\cup(A\times C)$
+
+\noindent$\therefore  A\times(B\cap C)\subseteq(A\times B)\cup(A\times C)$
+
+\noindent if $Z=(x,y)\in (A\times B)\cup(A\times C)$ then $x\in A\ y\in B$ or $y\in C$
+
+$x\in A\ y\in B\subseteq B\cup C$ $\therefore Z\in A\times(B\cup C)$
+
+$x\in A\ y\in C\subseteq B\cup C$ $\therefore Z\in A\times(B\cup C)$
+
+\noindent$\therefore (A\times B)\cup(A\times C)\subseteq A\times(B\cup C)$
+
+\noindent$\therefore A\times(B\cup C)=(A\times B)\cup(A\times C)$
+
+\noindent(b)True
+
+\noindent if $Z=(x,y)\in A\times(B\cap C)$ then $x\in A\ y\in B\cap C$
+
+$\because B\cap C\subseteq B$ and $B\cap C\subseteq C$
+
+$\therefore Z\in A\times B$ and $Z\in A\times C$
+
+$\therefore Z\in (A\times B)\cap (A\times C)$
+
+\noindent$\therefore A\times(B\cap C)\subseteq (A\times B)\cap (A\times C)$
+
+\noindent if $Z=(x,y)\in (A\times B)\cap (A\times C)$ then $Z=(x,y)\in (A\times B)$ and $Z=(x,y)\in (A\times C)$
+
+$\therefore x\in A$ and $y\in B$ and $x\in A$ and $y\in C$
+
+$\therefore x\in A\ y\in (B\cap C)$
+
+$\therefore Z=(x,y)\in A\times(B\cap C)$
+
+\noindent$\therefore (A\times B)\cap (A\times C)\subseteq A\times(B\cap C)$
+
+\noindent$\therefore A\times(B\cap C)=(A\times B)\cap (A\times C)$
 \end{solution}
 %%%%%%%%%%
                 
@@ -348,7 +820,31 @@ This is a pretty complicated definitions. It is also not our idea, but rather an
 \end{problem}
                     
 \begin{solution}
-                        
+(a) $(a,b)=\{\{a\},\{a,b\}\}=(c,d)=\{\{c\},\{c,d\}\}$
+
+$\therefore \{a\}=\{c\},\{a,b\}=\{c,d\}$
+
+$\therefore a=c,b=d$
+
+\noindent(b) $\because a\in A\ b\in B$ $\therefore \{a,b\}\in P(A\cup B)$
+
+$(a,b)=\{\{a\},\{a,b\}\}$
+
+$\{a\}\subseteq\{a,b\}\in P(A\cup B)$
+
+\noindent$\therefore (a,b)\in P(P(A\cup B))$
+
+\noindent(c)if $Z=(a,b)\in A\times B$ then $Z=(a,b)\in P(P(A\cup B))$
+
+$\therefore \{\{a\},\{a,b\}\}\in P(P(A\cup B))$
+
+$\because A\cup B\in C\cup D$
+
+$\therefore P(A\cup B)\subseteq P(C\cup D)$
+
+$\therefore \{\{a\},\{a,b\}\}\in P(P(C\cup D))$
+
+\noindent$\therefore Z=(a,b)\in C\times D$
 \end{solution}
 %%%%%%%%%%
                     
