@@ -1,0 +1,129 @@
+函数指针最常用的场景：排序
+Sort for all types
+Compare & Swap
+
+(#include <stdlib,h>)
+void qsort (void *base, size_t sum, size_t size, int (*compar)(const void*, const void*));
+//void类型指针可以转换成任意类型的其他指针
+
+int compare(int a, int b);
+//compare函数的通用规范，返回int型数据，如果a>b返回1，如果a<b返回-1
+
+---------------------------------------------------------------------------------------------------------------------------------
+//create by bqy1999 2017/11/24
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int *generate_values(int n);
+void print_value(int *vals, int n);
+int compare(const void *a,const void *b);//const表示指针指向的数据是一个常量,void* 表示指针指向的可以是任意类型的数据
+//升序排序
+int compare_reverse(const void *a,const void *b);
+//降序排序
+
+int main(){
+    int n=100;
+    int *vals=generate_values(n);
+
+    qsort(vals,n, sizeof(int),compare);
+    print_value(vals,n);
+
+    qsort(vals,n, sizeof(int),compare_reverse);
+    print_value(vals,n);
+
+    return 0;
+}
+
+int *generate_values(int n){
+    srand((unsigned)time(0));//生成随机数
+
+    int *values=(int *)malloc(sizeof(int) * n);
+    for(int i=0;i<n;i++){
+        values[i]=rand()%100;//意思是产生从0到99的随机数
+    }
+
+    return values;
+}
+
+void print_value(int *vals, int n){
+    for(int i=0;i<n;i++){
+        printf("%d\t",vals[i]);
+    }
+    puts(" ");//puts函数实现换行功能，如果什么都没有就自动换一行
+}
+
+int compare(const void *a,const void *b){
+    return (*(int *)a)-(*(int *)b);//a是一个指针变量，是void*类型，先强制类型转换成int*然后a还是一个指针，所以*解应用，获得指针指向的位置的值
+}
+
+int compare_reverse(const void *a,const void *b){
+    return (*(int *)b)-(*(int *)a);
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+//create by bqy1999 2017/11/24
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef int (predicate)(int n); //type!
+
+int *generate_values(int n);
+void print_values(int *vals,int n);
+int even(int n);
+int gt_fifty(int n);
+void filter(int *vals, int n,predicate cond);
+
+int main(){
+    int n=20;
+
+    int *vals=generate_values(n);
+    print_values(vals,n);
+
+    filter(vals,n,even);
+    filter(vals,n,gt_fifty);
+
+    return 0;
+}
+
+int *generate_values(int n){
+    srand((unsigned)time(0));//生成随机数
+
+    int *values=(int *)malloc(sizeof(int) * n);
+    for(int i=0;i<n;i++){
+        values[i]=rand()%100;//意思是产生从0到99的随机数
+    }
+
+
+    return values;
+}
+
+void print_values(int *vals, int n){
+    for(int i=0;i<n;i++){
+        printf("%d\t",vals[i]);
+    }
+    puts(" ");//puts函数实现换行功能，如果什么都没有就自动换一行
+}
+
+int even(int n){
+    return n%2==0;
+}
+
+void filter(int *vals, int n,predicate cond){
+    for(int i=0;i<n;i++){
+        if(cond(vals[i]))//cond是一个函数指针,如果cond传的是even函数的话，就判断是不是偶数
+            printf("%d\t",vals[i]);
+    }
+    puts("");
+}
+
+int gt_fifty(int n){
+    return n>=50;
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
