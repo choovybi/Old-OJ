@@ -1,0 +1,741 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第九讲：关系及其基本性质}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[UD: 10.2]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+Let X=\{1,2,3,4,5\}.
+
+(a) If possible, define a relation on X that is an equivalence relation.
+
+(b) If possible, define a relation on X that is reflexive, but neither symmetric nor transitive.
+
+(c) If possible, define a relation on X that is symmetric, but neither reflexive nor transitive.
+
+(d) If possible, define a relation on X that is transitive, but neither reflexive nor symmetric.
+\end{problem}
+
+\begin{solution}
+
+(a) $x\sim y$ if and only if $x-y$ is even.
+
+(b) $x\sim y$ if and only if $x<y+1$.
+
+(c) $x\sim y$ if and only if $x=-y$.
+
+(d) $x\sim y$ if and only if $x<y$.
+
+\end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 10.4]
+Define a relation $\sim$ on $\mathbb{R}$ as follows: For $x,y\in\mathbb{R}$, we say $x \sim y$ if and only if both $x_1-y_1$ and $x_2-y_2$ are even integers. Is this relation an equivalence relation? Why
+or why not?
+\end{problem}
+
+\begin{solution}
+(i) $x_1-x_1=0$ $x_2-x_2=0$
+
+\noindent(ii) if $(x_1,x_2)\sim (y_1,y_2)$ so $x_1-y_1$ 和 $x_2-y_2$ are even
+
+$y_1-x_1=-(x_1-y_1)$ $y_2-x_2=-(x_2-y_2)$ are even
+
+therefore $(y_1,y_2)\sim (x_1,x_2)$
+
+\noindent(iii) if $(x_1,x_2)\sim (y_1,y_2)$ and $(y_1,y_2)\sim (z_1,z_2)$
+
+so $x_1-y_1$ is even $y_1-z_1$ is even, so $x_1-z_1=(x_1-y_1)-(y_1-z_1)$ is even 
+
+$x_2-y_2$ is even $y_2-z_2$ is even, so $x_2-z_2=(x_2-y_2)-(y_2-z_2)$ is even 
+
+therefore $(x_1,x_2)\sim (z_1,z_2)$
+
+\noindent so this relation is an equivalence relation.
+
+
+
+\end{solution}
+
+% %%%%%%%%%
+% %\newpage  % page-break; comment it out if not necessarily
+% %这个的作用是主动开始新的一页
+% %%%%%%%%%
+\begin{problem}[UD: 10.5]
+Let X be a nonempty set with an equivalence relation $\sim$ on it. Prove that for all elements $x$ and $y$ in X, the equality $E_x=E_y$ holds if and only if $x\sim y$.
+\end{problem}
+
+\begin{solution}
+(i) If $z\in E_x$ $\because E_x=E_y$ $\therefore z\in E_y$
+
+$\therefore z\sim x\ z\sim y$
+
+根据对称性
+
+$x\sim z$ $\therefore x\sim y$
+
+\noindent(ii) If $x\sim y$
+
+假设$E_x > E_y$ so $\exists z\in E_x$ and $z\notin E_y$
+
+$\therefore z\sim x $
+
+$\because x\sim y$
+
+$\therefore z\sim y$ $z\in E_y$ 与假设矛盾
+
+$E_x < E_y$ 亦然
+
+$\therefore E_x=E_y$
+
+\noindent $\therefore$ the equality $E_x=E_y$ holds if and only if $x\sim y$.
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+
+\begin{problem}[UD: 10.8]
+Recall that a $\textbf{polynomial}$ $p$ over $\mathbb{R}$ is an expression of the form $p(x)=a_{n}x^n+a_{n-1}x^{n-1}+\dots+a_{1}x^{1}+a_{0}$
+where each $a_j\in\mathbb{R}$ and $n\in\mathbb{N}$. The largest integer $j$ such that $a_{j}\neq0$ is the $\textbf{degree}$ of $p$. We define the degree of the constant polynomial
+$p=0$ to be $-\infty$. (A polynomial over $\mathbb{R}$ defines a function $p:\mathbb{R}\rightarrow \mathbb{R}$.)
+
+(a) Define a relation on the set of polynomials by $p\sim q$ if and only if $p(0)=q(0)$. Is this an equivalence
+relation? If so, what is the equivalence class of the polynomial given by $p(x)=x$?
+
+(b) Define a relation on the set of polynomials by $p\sim q$ if and only if the degree of $p$ is the same as the degree of $q$. Is this an equivalence
+relation? If so, what is $E_r$ if $r(x)=3x+5$?
+
+(c) Define a relation on the set of polynomials by $p\sim q$ if and only if the degree of $p$ is less than or equal to the degree of $q$. Is this equivalence relation?
+If so, what is $E_r$, where $r(x)=x^2$?
+\end{problem}
+
+\begin{solution}
+
+(a) Yes
+
+the equivalence class is $\{p(x): a_1=1,\ a_i=0\ \forall i\in\mathbb{N}\backslash 1\}$
+
+\noindent(b) Yes
+
+the equivalence class is $\{p(x): a_0=5, a_1=3,\ a_i=0\ \forall i\in\mathbb{N}\backslash 0\ 1\}$
+
+\noindent(c) No
+
+不满足对称性
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 11.3]
+(a) For each $r\in\mathbb{R}$, let $A_r=\{(x,y,z)\in\mathbb{R}^3:x+y+z=r\}$. Is this a partition of $\mathbb{R}^3$?
+If so, give a geometric description of the partitioning sets.
+
+\noindent(b) For each $r\in\mathbb{R}$, let $A_r=\{(x,y,z)\in\mathbb{R}^3:x^2+y^2+z^2=r^2\}$. Is this a partition of $\mathbb{R}^3$?
+If so, give a geometric description of the partitioning sets.
+\end{problem}
+
+\begin{solution}
+(a) Yes
+
+三维坐标系中过(r,0,0), (0,r,0), (0,0,r)三点的平面
+
+\noindent(b) Yes
+
+以r为半径的球面
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 11.7]
+Consider the set $P$ of polynomials with real coefficients. Decide whether or not each of the following determine a partition of $P$. If you decide that it does determine a partition, show it carefully. If you decide that it does not determine a partition, justify your answer.(See Problem 10.8 for more information about polynomials.)
+
+(a) For $m\in\mathbb{N}$, let $A_m$ deonte the set of polynomials of degree $m$.
+
+(b) For $c\in\mathbb{R}$, let $A_c$ denote the set of polynomials such that $p(0)=c$.
+
+(c) For a polynomial $q$, let $A_q$ denote the set of all polynomials $p$ such that $q$ is a factor of $p$; that is, there is a polynomial $r$ such that $p=q^r$.
+
+(d) For $c\in\mathbb{R}$, let $A_c$ denote the set of polynomials such that $p(c)=0$.
+\end{problem}
+
+\begin{solution}
+(a) Yes
+
+按阶数进行割
+
+\noindent(b) Yes
+
+按常数项进行割
+
+\noindent(c) No
+
+如果有一个$p(x)$的系数以2为因子，那么它一定也有1这个因子，不满足(iii)
+
+\noindent(d) No
+
+一个多项式可能有多个解，所以可能属于多个割，不满足(iii)
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 11.8]
+For two nonempty disjoint sets, $I$ and $J$, let $\{A_\alpha:\alpha\in I\}$ be a partition of $\mathbb{R^+}$ and $\{A_\alpha:\alpha\in J\}$ be a partition of $\mathbb{R}^-\cup\{0\}$. Prove that $\{A_\alpha:\alpha\in I\cup J\}$ is a partition of $\mathbb{R}$.
+\end{problem}
+
+\begin{solution}
+(i) $\because \{A_\alpha:\alpha\in I\}$ and $\{A_\alpha:\alpha\in J\}$ are partition
+
+$\therefore \forall \alpha\in I\cup J,\ A_\alpha\neq\emptyset $
+
+\noindent(ii) if $x\in\{A_\alpha:\alpha\in I\cup J\}$
+
+$\therefore x\in\{A _\alpha:\alpha\in I\}\cup\{A _\alpha:\alpha\in J\}$
+
+$\therefore x\in R$
+
+$\therefore \{A_\alpha:\alpha\in I\cup J\}\subseteq \mathbb{R}$
+
+if $x\in\mathbb{R}$ $\therefore x\in\mathbb{R^+}\cup\mathbb{R^-}\cup\{0\}$
+
+if $x\in\mathbb{R^+}$ 由割的性质(ii)得 $\exists A_\alpha, \alpha\in I$ $x\in A_\alpha$
+
+if $x\in\mathbb{R^-}\cup\{0\}$ 由割的性质(ii)得 $\exists A_\alpha, \alpha\in J$ $x\in A_\alpha$
+
+$\therefore \mathbb{R}\subseteq\{A _\alpha:\alpha\in I\}\cup\{A _\alpha:\alpha\in J\}=\{A_\alpha:\alpha\in I\cup J\}$
+
+$\therefore \{A_\alpha:\alpha\in I\cup J\}=\mathbb{R}$
+
+\noindent(iii) 假设$A_\alpha\cap A_\beta\neq\emptyset$
+
+1. $\alpha\in I\ \beta\in I$ 根据割的性质(iii)可知不可能
+
+2. $\alpha\in J\ \beta\in J$ 根据割的性质(iii)可知不可能
+
+3. $\alpha\in I\ \beta\in J$ 设 $A_\alpha\cap A_\beta=\{x\}$
+
+$x\in A_\alpha\in\mathbb{R^+}$
+
+$x\in A_\beta\in\mathbb{R^-}\cup\{0\}$所以x不存在
+
+4. 同3理
+
+$\therefore$ 对于不同的割 $ A_\alpha\cap A_\beta=\emptyset$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 11.9]
+Let X be a nonempty set and $\{A_\alpha:\alpha\in I\}$ be a partition of X.
+
+(a) Let B be a subset of X such that $A _\alpha \cap B\neq \emptyset$ for every $\alpha\in I$. Is $\{A_\alpha\cap B:\alpha\in I\}$ a partition of B? Prove it or give a counterexample.
+
+(b) Suppose further that $A_\alpha\neq X$ for every $\alpha\in I$. Is $\{X\backslash A_\alpha:\alpha\in I\}$ a partition of X? Prove it or give a counterexample.
+\end{problem}
+
+\begin{solution}
+(a) Yes
+
+(i) $A_\alpha\cap B\neq\emptyset$
+
+(ii) $\because \forall x\in B\subseteq X$ $\therefore \exists A_\alpha x\in A_\alpha, \alpha\in I$
+
+$\because x\in B$ and $x\in A_\alpha$ $\therefore x\in B\cap A_\alpha$
+
+(iii) 因为$A_\alpha$和$A_\beta$为X的分割
+
+所以$A_\alpha\cap A_\beta=\emptyset$
+
+$\therefore (A_\alpha\cap B)\cap(A_\beta\cap B)=\emptyset$
+
+\noindent(b) No
+
+$X=\{1,2,3\}$
+
+$A_1=\{1\}$ $X\backslash A_1=\{2,3\}$
+
+$A_2=\{2\}$ $X\backslash A_2=\{1,3\}$
+
+$A_3=\{3\}$ $X\backslash A_3=\{1,2\}$
+
+不满足分割性质(iii)
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 12.10]
+Let $S$ and $T$ be nonempty bounded subsets of $\mathbb{R}$.
+
+(a) Show that sup$(S\cup T)\geq$ sup $S$, and sup$(S\cup T)\geq$ sup $T$.
+
+(b) Shoe that sup$(S\cup T)=$ max$\{$sup $S$, sup $T$$\}$.
+
+(c) Try to state the results of (a) and (b) in English, without using mathematical symbols.
+\end{problem}
+
+\begin{solution}
+(a) If sup$S=$ sup$T$
+
+then sup$(S\cup T)=$ sup$S=$ sup$T$ 
+
+If sup$S>$ sup$T$
+
+\textcircled{1} $x\in S$ $p(x)\leq$sup$S$
+
+\textcircled{2} $x\in T$ $p(x)\leq$sup$T$
+
+then sup$(S\cup T)=$ sup$S$
+
+If sup$S<$ sup$T$
+
+\textcircled{1} $x\in S$ $p(x)\leq$sup$S$
+
+\textcircled{2} $x\in T$ $p(x)\leq$sup$T$
+
+then sup$(S\cup T)=$ sup$T$
+
+$\therefore$ sup$(S\cup T)\geq$ sup$S$, and sup$(S\cup T)\geq$ sup$T$
+
+\noindent(b) if $\exists y>$ max$\{$sup$S$,sup$T\}$为上确界
+
+$\forall x\in S\cup T$ $x<$max$\{$sup$S$,sup$T$$\}<y$ 不满足(ii)，所以$y$不为上确界
+
+if $\exists z<$ max$\{$sup$S$,sup$T\}$为上确界
+
+$y+\frac{max\{supS,supT\}-z}{2}\in S\cup T$
+
+但是$y<y+\frac{max\{supS,supT\}-z}{2}$所以$y$不满足(i), 不为上确界
+
+\noindent(c)The supremum of the union set is greater or equal to the supremum of the subset
+
+The supremum of the union set is equal to the biggest of the supremum of the subset.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[UD: 12.13]
+Let $\sim$ denote a relation on a set $S$. The relation $\sim$ is called a $\textbf{partial order}$ if the following three conditions are satisfied.
+
+(i) (Reflexive property) For all $x\in S$, we have $x\sim x$.
+
+(ii) (Tranditive property) For all $x,y,z\in S$, if $x\sim y$ and $y\sim z$, then $x\sim z$.
+
+(iii) (Antisymmetric property) For all $x,y\in S$, if $x\sim y$ and $y\sim x$, then $x=y$.
+
+The relation $\sim$ is a $\textbf{total order}$ on the set $S$ if, in addition, (iv) below is satisfied.
+
+(iv) For all $x,y\in S$, either $x\sim y$ or $y\sim x$.
+
+(b) Let A be a set containing at least two elements. We define an order on $P(A)$ using the regular set inclusion $\subseteq$. Show that $(P(A),\subseteq)$ is a partial order, but not a total order.
+\end{problem}
+    
+\begin{solution}
+\textcircled{1}
+
+(i) P(x)$\subseteq$P(x)
+
+(ii) if P(x)$\subseteq$P(y) and P(y)$\subseteq$P(z)
+
+P(x)$\subseteq$P(z)
+
+(iii) if P(x)$\subseteq$P(y) and P(y)$\subseteq$P(x)
+
+P(x)$=$P(y)
+
+\noindent\textcircled{2}
+
+if P(x)$\cap$P(y)$=\emptyset$
+
+$\therefore$ P(x)$\nsubseteq$P(y)
+
+$\therefore$ P(y)$\nsubseteq$P(x)
+
+so (P(A),$\subseteq$) is a partial order, but not a total order.
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 12.16]
+You showed in Problem 12.13 that $(P(\mathbb{Z}),\subseteq)$ is a partial order. For every nonempty subset $\mathcal{A}$ of $P(\mathbb{Z})$ we say that $U\in P(\mathbb{Z})$ is an upper set of $\mathcal{A}$, if $X\subseteq U$ for all $X\in\mathcal{A}$. A nonempty set $\mathcal{A}\subseteq P(\mathbb{Z})$ will be called an upper bounded set
+if there is an upper set of $\mathcal{A}$ in $P(\mathbb{Z})$. We say $U_0\in P(\mathbb{Z})$ is a least  upper set if (i) $U_0$ is an upper set of $\mathcal{A}$ and (ii) if $U$ is another upper set of $\mathcal{A}$, then $U_0\subseteq U$.
+
+(a) Let $\mathcal{B}=\{\{1,2,5,7\},\{2,8,10\},\{2,5,8\}\}$. Show that $\mathcal{B}$ is an upper bounded set and fins a least upper set of $\mathcal{B}$, if there is one.
+
+(b) Prove that every nonempty subest of $P(\mathbb{Z})$. 
+
+(c) Define ``lower set,''``lower bounded set,'' and ``greatest lower set.'' 
+
+(d) Let $\mathcal{A}$ be a nonempty subset of $P(\mathbb{Z})$. Using unoin and inter-section, find an expression for least upper set of $\mathcal{A}$ and greast lower set of $\mathcal{A}$.
+
+(e) Prove that $(P(\mathbb{z}),\subseteq)$ has the ``least upper set property''(in other words, show every upper bounded set has a least upper set).
+\end{problem}
+    
+\begin{solution}
+(a) $\{1,2,5,7,8,10\}$
+
+\noindent(b) $\mathbb{Z}\in$P($\mathbb{Z}$)
+
+$\forall x\in A$ $x\subseteq \mathbb{Z}$
+
+\noindent(C) we say that $U\in P(\mathbb{Z})$ is an lower set of $\mathcal{A}$,if $U\subseteq X$ for all $X\in\mathcal{A}$. A nonempty set $\mathcal{A}\subseteq P(\mathbb{Z})$ will be called an lower bounded set
+if there is an lower set of $\mathcal{A}$ in $P(\mathbb{Z})$. We say $U_0\in P(\mathbb{Z})$ is a greatest  lower set if (i) $U_0$ is an lower set of $\mathcal{A}$ and (ii) if $U$ is another lower set of $\mathcal{A}$, then $U\subseteq U_0$.
+
+\noindent(d) least upper set: $X_0\cup X_1\cup\dots\cup X_n$
+
+greast lower set: $X_0\cap X_1\cap\dots\cap X_n$
+
+\noindent(e) 根据实数的完备性，因为该集合有上界所以有上确界，记为$U_0$
+
+(i)$\forall x\in A\  x\subseteq U_0$
+
+(ii)假设 $U_1$为``least upper set property''且 $U_1\subseteq U_0$
+
+设$U_0\backslash U_1=\{y\}$
+
+$\exists x_i\in A$ $y\in x_i$ $\because x_i\in A$ 而$x_i\nsubseteq U_1$
+
+$\therefore U_1$不满足(i) $\therefore$集合的上确界$U_0$为``least upper set property''
+
+根据实数的完备性，有上界集合一定有上确界，所以有上界集合一定有``least upper set property''
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 12.20]
+Suppose we define $\infty$ to be an object that satisfies $a\leq \infty$ for all $a\in \mathbb{R}$. Prove that $\infty\notin\mathbb{R}$.
+\end{problem}
+    
+\begin{solution}
+if $\infty\in\mathbb{R}$ then $\infty$为$\mathbb{R}$的上界
+
+$\because \infty\in\mathbb{R}$ $\therefore\exists n,\ \infty<nb\ \because nb\in\mathbb{R}$
+
+与$\forall a\in\mathbb{R}\ a\leq\infty$矛盾
+
+$\therefore \infty\notin\mathbb{R}$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 12.22]
+Prove that if $a$ is a rational number, then there is an irrational number $b$ such that $a<b$.
+\end{problem}
+    
+\begin{solution}
+\
+    
+$a<a+\sqrt{2}$
+
+$\because a+\sqrt{2}$ $\therefore b=a+\sqrt{2}$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 12.23]
+Prove that for two arbitraty real numbers $a$ and $b$ with $a<b$, there is an irrational number $c$ such that $a<c<b$.(Hint: Consider $a/\sqrt{2}$ and $b/\sqrt{2}.)$
+\end{problem}
+    
+\begin{solution}
+\
+    
+假设$2a<b$，其中$a,b$都为有理数
+
+根据有理数的插值定理：$\exists c\in\mathbb{Q}$使得$2a<c<b$
+
+$\therefore \sqrt{2}a<2a<c<b<\sqrt{2}b$
+
+$\therefore a<\frac{\sqrt{2}}{2}c<b$
+
+$\because c\in\mathbb{Q}$  $\therefore \frac{\sqrt{2}}{2}c\in\mathbb{R\backslash Q}$
+
+得证
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.2]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+    
+% %%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+    
+% %%%%%%%%%%
+% \begin{problem}[UD: 9.12]
+
+% \end{problem}
+        
+% \begin{solution}
+
+
+% \end{solution}
+% %%%%%%%%%%
+        
+% %%%%%%%%%%
+% \begin{problem}[UD: 9.13]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+            
+% %%%%%%%%%%
+% \begin{problem}[UD: 9.14]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+% %%%%%%%%%%
+                
+% %%%%%%%%%%
+% \begin{problem}[UD: 9.16]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % %
+% % % %%%%%%%%%%%
+% \begin{problem}[第五讲:UD 2.10]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+% \begin{problem}[UD 17.11]
+
+% \end{problem}
+%     %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+% \begin{problem}[ES 24.4]
+
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+% \begin{problem}[DH 2.4]
+% %  这是一个错题订正的模板
+
+% \end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+% \begin{problem}[DH 2.5]
+%     %  这是一个错题订正的模板
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% \begin{problem}[DH 2.8]
+
+% \end{problem}
+% \begin{revision}
+
+% \end{revision}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+   
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
