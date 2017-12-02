@@ -104,3 +104,4 @@ void have_permutation(int cur,int length, int * A, int * B,int **get_temp)
     Time:60 ms
     Memory:19864 kb
 ****************************************************************/
+
