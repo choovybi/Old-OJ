@@ -1,1 +1,74 @@
 
+//created by bqy1999 2017/12/2
+ 
+#include <stdio.h>
+ 
+int main(){
+    int arr1[64]={0};
+    int arr2[64]={0};
+    int leftB[64]={0};
+    int leftA[64]={0};
+    int length1=0;
+    int length2=0;
+    int length3=0;
+    int n=0;
+ 
+    //input two arrays
+    while(1){
+        scanf("%d",&n);
+        if(n==-1)break;
+        arr1[length1]=n;
+        length1++;
+    }
+    while(1){
+        scanf("%d",&n);
+        if(n==-1)break;
+        arr2[length2]=n;
+        length2++;
+    }
+    //A cap B
+    for(int i=0;i<length1;i++){
+        for(int j=0;j<length2;j++){
+            if(arr1[i]==arr2[j]){
+                printf("%d ",arr1[i]);
+                leftB[j]=1;//if in the cap named "1"
+                leftA[i]=1;
+            }
+        }
+    }
+    printf("\n");
+ 
+    //A cup B
+    for(int i=0;i<length1;i++){
+        printf("%d ",arr1[i]);
+    }
+    for(int j=0;j<length2;j++){
+        if(leftB[j]==0)printf("%d ",arr2[j]);
+    }
+    printf("\n");
+ 
+    //A-B
+    for(int i=0;i<length1;i++){
+        if(leftA[i]==0){
+            printf("%d ",arr1[i]);
+            length3++;
+        }
+    }
+    printf("\n");
+ 
+    //is A \subseteq B?
+    if(length3==0)printf("true");
+    else printf("false");
+    //printf("\n %d\n",length3);
+ 
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1058
+    User: 171860624
+    Language: C
+    Result: 正确
+    Time:0 ms
+    Memory:960 kb
+****************************************************************/
