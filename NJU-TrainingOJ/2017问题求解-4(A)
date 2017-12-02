@@ -1,0 +1,40 @@
+//created by bqy1999 2017/12/2
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int cur_hour=0,cur_min,fut_hour,fut_min=0;
+    string cur_zone,fut_zone;
+
+    int cur_sum=0;
+    int fut_sum=0;
+
+    cin>>cur_hour>>cur_min>>cur_zone>>fut_hour>>fut_min>>fut_zone;
+
+    //计算目前时刻与0点相比的分钟数
+    if(cur_zone=="AM"){
+        cur_sum=(cur_hour%12)*60+cur_min;
+    }
+    else if(cur_zone=="PM"){
+        cur_sum=720+(cur_hour%12)*60+cur_min;
+    }
+
+    //计算未来时刻与0点相比的分钟数
+    if(fut_zone=="AM"){
+        fut_sum=(fut_hour%12)*60+fut_min;
+    }
+    else if(fut_zone=="PM"){
+        fut_sum=720+(fut_hour%12)*60+fut_min;
+    }
+
+    //如果目前时刻的分钟数比未来时刻要大，说明跳了一天
+    if(cur_sum>fut_sum){
+        printf("%d",1440+fut_sum-cur_sum);
+    }
+    else if(cur_sum<=fut_sum){
+        printf("%d",fut_sum-cur_sum);
+    }
+
+    return 0;
+}
