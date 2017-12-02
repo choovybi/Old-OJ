@@ -1,1 +1,1071 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
 
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第十讲：函数}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[UD: 13.3]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+Which of the following are functions? Given reasons for your answers.
+
+(a) Define $f$ on $\mathbb{R}$ by $f=\{(x,y):x^2+y^2=4\}$.
+
+(b) Define $f : \mathbb{R}\rightarrow\mathbb{R}$ by $f(x)=1/(x+1)$.
+
+(c) Define $f : \mathbb{R}^2\rightarrow\mathbb{R}$ by $f(x,y)=x+y$.
+
+(d) The domain of $f$ is the set of all closed intervals of real numbers of the form [a,b], where $a,b\in\mathbb{R},a\leq b$, and $f$ is defined by $f([a,b])=a$.
+
+(e) Define $f:\mathbb{N}\times\mathbb{N}\rightarrow\mathbb{R}$ by $f(n,m)=m$.
+
+(f) Define $f:\mathbb{R}\rightarrow\mathbb{R}$ by
+$$ f(x)=\left\{
+    \begin{aligned}
+    0 &  & if\  x\geq 0 \\
+    x &  & if\  x\leq 0 
+    \end{aligned}
+    \right.
+$$
+
+(g) Define $f:\mathbb{Q}\rightarrow\mathbb{R}$ by
+$$ f(x)=\left\{
+    \begin{aligned}
+    x+1 &  & if\  x\in 2\mathbb{Z} \\
+    x-1 &  & if\  x\in 3\mathbb{Z} \\
+    2   &  & otherwise
+    \end{aligned}
+    \right.
+$$
+
+(h) The domain of $f$ is the set of all circles in the plane $\mathbb{R}^2$ and, if $c$ is such a circle, define $f$ by $f(c)=$ the circumference of $c$.
+
+(i) (\textit{For students with a background in calculus.}) The domain of $f$ is the set of all polynomials with real coefficients, and $f$ is defined by $f(p)=p^{\prime}$. (Here $p^{\prime}$ is the derivative of $p$.)
+
+(j) (\textit{For students with a background in calculus.}) The domain of $f$ is the set of all polynomials and $f$ if defined by $f(p)=\int_{0}^{1}p(x)dx$. (Here $\int_{0}^{1}p(x)dx$ is the definite integral of $p$.)
+\end{problem}
+
+\begin{solution}
+(a) x=3时函数无定义
+
+\noindent(b) x=-1时函数无定义
+
+\noindent(c) is a function 
+
+每一个自变量都有对应的映射，并且映射唯一
+
+\noindent(d) is a function
+
+每一个自变量都有对应的映射，并且映射唯一
+
+\noindent(e) is a function
+
+每一个自变量都有对应的映射，并且映射唯一
+
+\noindent(f) is a function
+
+每一个自变量都有对应的映射，并且映射唯一
+
+\noindent(g) x=6时 f(6)=7或f(6)=5， 函数值不唯一
+
+\noindent(h) is a function
+
+每一个自变量都有对应的映射，并且映射唯一
+
+\noindent(i) is a function
+
+每一个多项式都是可导的，每一个多项式的导数都唯一
+
+\noindent(j) is a function
+
+每一个多项式都是可积的，每一个多项式的定积分都唯一
+
+\end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 13.4]
+Let $f:P(\mathbb{R})\rightarrow\mathbb{Z}$ be defined by
+$$ f(A)=\left\{
+    \begin{aligned}
+    min(A\cap\mathbb{N}) &  & if\ A\cap\mathbb{N}\neq\emptyset \\
+    -1 &  & if\  A\cap\mathbb{N}\neq\emptyset 
+    \end{aligned}
+    \right.
+$$
+
+Prove that $f$ above is a well-defined function.
+\end{problem}
+
+\begin{solution}
+
+\textcircled{1}因为$A\in\mathbb{R}$， 所以$A\cap\mathbb{N}$只有为空集和不为空集两种情况
+
+如果$A\cap\mathbb{N}$为空,$f(A)=-1\in\mathbb{Z}$成立
+
+如果$A\cap\mathbb{N}$不为空, 则$A\cap\mathbb{N}\in\mathbb{Z}$, 且$f(A)=min(A\cap\mathbb{N})$根据良序原则，$min(A\cap\mathbb{N})$一定存在
+
+所以对于任意$A\in\mathbb{R}$, $f(A)$一定存在。
+
+\noindent\textcircled{2}因为$A\cap\mathbb{N}=\emptyset$和$A\cap\mathbb{N}\neq\emptyset$只能满足一个不能够都满足，
+
+且$min(A\cap\mathbb{N})$的值是唯一的，所以$f(A)$也是唯一的
+
+\noindent 所以``f above is a well-defined function''
+
+\end{solution}
+
+% %%%%%%%%%
+% %\newpage  % page-break; comment it out if not necessarily
+% %这个的作用是主动开始新的一页
+% %%%%%%%%%
+\begin{problem}[UD: 13.5]
+Let $X$ be a nonempty set and let A be a subset of $X$. 
+We define the $\textbf{characteristic function}$ of the set A by
+$$ \mathcal{X}{A}(x)=\left\{
+    \begin{aligned}
+    1 &  & if\ x\in A \\
+    0 &  & if\ x\in X\backslash A 
+    \end{aligned}
+    \right.
+$$
+
+(a) Since this is called the characteristic function, it probably is a function, but check this carefully anyway.
+
+(b) Determine the domain and range of this function. Make sure you look at all possibilities for A and X.
+\end{problem}
+
+\begin{solution}
+(a)
+
+(i) $\because A\cup(X\backslash A)=X$ 以及 $x\in X$ 所以 $\mathcal{X}{A}(x)$一定存在
+
+(ii) $\because A\cap(X\backslash A)=\emptyset$ $\therefore x\notin A\cap(X\backslash A)$
+
+所以$\mathcal{X}A(x)$的值唯一
+
+\noindent所以$\mathcal{X}A(x)$是一个函数
+
+\noindent(b)
+
+(i) 如果$A=\emptyset$ range=$\{0\}$
+
+(ii) 如果$A=X$ range=$\{1\}$
+
+(iii) 如果$A=p(X)\backslash(\emptyset\cup X)$ range=$\{0,1\}$
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+
+\begin{problem}[UD: 13.11]
+Suppose that $f$ is a function from a set A to a set B. Thus, we know that $f$ is subset of $A\times B$. Is the relation $\{(y,x):(x,y)\in f\}$ necessarily
+a function from B to A? Why or why not? (Say as much as is possible to say with the given information.)
+\end{problem}
+
+\begin{solution}
+\
+    
+Not necessarily
+
+$\because B$ 是值域， 而$f$是函数范围
+
+$\therefore \exists (y,x)\in (A\times B)\backslash f$使得$(x,y)\notin f$
+
+不满足定义域内的每一个元素都有对应的映射这个条件
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 13.13]
+Let X be a nonempty set. Find all relations on X that are both equivalence relations and functions.
+\end{problem}
+
+\begin{solution}
+$\{(x,y)\in X\times X:y=x\}$ 
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 14.8]
+For each of the functions below, determine whether or not the function is one-to-one and whether or not the function is onto. If the function is not one-to-one, give an explicit example to show what goes wrong. If it is not onto, determine the range.
+
+(a) Define $f : \mathbb{R}\rightarrow\mathbb{R}$ by $f(x)=1/(x^2+1)$.
+
+(b) Define $f : \mathbb{R}\rightarrow\mathbb{R}$ by $f(x)=sin(x)$. (Assume familiar facts about the sine function.)
+
+(c) Define $f : \mathbb{Z}\times\mathbb{Z}\rightarrow\mathbb{Z}$ by $f(n,m)=nm$.
+
+(d) Define $f : \mathbb{R}^2\times\mathbb{R}^2\rightarrow\mathbb{R}$ by $f((x,y),(u,v))=xu+yv$.
+
+(e) Define $f : \mathbb{R}^2\times\mathbb{R}^2\rightarrow\mathbb{R}$ by $f((x,y),(u,v))=\sqrt{(x-u)^2+(y-v)^2}$.
+
+(f) Let $A$ and $B$ be nonempty sets and let $b\in B$. Define $f : A\rightarrow A\times B$ by $f(a)=(a,b)$.
+
+(g) Let $X$ be a nonempty set, and $P(X)$ the power set of $X$. Define $f : P(X)\rightarrow P(X)$ by $f(A)=X\backslash A$.
+
+(h) Let $B$ be a fixed proper subset of a nonempty set $X$. Define a function $f : P(X)\rightarrow P(X)$ by $f(A)=A\cap B$.
+
+(i) Let $f : \mathbb{R}\rightarrow\mathbb{R}$ be defined by 
+$$ f(x)=\left\{
+    \begin{aligned}
+    &2-x   & if\ x<1 \\
+    &1/x   & otherwise 
+    \end{aligned}
+    \right.
+$$
+\end{problem}
+
+\begin{solution} 
+(a) not one-to-one: $f(-1)=f(1)=\frac{1}{2}$
+
+not onto: 当$y=-1$时$\nexists x\in\mathbb{R}$使得 $f(x)=\frac{1}{x^2+1}=-1$成立
+
+\noindent(b)
+
+not one-to-one: $f(0)=f(\pi)=0$
+
+not onto: 当$y=-2$时$\nexists x\in\mathbb{R}$使得 $f(x)=sin(x)=-2$成立
+
+\noindent(c)
+
+not one-to-one: $f(0,1)=f(0,2)=0$
+
+\noindent(d)
+
+not one-to-one: $f((0,0),(1,1))=f((0,0),(2,2))=0$
+
+\noindent(e)
+
+not one-to-one: $f((1,2),(3,4))=f((2,1),(4,3))=2\sqrt{2}$
+
+not onto: 当$y=-1$时$\nexists (x,y),(u,v)\in\mathbb{R}^2\times\mathbb{R}^2$使得 $f((x,y),(u,v))=\sqrt{(x-u)^2+(y-v)^2}=-1$成立
+
+\noindent(f)
+
+not onto: 当$c\in B\backslash\{b\}$时$\nexists a\in A$使得 $f(a)=(a,c)$
+
+\noindent(g)
+
+one-to-one and onto
+
+\noindent(h)
+
+not one-to-one: $A\cap B=\emptyset$ 且 $C\cap B=\emptyset$ $f(A)=f(C)=\emptyset$
+
+not onto: 当$B\neq X$时$\nexists A\in P(X)$使得 $f(A)=A\cap B=X\backslash B$
+
+\noindent(i)
+
+not onto: 当$y=-1$时$\nexists x\in\mathbb{R}$使得 $f(x)=-1$
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 14.12]
+Let $a,b,c,$ and $d$ be real numbers with $a<b$ and $c<d$. Define a bijection from the closed interval [a,b] onto the closed interval [c,d] and prove that your function is a bijection.
+
+\end{problem}
+
+\begin{solution}
+$f(x)=\frac{d-c}{b-a}(x-a)+c$
+
+\noindent(1) 假设$f(\mathcal{X}1)=f(\mathcal{X}2)$, 则$\frac{d-c}{b-a}(\mathcal{X}1-a)+c=\frac{d-c}{b-a}(\mathcal{X}2-a)+c$
+
+所以$\mathcal{X}1=\mathcal{X}2$
+
+所以函数one-to-one
+
+\noindent(2) 因为$f(x)$是函数，所以$ran(f)\subseteq[c,d]$
+
+
+如果$y\in[c,d]$ $x=\frac{b-a}{d-c}(y-c)+a$
+
+$\because y\in[c,d]$ $\therefore x\in[a,b]$
+
+$f(x)=\frac{d-c}{b-a}\times\frac{b-a}{d-c}(y-c)+c=y$
+
+$\therefore [c,d]\subseteq ran(f)$
+
+所以函数onto
+
+\noindent所以函数是双射
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 14.13]
+Let $F([0,1])$ denote the set of all real-valued functions defined
+on the closed interval [0，1]. Define a new function $\emptyset : F([0,1])\rightarrow\mathbb{R}$
+by $\emptyset(f)=f(0)$. Is $\emptyset$ a function frome $F([0,1])$ to $\mathbb{R}$?
+Is it one-to-one? Is it onto? Remember to prove all claims, and to provide examples where appropriate.
+\end{problem}
+
+\begin{solution}
+
+\textcircled{1}$\emptyset$ is a function
+
+\noindent\textcircled{2}It is not one-to-one 
+
+设$f_1(x)=x\ x\in[0,1]$, $f_2(x)=x^2\ x\in[0,1]$
+
+$\emptyset(f_1)=\emptyset(f_2)=f_1(0)=f_2(0)=0$
+
+\noindent\textcircled{3}It is onto
+
+(1) $ran(\emptyset)\subseteq\mathbb{R}$
+
+(2) 如果$y\in\mathbb{R}$ 设$f_i(x)=x+i\in F([0,1]), i\in\mathbb{R}$
+
+$y=f(0)$ 那么$f=f_y(x)\in F([0,1])$
+
+$\emptyset(f)=\emptyset(f_y(x))=f_y(0)=y\in rand(\emptyset)$
+
+所以$\mathbb{R}\subseteq ran(\emptyset)$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 14.15]
+Let $f$ be a function, $f : \mathbb{R}\rightarrow\mathbb{R}$. Define a new function $f\cdot f$ by
+\[(f\cdot f)(x)=f(x)\cdot (x).\]
+
+\noindent Prove that $f\cdot f$ is a function. Then do the remaining parts of the problem. (You may wish to work Problem 14.14, if you haven't already done so.)
+
+(a) Does there exist a function $f$ for which $f\cdot f$ is one-to-one? If not, why not? If there is, what is an example?
+
+(b) Does there exist a function $f$ for which $f\cdot f$ maps onto $\mathbb{R}$? If not, what is ran$(f\cdot f)$? Your answer will be in terms of ran($f$).
+\end{problem}
+
+\begin{solution}
+(a) Yes
+
+$f(x)=e^x$ 则$(f\cdot f)(x)=e^{2x}$
+
+假设$(f\cdot f)(\mathcal{X}1)=e^{2\mathcal{X}1}=e^{2\mathcal{X}2}(f\cdot f)(\mathcal{X}2)$
+
+则$\mathcal{X}1=\mathcal{X}2$
+
+所以函数$f\cdot f$为单射
+
+\noindent(b) No
+
+$ran(f\cdot f)=ran(f)\cdot ran(f)$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[UD: 15.1]
+Find the compositions $f\circ g$ and $g\circ f$ assuming the domain of each is the largest set of real numbers for which the functions $f,g,f\circ g,$ and $g\circ f$ make sense. In your solution to each of the following, giev the compositions adn the corresponding domain and range:
+
+(a) $f(x)=1/(1+x),g(x)=x^2$;
+
+(b) $f(x)=x^2,g(x)=\sqrt{x}$(simplify this one);
+
+(c) $f(x)=1/x,g(x)=x^2+1$;
+
+(d) $f(x)=|x|,g(x)=f(x)$.
+\end{problem}
+    
+\begin{solution}
+(a) $f\circ g=\frac{1}{1+x^2}$ $dom(f\circ g)=\mathbb{R}$ $ran(f\circ g)=(0,1]$
+
+$g\circ f=(\frac{1}{1+x})^2$ $dom(g\circ f)=\mathbb{R}\backslash\{1\}$ $ran(g\circ f)=(0,+\infty)$
+
+\noindent(b) $f\circ g=x$ $dom(f\circ g)=[0,+\infty)$ $ran(f\circ g)=[0,+\infty)$
+
+$g\circ f=x$ $dom(g\circ f)=\mathbb{R}$ $ran(g\circ f)=[0,+\infty)$
+
+\noindent(c) $f\circ g=\frac{1}{x^2+1}$ $dom(f\circ g)=\mathbb{R}$ $ran(f\circ g)=(0,1]$
+
+$g\circ f=\frac{1}{x^2}+1$ $dom(g\circ f)=\mathbb{R}\backslash\{0\}$ $ran(g\circ f)=(1,+\infty)$
+
+\noindent(d) $f\circ g=|x|$ $dom(f\circ g)=\mathbb{R}$ $ran(f\circ g)=[0,+\infty)$
+
+$f\circ g=|x|$ $dom(f\circ g)=\mathbb{R}$ $ran(f\circ g)=[0,+\infty)$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[UD: 15.6]
+The function $f : \mathbb{R}\backslash\{-2\}\rightarrow\mathbb{R}\backslash\{1\}$ and $f : \mathbb{R}\backslash\{1\}\rightarrow\mathbb{R}\backslash\{-2\}$ defined by
+\[f(x)=\frac{x-3}{x+2}\ and\ g(x)=\frac{3+2x}{1-x}\]
+
+\noindent are well-defined functions(you need not check this).
+
+(a) Caldulate $f\circ g$ and $g\circ f$.
+
+(b) What can you conclude about $f$ and $g$ from your result in part (a)? If you use a theorem, give a reference.
+\end{problem}
+    
+\begin{solution}
+(a) $f\circ g=\frac{5x}{5}=x$;
+
+$g\circ f=x$
+
+\noindent(b) $f=g^{-1}$
+
+使用15.8的(iii)
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.7]
+(a) If possible, find examples of functions $f : A\rightarrow B$ and $g : B\rightarrow A$ such that $f\circ g=i_B$ when:
+
+(i) $A=\{1,2,3\}, B=\{4,5\}$;
+
+(ii) $A=\{1,2\}, B=\{4,5\}$;
+
+(iii) $A=\{1,2,3\}, B=\{4,5,6,7\}$.
+
+Draw diagrams of $A$ and $B$ in each case above.
+
+\noindent(b) Given an example of sets $A$ and $B$, and functions $f : A\rightarrow  B$ and $g : B\rightarrow A$ such that $f\circ g=i_B$, but $g\circ f\neq i_A$.(Thus the existence of a function $g$ such that $f\circ g=i_B$ is not enough to conclude that $f$ has an inverse!) Why doesn't this contradict Theorem 15.4, part($iv$)?
+
+\noindent(c) Given an example of sets $A$ and $B$, and functions $f : A\rightarrow  B$ and $g : B\rightarrow A$ such that $g\circ f=i_A$, but $f\circ g\neq i_B$.(Thus the existence of a function $g$ such that $f\circ g=i_A$ is not enough to conclude that $f$ has an inverse!) Why doesn't this contradict Theorem 15.4, part($iv$)? 
+
+\noindent(d) Let $A$ and $B$ be two sets, and let $f : A\rightarrow B$ be a function. Assume further that there exists a function $g : B\rightarrow A$ such that $f\circ g=i_B$. Must $f$ be one-to-one? onto?
+
+\noindent(e) Looking over your work above, what should be your stratrgy in solving a question lick (d) above? Whatever you devide, use it to solve the following: Let $f$ and $g$ be as above and suppose $g\circ f=i_A$. Must $f$ be one-to-one? onto?
+
+\end{problem}
+    
+\begin{solution}
+(a)
+(i) $$ g(x)=\left\{
+    \begin{aligned}
+    1 &  & if\ x=4 \\
+    0 &  & if\ x=5 
+    \end{aligned}
+    \right.
+$$
+
+$$ f(x)=\left\{
+    \begin{aligned}
+    4 &  & if\ x=2k \\
+    5 &  & if\ x=2k+1
+    \end{aligned}
+    \right.
+$$
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+(ii)
+g(x)=x-3
+
+f(x)=x+3
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+(iii)
+不存在这样的$f$和$g$
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+\noindent(b)
+$f(x)=x$, $g(x)=x$
+
+$A=\{1,2,3,4\}$
+
+$B=\{1,2,3\}$即$A$的元素比$B$的元素多
+
+因为15.4 part(iv)要求$f$是双射
+
+\noindent(c)
+$f(x)=x$, $g(x)=x$
+
+$B=\{1,2,3,4\}$
+
+$A=\{1,2,3\}$即$B$的元素比$A$的元素多
+
+因为15.4 part(iv)要求$f$是双射
+
+\noindent(d)
+$f$不一定要是单射，$f$一定要是满射
+
+\noindent(e)
+$f$一定要是单射，$f$不一定要是满射
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.11]
+Suppose that $f : A\rightarrow B$ and $g_1$ and $g_2$ are functions from $B$ to $A$ such that $f\circ g_1=f\circ g_2$.
+Show that if $f$ is bijective, then $g_1=g_2$. If $g_1\circ f=g_2\circ f$ and $f$ is bijective, must $g_1=g_2$?
+\end{problem}
+    
+\begin{solution}
+$\because(f\circ g_1)(x)=(f\circ g_2)(x)$
+
+$\therefore f(g_1(x))=f(g_2(x))$
+
+$\because f$是双射
+
+$\therefore g_1(x)=g_2(x)$
+
+$\therefore g_1=g_2$
+
+没有必要$g_1=g_2$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.12]
+Let $f : A\rightarrow A$ be a function. Define a relation on $A$ by $a\sim b$ if and only if $f(a)=f(b)$. Is this an equivalence relation?
+If $f$ is one-to-one, what is the equivalence class of a point $a\in A$?
+\end{problem}
+    
+\begin{solution}
+Yes
+
+\noindent等价集为$\{a|a\in A\}$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.13]
+Let $f : A\rightarrow A$ be a function. Define a relation on $A$ by $a\sim b$ if and only if $f(a)=b$. Is this an equivalence relation for an arbitrary function $f$?
+If not, is there a function for which it is an equivalence relation?
+
+\end{problem}
+    
+\begin{solution}
+No
+
+\noindent等价关系式为$f(x)=x$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.14]
+Let $A,B,C$ and $D$ be nonempty sets. Let $f : A\rightarrow B$ and $g : C\rightarrow D$ be functions.
+
+(a) Prove that if $f$ and $g$ are onr-to-one, then $H : A\times C\rightarrow B\times D$ defined by 
+\[H(a,c)=(f(a),g(c))\]
+
+is a one-to-one function. (Check that it is one-to-one and a function.)
+
+(b) Prove that if $f$ and $g$ are onto, then $H$ is also onto.
+\end{problem}
+    
+\begin{solution}
+(a) 如果$H(a_1,c_1)=H(a_2,c_2)$
+
+$(f(a_1),g(c_1))=(f(a_2),g(c_2))$
+
+$\therefore f(a_1)=f(a_2)$且$g(c_1)=g(c_2)$
+
+因为$f,g$是单射，所以$a_1=a_2,c_1=c_2$
+
+所以$H$是单射
+
+$\forall a\in A,c\in C$
+
+$H(a,c)=(f(a),g(c))$一定存在
+
+因为$f,g$为函数
+
+所以$H(a,c)$唯一
+
+所以$H$为函数
+
+\noindent(b)因为是函数，所以$ran(H)\subseteq B\times D$
+
+$\forall(b,d)\in B\times D$
+
+因为$f,g$是满射，所以$\exists a_1$使得$f(a_1)=b$且$\exists c_1$使得$g(c_1)=d$
+
+即$\exists (f(a_1),g(c_1))=(b,d)$
+
+$\therefore H(a_1,c_1)=(f(a_1),g(c_1))=(b,d)$
+
+$\therefore B\times D\subseteq ran(H)$
+
+所以$H$是满射
+
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 15.15]
+Let $A,B,C$ and $D$ be nonempty sets. Let $f : A\rightarrow B$ and $g : C\rightarrow D$ be functions. Consider $H$ defined on $A\cup C$ by
+$$ H(x)=\left\{
+    \begin{aligned}
+    f(x) &  & if\ x\in A \\
+    g(x) &  & if\ x\in C 
+    \end{aligned}
+    \right.
+$$    
+
+Show that there exist sets $A,B,C$ and $D$ for which $H$ is not a function, but there also exist such sets for which $H$ is a function. What conditions can we palce on $A$ and $C$ that assure us that $H$ is a function?
+\end{problem}
+        
+\begin{solution}
+\
+    
+(i)
+
+$$ H(x)=\left\{
+    \begin{aligned}
+    0 &  & x\in(1,2)=A \\
+    1 &  & x\in(1,3)=C
+    \end{aligned}
+    \right.
+$$
+
+$B=\{0\},D=\{1\}$
+
+(ii)
+
+$$ H(x)=\left\{
+    \begin{aligned}
+    0 &  & x\in(1,2)=A \\
+    1 &  & x\in(2,3)=C
+    \end{aligned}
+    \right.
+$$
+
+$B=\{0\},D=\{1\}$
+
+(iii)$A\cap C=\emptyset$
+\end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+\begin{problem}[UD: 15.20]
+In this problem, we look at a function called the restriction function, which we now define.
+
+If $f : A\rightarrow B$ is a function, and $A_1\subset A$, we define another function $F : A_1\rightarrow B$ by $F(a)=f(a)$ for all $a\in A_1$.
+This function $F$ is called the $\textbf{restriction}$ of $f$ to $A_1$ and is usually denoted $f|_A1$.
+We now turn to the problem:
+
+(a) Prove that if $f$ is one-to-one, then $f|_A1$ is onto, then $f$ is onto.
+\end{problem}
+            
+\begin{solution}
+(a)
+假设$f|_{A_1}(\mathcal{X}1)=f|_{A_1}(\mathcal{X}2)$     
+
+因为$F(a)=f(a)$
+
+所以$f(\mathcal{X}1)=f(\mathcal{X}2)$
+
+因为$f$是单射，所以$\mathcal{X}1=\mathcal{X}2$
+
+所以$f|_{A_1}$也是单射
+
+\noindent(b)
+$\forall y\in B$
+
+因为$f|_{A_1}$为满射
+
+所以$\exists x\in A_1$使得$f|_{A_1}(x)=y$
+
+又因为$A_1\subseteq A$
+
+所以$\exists x\in A$使得$f(x)=y$
+
+所以$f$是满射
+
+\end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+\begin{problem}[UD: 16,19]
+Let $f : A\rightarrow B$ be a function. Prove that if $f$ is onto, then $\{f^{-1}(\{b\}):b\in B\}$ partitions the set $A$. 
+\end{problem}
+        
+\begin{solution}
+(1)$\because f$是满射，$\therefore \forall b\in B$, $\exists \mathcal{X}0\in A$ 使得 $f(\mathcal{X}0)=b\in B$
+
+$\therefore\forall b\in B\  f^{-1}(\{b\})\neq\emptyset$
+
+\noindent(2) 假设$\mathcal{X}0\in f^{-1}(\{b_1\})$ 且 $\mathcal{X}0\in f^{-1}(\{b_2\})$
+
+即$x\in\{x\in A:f(x)=b_1\}$ 且 $x\in\{x\in A:f(x)=b_2\}$
+
+$\therefore f(\mathcal{X}0)=b_1\ f(\mathcal{X}0)=b_2$
+
+$\because f$是函数$\therefore b_1=b_2$
+
+\noindent$\therefore \{f^{-1}(\{b\}):b\in B\}$是$A$的分割
+\end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+\begin{problem}[UD: 16.20]
+Suppose that $f : X\rightarrow Y$ is a function, and let $A_1$ and $A_2$ en subsets of $X$.
+
+(a) If $f(A_1)=f(A_2)$, must $A_1=A_2$?
+
+(b) Let $f$ be a bijective function. Show that if $f(A_1)=f(A_2)$, then $A_1=A_2$. Indicate claerly where you use one-to-one or onto. Did you use both?
+\end{problem}
+            
+\begin{solution}
+(a) No
+
+\noindent(b) (1)if $x\in A$,因为$f$是函数$\therefore f(x)\in f(A_1)$
+
+$\because f(A_1)=f(A_2)$  $\therefore f(x)\in f(A_2)$
+
+因为$f$是满射，所以一定存在$x\in A_2$使得$f(x)\in f(A_2)$
+
+又因为$f$是单射，所以此$x$唯一
+
+$\therefore x\in A_2$
+
+$\therefore A_1\subseteq A_2$
+
+(2)同理可得$A_2\subseteq A_1$
+
+\noindent$\therefore A_1=A_2$
+\end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+\begin{problem}[UD: 16.21]
+Suppose that $f : X\rightarrow Y$ is a function, and let $B_1$ and $B_2$ en subsets of $Y$.
+    
+(a) If $f^{-1}(B_1)=f^{-1}(B_2)$, must $B_1=B_2$?
+    
+(b) Let $f$ be a bijective function. Show that if $f^{-1}(B_1)=f^{-1}(B_2)$, then $B_1=B_2$. Indicate claerly where you use one-to-one or onto. Did you use both?
+
+\end{problem}
+                
+\begin{solution}
+(a) No
+
+\noindent(b) (1)if $y=f(x)\in B_1$
+
+因为$f$是满射，所以一定存在$x\in f^{-1}(B_1)$使得$f(x)\in B_1$
+
+又因为$f$是单射，所以此$x$唯一
+
+$\therefore x\in f^{-1}(B_1)$
+
+$f(x)\in B_2$
+
+$\therefore B_1\subseteq B_2$
+
+(2)同理可得 $B_2\subseteq B_1$
+
+\noindent $\therefore B_1=B_2$
+\end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+\begin{problem}[UD: 16.22]
+Let $X$ be a nonempty set and let $A_1$ and $A_2$ eb subsets of $X$. Recall the notation for characteristic function, $\mathcal{X}_A$, defined in Problem 13.5.
+
+(a) If $\mathcal{X}_{A_1}=\mathcal{X}_{A_2}$, must $A_1=A_2$?
+
+(b) Show that the product $\mathcal{X}_{A_1}\cdot\mathcal{X}_{A_2}$, which is defined pointwise on $X$ by $(\mathcal{X}_{A_1}\cdot\mathcal{X}_{A_2})(x)=\mathcal{X}_{A_1}(x)\cdot\mathcal{X}_{A_2}(x)$, satisfies $\mathcal{X}_{A_1}\cdot\mathcal{X}_{A_2}=\mathcal{X}_{A_1\cap A_2} $.
+
+(c) Show that $\mathcal{X}_{A_1}+\mathcal{X}_{A_2}-\mathcal{X}_{A_1\cap A_2}=\mathcal{X}_{A_1\cup A_2}$.(In other words, for each $x\in X$, we have $\mathcal{X}_{A_1}(x)+\mathcal{X}_{A_2}(x)-\mathcal{X}_{A_1\cap A_2}(x)=\mathcal{X}_{A_1\cup A_2}(x)$.)
+
+(d) Can you find a similar result for $\mathcal{X}_{X\backslash A_1}$?
+\end{problem}
+                    
+\begin{solution}
+(a) Yes
+
+\noindent(b) (1)如果$\mathcal{X}{A_1}\cdot \mathcal{X}{A_2}(x)=1$
+
+$\mathcal{X}{A_1}(x)\cdot \mathcal{X}{A_2}(x)=1$
+
+即$\mathcal{X}{A_1}(x)=1$ 且 $\mathcal{X}{A_2}(x)=1$
+
+$\therefore x\in A_1\cap A_2$
+
+$\therefore \mathcal{X}{A_1\cap A_2}(x)=1$
+
+(2) 如果$\mathcal{X}{A_1}\cdot \mathcal{X}{A_2}(x)=0$
+
+$\mathcal{X}{A_1}(x)\cdot \mathcal{X}{A_2}(x)=0$
+
+即$\mathcal{X}{A_1}(x)=0$ 或 $\mathcal{X}{A_2}(x)=0$
+
+$\therefore x\in X\backslash A_1\cap A_2$
+
+$\therefore \mathcal{X}{A_1\cap A_2}(x)=0$
+
+\noindent$\therefore\mathcal{X}_{A_1}\cdot\mathcal{X}_{A_2}=\mathcal{X}_{A_1\cap A_2} $
+
+\noindent(c) (1)如果$\mathcal{X}_{A_1}+\mathcal{X}_{A_2}-\mathcal{X}_{A_1\cap A_2}(x)=1$
+
+\textcircled{1}$x\in A_1\cap A_2$， 得$1+1-1=1$
+
+\textcircled{2}$x\in A_1\backslash A_1\cap A_2$， 得$1+0-0=1$
+
+\textcircled{3}$x\in A_2\backslash A_1\cap A_2$， 得$0+1-0=1$
+
+$\therefore x\in A_1\cup A_2$
+
+$\therefore \mathcal{X}_{A_1\cup A_2}(x)=1$
+
+(2)如果$\mathcal{X}_{A_1}+\mathcal{X}_{A_2}-\mathcal{X}_{A_1\cap A_2}(x)=0$
+
+$x\in \emptyset$
+
+$\therefore \mathcal{X}_{A_1\cup A_2}(x)=0$
+
+\noindent$\therefore \mathcal{X}_{A_1}+\mathcal{X}_{A_2}-\mathcal{X}_{A_1\cap A_2}=\mathcal{X}_{A_1\cup A_2}$
+
+\noindent(d) Yes
+
+$\mathcal{X}_{X\backslash A_1}=\mathcal{X}_{X}-\mathcal{X}_{A_1}$
+
+\end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % %
+% % % %%%%%%%%%%%
+% \begin{problem}[第五讲:UD 2.10]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+% \begin{problem}[UD 17.11]
+
+% \end{problem}
+%     %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+% \begin{problem}[ES 24.4]
+
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+% \begin{problem}[DH 2.4]
+% %  这是一个错题订正的模板
+
+% \end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+% \begin{problem}[DH 2.5]
+%     %  这是一个错题订正的模板
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% \begin{problem}[DH 2.8]
+
+% \end{problem}
+% \begin{revision}
+
+% \end{revision}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+%  %插入图片的方法：
+%  \begin{figure}
+%	\includegraphics[width = 0.30\textwidth]{hello.png}
+%	\caption{PNG}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+%  \end{figure}
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
