@@ -105,3 +105,4 @@ void have_permutation(int cur,int length, int * A, int * B,int **get_temp)
     Memory:19864 kb
 ****************************************************************/
 
+
