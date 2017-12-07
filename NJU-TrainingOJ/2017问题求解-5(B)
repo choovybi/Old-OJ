@@ -1,0 +1,67 @@
+//created by bqy1999 2017/12/8
+ 
+#include <stdio.h>
+ 
+int main(){
+ 
+    int numf=0;
+    int nums=0;
+    int length=0;
+    int times=0;
+    int mat[64][64]={0};
+    int arr[64];
+ 
+    while(1){
+        scanf("%d",&numf);
+        arr[length]=numf;
+        if(numf==-1)break;
+        length++;
+    }
+ 
+    scanf("%d",&times);
+    for(int i=0;i<times;++i){
+        scanf("%d",&numf);
+        scanf("%d",&nums);
+        mat[numf][nums]=1;
+    }
+ 
+    //reflexive
+    int ref=0;
+    for(int i=0;i<length;i++){
+        if(mat[arr[i]][arr[i]]!=1)ref++;
+    }
+    if(ref==0)printf("reflexive\n");
+ 
+    //symmetric
+    int sym=0;
+    for(int i=0;i<length;++i){
+        for(int j=0;j<length;++j){
+            if(mat[arr[i]][arr[j]]==1&&mat[arr[j]][arr[i]]==0)sym++;
+        }
+    }
+    if(sym==0)printf("symmetric\n");
+ 
+    //transitive
+    int tra=0;
+    for(int i=0;i<length;++i){
+        for(int j=0;j<length;++j){
+            if(mat[arr[i]][arr[j]]==1&&arr[i]!=arr[j]){
+                for(int k=0;k<length;++k){
+                    if(mat[arr[j]][arr[k]]==1&&mat[arr[i]][arr[k]]==0)tra++;
+                }
+            }
+        }
+    }
+    if(tra==0)printf("transitive\n");
+ 
+    return 0;
+}
+/**************************************************************
+    Problem: 1060
+    User: 171860624
+    Language: C
+    Result: 正确
+    Time:0 ms
+    Memory:960 kb
+****************************************************************
+本题使用关系矩阵来实现；可行的方法还有键值对、图、链表等等，但亲测效果没有关系矩阵好
