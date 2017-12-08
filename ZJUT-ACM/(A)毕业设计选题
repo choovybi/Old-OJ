@@ -30,3 +30,41 @@ int main(){
 
     return 0;
 }
+---------------------------------------------------------------------------------------------------
+上面时间开销太大，下面的运行时间少一些
+
+#include <iostream>
+//#include <string>
+
+using namespace std;
+
+char str[2][55], *p=str[0], *q=str[1];
+
+int main(){
+    int num=0;
+    int line=0;
+
+    //string s;
+    double gds=0;
+    double work=0;
+
+    //string str;
+    double quo=0;
+
+    scanf("%d", &num);
+    for(int i=0;i<num;++i){
+        scanf("%d", &line);
+        quo=0;
+        for(int j=0;j<line;++j){
+            //cin>>s>>gds>>work;
+            scanf("%s%d%d", p, &gds, &work);
+            if((gds/work)>quo){
+                quo=gds/work;
+                swap(p, q);
+            }
+        }
+        cout<<q<<endl;
+    }
+
+    return 0;
+}
