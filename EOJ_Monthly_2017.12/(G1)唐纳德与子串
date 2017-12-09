@@ -1,0 +1,50 @@
+#include<iostream>
+#include<stdlib.h>
+#include <string.h>
+using namespace std;
+
+int findChildCnt(char* str1, char* str2);
+int main(){
+    char str1[101];
+    int tim=0;
+    cin>>str1>>tim;
+
+    int hea=0;
+    int tail=0;
+    char str2[101];
+
+    for(int i=0;i<tim;++i){
+        cin>>hea>>tail>>str2;
+
+        char* temp=new char[tail-hea+1];
+
+        int k=0;
+        for(int j=hea;j<=tail;++j){
+            temp[k]=str1[j];
+            ++k;
+        }
+
+        //cout<<str1[hea]<<endl;
+        //cout<<(tail-hea+1)<<endl;
+
+        int val=findChildCnt(temp, str2);
+
+        cout<<val<<endl;//这个地方一开始忘了敲回车，导致一直WA，好晕(((φ(◎ロ◎;)φ)))
+    }
+
+    return 0;
+}
+
+int findChildCnt(char* str1, char* str2)
+{
+    //int len=strlen(str2);
+    int cnt = 0;
+    while (str1 = strstr(str1, str2))
+    {
+        cnt++; 
+        //str1 +=len; 
+        str1++;
+    }
+    return cnt;
+}
+
