@@ -1,0 +1,52 @@
+#include <iostream>
+#include<stdlib.h>
+
+using namespace std;
+
+int main()
+{
+    int p=0;
+    cin>>p;
+    int arr1[6];
+    int arr2[6];
+    for(int i=0;i<6;++i){
+        cin>>arr1[i];
+    }
+    for(int j=0;j<6;++j){
+        cin>>arr2[j];
+    }
+
+    int arr[36]={0};
+    int m=0;
+    for(int k=0;k<6;++k){
+        for(int l=0;l<6;++l){
+            arr[m]=arr1[k]+arr2[l];
+            m++;
+        }
+    }
+
+
+    int *arr3=(int*)malloc(sizeof(int)*p);
+    for(int i=0;i<p;++i){
+        arr3[i]=0;
+    }
+    int q=0;
+    for(int q=0;q<p;++q){
+        for(int i=0;i<36;++i){
+            arr[i]=arr[i]%p;
+            if(arr[i]==q){
+                arr3[q]++;
+            }
+        }
+    }
+
+    int n=arr3[0];
+    for(int i=1;i<p;++i){
+        if(arr3[i]!=n){
+            cout<<"No"<<endl;
+            return 0;
+        }
+    }
+    cout<<"Yes"<<endl;
+    return 0;
+}
