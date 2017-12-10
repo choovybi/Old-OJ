@@ -16,6 +16,8 @@
 \usepackage{amsmath}
 \usepackage{lmodern}
 \usepackage{textcomp}
+\usepackage{mathabx}
+
 
 %%%%%%%%%%%%%%%%%%%%
 \title{第十二讲：偏序关系和格}
@@ -35,7 +37,13 @@
 \end{problem}
 
 \begin{solution}
+(a) minimal of $B$ : $d,f$; maximal of $B$ : $a$
 
+\noindent(b) $B$ have no first element and a last element $a$
+
+\noindent(c) $[(a,6),(b,5),(c,4),(d,3),(e,2),(f,1)]$ and $[(a,6),(b,4),(c,5),(d,3),(e,2),(f,1)]$
+
+The number of consistent enumerations of $B$ is 11
 \end{solution}
 
 % The ``remark'' environments (when needed) must be 
@@ -58,6 +66,14 @@
 \end{problem}
 
 \begin{solution}
+\
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.40\textwidth]{f.png}
+	\caption{14.44}
+   %\fig{width = 0.30\textwidth}{14.44.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{14.44.png}
+\end{figure} 
 
 \end{solution}
 
@@ -70,7 +86,9 @@
 \end{problem}
 
 \begin{solution}
+(a) an $\prec$ at $\prec$ go $\prec$ or $\prec$ arm $\prec$ one $\prec$ about $\prec$ gate $\prec$ gone $\prec$ occur.
 
+\noindent(b) an $\prec$ about $\prec$ arm $\prec$ at $\prec$ gate $\prec$ go $\prec$ gone $\prec$ occur $\prec$ one $\prec$ or.
 \end{solution}
 % %%%%%%%%%%
 
@@ -82,6 +100,32 @@
 \end{problem}
 
 \begin{solution}
+(a) $\because A$ is an ordered set, 
+
+let $f(a)=a$, $f: A\rightarrow A$ is a bijective mapping
+
+and $f$ preserves the order relations.
+
+\noindent(b) $\because A\cong B$
+
+$\therefore \exists f: A\rightarrow B$ is a bijective mapping
+
+and $f$ preserves the order relations.
+
+Let $g=f^{-1}: B\rightarrow A$
+
+so $g$ is also a bijective mapping and $g$ preserves the order relations.
+
+$\therefore B\cong A$
+
+\noindent(c) $\because A\cong B$ and $B\cong C$
+
+$\therefore \exists f: A\rightarrow B$ and $g: B\rightarrow C$
+
+$f$ and $g$ are both bijective mappings and both preserves the order relations.
+
+$\therefore g(f): A\rightarrow C$ is also a bijective mapping and preserves the order relations.
+
 
 \end{solution}
 % %%%%%%%%%%
@@ -92,6 +136,22 @@
 \end{problem}
 
 \begin{solution}
+\
+
+$\because A\cong B$ so $\exists f : A\rightarrow B$ and $f$ is a bijective mapping and preserves the order relations.
+
+$\because A$ and $B$ are well-ordered sets so 
+
+assume there exists another $g : A\rightarrow B$ and $g$ is a bijective mapping and preserves the order relations.
+
+for $b\in B$ $\because A\cong B$ 
+
+so there exists $a_1\in A$ and $f(a_1)=b$;$a_2\in A$ and $g(a_2)=b$;$a_1 \neq a_2$
+
+because $f$ and $g$ are both bijective mapping and preserves the order relations.
+
+so $a_1\nprec a_2$ and $a_2\nprec a_1$ so $A$ is not well-ordered,contradictory.
+
 
 \end{solution}
 % %%%%%%%%%%
@@ -102,7 +162,17 @@
 \end{problem}
 
 \begin{solution} 
+(a) join-irreducible elements: $0, a, b, c, g$
 
+\noindent(b) atoms: a,b,can
+
+\noindent(c) the complement of $a$ is $b, g$ the complement of $b$ does not exist.
+
+\noindent(d) $a, b, c$ and $g$ are irredundant join-irreducible elements.
+
+$a=a\cup a$; $b=b\cup b$; $c=c\cup c$; $d=a\cup c$; $e=b\cup c$; $f=a\cup b$; $g=g\cup g$; $I=(a\cup b)\cup g$.
+
+\noindent(e) $M$ is neither distributive nor complemented.
 \end{solution}
 %%%%%%%%%%
 
@@ -114,6 +184,29 @@
 
 \begin{solution}
 
+(a)
+\begin{figure}[!htb]
+    \includegraphics[width = 0.40\textwidth]{g.png}
+	\caption{(a)}
+   %\fig{width = 0.30\textwidth}{14.70.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{14.70.png}
+\end{figure} 
+
+\noindent(b) $1,2,3,4,5$ are join-irreducible
+
+atoms are $2,3,5$
+
+\noindent(c) the complements of 2 do not exist.
+
+the complements of 10 do not exist too.
+
+\noindent(d) 
+
+$1=1\cup 1$; $2-2\cup 2$; $3=3\cup 3$; $4=4\cup 4$; $5=5\cup 5$; 
+
+$6=2\cup 3$; $10=2\cup 5$; $12=4\cup(2\cup 3)$; $15=3\cup 5$; $20=4\cup(2\cup 5)$; $30=(2\cup 5)\cup(3\cup 5)$; 
+
+$60=(4\cup(2\cup 3))\cup(4\cup(2\cup 5))\cup((2\cup 5)\cup(3\cup 5))$.
 \end{solution}
 %%%%%%%%%%
 
@@ -124,6 +217,33 @@
 \end{problem}
 
 \begin{solution}
+(a) $\because M$ is distributive lattice
+
+$\therefore a\lor(b\land c)=(a\lor b)\land(a\lor c)$
+
+$\because a\leq c$ so $a\lor c=c$
+
+$\therefore a\lor(b\land c)=(a\lor b)\land c$
+
+\noindent(b) let $a\leq c$
+
+if $b\neq I$, then $a\lor(b\land c)=a\lor 0=a$ and $(a\lor b)\land c=a\land c=a$
+
+$\therefore a\lor(b\land c)=(a\lor b)\land c$
+
+if $b=I$, then $a\lor(b\land c)=a\lor c=c$ and $(a\lor b)\land c=I\land c=c$
+
+$\therefore a\lor(b\land c)=(a\lor b)\land c$
+
+$\therefore $non-distributive lattice can be modular.
+
+\noindent(c) $a\leq c$
+
+$a\lor(b\land c)=a\lor 0=a$ and $(a\lor b)\land c=I\land c=c$
+
+$a\neq c$ so $a\lor(b\land c)\neq(a\lor b)\land c$
+
+$\therefore $the nondistributive lattice in Fig. 14-7(a) is non-modular.
 
 \end{solution}
 %%%%%%%%%%
