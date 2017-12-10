@@ -1,1 +1,1031 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
 
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{第十一讲：有限与无限}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+%\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[UD: 20.4]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+\end{problem}
+
+\begin{solution}
+(a) $\because \exists f:\mathbb{Q^+}\rightarrow\mathbb{Q^-}$
+
+$f(x)=-x$, $x\in\mathbb{Q^+}$
+
+很明显$f$是双射，
+
+$\therefore \mathbb{Q^+}$和$\mathbb{Q^-}$是equivalent
+
+\noindent(b) $\because \exists g；\{x=2k|k\in\mathbb{Z}\}\rightarrow \{x=2k+1|k\in\mathbb{Z}\}$
+
+$g(x)=x+1$, $x\in\{x=2k|k\in\mathbb{Z}\}$
+
+很明显$g$是双射，
+
+$\therefore$ even and odd integers are equivalent
+\end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 20.8]
+\end{problem}
+
+\begin{solution}
+\textcircled{1}$\because A\cap B=\emptyset$
+
+$\therefore x\notin A\cap B$ but $x\in A\cup B$
+
+$\because f$ and $g$ are bijective functions
+
+$\therefore$ $H(x)$存在且唯一
+
+$\therefore H$ is a function
+
+\noindent\textcircled{2}
+
+(a) 假设$H(x_1)=H(x_2)$
+
+(1)$f(x_1)=f(x_2)$
+
+$\because f$ is bijective function
+
+$\therefore x_1=x_2$
+
+(2)$g(x_1)=g(x_2)$
+
+$\because g$ is bijective function
+
+$\therefore x_1=x_2$
+
+(3)$f(x_1)=g(x_2)$ or $g(x_1)=f(x_2)$
+
+$\because C\cap D=\emptyset$
+
+$\therefore f(a)\neq(b)$
+
+所以$H$是单射
+
+(b) 因为$H$是函数，所以$ran(H)\subseteq C\cup D$
+
+假设$y\in C\cup D$
+
+因为$C\cup D=\emptyset$所以有两种情况：
+
+(1) $y\in C$ $\because f$ is onto
+
+$\therefore \exists x_1\in A$ 使得 $f(x_1)=y$
+
+(2) $y\in D$ $\because g$ is onto
+
+$\therefore \exists x_2\in B$ 使得 $g(x_2)=y$
+
+$\therefore C\cup D\subseteq ran(H)$
+
+$\therefore C\cup D=ran(H)$
+
+所以$H$是满射
+
+\noindent $\therefore H$ is well-defined and bijective.
+\end{solution}
+
+% %%%%%%%%%
+% %\newpage  % page-break; comment it out if not necessarily
+% %这个的作用是主动开始新的一页
+% %%%%%%%%%
+\begin{problem}[UD: 20.9]
+\end{problem}
+
+\begin{solution}
+(a)
+    
+$\because A$是有限集
+
+$\therefore \exists f$ 使得 $f: A\rightarrow \{1,2,\dots,n\}$ for some $n$, $f$是双射
+
+$A\approx\{1,2,\dots,n\}$
+
+$\because B$是有限集
+
+$\therefore \exists g$ 使得 $g: B\rightarrow \{1,2,\dots,m\}$ for some $m$, $g$是双射
+
+$\exists H: \{1,2,\dots,m\}\rightarrow\{n+1,n+2,\dots,n+m\}$ 
+
+$H(x)=x+n$ 易得$H$为双射
+
+$\therefore \exists H(g)$ 使得 $H(g):B\rightarrow\{n+1,n+2,\dots,n+m\}$
+
+$B\approx \{n+1,n+2,\dots,n+m\}$
+
+\noindent(b)
+
+证明$A\cup B$是有限集即证明
+
+$\exists F: A\cup B\rightarrow \{1,2,\dots,k\}$ for some $k$, 
+
+令$\{1,2,\dots,k\}=\{1,2,\dots,n\}\cup\{n+1,n+2,\dots,n+m\}$ 即$k=m+n$
+
+$$ F(x)=\left\{
+    \begin{aligned}
+    f(x) &  & if\ x\in A \\
+    H(g(x)) &  & if\ x\in B 
+    \end{aligned}
+    \right.
+$$
+
+由$(a)$和Theorem 20.6得$F$是双射，
+
+所以$A\cup B$是有限集
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+
+\begin{problem}[UD: 20.10]
+\end{problem}
+
+\begin{solution}
+\
+    
+$\because A\approx C$
+
+$\therefore \exists f: A\rightarrow C$, $f$是双射
+
+$\because B\approx D$
+
+$\therefore \exists g: B\rightarrow D$, $g$是双射
+
+令$$ H(x)=\left\{
+    \begin{aligned}
+    f &  & if\ x\in A \\
+    g &  & if\ x\in B 
+    \end{aligned}
+    \right.
+$$
+
+由 Problem 15.14得$H$是双射，
+
+而$H$又有$H: A\times B\rightarrow C\times D$
+
+$\therefore A\times B\approx C\times D$
+
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 21.7]
+
+\end{problem}
+
+\begin{solution}
+\
+    
+$\because \mathbb{Z}\subset \mathbb{Q}$
+
+又21.4证明$\mathbb{Z}$ is infinite
+
+因为Corollary20.11证明``every subset of a finite set is finite''
+
+$\therefore \mathbb{Q}$必定是无穷集合
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+\begin{problem}[UD: 21.9]
+
+\end{problem}
+
+\begin{solution}
+$B\subseteq A$
+
+$B$ is an infinite set
+
+因为Corollary20.11证明``every subset of a finite set is finite''
+
+$\therefore A$必定时无穷集合
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 21.10]
+
+\end{problem}
+
+\begin{solution}
+\
+
+假设$\forall b\in B$ $f^{-1}(\{b\})$是有穷的
+
+即$\exists $有穷集合$S_{b}$，使得$f:S_b\rightarrow \{b\}$
+
+假设$f:A\rightarrow B'$是满射
+
+$B'=\bigcup_{i=1}^{n}\{b_i\}$，因为$B$是有穷集合，所以$B'$也是有穷集合，则$n$为一个固定正整数
+
+$\therefore A=\bigcup_{i=1}^{n}S_{b_i}$为有限个有穷集合的并
+
+最终可以化成Theorem20.12的形式
+
+可得$A$也是有穷集合
+
+与``A is an infinite set''矛盾
+
+$\therefore \exists b\in B$ such that $f^{-1}(\{b\})$ is infinite
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 21.11]
+
+\end{problem}
+
+\begin{solution}
+\
+
+\noindent(a)finite
+
+\noindent原因：$A\cap B\subset A$
+
+$\because A$ is finite，根据Corollary 20.11``Let S be a finite set. Then every subset of S is finite.''
+
+$\therefore A\cap B$ is finite.
+
+\noindent(b)finite
+
+\noindent原因：$A\backslash B\subset A$
+
+剩余证明同(a)，所以$A\backslash B$ is finite.
+
+\noindent(c)infinite
+
+\noindent原因：假设$X\backslash A$ is finite
+
+there exists an integer $m$ and a one-to-one mapping, $g$, of $\mathbb{N}$ onto $\{1,2,\dots,m\}$
+
+$\because A$ is finite
+
+there exists an integer $n$ and a one-to-one mapping, $f$, of $\mathbb{N}$ onto $\{1,2,\dots,n\}$
+
+根据集合运算
+
+there exists an integer $k$ and a one-to-one mapping, $h$, of $\mathbb{N}$ onto $\{1,2,\dots,m+n\}$
+
+$$ h(x)=\left\{
+    \begin{aligned}
+    f(x) &  & if\ x\in A \\
+    g(x) &  & if\ x\in X\backslash A
+    \end{aligned}
+    \right.
+$$
+
+$\therefore X$ is finite，矛盾
+
+$\therefore X\backslash A$ is finite.
+
+\noindent(d)finite
+
+\noindent原因：$\because A$和$B$ is finite set.
+
+根据Theorem 20.12``The union of two finite sets is finite''
+
+$\therefore A\cup B$ is finite.
+
+\noindent(e)finite
+
+\noindent原因：$\because A$ is finite.
+
+$f:A\rightarrow X$ is a one-to-one function
+
+$\therefore \exists m$ and a one-to-one function $f^{-1}$
+
+$f^{-1}:f(A)\rightarrow A$
+
+$\therefore f(A)$ is finite.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[UD: 21.16]
+
+\end{problem}
+
+\begin{solution}
+(a) $\because A$ is finite.
+
+$\therefore \exists m$ and a one-to-one function $f:A\rightarrow \{1,2,\dots,m\}$
+
+$\because B$ is finite.
+
+$\therefore \exists n$ and a one-to-one function $g:B\rightarrow \{1,2,\dots,n\}$
+
+$\because B\subseteq A$
+
+$\therefore \{1,2,\dots,m\}\subseteq\{1,2,\dots,n\}$
+
+$\therefore m\leq n$
+
+$\therefore |B|=m\leq n=|A|$
+
+\noindent(b)根据(a) $\because B\subseteq A$
+
+$\therefore |B|\leq |A|$
+
+假如$B=A$,$\exists m$ and two one-to-one functions$f,g$
+
+$f:A\rightarrow \{1,2,\dots,m\}$
+
+$g:B\rightarrow \{1,2,\dots,m\}$
+
+$\therefore |A|=|B|$
+
+$\because B\neq A$
+
+$\therefore |A|\neq|B|$
+
+$\therefore |B|<|A|$
+
+\noindent(c)根据(a)
+
+$\because B\subseteq A$
+
+$\therefore |B|\leq |A|$
+
+又$\because |A|\leq |B|$
+
+$\therefore |A|=|B|$
+
+又$\because B\subseteq A$
+
+$\therefore B=A$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[UD: 21.17]
+
+\end{problem}
+    
+\begin{solution}
+\
+$\because A,B$ are finite sets
+
+$\therefore \exists m$ and a one-to-one mapping $g:A\rightarrow \{1,2,\dots,m\}$
+
+$\exists n$ and a one-to-one mapping $h:B\rightarrow \{1,2,\dots,n\}$
+
+根据鸽笼原理，如果$n<m$，那么不存在$f:A\rightarrow B$ is one-to-one
+
+$\therefore m\leq n$
+
+$\therefore m=|A|\leq |B|=n$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 21.18]
+
+\end{problem}
+    
+\begin{solution}
+(i) if $f$ is one-to-one
+
+$\because A$ is finite
+
+$\therefore \exists m$ $A\approx \{1,2,\dots,m\}$
+
+$\because f:A\rightarrow ran(f)$，$ran(f)$ is finite.
+
+$\therefore \exists n$ $ran(f)\approx \{1,2,\dots,n\}$
+
+$\because f$ is one-to-one
+
+$f:\{1,2,\dots,m\}\rightarrow \{1,2,\dots,n\}$
+
+$\therefore n=m$
+
+$\therefore |ran(f)|=n=m=|A|$
+
+\noindent(ii)if $f$ is not one-to-one
+
+$\because A$ is finite
+
+$\therefore \exists m$ $A\approx \{1,2,\dots,m\}$
+
+$\because f:A\rightarrow ran(f)$，$ran(f)$ is finite.
+
+$\therefore \exists n$ $ran(f)\approx \{1,2,\dots,n\}$
+
+$\because f$ is not one-to-one
+
+$f:\{1,2,\dots,m\}\rightarrow \{1,2,\dots,n\}$
+
+根据鸽笼原理$\therefore n<m$
+
+$\therefore |ran(f)|=n<m=|A|$
+
+\noindent$\therefore n\leq m$ 即 $|ran(f)\leq |A|$
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 21.19]
+
+\end{problem}
+    
+\begin{solution}
+(1)
+
+(i)$\because A$ is finite
+
+$\therefore \exists n$ 使得 $A\approx \{1,2,\dots,n\}$
+
+$\because f$ is one-to-one
+
+$\therefore ran(f)\approx\{1,2,\dots,n\}\approx A$
+
+$\because ran(f)\approx A$
+
+$\therefore f$ is onto
+
+(ii)$\because f$ is noto
+
+$\therefore \exists m$ 使得 $ran(f)\approx\{1,2,\dots,m\}\approx A$
+
+根据鸽笼原理
+
+if $f$ is ont one-to-one
+
+$\nexists f:A\rightarrow ran(f)$
+
+$\therefore f$ is one-to-one
+
+\noindent$\therefore$ Let $A$ be a finite set. $f:A\rightarrow A$ is one-to-one if and only if it is onto.
+
+
+\noindent(2)No
+
+$f:N\rightarrow N$
+
+$f()x=x+1$ is one-to-one but not onto
+
+但是$N$ is infinite.
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 22.1]
+
+\end{problem}
+    
+\begin{solution}
+(a) $\{A_{\alpha}=\{\alpha\}|\alpha\in \mathbb{N}\}$
+
+\noindent(b)$\{A_{\alpha}=\{1\}|\alpha\in \mathbb{N}\}$
+
+\noindent(c)不存在这样的collection
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 22.2]
+
+\end{problem}
+    
+\begin{solution}
+(a) countably infinite
+
+$\because f=\frac{1}{n}$ is one-to-one
+
+$\therefore ran(f)\approx \mathbb{Z}\backslash\{0\}$
+
+$\therefore \{1/n:n\in\mathbb{Z}\backslash\{0\}\}$ is countably infinite.
+
+\noindent(b)uncountable
+
+$\mathbb{R}\backslash \mathbb{N}\subseteq \mathbb{R}$
+
+根据Corollary 22.4
+
+if $\mathbb{R}\backslash \mathbb{N}$ is countable
+
+then $\mathbb{R}$ is countable
+
+已知$\mathbb{R}$ is uncountable
+
+$\therefore \mathbb{R}\backslash \mathbb{N}$ is uncountable
+
+\noindent(c)countably infinite
+
+$\{x\in\mathbb{Z}:|x-7|<|x|\}=\{x\in\mathbb{Z}:x>\frac{7}{2}\}\subseteq\mathbb{Z}$
+
+$\because \mathbb{Z}$ is countable
+
+$\therefore \{x\in\mathbb{Z}:|x-7|<|x|\}$ is countable
+
+假设$\{x\in\mathbb{Z}:|x-7|<|x|\}$ is finite
+
+$\therefore \exists m$ and a one-to-one mapping ,$f$, of$\{x\in\mathbb{Z}:|x-7|<|x|\}$ onto $\{4,5,\dots,m\}$
+
+Now $\{4,5,\dots,m+1\}\subseteq\{x\in\mathbb{Z}:|x-7|<|x|\}$
+
+根据鸽笼原理$\nexists g:\{4,5,\dots,m+1\}\rightarrow \{4,5,\dots,m\}$
+
+$\therefore \{x\in\mathbb{Z}:|x-7|<|x|\}$ is infinite
+
+\noindent(d)countably infinite
+
+$\because 2\mathbb{Z}$ and $3\mathbb{Z}$ is countable
+
+根据Corollary 22.10
+
+$\therefore 2\mathbb{Z}\times 3\mathbb{Z}$ is countable
+
+$\because \mathbb{Z}$ is infinite
+
+$\therefore 2\mathbb{Z}\times 3\mathbb{Z}$ is infinite
+
+$\therefore 2\mathbb{Z}\times 3\mathbb{Z}$ is countably infinite.
+
+\noindent(e)uncountably
+
+$\{A_{\alpha}=\{y=kx+b:k=\alpha,b\in\mathbb{R}\}:\alpha\in\mathbb{Q}\}$
+
+$\because b\in\mathbb{R}$
+
+$\therefore \{y=k_{0}x+b:b\in\mathbb{R}\}$ is uncountable
+
+$\therefore \{y=kx+b:k\in\mathbb{Q},b\in\mathbb{R}\}$ is uncountable
+
+$\therefore \{A_{\alpha}=\{y=kx+b:k=\alpha,b\in\mathbb{R}\}:\alpha\in\mathbb{Q}\}$ is uncountable
+
+\noindent(f)countably infinite
+
+$\because \mathbb{Q}\backslash\{0\}\subseteq\mathbb{Q}$ and $\mathbb{Q}$ is countable
+
+$\therefore \mathbb{Q}\backslash\{0\}$ is countable
+
+$\mathbb{N}^+\subseteq\mathbb{Q}\backslash\{0\}$
+
+$\because \mathbb{N}^+$ is infinite
+
+$\therefore \mathbb{Q}\backslash\{0\}$ is infinite
+
+$\therefore \mathbb{Q}\backslash\{0\}$ is countably infinite.
+
+\noindent(g)countably infinite
+
+证明过程类似(f)
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 22.3]
+
+\end{problem}
+    
+\begin{solution}
+uncountable
+
+假设这个包含所有0和1的序列$A$是countably infinite
+
+则$\exists$ a bijective function $f:\mathbb{Z}^+\rightarrow A$
+
+so
+
+$f(1)=a_{11}a_{12}a_{13}\dots$
+
+$f(2)=a_{21}a_{22}a_{23}\dots$
+
+$f(3)=a_{31}a_{32}a_{33}\dots$
+
+$\vdots$
+
+其中$a_{ij}\in\{0,1\}$
+
+现在构造一个新的序列$b_1=\neg a_{11}\cdots b_n=\neg a_{nn}$
+
+可得$\nexists f(x)=b_{1}b_{2}\dots b_{n}$
+
+$\therefore A$ is countable
+
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[UD: 22.6]
+
+\end{problem}
+        
+\begin{solution}
+    \
+    
+$S$ is countable set,$A$ is a subset of $S$
+
+\textcircled{1} $S$ is finite set
+
+根据Corollary 20.11 $A$ is finite
+
+$\therefore A$ is countable
+
+\textcircled{2} $S$ is infinite
+
+$\exists f:S\rightarrow \mathbb{N}$ $f$ is bijective
+
+(1)$A$ is finite, then $A$ is countable
+
+(2)$A$ is infinite, then $A$ has a least element $a_1$
+
+Let $g(1)=a_1\cdots g(n)=a_n$
+
+[1] We first note that $g$ is defined for every positive integer 
+
+and there is a unique value associated with each positive integer;
+
+in other words, $g$ is well-defined
+
+[2] let $i,j$ be positive integers with $i\neq j$
+
+Since $i\neq j$, 
+
+one of them must be strictly smaller than the other, say $i<j$.
+
+Now $g$ was constructed to make $a_1<a_2<\cdots <a_n<a_n+1$ 
+
+It follows that $a_i<a_j$, and consequently $g(i)\neq g(j)$.
+
+Thus $g$ is one-to-one
+
+[3] If $s\ A$, consider the set $A_1=\{a\in A:a<s\}$
+
+Then $A_1$ is finite, so there exists $n\in\mathbb{Z}^+$ such that $|A_1|=n$
+
+Thus, there are $n$ elements in $A_1$ 
+
+and these have been enumerated by $g$ as $g(a)=a_1,\cdots,g(n)=a_n$
+
+Now $s\in A\backslash A_1$ and anything that is in $A$ and less than $s$ is in $A_1$,
+
+so $s$ is also the least element of the set $A\backslash A_1=A\backslash\{g(1),\cdots,g(n)\}$.
+
+Hence $g(n+1)=s$. therefore, $g$ is onto. Since $g$ is bijection, $A$ is countable.
+
+\end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+\begin{problem}[UD: 22.9]
+
+\end{problem}
+            
+\begin{solution}
+\
+
+观察这个矩阵
+
+每一行的分子为$1,2,3,4,\cdots$
+
+每一列的分母为$1,2,3,4,\cdots$
+
+$\exists f: \mathbb{Q}\rightarrow \mathbb{N}^2$ and $f$ is one-to-one
+
+$\because \mathbb{N}^2\approx \mathbb{N}$
+
+$\therefore f: \mathbb{Q}\rightarrow \mathbb{N}$ and $f$ is also one-to-one
+
+$\therefore \mathbb{Q}$ is countable.
+\end{solution}
+%%%%%%%%%%
+            
+
+                
+%%%%%%%%%%
+\begin{problem}[UD: 23.2]
+
+\end{problem}
+                    
+\begin{solution}
+(a) the distance in the usual metric is 2
+
+the distance in the discrete metric is 1
+
+\noindent(b) the distance in the usual metric is $\sqrt{5}$
+
+the distance in the taxicab metric is 3
+
+the distance in the max metric is 2
+
+the distance in the discrete metric is 1
+\end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+\begin{problem}[UD: 23.3]
+
+\end{problem}
+                    
+\begin{solution}
+(a)
+ %插入图片的方法：
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{a.png}
+	\caption{(a)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+\newpage
+\noindent(b)
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{b.png}
+	\caption{(b)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+
+\noindent(c)
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{c.png}
+	\caption{(c)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+
+\noindent(d)
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{d.png}
+	\caption{(d)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+
+\noindent(e)
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{e.png}
+	\caption{(e)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+ 
+\end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+\begin{problem}[UD: 23.10]
+
+\end{problem}
+
+\begin{solution}
+(i) $d(p,q)=|p(0)-q(0)|>=0$ 成立;
+
+\noindent(ii) if $d(p,q)=0$
+
+then $p(0)=q(0)$
+
+there is not necessarily that $p=q$
+
+$\therefore d(p,q)=|p(0)-q(0)|$ is not a metric.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 23.3]
+    
+% \end{problem}
+    
+% \begin{solution}
+        
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 22.4]
+    
+% \end{problem}
+        
+% \begin{solution}
+    
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%    
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % %
+% % % %%%%%%%%%%%
+% \begin{problem}[第五讲:UD 2.10]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+% \begin{problem}[UD 17.11]
+
+% \end{problem}
+%     %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+% \begin{problem}[ES 24.4]
+
+% \end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+% \begin{problem}[DH 2.4]
+% %  这是一个错题订正的模板
+
+% \end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+% \begin{problem}[DH 2.5]
+%     %  这是一个错题订正的模板
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+% \begin{problem}[DH 2.8]
+
+% \end{problem}
+% \begin{revision}
+
+% \end{revision}
+
+
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+   
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
