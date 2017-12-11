@@ -1,0 +1,28 @@
+平方和与立方和
+
+#include <stdio.h>
+
+int main(){
+    int fst,lst=0;
+    int pro2,pro3=0;
+    while (scanf("%d %d",&fst,&lst)!=EOF){
+        pro2=0;
+        pro3=0;
+        if(lst>=fst){
+            for (int i = fst; i <=lst ; ++i) {
+                if(i%2==0)pro2+=(i*i);
+                else pro3+=(i*i*i);
+                //pro3+=pow(i,3)不可以，因为pow的类型是浮点型，转换成int型时会产生误差
+            }
+        } else{
+            for (int i = lst; i <=fst ; ++i) {
+                if (i % 2 == 0)pro2 += (i * i);
+                else pro3 += (i * i * i);
+            }
+        }
+
+        printf("%d %d\n",pro2,pro3);
+    }
+
+    return 0;
+}
