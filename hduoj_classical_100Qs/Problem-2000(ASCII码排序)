@@ -1,4 +1,4 @@
-//ASCII码排序
+ASCII码排序
 
 #include <iostream>
 #include <cstdio>
