@@ -1,0 +1,16 @@
+计算两点间的距离
+
+#include <iostream>
+#include <math.h>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    double x1,y1,x2,y2,res1,res2,res=0;
+    while (cin>>x1>>y1>>x2>>y2){
+        res=sqrt(pow(x1-x2,2)+pow(y1-y2,2));
+        printf("%.2f\n",res);
+    }
+    return 0;
+}
