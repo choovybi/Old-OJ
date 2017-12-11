@@ -1,0 +1,27 @@
+第几天？
+
+#include <stdlib.h>
+#include <cstdio>
+
+int main(){
+    int year,month,day,feb=0;
+    while(scanf("%d/%d/%d",&year,&month,&day)!=EOF){
+        if(month==1)printf("%d\n",day);
+        else if(month==2)printf("%d\n",31+day);
+        else {
+            if((year%4==0&&year%100!=0)||year%400==0)feb=29;
+            else feb=28;
+            if(month==3)printf("%d\n",31+feb+day);
+            else if(month==4)printf("%d\n",31+feb+31+day);
+            else if(month==5)printf("%d\n",31+feb+31+30+day);
+            else if(month==6)printf("%d\n",31+feb+31+30+31+day);
+            else if(month==7)printf("%d\n",31+feb+31+30+31+30+day);
+            else if(month==8)printf("%d\n",31+feb+31+30+31+30+31+day);
+            else if(month==9)printf("%d\n",31+feb+31+30+31+30+31+31+day);
+            else if(month==10)printf("%d\n",31+feb+31+30+31+30+31+31+30+day);
+            else if(month==11)printf("%d\n",31+feb+31+30+31+30+31+31+30+31+day);
+            else if(month==12)printf("%d\n",31+feb+31+30+31+30+31+31+30+31+30+day);
+        }
+    }
+    return 0;
+}
