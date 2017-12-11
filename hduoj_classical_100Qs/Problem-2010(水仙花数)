@@ -17,7 +17,7 @@ int main(){
                 one=i-100*hun-10*ten;
                 if(i==(hun*hun*hun)+(ten*ten*ten)+(one*one*one)){
                     if(num==0)printf("%d",i);
-                    else printf(" %d",i);
+                    else printf(" %d",i);//这里的输出条件很苛刻，要求的是两个数之间用空格隔开，末尾不能有！！！
                     num++;
                 }
             }
