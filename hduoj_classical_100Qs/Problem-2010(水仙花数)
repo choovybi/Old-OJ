@@ -1,0 +1,41 @@
+水仙花数
+
+#include <stdio.h>
+
+int main(){
+    int m,n,num=0;
+    int hun,ten,one=0;
+    while(scanf("%d %d",&m,&n)!=EOF){
+        hun=0;
+        ten=0;
+        one=0;
+        num=0;
+        if(n>m){
+            for (int i = m; i <=n ; ++i) {
+                hun=i/100;
+                ten=(i-100*hun)/10;
+                one=i-100*hun-10*ten;
+                if(i==(hun*hun*hun)+(ten*ten*ten)+(one*one*one)){
+                    if(num==0)printf("%d",i);
+                    else printf(" %d",i);
+                    num++;
+                }
+            }
+        }
+        else{
+            for (int i = n; i <=m ; ++i) {
+                hun=i/100;
+                ten=(i-100*hun)/10;
+                one=i-100*hun-10*ten;
+                if(i==(hun*hun*hun)+(ten*ten*ten)+(one*one*one)){
+                    if(num==0)printf("%d",i);
+                    else printf(" %d",i);
+                    num++;
+                }
+            }
+        }
+        if(num==0)printf("no");
+        printf("\n");
+    }
+    return 0;
+}
