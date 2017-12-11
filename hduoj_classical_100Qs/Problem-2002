@@ -1,0 +1,17 @@
+计算球体积
+
+#include <iostream>
+#include <cstdio>
+#include <cmath>
+
+#define PI 3.1415927
+
+using namespace std;
+
+int main(){
+    double r=0;
+    while (cin>>r){
+        printf("%.3f\n",(4.000/3.000)*PI*pow(r,3));
+    }
+    return 0;
+}
