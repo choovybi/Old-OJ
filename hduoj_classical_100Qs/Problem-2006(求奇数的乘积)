@@ -1,0 +1,18 @@
+求奇数的乘积
+
+#include <stdio.h>
+
+int main(){
+    int num,cur=0;
+    int pro=1;
+    while(scanf("%d",&num)!=EOF){
+        pro=1;
+        for (int i = 0; i <num ; ++i) {
+            scanf("%d",&cur);
+            if(cur%2!=0)pro*=cur;
+        }
+        printf("%d\n",pro);
+    }
+
+    return 0;
+}
