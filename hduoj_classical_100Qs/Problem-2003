@@ -1,0 +1,18 @@
+求绝对值
+
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    double a=0;
+    while (cin>>a){
+        if(a<0){
+            a=-a;
+            printf("%.2f\n",a);
+        }
+        else printf("%.2f\n",a);
+    }
+    return 0;
+}
