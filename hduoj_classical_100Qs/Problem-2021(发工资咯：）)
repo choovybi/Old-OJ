@@ -1,0 +1,52 @@
+发工资咯：）
+
+#include <stdio.h>
+
+int getnum(int sal,int num);
+
+int main(){
+
+    int n,sal,sum=0;
+    while (1){
+        sum=0;
+        scanf("%d",&n);
+        if(n==0)break;
+        else{
+            for (int i = 0; i < n; ++i) {
+                scanf("%d",&sal);
+                sum+=getnum(sal,0);
+            }
+        }
+        printf("%d\n",sum);
+    }
+    return 0;
+}
+
+int getnum(int sal,int num){
+    if(sal>=100){
+        sal=sal-100;
+        num++;
+        num=getnum(sal,num);
+    } else if(sal>=50){
+        sal=sal-50;
+        num++;
+        num=getnum(sal,num);
+    } else if(sal>=10){
+        sal=sal-10;
+        num++;
+        num=getnum(sal,num);
+    } else if(sal>=5){
+        sal=sal-5;
+        num++;
+        num=getnum(sal,num);
+    } else if(sal>=2){
+        sal=sal-2;
+        num++;
+        num=getnum(sal,num);
+    } else if(sal==1){
+        sal=sal-1;
+        num++;
+        num=getnum(sal,num);
+    }
+    return num;
+}
