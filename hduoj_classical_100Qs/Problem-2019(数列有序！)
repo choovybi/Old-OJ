@@ -1,0 +1,33 @@
+数列有序！
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n,m,cur,label=0;
+    int arr[100]={0};
+    while (cin>>n>>m){
+        label=0;
+        if(n==0&&m==0)break;
+        for (int i = 0; i < n; ++i) {
+            cin>>cur;
+            arr[i]=cur;
+            if(m>cur)label=i+1;
+        }
+        for (int j = 0; j < n; ++j) {
+            if(label!=0){
+                if(j==0)cout<<arr[0];
+                else{
+                    cout<<' '<<arr[j];
+                }
+                if(j==label-1)cout<<' '<<m;
+            } else{
+                if(j==0)cout<<m;
+                cout<<' '<<arr[j];
+            }
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+//hint:m有可能插在数列的头部和尾部！
