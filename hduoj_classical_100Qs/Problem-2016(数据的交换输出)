@@ -1,0 +1,36 @@
+数据的交换输出
+
+#include <stdio.h>
+
+int main(){
+    int n,cur,min,label,temp=0;
+    int arr[100]={0};
+    while (scanf("%d",&n)!=EOF){
+        if(n==0)break;
+        label=0;
+        scanf("%d",&cur);
+        min=cur;
+        arr[0]=cur;
+        for (int i = 1; i <n ; ++i) {
+            scanf("%d",&cur);
+            arr[i]=cur;
+            if(cur<min){
+                min=cur;
+                label=i;
+            }
+        }
+        temp=arr[label];
+        arr[label]=arr[0];
+        arr[0]=temp;
+
+        for (int j = 0; j <n ; ++j) {
+            if(j==0)printf("%d",arr[0]);
+            else{
+                printf(" %d",arr[j]);
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
