@@ -1,0 +1,39 @@
+海选女主角
+
+#include <stdio.h>
+
+int main(){
+    int row,col,cur=0;
+    int rec1,rec2,rea=0;
+    int max=0;
+    while (scanf("%d %d",&row,&col)!=EOF){
+        max=0;
+        rea=0;
+        rec1=0;
+        rec2=0;
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < col; ++j) {
+                scanf("%d",&cur);
+                if (cur<0){
+                    if(-cur>max){
+                        max=-cur;
+                        rec1=i;
+                        rec2=j;
+                        rea=cur;
+                    }
+                } else{
+                    if(cur>max){
+                        max=cur;
+                        rec1=i;
+                        rec2=j;
+                        rea=cur;
+                    }
+                }
+            }
+        }
+        printf("%d %d %d\n",rec1+1,rec2+1,rea);
+    }
+    return 0;
+}
+
+//hint:没有必要创建数组，题目只要获得分数的绝对值最大的女主角的分和位置就行了！
