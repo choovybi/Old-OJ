@@ -1,0 +1,24 @@
+字符串统计
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    int n,index,sum=0;
+    string str;
+    cin>>n;
+    for (int i = 0; i <n ; ++i) {
+        index=0;
+        sum=0;
+        cin>>str;
+        while (index<str.size()){
+            if(str[index]=='0'||str[index]=='1'||str[index]=='2'||str[index]=='3'||str[index]=='4'||str[index]=='5'||str[index]=='6'||str[index]=='7'||str[index]=='8'||str[index]=='9'){
+                sum++;
+            }
+            index++;
+        }
+        cout<<sum<<endl;
+    }
+    return 0;
+}
