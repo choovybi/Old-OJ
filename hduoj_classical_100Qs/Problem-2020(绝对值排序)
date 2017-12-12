@@ -1,0 +1,44 @@
+绝对值排序
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n,cur,temp=0;
+    int arr[100]={0};//arr[]存放的是输入的数的绝对值
+    int arr2[100]={0};//arr2[]存放的时输入的数
+    while (1){
+        cin>>n;
+        if(n==0)break;
+        else{
+            for (int i = 0; i < n; ++i) {
+                cin>>cur;
+                arr2[i]=cur;
+                if(cur<0)cur=-cur;
+                arr[i]=cur;
+            }
+            //对绝对值使用冒泡排序
+            for (int j = 0; j < n; ++j) {
+                for (int i = 0; i < n; ++i) {
+                    if(arr[i]<arr[i+1]){
+                        temp=arr[i];
+                        arr[i]=arr[i+1];
+                        arr[i+1]=temp;
+
+                        temp=arr2[i];
+                        arr2[i]=arr2[i+1];
+                        arr2[i+1]=temp;
+                        //实际数值的顺序也随着绝对值的顺序的变化发生变化
+                    }
+                }
+            }
+            
+            cout<<arr2[0];
+            for (int k = 1; k < n; ++k) {
+                cout<<' '<<arr2[k];
+            }
+            cout<<endl;
+        }
+    }
+    return 0;
+}
