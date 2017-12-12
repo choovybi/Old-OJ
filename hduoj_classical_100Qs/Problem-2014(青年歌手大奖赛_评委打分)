@@ -1,0 +1,24 @@
+青年歌手大奖赛_评委打分
+
+#include <stdio.h>
+//#include <math.h>
+
+int main(){
+    int turn=0;
+    double max,min,sum,cur=0;
+    while (scanf("%d",&turn)!=EOF){
+        sum=0;
+        scanf("%lf",&cur);
+        sum+=cur;
+        max=cur;
+        min=cur;
+        for (int i = 1; i <turn ; ++i) {
+            scanf("%lf",&cur);
+            sum+=cur;
+            if(cur<min)min=cur;
+            if(cur>max)max=cur;
+        }
+        printf("%.2f\n",(sum-max-min)/(turn-2));
+    }
+    return 0;
+}
