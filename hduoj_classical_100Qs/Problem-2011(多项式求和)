@@ -1,0 +1,19 @@
+多项式求和
+
+#include <stdio.h>
+
+int main(){
+    int num,cur=0;
+    float res=0;
+    scanf("%d",&num);
+    for (int i = 0; i <num ; ++i) {
+        res=0;
+        scanf("%d",&cur);
+        for (int j = 1; j <=cur ; ++j) {
+            if(j%2==0)res-=1.00/j;
+            else if(j%2!=0) res+=1.00/j;
+        }
+        printf("%.2f\n",res);
+    }
+    return 0;
+}
