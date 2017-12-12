@@ -1,0 +1,16 @@
+蟠桃记
+
+#include <stdio.h>
+//#include <math.h>
+
+int main(){
+    int n,sum=0;
+    while (scanf("%d",&n)!=EOF){
+        sum=1;
+        for (int i = 1; i <n ; ++i) {
+            sum=2*(sum+1);
+        }
+        printf("%d\n",sum);
+    }
+    return 0;
+}
