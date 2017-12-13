@@ -1,0 +1,27 @@
+查找最大元素
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    string str;
+    string s="(max)";//这个东西是五个字符(char)啊!!!
+    char max;
+    while (cin>>str){
+        max=str[0];
+        for (int i = 1; i < str.length(); ++i) {
+            if(max<str[i]){
+                max=str[i];
+            }
+        }
+        for (int j = 0; j < str.length(); ++j) {//新姿势：str.length是会根据变化的字符串实时变化的！
+            if(str[j]==max){
+                str.insert(j+1,s);//要插到查找到的字符的后面，所以要+1
+                j=j+5;//要跳过搜寻插入的字符，所以要加+5，跳过(max)
+            }
+        }
+        cout<<str<<endl;
+    }
+    return 0;
+}
