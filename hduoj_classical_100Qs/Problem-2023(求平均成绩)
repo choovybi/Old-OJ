@@ -1,0 +1,52 @@
+求平均成绩
+
+#include <stdio.h>
+
+int main(){
+    int n,m,flag,all=0;
+    double sum=0;
+    int arr[50][5]={0};
+    double ave[5]={0};
+
+    while(scanf("%d %d",&n,&m)!=EOF){
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                scanf("%d",&arr[i][j]);
+            }
+        }
+
+        for (int k = 0; k < n; ++k) {
+            sum=0;
+            for (int i = 0; i < m; ++i) {
+                sum+=arr[k][i];
+            }
+            if (k==0)printf("%.2f",(sum*1.00)/m);
+            else printf(" %.2f",(sum*1.00)/m);
+        }
+        printf("\n");
+
+        for (int l = 0; l < m; ++l) {
+            sum=0;
+            for (int i = 0; i < n; ++i) {
+                sum+=arr[i][l];
+            }
+            ave[l]=(sum*1.00)/n;
+            if (l==0)printf("%.2f",(sum*1.00)/n);
+            else printf(" %.2f",(sum*1.00)/n);
+        }
+        printf("\n");
+
+        all=0;
+        for (int i1 = 0; i1 < n; ++i1) {
+            flag=0;
+            for (int i = 0; i < m; ++i) {
+                if(arr[i1][i]>=ave[i])flag++;
+            }
+            if(flag==m)all++;
+        }
+        printf("%d\n\n",all);
+    }
+    return 0;
+}
+
+//hint:因为有多组数据，所以每一组数据算出all后在进行新的数据的时候要将all置0！
