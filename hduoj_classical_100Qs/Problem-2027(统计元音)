@@ -1,0 +1,36 @@
+统计元音
+
+#include <iostream>
+#include <string>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    int n,numa,nume,numi,numo,numu=0;
+    string str;
+    scanf("%d",&n);
+    getchar();
+
+    for (int j = 0; j < n; ++j) {
+        getline(cin,str);
+        numa=0;nume=0;numi=0;numo=0;numu=0;
+        for (int i = 0; i < str.length(); ++i) {
+            if(str[i]=='a')numa++;
+            else if(str[i]=='e')nume++;
+            else if(str[i]=='i')numi++;
+            else if(str[i]=='o')numo++;
+            else if(str[i]=='u')numu++;
+        }
+        printf("a:%d\n",numa);
+        printf("e:%d\n",nume);
+        printf("i:%d\n",numi);
+        printf("o:%d\n",numo);
+        if(j==n-1)printf("u:%d\n",numu);
+        else printf("u:%d\n\n",numu);
+        //请特别注意：最后一块输出后面没有空行：）
+        //emmmmmm这里的格式有一点坑，没有空行的意思不是没有回车，不要理解错了！！！两个回车才会产生一个空行！！！
+    }
+
+    return 0;
+}
