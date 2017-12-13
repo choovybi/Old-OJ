@@ -1,0 +1,30 @@
+Lowest Common Multiple Plus
+
+
+#include <iostream>
+using namespace std;
+
+long long gcd(long long a,long long b){
+    if(b==0)return a;
+    else return gcd(b,a%b);
+}
+//求最大公因数，辗转相除法，辗转相模，直到被整模，此时的模就是最大公因数！
+
+long long lcm(long long a,long long b){
+    return (a*b)/gcd(a,b);
+}
+//求最小公倍数，需要用到最大共因数，两个数的最小公倍数就是两数乘积处于最大公因数！
+
+int main(){
+    int n=0;
+    long long a,b=0;//因为最后算出来的最小公倍数可能很大，所以要用到long long类型！
+    while (cin>>n){
+        cin>>a;
+        for (int i = 1; i < n; ++i) {
+                cin>>b;
+                a=lcm(a,b);
+        }
+        cout<<a<<endl;
+    }
+    return 0;
+}
