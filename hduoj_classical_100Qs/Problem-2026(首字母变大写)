@@ -1,0 +1,20 @@
+首字母变大写
+
+#include <iostream>
+#include<string>//在OJ上面这个头文件必须要加上，虽然在自己的编译器上这个可以没有！！！
+using namespace std;
+
+int main(){
+    string str;
+    while (getline(cin,str)){
+        if((int)str[0]>=97&&(int)str[0]<=122)str[0]=(char)((int)str[0]-32);//记得第一个字母也要变成大写，虽然它的前面没有空格
+        for (int i = 1; i < str.length(); ++i) {
+            if (str[i]==' ')str[i+1]=(char)((int)str[i+1]-32);
+        }
+        cout<<str<<endl;
+    }
+
+    return 0;
+}
+
+//hint:主要考查ASCII码之间的转化
