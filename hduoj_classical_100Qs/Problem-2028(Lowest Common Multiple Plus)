@@ -28,3 +28,30 @@ int main(){
     }
     return 0;
 }
+--------------------------------------------------------------------------------------------------------------------------------------
+#include<iostream>
+using namespace std;
+int gcd(int m, int n)
+{
+	if (n == 0)return m;
+	else return gcd(n, m%n);
+}
+int main()
+{
+	int n, a[100];
+	while (cin >> n)
+	{
+		int k = 0;
+		for (int i = 0; i < n; i++)
+			cin >> a[i];
+		int j;
+		for (j = 0; j < n - 1; j++)
+			a[j + 1] = a[j] * (a[j + 1]/gcd(a[j], a[j + 1]));
+		  cout << a[j] << endl;
+
+
+	}
+	return 0;
+}
+
+这个方法没有使用long long类型，因为他没有调用lcm()函数而是直接进行计算，并且他是先进行除法运算再进行乘法运算，这样数据量会稍微小一点
