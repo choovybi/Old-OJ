@@ -1,0 +1,50 @@
+C语言合法标识符
+
+#include <iostream>
+#include <string>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    string str;
+    int n,m=0;
+
+    cin>>n;
+    getchar();//cin之后我们会敲入一个空格，如果没有这个getchar那么那个空行会被getline()给读入！！！
+    for (int j = 0; j < n; ++j) {
+        m=1;
+        getline(cin,str);
+        if(str[0]!='a'&&str[0]!='b'&&str[0]!='c'&&str[0]!='d'&&str[0]!='e'&&str[0]!='f'&&str[0]!='g'&&
+           str[0]!='h'&&str[0]!='i'&&str[0]!='j'&&str[0]!='k'&&str[0]!='l'&&str[0]!='m'&&str[0]!='n'&&
+           str[0]!='o'&&str[0]!='p'&&str[0]!='q'&&str[0]!='r'&&str[0]!='s'&&str[0]!='t'&&str[0]!='u'&&
+           str[0]!='v'&&str[0]!='w'&&str[0]!='x'&&str[0]!='y'&&str[0]!='z'&&
+           str[0]!='A'&&str[0]!='B'&&str[0]!='C'&&str[0]!='D'&&str[0]!='E'&&str[0]!='F'&&str[0]!='G'&&
+           str[0]!='H'&&str[0]!='I'&&str[0]!='J'&&str[0]!='K'&&str[0]!='L'&&str[0]!='M'&&str[0]!='N'&&
+           str[0]!='O'&&str[0]!='P'&&str[0]!='Q'&&str[0]!='R'&&str[0]!='S'&&str[0]!='T'&&str[0]!='U'&&
+           str[0]!='V'&&str[0]!='W'&&str[0]!='X'&&str[0]!='Y'&&str[0]!='Z'&&
+           str[0]!='_'){
+            cout<<"no"<<endl;//合法标志符的第一个必须是字母或者_
+        } else{
+            for (int i = 1; i <str.length() ; ++i) {
+                if(str[i]!='1'&&str[i]!='2'&&str[i]!='3'&&str[i]!='4'&&str[i]!='5'&&str[i]!='6'&&str[i]!='7'&&str[i]!='8'&&str[i]!='9'&&str[i]!='0'&&
+                   str[i]!='a'&&str[i]!='b'&&str[i]!='c'&&str[i]!='d'&&str[i]!='e'&&str[i]!='f'&&str[i]!='g'&&
+                   str[i]!='h'&&str[i]!='i'&&str[i]!='j'&&str[i]!='k'&&str[i]!='l'&&str[i]!='m'&&str[i]!='n'&&
+                   str[i]!='o'&&str[i]!='p'&&str[i]!='q'&&str[i]!='r'&&str[i]!='s'&&str[i]!='t'&&str[i]!='u'&&
+                   str[i]!='v'&&str[i]!='w'&&str[i]!='x'&&str[i]!='y'&&str[i]!='z'&&
+                   str[i]!='A'&&str[i]!='B'&&str[i]!='C'&&str[i]!='D'&&str[i]!='E'&&str[i]!='F'&&str[i]!='G'&&
+                   str[i]!='H'&&str[i]!='I'&&str[i]!='J'&&str[i]!='K'&&str[i]!='L'&&str[i]!='M'&&str[i]!='N'&&
+                   str[i]!='O'&&str[i]!='P'&&str[i]!='Q'&&str[i]!='R'&&str[i]!='S'&&str[i]!='T'&&str[i]!='U'&&
+                   str[i]!='V'&&str[i]!='W'&&str[i]!='X'&&str[i]!='Y'&&str[i]!='Z'&&
+                   str[i]!='_'){
+                    cout<<"no"<<endl;
+                    break;
+                }
+                m++;
+            }
+        }
+        if(m==str.length())cout<<"yes"<<endl;
+    }
+
+    return 0;
+}
