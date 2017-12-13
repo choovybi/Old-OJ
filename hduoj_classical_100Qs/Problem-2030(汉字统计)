@@ -1,0 +1,27 @@
+汉字统计
+
+#include <iostream>
+#include <string>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    int n,sum=0;
+    string str;
+    cin>>n;
+    getchar();
+    for (int i = 0; i < n; ++i) {
+        sum=0;
+        getline(cin,str);
+        for (int j = 0; j < str.length(); ++j) {
+            if(str[j]<0)sum++;//汉字转化的字节的ASCII码为负
+        }
+        cout<<sum/2<<endl;
+    }
+
+    return 0;
+}
+
+//hint:汉字机内码的特点：一个汉字占据两个字节，并且这两个字节的机内码转化成ASCII码之后都是负值！！！
+//所以只需要统计所有ASCII码为负的字符位，最后要将这个数值除于2，因为一个汉字占据两个字节嘛:)
