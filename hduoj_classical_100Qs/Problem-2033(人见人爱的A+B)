@@ -1,0 +1,21 @@
+人见人爱的A+B
+
+#include <stdio.h>
+
+int main(){
+    int n=0;
+    int AH,AM,AS,BH,BM,BS=0;
+    int ansH,ansM,ansS=0;
+    scanf("%d",&n);
+    for (int i = 0; i < n; ++i) {
+        scanf("%d %d %d %d %d %d",&AH,&AM,&AS,&BH,&BM,&BS);
+        ansS=(AS+BS)%60;
+        ansM=(AM+BM+(AS+BS)/60)%60;
+        ansH=AH+BH+(AM+BM+(AS+BS)/60)/60;
+        printf("%d %d %d\n",ansH,ansM,ansS);
+    }
+
+    return 0;
+}
+
+//hint:只要注意秒和分满60需要进位就可以了
