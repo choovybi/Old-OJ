@@ -1,0 +1,68 @@
+人见人爱A-B
+
+#include <stdio.h>
+
+int main(){
+    int lenA,lenB,sum,temp=0;
+    int setA[100]={0};
+    int setB[100]={0};
+    int left[100]={0};
+    int ans[100]={0};
+
+    while (scanf("%d %d",&lenA,&lenB)!=EOF){
+        sum=0;
+        if(lenA==0&&lenB==0)break;
+        else{
+            for (int i = 0; i < lenA; ++i) {
+                scanf("%d",&setA[i]);
+            }
+            for (int j = 0; j < lenB; ++j) {
+                scanf("%d",&setB[j]);
+            }
+
+            for (int k = 0; k < lenA; ++k) {
+                for (int i = 0; i < lenB; ++i) {
+                    if(setA[k]==setB[i]){
+                        left[k]=1;
+                        break;
+                    }
+                }
+            }
+
+            for (int l = 0; l < lenA; ++l) {
+                if(left[l]==0){
+                    ans[sum]=setA[l];
+                    sum++;
+                }
+            }
+
+            if(sum==0)printf("NULL");
+            else {
+                for (int i = 0; i < sum; ++i) {
+                    for (int j = 1; j < sum-i; ++j) {
+                        if(ans[j]<ans[j-1]){
+                            temp=ans[j];
+                            ans[j]=ans[j-1];
+                            ans[j-1]=temp;
+                        }
+                    }
+                }
+            }
+
+            for (int m = 0; m < sum; ++m) {
+                printf("%d ",ans[m]);
+            }
+        }
+
+        printf("\n");
+        
+        for (int l = 0; l < lenA; ++l) {
+            left[l]=0;
+        }
+    }
+
+    return 0;
+}
+
+//hint:主要考查集合的运算，需要创建一个判断A中元素B中是否有的判断数组left[]，
+//同时，因为需要排序之后再输出，所以应该将判断数组left[]中选出的元素放到答案数组ans[]中，在进行从小到大的排序输出！
