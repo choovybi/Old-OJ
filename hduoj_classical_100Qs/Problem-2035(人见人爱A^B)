@@ -1,0 +1,28 @@
+人见人爱A^B
+
+#include <stdio.h>
+
+int main(){
+    int A,B=0;
+    int ans=0;
+    while (scanf("%d %d",&A,&B)!=EOF){
+        ans=1;
+        if(A==0&&B==0)break;
+        else{
+            for (int i = 0; i < B; ++i) {
+                if(ans>=1000){
+                    ans=(ans%1000)*A;
+                } else{
+                    ans*=A;
+                }
+            }
+            if(ans>=1000)printf("%d\n",ans%1000);
+            else printf("%d\n",ans);
+        }
+    }
+
+    return 0;
+}
+
+//hint:这题没有必要使用long long int类型，因为没有必要把结果全部存储下来，最后只要输出后三位的数就可以了
+//因此可以当ans>=1000时，把ans化成ans%1000再进行后续乘方计算！
