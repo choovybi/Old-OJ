@@ -1,0 +1,46 @@
+进制转换
+
+#include <stdio.h>
+
+void _exchange(int n,int r){
+    if(n!=0){
+        _exchange(n/r,r);
+        if(n%r<=9){
+            printf("%d",n%r);
+        }else if(n%r==10){
+            printf("A");
+        }else if(n%r==11){
+            printf("B");
+        }else if(n%r==12){
+            printf("C");
+        }else if(n%r==13){
+            printf("D");
+        }else if(n%r==14){
+            printf("E");
+        }else if(n%r==15){
+            printf("F");
+        }
+    }
+}
+
+//辗转相除法求进行过进制转换后的数
+//如果被除数不为0，那么就将它除于进制，在进行一次进制转换
+//如果被除数已经为0了，那么就从后开始往前回溯，每一次的被除数模上进制就是那一位应该输出的数
+//注意：如果该位的被除数模过进制后>9，那么就用16进制的表示方法(10='A',11='B',12='C',13='D',14='E',15='F')
+
+int main(){
+    int n,r=0;
+
+    while (scanf("%d %d",&n,&r)!=EOF){
+        if(n<0){
+            printf("-");
+            _exchange(-n,r);
+        } else{
+            _exchange(n,r);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+//hint:如果要进行取模运算的数是一个负数，那么将它转化成正数再进行转换
