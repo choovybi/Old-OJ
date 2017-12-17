@@ -1,0 +1,63 @@
+今年暑假不AC
+
+#include <stdio.h>
+
+void seeknext(int arr2[100][2],int j[2],int sum,int n);
+
+int main(){
+    int n,temp,sum=0;
+    int arr[100][2]={0};
+    int j[2]={0};
+    while (scanf("%d",&n)!=EOF){
+        if(n==0)break;
+        sum=0;
+        j[0]=0;
+        j[1]=0;
+        //j-judge数组每次测试数据时都要初始化！
+
+        for (int i = 0; i < n; ++i) {
+            scanf("%d %d",&arr[i][0],&arr[i][1]);
+        }
+
+        for (int j = 0; j < n; ++j) {
+            for (int i = 0; i < n-j-1; ++i) {
+                //注意这里是n-j-1，因为j=0时，如果只是i<n-j=n，那么i+1=n就会超出可用数组下界
+                if(arr[i][1]>arr[i+1][1]){
+                    temp=arr[i][1];
+                    arr[i][1]=arr[i+1][1];
+                    arr[i+1][1]=temp;
+
+                    temp=arr[i][0];
+                    arr[i][0]=arr[i+1][0];
+                    arr[i+1][0]=temp;
+                }
+            }
+        }
+        //先排序
+        seeknext(arr,j,sum,n);
+    }
+
+    return 0;
+}
+
+ void seeknext(int arr[100][2],int j[2],int sum,int n){
+    for (int i = 0; i < n; ++i) {
+        if (arr[i][0]>=j[1]){
+            j[1]=arr[i][1];
+            sum++;
+        }
+    }
+
+     printf("%d\n",sum);
+}
+
+---------------------------------------------------------------------------------------------------------------------------------
+这是遇到的第一个动态规划的题目(貌似也是最简单的动规了)，哈哈，解决啦！
+
+关键在于judge数组j[2]
+随着循环的进行，j数组的值发生改变，同时判定的条件也发生改变
+if (arr[i][0]>=j[1]){
+   j[1]=arr[i][1];
+   sum++;
+}
+这个就是动规中最重要的状态转移方程(划重点)
