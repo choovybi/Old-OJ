@@ -1,0 +1,48 @@
+三角形
+
+#include <iostream>
+using namespace std;
+
+int judge(double a, double b, double c){
+    if(a+b>c&&a+c>b&&b+c>a&&a-b<c&&a-c<b&&b-c<a)return 1;
+    else return 0;
+
+}
+
+int main(){
+    int n=0;
+    double a,b,c=0;
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>a>>b>>c;
+        if(judge(a,b,c))cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+
+    return 0;
+}
+--------------------------------------------------------------------------------------------------------------------------------
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+const double eps=1e-8;
+int cmp(double x){
+    if(x>eps)return 1;
+    else return 0;
+}
+bool judge(double x, double y, double z){
+    if(cmp(x+y-z)>0)return true;
+    else return false;
+}
+int main(){
+    int t=0;
+    scanf("%d",&t);
+    while (t--){
+        double x,y,z=0;
+        scanf("%lf%lf%lf",&x,&y,&z);
+        if(judge(x,y,z)&&judge(x,z,y)&&judge(y,z,x))printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
