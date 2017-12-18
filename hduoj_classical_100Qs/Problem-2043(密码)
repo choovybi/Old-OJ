@@ -1,0 +1,63 @@
+密码
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool Bigword(string str);
+bool smallWord(string str);
+bool number(string str);
+bool unique(string str);
+
+int main(){
+    int m=0;
+    int flag=0;
+    string str;
+    cin>>m;
+    for (int i = 0; i < m; ++i) {
+        cin>>str;
+        flag=0;
+        if(str.length()<8||str.length()>16)flag=0;//这里不能够先行输出，因为下面还会判断输出
+        else{
+            if(Bigword(str))flag++;
+            if(smallWord(str))flag++;
+            if(number(str))flag++;
+            if(unique(str))flag++;
+        }
+        if(flag>=3)cout<<"YES"<<endl;//判断flag来进行输出
+        else cout<<"NO"<<endl;
+    }
+    return 0;
+}
+
+bool Bigword(string str){
+    for (int i = 0; i < str.length(); ++i) {
+        if(str[i]=='A'||str[i]=='B'||str[i]=='C'||str[i]=='D'||str[i]=='E'||str[i]=='F'||str[i]=='G'||
+           str[i]=='H'||str[i]=='I'||str[i]=='J'||str[i]=='K'||str[i]=='L'||str[i]=='M'||str[i]=='N'||
+           str[i]=='O'||str[i]=='P'||str[i]=='Q'||str[i]=='R'||str[i]=='S'||str[i]=='T'||str[i]=='U'||
+           str[i]=='V'||str[i]=='W'||str[i]=='X'||str[i]=='Y'||str[i]=='Z')return true;
+    }
+    return false;
+}
+bool smallWord(string str){
+    for (int i = 0; i < str.length(); ++i) {
+        if(str[i]=='a'||str[i]=='b'||str[i]=='c'||str[i]=='d'||str[i]=='e'||str[i]=='f'||str[i]=='g'||
+           str[i]=='h'||str[i]=='i'||str[i]=='j'||str[i]=='k'||str[i]=='l'||str[i]=='m'||str[i]=='n'||
+           str[i]=='o'||str[i]=='p'||str[i]=='q'||str[i]=='r'||str[i]=='s'||str[i]=='t'||str[i]=='u'||
+           str[i]=='v'||str[i]=='w'||str[i]=='x'||str[i]=='y'||str[i]=='z')return true;
+    }
+    return false;
+}
+bool number(string str){
+    for (int i = 0; i < str.length(); ++i) {
+        if(str[i]=='0'||str[i]=='1'||str[i]=='2'||str[i]=='3'||str[i]=='4'||str[i]=='5'||str[i]=='6'||
+           str[i]=='7'||str[i]=='8'||str[i]=='9')return true;
+    }
+    return false;
+}
+bool unique(string str){
+    for (int i = 0; i < str.length(); ++i) {
+        if(str[i]=='~'||str[i]=='!'||str[i]=='@'||str[i]=='#'||str[i]=='$'||str[i]=='%'||str[i]=='^')return true;
+    }
+    return false;
+}
