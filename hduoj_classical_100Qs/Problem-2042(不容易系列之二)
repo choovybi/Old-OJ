@@ -1,0 +1,21 @@
+不容易系列之二
+
+#include <stdio.h>
+
+int main(){
+    int N=0;
+    int a=0;
+    int num=3;
+    scanf("%d",&N);
+    for (int i = 0; i < N; ++i) {
+        num=3;
+        scanf("%d",&a);
+        for (int j = 0; j < a; ++j) {
+            num=(num-1)*2;
+        }
+        printf("%d\n",num);
+    }
+    return 0;
+}
+
+//这题这么水，放这里真的好吗...
