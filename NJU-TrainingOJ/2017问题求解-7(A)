@@ -1,0 +1,74 @@
+Game of life
+
+#include <stdio.h>
+
+void change(int board[80][22][2]);
+
+int main(){
+    //freopen("input.txt", "r", stdin);
+    //freopen("output.txt", "w", stdout);
+
+    int board[80][22][2]={0};
+    char ch;
+    int gen=0;
+    scanf("%d",&gen);
+    getchar();
+    for (int i = 0; i < 80; ++i) {
+        for (int j = 0; j < 22; ++j) {
+            //printf("%c");
+            scanf("%c",&ch);
+            if(ch=='*')board[i][j][0]=1;
+            else board[i][j][0]=0;
+            if(j==21)getchar();
+        }
+    }
+    //printf("%c\n",board[0][0][0]);
+
+    for (int k = 0; k < gen; ++k) {
+        change(board);
+    }
+    for (int l = 0; l < 80; ++l) {
+        for (int i = 0; i < 22; ++i) {
+            if (board[l][i][0]==1)printf("*");
+            else printf(" ");
+            if(i==21)printf("\n");
+        }
+    }
+    //fclose(stdin);
+    //fclose(stdout);
+
+    return 0;
+}
+
+void change(int board[80][22][2]){
+    int j=0;
+    for (int i = 0; i < 80; ++i) {
+        for (int k = 0; k < 22; ++k) {
+            j=0;
+            if (board[(i+80-1)%80][k][0]==1)j++;
+            if (board[(i+1)%80][k][0]==1)j++;
+            if (board[i][(k+22-1)%22][0]==1)j++;
+            if (board[i][(k+1)%22][0]==1)j++;
+            if (board[(i+80-1)%80][(k+22-1)%22][0]==1)j++;
+            if (board[(i+1)%80][(k+22-1)%22][0]==1)j++;
+            if (board[(i+80-1)%80][(k+1)%22][0]==1)j++;
+            if (board[(i+1)%80][(k+1)%22][0]==1)j++;
+            if (j<=1)board[i][k][1]=-1;
+            else if(j==3)board[i][k][1]=1;
+            else if(j>=4)board[i][k][1]=-1;
+        }
+    }
+    for (int l = 0; l < 80; ++l) {
+        for (int i = 0; i < 22; ++i) {
+            if(board[l][i][1]==1)board[l][i][0]=1;
+            else if(board[l][i][1]==-1)board[l][i][0]=0;
+            board[l][i][1]=0;
+        }
+    }
+}
+
+体验了一把文件输入输出，感觉还不错，适合多次重复debug时使用
+//hint:scanf()函数会漏过输出时候的回车键，所以要通过getchar将那个坑爹的回车键收入囊中
+//判断状态的时候不能把当前状态改变，所以要先将当前对象下一步的状态保留下来，到最后所有对象的状态都判定完毕时再统一地改变状态
+//状态判断的时候要记得取模操作，+-都需要，不变就算了
+//最后有个小tip:使用文件输入输出的时候，要记得CLion的输入和输出文件应该放在当前project的cmake-build-debug文件夹下，千万不要放错了哦
