@@ -1,0 +1,20 @@
+Average and standard deviation
+
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+    double s1,s2,s3,s4=0;
+    double ave,std=0;
+    while (scanf("%lf %lf %lf %lf",&s1,&s2,&s3,&s4)!=EOF){
+        ave=(s1+s2+s3+s4)/4;
+        printf("%.2lf ",ave);
+        std=sqrt(((s1-ave)*(s1-ave)+(s2-ave)*(s2-ave)+(s3-ave)*(s3-ave)+(s4-ave)*(s4-ave))/4);
+        printf("%.2lf\n",std);
+    }
+
+    return 0;
+}
+
+//求平均值和标准差......没什么好讲的
+//对了，求标准差记得要除于数据个数再开根，本题中就是除于4再开根
