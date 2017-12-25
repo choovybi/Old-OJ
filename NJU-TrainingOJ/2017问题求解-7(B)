@@ -1,5 +1,3 @@
-Average and standard deviation
-
 #include <stdio.h>
 #include <math.h>
 
