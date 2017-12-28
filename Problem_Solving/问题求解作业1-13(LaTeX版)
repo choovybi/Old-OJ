@@ -37,6 +37,94 @@
 \end{problem}
 
 \begin{solution}
+\textcircled{1}证明布尔代数是有界有补分配格
+
+join operation 定义为``+'', meet operation 定义为``*''
+
+(1)证明布尔函数满足交换律：$a \cap b = b \cap a$ , and  $a \cup b = b \cup a$
+
+$a\cap b=a * b=b * a=b \cap a$,
+
+and $a \cup b =a+b=b+a= b \cup a$.
+
+(2)证明布尔函数满足结合律：$(a \cap b) \cap c = a \cap (b \cap c)$ , and  $(a \cup b) \cup c = a \cup (b \cup c)$ 
+
+$(a \cap b) \cap c =(a*b)*c=a*(b*c)=a \cap (b \cap c)$,
+
+and $(a \cup b) \cup c=(a+b)+c=a+(b+c)=a \cup (b \cup c)$.
+
+(3)证明布尔代数满足吸收律：(3a) $a \cap (a \cup b) =a$ , and  $a \cup (a \cap b) = a$
+
+$a \cap (a \cup b)=a*(a+b)=a$,
+
+and $a \cup (a \cap b)=a+(a*b)=a$.
+
+$\therefore$ 布尔代数是格
+
+(4)证明布尔代数是有界格：``L has both a lower bound 0 and an upper bound $\textbf{I}$''
+
+$\forall a\in \mathbb{L}$
+
+$a\cap 0=a*0=0$, 所以0是下确界
+
+$a\cup 1=a+1=1$, 所以1是上确界
+
+$\therefore 0$ is the lower bound 0 and $1$ is the upper bound $\textbf{I}$.
+
+(5)证明布尔代数是分配格：``for any elements a, b, c in $\textbf{L}$ we have 
+
+$a \cap (b \cup c) = (a \cap b) \cup (a \cap c)$ and 
+
+$a \cup (b \cap c) = (a \cup b) \cap (a \cup c)$''
+
+$a \cap (b \cup c)=a*(b+c)=(a*b)+(a*c)=(a\cap b)\cup (a\cap c)$,
+
+and $a \cup (b \cap c)=a+(b*c)=(a+b)*(a+c)=(a \cup b) \cap (a \cup c)$.
+
+(6)证明布尔代数是有补格：
+
+即``$\textbf{L}$ is bounded and every element in \textbf{L} has a complement.''
+
+$\because$ $\forall a\in \textbf{L}$, $\exists '$ so we have $a'$ as the complement of $a$.  
+
+\noindent$\therefore$布尔代数是有界有补分配格
+
+
+
+
+\noindent\textcircled{2}证明有界有补分配格是布尔代数
+
+two binary operations ``+'' and ``∗''定义为join meet operations.
+
+(1)证明有界有补分配格满足交换律：$a + b = b + a$, and $a ∗ b = b ∗ a$
+
+$a + b =a\cup b=b\cup a=b+a$,
+
+and $a ∗ b=a\cap b=b\cap a=b*a$.
+
+(2)证明有界有补分配格满足分配律：
+
+$a + (b ∗ c) = (a + b) ∗ (a + c)$, and $a ∗ (b + c) = (a ∗ b) + (a ∗ c)$
+
+$a + (b ∗ c)=a\cup(b\cap c)=(a\cup b)\cap(a\cup c)=(a + b) ∗ (a + c)$,
+
+and $a ∗ (b + c)=a\cap(b\cup c)=(a\cap b)\cup(a\cap c)=(a ∗ b) + (a ∗ c)$.
+
+(3)证明有界有补分配格满足同一律：$a + 0 = a$, and $a ∗ 1 = a$
+
+$a + 0=a\cup 0=a$,
+
+and $a ∗ 1=a\cap 1=a$.
+
+(4)证明有界有补分配格满足补余律：$a + a^,=1$, and $a ∗ a^,= 0$
+
+$\forall a\in\textbf{L},$ there exists $a^,$ as the complement of a
+
+$a + a^,=a\cup a^,=1$,
+
+and $a ∗ a^,=a\cap a^,=0$.
+
+\noindent$\therefore$ 有界有补分配格是布尔代数
 
 \end{solution}
 
@@ -60,7 +148,27 @@
 \end{problem}
 
 \begin{solution}
+题目要求证明:``mapping f: B → P(A) is an isomorphism.''
 
+根据Theorem 14.8, 
+
+each $x \neq 0$ in B can be expressed uniquely (except for order) as the join of atoms
+
+所以$f: B \rightarrow P(A)$ is an one-to-one function.
+
+接下来需要证明$f (a \cap b) = f (a) \cap f (b)$ and $f (a \cup b) = f (a) \cup f (b)$
+
+$\because a$ and $b$ are both atoms so $a\cap b=0$, 
+
+so $f (a \cap b)=f(0)=\emptyset=\{a\}\cap\{b\}=f (a) \cap f (b)$
+
+$\because a$ and $b$ are both atoms, so if $c=a\cup b$ then $\{c\}=\{a,b\}$
+
+so $f (a \cup b)=f(c)=\{c\}=\{a,b\}=\{a\}\cup\{b\}=f(a)\cup f(b)$
+
+because $f: B \rightarrow P(A)$ is an one-to-one function and $f (a \cap b) = f (a) \cap f (b)$ and $f (a \cup b) = f (a) \cup f (b)$
+
+$\therefore f: B \rightarrow P(A)$ is an isomorphism.
 \end{solution}
 
 %%%%%%%%%
@@ -69,10 +177,32 @@
 %%%%%%%%%
 
 \begin{problem}[3]
-证明等势的布尔代数均同构    
+证明等势的布尔代数均同构
 \end{problem}
 
 \begin{solution}
+\
+
+假设两个布尔代数分别为$\textbf{L}$和$\textbf{I}$，并且$a\in \textbf{L}$和$b\in \textbf{I}$
+
+根据布尔代数的性质得：$\forall a\in \textbf{L}, \exists a^,\in \textbf{L}$
+
+满足$a+a^,=1$ and $a*a^,=0$, 所以$a$和$a^,$之间存在偏序关系，并且只和$a^,$有偏序关系
+
+如果两个布尔代数等势，而每两个元素之间构成一对偏序关系，
+
+那么他们成偏序关系的对数也是相等的，
+
+因此可以构造一个one-to-one的function：$f=\{(a,b),(a^{,},b^{,}),\cdots\}$
+
+$f$满足：If $a\preceq a^,$ then $b\preceq b^,$
+
+因为$\textbf{I}$也为布尔代数，所以$b$也只与$b^,$存在偏序关系，
+
+所以$f$也满足：If $a\ ||\ a^,$(noncomparable), then $f(a)=b\ ||\ b^,=f(a^,)$.
+
+所以等势的布尔代数均同构
+
 
 \end{solution}
 %%%%%%%%%%
@@ -293,13 +423,13 @@
 
 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%
-% \newpage
-% \begincorrection	% begin the ``correction'' part (Optional)
+\newpage
+\begincorrection	% begin the ``correction'' part (Optional)
 % % % %
 % % % %%%%%%%%%%%
-% \begin{problem}[第五讲:UD 2.10]
-
-% \end{problem}
+\begin{problem}[]
+BNF范式
+\end{problem}
 % % % %
 % % \begin{cause}
 % % 没有看到是``English sentence''
@@ -308,34 +438,89 @@
 
 % % % %
 % % % %% Or use the ``solution'' environment
-% \begin{revision}
+\begin{revision}
 
-% \end{revision}
+$\langle additive\_exp\rangle ::= \langle additive\_exp\rangle\  +\  \langle mult\_exp\rangle$
+      
+$|\  \langle additive\_exp\rangle\  -\  \langle mult\_exp\rangle$
+      
+$|\  \langle mult\_exp\rangle$;
+\
+
+\noindent$\langle mult\_exp\rangle ::= \langle mult\_exp \rangle\  *\  \langle cast\_exp\rangle$
+
+$|\  \langle mult\_exp\rangle\  /\  \langle cast\_exp\rangle$
+
+$|\  \langle cast\_exp\rangle $;
+\
+
+\noindent$\langle cast\_exp\rangle ::= \langle unary\_exp\rangle$
+
+$|\  '(' \langle type\_name\rangle ')'\ \langle cast\_exp\rangle$;
+\
+
+\noindent$\langle unary\_exp ::= \langle postfix\_exp\rangle$
+
+$|\  \langle unary\_operator \rangle\  \langle cast\_exp\rangle$;
+\
+
+\noindent$\langle unary\_operator\rangle ::=\  '+'\ |\ '-'\ |\ '*'\ |\ '/'\ $;
+\
+
+\noindent$\langle postfix\_exp\rangle ::= \langle primary\_exp \rangle$
+
+$|\  \langle postfix\_exp\rangle\ '('\ exp \ ')'$;
+\
+
+\noindent$\langle primary\_exp\rangle ::= id$
+
+$|\  const$
+
+$|\  string$
+
+$|\  '('\ exp\ ')'$;
+\end{revision}
 % % %%%%%%%%%%%
 
 % % %%%%%%%%%%%
-% \begin{problem}[UD 17.11]
+\begin{problem}[UD 8.11]
+\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
 
-% \end{problem}
+\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+\end{problem}
 %     %     %% Or use the ``solution'' environment
-% \begin{revision}
+\begin{revision}
+\noindent (c) If $A_\alpha = A_\beta$, then $A_\alpha \cap A_\beta\neq\emptyset$
 
-% \end{revision}
+\noindent (F) False
+\end{revision}
 % % %%%%%%%%%%
 
 % % %%%%%%%%%%
-% \begin{problem}[ES 24.4]
-
-% \end{problem}
+\begin{problem}[UD 9.13]
+Suppose A,B,C and D are four sets. If $A\times B \subseteq C\times D$,  must $A\subseteq C$ and $B\subseteq D$? Why or why not?
+\end{problem}
 % %
 % %\begin{cause}
 % %%  简述错误原因（可选）。
 % %\end{cause}
 % %
 % %% Or use the ``solution'' environment
-% \begin{revision}
+\begin{revision}
+\noindent True
 
-% \end{revision}
+\noindent Suppose $(x,y)\in A\times B$
+
+that is $x\in A$ and $y\in B$
+
+$\because A\times B \subseteq C \times D$
+
+$\therefore (x,y)\in C\times D$
+
+$\therefore x\in C$ and $y\in D$
+
+$\therefore A\subseteq C$ and $B\subseteq D$.
+\end{revision}
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -350,10 +535,14 @@
 
 %%%%%%%%%%
 
-% \begin{problem}[DH 2.4]
-% %  这是一个错题订正的模板
+\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+\noindent(a) Define a relation on the set of polynomials by $p\sim q$ if and only if
+$p(0)=q(0)$. Is this an quivalence relation? If so, what is the equivalence class of the polynomial given by $p(x)=x$？
 
-% \end{problem}
+\noindent(b) Define a relation on the set of polynomials by $p\sim q$ if and only if the degree of $p$ is the same as the degree of
+$q$. Is this an equivalence relation? If so, what is $E_r$ if $r(x)=3x+5$?
+\end{problem}
 % %
 % \begin{cause}
 %     没有看清是奇数的积和偶数的和，认为都是和了
@@ -361,17 +550,25 @@
 % \end{cause}
 % %
 % %% Or use the ``solution'' environment
-% \begin{revision}
+\begin{revision}
+(a) This is an equivalence relaiton.
 
-% \end{revision}
+等价类是所有常数项$a_0=0$的多项式。
+
+\noindent(b) This is an equivalence relaiton.
+
+等价类$E_r$是所有的一次多项式。
+\end{revision}
 
 % %%%%%%%%%%%%%%%%%%%
 
 % %%%%%%%%%%%%%%%%%%%
-% \begin{problem}[DH 2.5]
-%     %  这是一个错题订正的模板
+\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+Decide whether or not each of the following determine a partition of P.
 
-% \end{problem}
+(a) For $m\in \mathbb{N}$, let $A_m$ denote the set of polynomials of degree $m$.
+\end{problem}
 %     %
 %     % \begin{cause}
         
@@ -379,18 +576,131 @@
 %     % \end{cause}
 %     %
 %     %% Or use the ``solution'' environment
-% \begin{revision}
+\begin{revision}
+(a) It is not a partition.
 
-% \end{revision}
+according to the definition of the partition $\bigcup A_m=\mathbb{U},\  m\in \mathbb{N}$
 
-% \begin{problem}[DH 2.8]
+but if $p=0$ then $m=-\infty$
 
-% \end{problem}
-% \begin{revision}
+however $-\infty\notin \mathbb{N}$
 
-% \end{revision}
+so, there exists an polynomial $p=0$ can't be included by any partition.
+
+Thereby, It is not a partition.
+\end{revision}
+
+\begin{problem}[UD 14.15]
+Determine whether or not the function is one-to-one and whether or not the function is noto. If the function is not one-to-one, give an explicit example
+to show what goes wrong. If it is not onto, determine the range.
+\end{problem}
+\begin{revision}
+\noindent(a) not one-to-one : $f(-1)=f(1)=\frac{1}{2}$
+
+\noindent not onto : $ran(f)=(0,1]$
+
+\noindent(b) not one-to-one : $f(0)=f(\pi)=0$
+
+\noindent not onto : $ran(f)=[-1,1]$
+
+\noindent(e) not one-to-one : $f((1,2),(3,4))=f((2,1),(4,3))=2\sqrt{2}$
+
+\noindent not onto : $ran(f)=[0,+\infty)$
+
+\noindent(f) not onto : $ran(f)=A\times \{b\}$
+
+\noindent(h) not one-to-one : if $A\cap B=\emptyset$ and $C\cap D=\emptyset$ then $f(A)=f(C)=\emptyset$
+
+\noindent not onto : $ran(f)=\{\emptyset, P(B)\}$
+
+\noindent(i) not onto : $ran(f)=(0,+\infty)$
+\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{problem}[DH 22.1]
+    Give an example, if possible, of each of the following:
+
+    \noindent(a) a countably infinite collection of pairwise disjoint finite sets whose union is
+    countably infinite (see Problem 8.18 for the definition of pairwise disjoint);
+    
+    \noindent(b) a countably infinite collection of nonempty sets whose union is finite;
+    
+    \noindent(c) a countably infinite collection of pairwise disjoint nonempty sets whose union
+    is finite.
+    %  这是一个错题订正的模板
+\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+\begin{revision}
+(b) there isn't such collection
+
+If the collection exists and their union is finite.
+
+Suppose the union $\mathbb{U}\approx \{1,2,\cdots,n\},\ n\in \mathbb{N}$
+
+then the union has $2^n$ subsets at all.
+
+so the union can be rewritten as the union of $2^n$ different sets at most.
+
+however the union is a countably infinite collection of nonempty sets.
+
+Thus there exists contradiction
+
+so there isn't such collection.
+\end{revision}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{problem}[DH 23.3]
+
+    (a) Sketch the set $\{(x,y)\in\mathbb{R}^2\  :\ d_u((x,y),(0,0))<1 \}$, where $d_u$
+    is the usual metric.
+    
+    \noindent(b) Sketch the set $\{(x,y)\in\mathbb{R}^2\ :\ d_{tc}((x,y),(0,0))<1\}$, where $d_{tc}$ is the taxicab
+    metric.
+    
+    \noindent(c) Sketch the set $\{(x,y)\in\mathbb{R}^2\ :\ d_{m}((x,y),(0,0))<1\}$, where $d_m$ is the max metric.
+    
+    \noindent(d) Sketch the set $\{(x,y)\in\mathbb{R}^2\ :\ d_{d}((x,y),(0,0))<1\}$, where $d_d$ is the discrete
+    metric.
+    
+    \noindent(e) Sketch the set $\{(x,y,z)\in\mathbb{R}^3\ :\ d_{u}((x,y,z),(0,0,0))<1\}$, where $d_u$ is the usual
+    metric.
+    %  这是一个错题订正的模板
+\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+\begin{revision}
+(d)
+
+\begin{figure}[!htb]
+    \includegraphics[width = 0.30\textwidth]{1.png}
+	\caption{(d)}
+   %\fig{width = 0.30\textwidth}{hello.png}{caption}
+   %\fignocaption{width = 0.30\textwidth}{hello.png}
+\end{figure} 
+\end{revision}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %插入项目符号的方法：
 %	
 %
