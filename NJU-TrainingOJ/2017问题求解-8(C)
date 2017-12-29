@@ -1,0 +1,151 @@
+Sudoku
+
+/*************************************************************************                                                                                  	> File Name: Compute_coin.c
+     > Author: arthurbi
+     > Mail: arthurbqy1999@gmail.com
+     > Created Time: 2017年12月30日 星期六 01时05分29秒
+  ************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+int sudoku[9][9]={0};
+int possible_sudoku[9][9][9]={0};
+int sum[9][9]={0};
+
+void initialize(){
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            sum[i][j]=9;
+            for (int k = 0; k < 9; ++k) {
+                possible_sudoku[i][j][k]=0;
+            }
+        }
+    }
+
+    for (int x1 = 0; x1 < 9; ++x1) {
+        for (int y1 = 0; y1 < 9; ++y1) {
+            if(sudoku[x1][y1]!=0){
+                for (int j = 0; j < 9; ++j) {
+                    if(j!=y1&&possible_sudoku[x1][j][sudoku[x1][y1]-1]==0){
+                        possible_sudoku[x1][j][sudoku[x1][y1]-1]=1;
+                        sum[x1][j]--;
+                    }
+                    if(j!=x1&&possible_sudoku[j][y1][sudoku[x1][y1]-1]==0){
+                        possible_sudoku[j][y1][sudoku[x1][y1]-1]=1;
+                        sum[j][y1]--;
+                    }
+                }
+                for (int j = (x1/3)*3; j < (x1/3)*3+3; ++j) {
+                    for (int i = (y1/3)*3; i < (y1/3)*3+3; ++i) {
+                        if(j!=x1&&i!=y1&&possible_sudoku[j][i][sudoku[x1][y1]-1]==0){
+                            possible_sudoku[j][i][sudoku[x1][y1]-1]=1;
+                            sum[j][i]--;
+                        }
+                    }
+                }
+                //这里初始化的时候sudoku[x1][y1]-1很重要，注意不要写错了
+            }
+        }
+    }
+}
+
+int solve_sudoku(int num){
+    int x=0;
+    int y=0;
+    int min=10;
+
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            if(sudoku[i][j]==0&&min>sum[i][j]){
+                min=sum[i][j];
+                x=i;
+                y=j;
+            }
+        }
+    }
+    //找出可能取值最少的位置
+
+    if(min==10)return 1;
+    //如果所有的数独位置都被填好了则返回
+
+    for (int k = 0; k < 9; ++k) {
+        //如果可能取值最少的点没有数可以填了，那么会跳出for循环，返回0
+        if (possible_sudoku[x][y][k]==0){
+            sudoku[x][y]=k+1;
+            //最先找到一个可以填的数，就填上
+            //如果最后返回的是0，那么会回溯到这里，k++，循环会多进行一轮
+
+            for (int i = 0; i < 9; ++i) {
+                if(possible_sudoku[x][i][k]==0){
+                    possible_sudoku[x][i][k]=num;
+                    sum[x][i]--;
+                }
+                if(possible_sudoku[i][y][k]==0){
+                    possible_sudoku[i][y][k]=num;
+                    sum[i][y]--;
+                }
+            }
+            for (int j = (x/3)*3; j < (x/3)*3+3; ++j) {
+                for (int i = (y/3)*3; i < (y/3)*3+3; ++i) {
+                    if(j!=x&&i!=y&&possible_sudoku[j][i][k]==0){
+                        possible_sudoku[j][i][k]=num;
+                        sum[j][i]--;
+                    }
+                }
+            }
+
+            if(solve_sudoku(num+1)==1)return 1;
+                //递归调用solve_sudoku函数
+            else{
+                //如果返回0
+                sudoku[x][y]=0;
+                for (int i = 0; i < 9; ++i) {
+                    if(possible_sudoku[x][i][k]==num){
+                        possible_sudoku[x][i][k]=0;
+                        sudoku[x][i]++;
+                    }
+                    if(possible_sudoku[i][x][k]==num){
+                        possible_sudoku[i][x][k]=0;
+                        sudoku[i][x]++;
+                    }
+                }
+                for (int j = (x/3)*3; j < (x/3)*3+3; ++j) {
+                    for (int i = (y/3)*3; i < (y/3)*3+3; ++i) {
+                        if(j!=x&&i!=y&&possible_sudoku[j][i][k]==num){
+                            possible_sudoku[j][i][k]=0;
+                            sum[j][i]++;
+                        }
+                    }
+                }
+                //将上一步复原
+            }
+        }
+    }
+    return 0;
+}
+
+int main(){
+    int n=0;
+    scanf("%d",&n);
+    for (int i = 0; i < n; ++i) {
+        int row=0;
+        for (int l = 0; l < 9; ++l) {
+            scanf("%d",&row);
+            for (int j = 8; j >= 0; --j) {
+                sudoku[l][j]=row%10;
+                row/=10;
+            }
+        }
+        initialize();
+        solve_sudoku(1);
+
+        for (int j = 0; j < 9; ++j) {
+            for (int k = 0; k < 9; ++k) {
+                printf("%d",sudoku[j][k]);
+            }
+            printf("\n");
+        }
+    }
+
+    return 0;
+}
