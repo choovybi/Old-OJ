@@ -2,38 +2,41 @@ Compute coin
 
 /*************************************************************************                                                                                  	> File Name: Compute_coin.c
      > Author: arthurbi
-     > Mail: arthurbqy1999@gmail.com 
+     > Mail: arthurbqy1999@gmail.com
      > Created Time: 2017年12月29日 星期五 07时03分01秒
   ************************************************************************/
- 
- #include<stdio.h>
- 
- void compute_coin(int coin_value,int& number,int& amount_left);
- 
+
+#include<iostream>
+using namespace std;
+
+void compute_coin(int coin_value,int& number,int& amount_left);
+
  int main(){
      int money=0;
      int num1,num2,num3=0;
-     while(1){
-         scanf("%d",&money);
+     while(cin>>money){
          if(money==0){
-             printf("0 quarters(s) 0 dime(s) 0 penny(pennies)\n");
+             cout<<"0 quarters(s) 0 dime(s) 0 penny(pennies)"<<endl;
              break;
          }
-         num1=0;
-         num2=0;
-         num3=0;
          else{
+             num1=0;
+             num2=0;
+             num3=0;
              if(money>=25)compute_coin(25,num1,money);
              if(money>=10)compute_coin(10,num2,money);
              if(money>=1)compute_coin(1,num3,money);
-             printf("%d quarters(s) %d dime(s) %d penny(pennies)\n",num1,num2,num3);
+             cout<<num1<<" quarters(s) "<<num2<<" dime(s) "<<num3<<" penny(pennies) "<<endl;
          }
      }
-     
+
      return 0;
  }
- 
+
  void compute_coin(int coin_value,int& number,int& amount_left){
-     number=amount_coin/coin_value;
+     number=amount_left/coin_value;
      amount_left%=coin_value;
  }
+ 
+ //hint::这题有一点坑啊，题目说" lets the user repeat this computation for new input values until the user says he or she wants to end the program."
+ //意思其实是：当user输入的不是数字的时候程序停止，而不是说当输入为0的时候程序停止。
