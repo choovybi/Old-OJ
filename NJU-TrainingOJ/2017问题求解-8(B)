@@ -1,0 +1,63 @@
+Day of the Week
+
+/*************************************************************************                                                                                  	> File Name: Compute_coin.c
+     > Author: arthurbi
+     > Mail: arthurbqy1999@gmail.com
+     > Created Time: 2017年12月29日 星期五 11时12分29秒
+  ************************************************************************/
+#include <stdio.h>
+
+
+int isLeapYear(int year);
+int getCenturyValue(int year);
+int getYearValue(int year);
+int getMonthValue(int month, int year);
+void getdate(int sum);
+
+int main(){
+    int year,month,day=0;
+    while (scanf("%d %d %d",&year,&month,&day)!=EOF){
+        getdate(day+getCenturyValue(year)+getYearValue(year)+getMonthValue(month,year));
+    }
+
+    return 0;
+}
+
+int isLeapYear(int year){
+    return year % 400 == 0 || (year % 4 == 0 && year % 100 != 0);
+}
+
+int getCenturyValue(int year){
+    return (3-(year/100)%4)*2;
+}
+
+int getYearValue(int year){
+    return (year%100)/4+year%100;
+}
+
+int getMonthValue(int month, int year){
+    if(isLeapYear(year)&&month==1)return 6;
+    else if(!isLeapYear(year)&&month==1)return 0;
+    else if(isLeapYear(year)&&month==2)return 2;
+    else if(!isLeapYear(year)&&month==2)return 3;
+    else if(month==3)return 3;
+    else if(month==4)return 6;
+    else if(month==5)return 1;
+    else if(month==6)return 4;
+    else if(month==7)return 6;
+    else if(month==8)return 2;
+    else if(month==9)return 5;
+    else if(month==10)return 0;
+    else if(month==11)return 3;
+    else if(month==12)return 5;
+}
+
+void getdate(int sum){
+    if(sum%7==0)printf("Sunday\n");
+    else if(sum%7==1)printf("Monday\n");
+    else if(sum%7==2)printf("Tuesday\n");
+    else if(sum%7==3)printf("Wednesday\n");
+    else if(sum%7==4)printf("Thursday\n");
+    else if(sum%7==5)printf("Friday\n");
+    else if(sum%7==6)printf("Saturday\n");
+}
