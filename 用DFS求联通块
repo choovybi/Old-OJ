@@ -1,0 +1,46 @@
+知识背景：联通块指的是相邻的格子(相邻即横、竖或者对角线方向)
+
+#include <cstdio>
+#include <cstring>
+//图的DFS会用到的两个头文件
+
+const int maxn = 100 + 5;
+
+char pic[maxn][maxn];  //创建图盘
+int m,n;  //设置长和宽
+int idx[maxn][maxn];  //*创建标号数组* 关键！！！
+
+void dfs(int r,int c,int id){  //三个参数row，column，和标号id
+    if(r<0||r>=m||c<0||c>=n) return;  //如果当前目标块越界，那么返回不操作
+    if(idx[r][c]>0||pic[r][c]!='@')return;  //如果当前目标块标号不为0(已经被操作过了)或者不是(@)非要找的联通块，那么返回不操作
+    else{  //如果是要找的没有被操作的联通块
+        idx[r][c]=id;  //给上标记
+        for (int dr = -1; dr <=1 ; ++dr) {
+            for (int dc = -1; dc <=1 ; ++dc) {
+                if(dr!=0||dc!=0)dfs(r+dr,c+dc,id);  //这里dr和dc是偏移量，要加上原来的坐标r和c
+            }
+        }
+    }
+}
+
+int main(){
+    while (scanf("%d %d", &m, &n)==2 && m && n){  //这个语句表示输入两个数，并且m和n都不为0时才成立，这里的&&是判断条件的和
+        for (int i = 0; i < m; ++i) {
+            scanf("%s",pic[i]);  //这里要特别注意：scanf()函数会将连续的字符都读入，因此不能够用两次循环读入，如果输入的是数字则使用辗转相除法
+        }
+        memset(idx,0, sizeof(idx));  //将标号数组置0，将idx指向的内存的前sizeof(idx)个字节设置为"0"
+        int cnt=0;  //将标号count置0
+        for (int k = 0; k < m; ++k) {
+            for (int i = 0; i < n; ++i) {
+                if(idx[k][i]==0&&pic[k][i]=='@'){
+                    idx[k][i]=cnt+1;  //将当前位置的标记置为cnt+1
+                    dfs(k,i,++cnt);  //从当前位置开始进行DFS(深度优先遍历)
+                }
+            }
+        }
+        //二次循环遍历图中的每一个位置
+        //一个cnt的值就表示一个联通块
+        printf("%d\n",cnt);
+    }
+    return 0;
+}
