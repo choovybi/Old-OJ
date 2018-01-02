@@ -274,7 +274,8 @@ int main(){
     for (int i = 0; i < n; ++i) {
         int row=0;
         for (int l = 0; l < 9; ++l) {
-            scanf("%d",&row);
+            scanf("%d",&row);  //这里scanf()读入的是一整行的数字，但是用下面的辗转相除法可以将每一位的数字放到对应的数组位置上。
+                               //对于之间没有空格的字符则只要读取行数就可以了，字符串会自动的存入每一个位置。
             for (int j = 8; j >= 0; --j) {
                 sudoku[l][j]=row%10;
                 row/=10;
