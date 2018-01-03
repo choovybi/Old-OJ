@@ -1,0 +1,34 @@
+%基于"悲剧文本"问题的数组链表解法
+
+#include <cstdio>
+#include <cstring>
+
+const int maxn = 100000 + 5;
+int last,cur,next[maxn];  //last表示最后一个字符的位置，cur表示当前光标的位置，next[i]表示s[i]右边的字符编号
+char s[maxn];  //s[]数组用来存放输入的字符串
+
+int main(){
+    while (scanf("%s",s+1) == 1){  //这样输入的目的就是把第一个位置空下来
+        int n = strlen(s+1);  //将输入保存在s[1],s[2]......中，s[0]是用来存放头结点的。
+        // strlen()函数的功能是获取不为空的连续字符的长度
+        last = cur =0;  //last表示链表的尾部所在的位置
+        next[0] = 0;  //next[0]表示链表中0的后继，初始化为0
+
+        for (int i = 1; i <= n; ++i) {  //这里是从i=1开始，切记切记
+            char ch = s[i];
+            if(ch == '[')cur=0;  //如果是Home键，那么光标返回到最前面，在0和0的后继之间插入结点
+            else if(ch==']')cur=last;  //如果是End键，那么光标到文段的最后面，在链表的末尾和0之间插入结点
+            else{
+                next[i]=next[cur];  //让第i个结点(新插入的结点)指向光标所在的结点指向的结点***
+                next[cur]=i;  //让光标所在结点指向第i个结点(新插入的结点)
+                if(cur==last)last = i;  //如果光标在链表的末尾，那么链表的尾部就是新插入的结点
+                cur = i;  //将光标移到新插入的结点上
+            }
+        }
+        for (int j = next[0]; j != 0 ; j = next[j]) {
+            printf("%c",s[j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
