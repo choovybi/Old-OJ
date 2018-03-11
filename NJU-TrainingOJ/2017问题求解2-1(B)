@@ -1,0 +1,33 @@
+Goldbach's Conjecture
+
+#include <iostream>
+using namespace std;
+
+bool is_prime(int num);
+
+int main(){
+    int num=0;
+    int sum=0;
+    int a=0;
+    int b=0;
+    cin>>num;
+    while (num!=0){
+        for (int i = 1; i <= num/2; ++i) {
+            a=i;
+            b=num-i;
+            if(is_prime(a)&&is_prime(b))sum++;
+        }
+        cout<<sum<<endl;
+        cin>>num;
+        sum=0;
+    }
+    return 0;
+}
+
+bool is_prime(int num){
+    int i;
+    for (i = 2; i <num ; ++i) {
+        if(num%i==0)break;
+    }
+    return i == num;
+}
