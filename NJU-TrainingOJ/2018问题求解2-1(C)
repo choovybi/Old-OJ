@@ -1,0 +1,19 @@
+IBM Minus One
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    int sum=0;
+    cin>>sum;
+    for (int i = 0; i < sum; ++i) {
+        string str;
+        cin>>str;
+        cout<<"String #"<<i+1<<endl;
+        for (int j = 0; j < str.length(); ++j) {
+            cout<<char((int(str[j])-int('A')+1)%26+int('A'));
+        }
+        cout<<endl<<endl;
+    }
+    return 0;
