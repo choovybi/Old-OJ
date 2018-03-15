@@ -1,0 +1,58 @@
+Watering Flowers
+
+#include <iostream>
+#include <string>
+//#include <cstdio>
+
+using namespace std;
+
+int main(){
+    int sum=0;
+    string str;
+    bool flag=0;
+//    freopen("C:\\Users\\85977\\Desktop\\input.txt","r",stdin);
+    while(cin>>str){
+        if(str=="<br>"){
+            cout<<endl;
+            flag=0;
+            sum=0;
+        } else if(str=="<hr>"){
+            if(flag){
+                //flag==1;
+                cout<<endl;
+                cout<<"--------------------------------------------------------------------------------";
+                cout<<endl;
+                flag=0;
+                sum=0;
+            } else{
+                //flag==0;
+                cout<<"--------------------------------------------------------------------------------";
+                cout<<endl;
+                flag=0;
+                sum=0;
+            }
+        } else{
+            if(flag){
+                sum+=str.length()+1;
+                if(sum>80){
+                    cout<<endl;
+                    sum=0;
+                    sum+=str.length();
+                    cout<<str;
+                    flag=1;
+                } else{
+                    cout<<' ';
+                    cout<<str;
+                    flag=1;
+                }
+            } else{
+                sum=0;
+                sum+=str.length();
+                cout<<str;
+                flag=1;
+            }
+        }
+    }
+    cout<<endl;
+    return 0;
+}
