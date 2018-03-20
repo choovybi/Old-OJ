@@ -1,0 +1,637 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[CS 1.1.13]
+    Suppose on Day 1 you receive one penny, and, for $i$ > 1, on Day i
+    you receive twice as many pennies as you did on Day $i − 1$. How
+    many pennies will you have on Day 20? How many will you have
+    on Day $n$? Can you justify your answer by using the sum or product
+    principle?
+\end{problem}
+
+\begin{solution} 
+\
+
+(1) I will have 1048575 pennies on Day 20.
+
+(2) I will have $\sum_{i=0}^{n-1}2^i$ pennies on Day $n$
+
+(3) Suppose the set of pennies I have on Day $n$ is $S$, it's obviously that set $S$ is finite.
+I can partition it into $n$ blocks. Every block $S_{i}$ represents the pennies that I get on Day $i$ so they are all disjoint and finite.
+According to the Sum Principle $S=\sum_{i=0}^{n-1}S_{i}$ so I will have $\sum_{i=0}^{n-1}2^i$ pennies on Day $n$.
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[CS 1.2.5]
+    Assuming $k \leq n$, in how many ways can we pass out $k$ distinct pieces
+    of fruit to $n$ children if each child may get at most one piece? What
+    if $k > n$? Assume for both questions that we pass out all the fruit.
+\end{problem}
+
+\begin{solution}
+\
+
+(1) Assuming $k \leq n$, then there are $\frac{n!}{(n-k)!}$ ways to pass out all the fruits.
+
+(2) If $k>n$ and we should pass out all the fruits, then there are no ways to do it.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 1.2.15]
+    A tennis club has $2n$ members. We want to pair up the members
+    by twos for singles matches. In how many ways can we pair up all
+    the members of the club? Suppose that in addition to specifying who
+    plays whom, we also determine who serves first for each pairing. Now
+    in how many ways can we specify our pairs?
+\end{problem}
+
+\begin{solution}
+\
+
+(1) To pair up the members we should choose 2 two people from the left people in $n$ times, and the chosen groups might be in different orders that should be considered as the same situation so There are $\frac{2n!}{(2^n)*n!}$ ways to pair up all the members.
+
+(2) If determining who serves first for each pairing. There are $\frac{2n!}{n!}$ ways to pair up all the members.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 1.5.4]
+    Use multisets to determine the number of ways to pass out $k$
+    identical apples to $n$ children. Assume that a child may get more
+    than one apple.
+\end{problem}
+
+\begin{solution}
+\
+
+The question equals to determine the numbers of $k$-element multisets chosen from a $n$-element multiset.
+Assume $S=<<a_1*b_1,a_2*b_2,...,a_n*b_n>>$, $a=a_{1}+a_{2}+...+a_{n}$,
+because there might be child who has no apple,
+According to the quotient principle,
+so there are $\frac{(n+k-1)!}{(n-1)!\times k!}$ ways to pass out apples.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 1.5.12]
+    A standard notation for the number of partitions of an n-element set
+into k classes is $S(n, k)$. Because the empty family of subsets of the
+empty set is a partition of the empty set, $S(0, 0)$ is 1. In addition,
+$S(n, 0)$ is 0 for $n > 0$, because there are no partitions of a nonempty
+set into no parts. $S(1, 1)$ is 1.
+
+a. Explain why $S(n, n)$ is 1 for all $n > 0$. Explain why $S(n, 1)$ is
+1 for all $n > 0$.
+
+b. Explain why $S(n, k) = S(n − 1, k − 1) + k*S(n − 1, k)$ for
+$1 < k < n$.
+
+c. Make a table like Table 1.1 that shows the values of $S(n, k)$ for
+values of $n$ and $k$ ranging from 1 to 6.
+\end{problem}
+
+\begin{solution} 
+\
+
+a. The partition of $n$-element set $S$ consists of $n$ sets $S_{1},S_{2},...S_{n}$ and $S_{1}\cup S_{2}\cup ... \cup S_{n}=S$, for each $i$ with $i\neq j$. $S_{i} \cap S_{j}=\emptyset$.
+so every block have exactly one element that is $S(n, n)=1$. If there are more than one ways to do it, one block must have more than one element and other one block will be empty.
+
+b. Suppose the $n$-est element serves as a block itself, then there are $S(n-1,k-1)$ ways.
+Suppose the $n$-est element is in other blocks, there are $k$ blocks and $S(n-1,k)$ ways to partition them.
+So $S(n, k)=S(n - 1, k - 1)+k*S(n - 1, k)$ .
+
+c. The table is as follows:
+
+\begin{table}[h]
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+    	\hline  & n=1 & n=2 & n=3 & n=4 & n=5 & n=6\tabularnewline
+    	\hline 
+    	k=1 & 1 & 1 & 1 & 1 & 1 & 1 \tabularnewline
+    	\hline 
+    	k=2 & 0 & 1 & 3 & 7 & 15 & 31 \tabularnewline
+    	\hline 
+    	k=3 & 0 & 0 & 1 & 6 & 25 & 90 \tabularnewline
+    	\hline 
+    	k=4 & 0 & 0 & 0 & 1 & 10 & 65 \tabularnewline
+    	\hline 
+    	k=5 & 0 & 0 & 0 & 0 & 1 & 15 \tabularnewline
+    	\hline 
+    	k=6 & 0 & 0 & 0 & 0 & 0 & 1 \tabularnewline
+    	\hline 
+    \end{tabular}
+    \end{table}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 1.5.14]
+    Consider the following C++ function to compute $\binom{n}{k}$
+    \begin{lstlisting}[language=C++] 
+        int pascal(int n, int k)
+        { 
+            if (n < k)
+            {
+                cout<< "error:n<k" <<endl;
+                exit(1);
+            }
+            if( (k==0) || (n==k))
+                return 1;
+            return pascal(n-1,k-1) + pascal(n-1,k);
+        } 
+        \end{lstlisting} 
+    Enter this code, compile it, and run it (you will need to create a
+    simple main program that calls it). Run it on larger and larger
+    values of $n$ and $k$, and observe the running time of the program.
+    It should be surprisingly slow.(For example, try computing $\binom{30}{15}$.)
+    Why is it so slow? Can you write a different function to compute$\binom{n}{k}$
+    that is significantly faster? Why is your new version faster?
+    (Note: An exact analysis of this might be difficult at this point in the
+    course; it will be easier later. However, you should be able to figure
+    out roughly why the original version is so much slower.)
+\end{problem}
+
+\begin{solution} 
+\
+
+(1) Because this code uses recursion structure, if you need to compute $\binom{k}{n}$
+you need to compute all the former numbers. So it is slow.
+
+(2) \begin{lstlisting}[language=C++] 
+    int pascal(int n, int k)
+    { 
+        int res1,res2,res3=1;
+        for(int i=1;i<=n;++i){
+            res1*=i;
+        }
+        for(int j=1;j<=k;++j){
+            res2*=j;
+        }
+        for(int l=1;l<=n-k;++l){
+            res3*=l;
+        }
+        return res1/(res2*res3);
+    } 
+    \end{lstlisting} 
+
+(3) Because this code uses loops rather than recursion structure, So the complexity of the argorithm is $O(n)$ that is much faster.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[SM: 14.70]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[SM: 14.75]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[UD: 14.15]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.1]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.6]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.7]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.11]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
