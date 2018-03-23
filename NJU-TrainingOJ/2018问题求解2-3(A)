@@ -1,0 +1,98 @@
+Train Problem I
+
+#include <iostream>
+#include <string>
+#include <cstdio>
+
+using namespace std;
+
+int main(){
+    int num=0;
+    while (cin>>num){
+        getchar();
+        bool jud= true;
+        string str1;    //come in
+        int num1=0;
+        string str2;    //come out
+        string str3;    //stack
+        int num3=0;
+
+        int length=0;
+        int boo[1000]={0};
+        cin>>str1;
+        getchar();
+        cin>>str2;
+
+        for (int k = 0; k < num; ++k) {
+            if(num3==0&&str2[k]!=str1[num1]){
+                str3[num3]=str1[num1];
+                num3++;
+
+                num1++;
+                if(num1>=num){
+                    jud=false;
+                    break;
+                }
+                boo[length]=-1;//表示进
+                length++;
+            }
+            if(num1==num&&str2[k]!=str3[num3-1]){
+                jud=false;
+                break;
+            }
+
+            if(num1!=num&&num3!=0&&str2[k]!=str1[num1]&&str2[k]!=str3[num3-1]){
+                while (str2[k]!=str1[num1]&&str2[k]!=str3[num3-1]){
+                    if(num1==num-1){
+                        jud=false;
+                        break;
+                    }
+                    str3[num3]=str1[num1];
+                    num3++;
+                    if(num3>10){
+                        jud=false;
+                        break;
+                    }
+
+                    num1++;
+                    if(num1>=num){
+                        jud=false;
+                        break;
+                    }
+
+                    boo[length]=-1;//表示进
+                    length++;
+                }
+            }
+
+            if(num1!=num&&str2[k]==str1[num1]){
+                num1++;
+                if(num3>=9){
+                    jud=false;
+                    break;
+                }
+                boo[length]=-1;//表示进
+                length++;
+                boo[length]=1;//表示出
+                length++;
+            } else if(num3!=0&&str2[k]==str3[num3-1]){
+                num3--;
+                boo[length]=1;//表示出
+                length++;
+            }
+        }
+
+        if(jud==0){
+            cout<<"No."<<endl;
+        }
+        else{
+            cout<<"Yes."<<endl;
+            for (int i = 0; i < length; ++i) {
+                if(boo[i]==-1)cout<<"in"<<endl;
+                else if(boo[i]==1)cout<<"out"<<endl;
+            }
+        }
+        cout<<"FINISH"<<endl;
+    }
+    return 0;
+}
