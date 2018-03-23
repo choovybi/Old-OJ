@@ -1,0 +1,51 @@
+前m大的数
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+bool compare(int a,int b){
+    return a>b;
+}
+
+int main(){
+    int n,m=0;
+    int array[3000]={0};
+    int res[5000]={0};
+    while (cin>>n>>m){
+        int length=0;
+
+        for (int i = 0; i < n; ++i) {
+            cin>>array[i];
+        }
+        sort(array,array+n,compare);
+
+        if(n<50){
+            for (int j = 0; j < n; ++j) {
+                for (int i = j+1; i < n; ++i) {
+                    res[length]=array[j]+array[i];
+                    length++;
+                }
+            }
+        } else{
+            for (int j = 0; j < 100; ++j) {
+                for (int i = j+1; i < 100; ++i) {
+                    res[length]=array[j]+array[i];
+                    length++;
+                }
+            }
+        }
+
+        sort(res,res+length,compare);
+        for (int k = 0; k < m; ++k) {
+            if(k!=m-1){
+                cout<<res[k]<<" ";
+            } else{
+                cout<<res[k];
+            }
+        }
+        cout<<endl;
+    }
+
+    return 0;
+}
