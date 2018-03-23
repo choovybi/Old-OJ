@@ -1,0 +1,588 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.2]
+\
+
+(a) Write an algorithm which, given a tree $T$ , calculates the sum of the depths of all the
+nodes of $T$ .
+
+(b) Write an algorithm which, given a tree $T$ and a positive integer $K$, calculates the
+number of nodes in $T$ at depth $K$.
+
+(c) Write an algorithm which, given a tree $T$ , checks whether it has any leaf at an even
+depth.
+\end{problem}
+
+\begin{solution} 
+
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[DH 4.8]
+\
+
+Prove that the maximal distance between any two points on a polygon occurs between
+two of the vertices.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.11]
+    \
+
+    Write algorithms that find the two maximal elements in a given vector of $N$ distinct
+    integers (assume $N > 1$).
+
+    (a) Using an iterative method.
+
+    (b) Using the divide-and-conquer method.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.12]
+    \
+
+Write in detail the greedy algorithm described in the text for finding a minimal spanning
+tree. The $\textbf{integer-knapsack}$ problem asks to find a way to fill a knapsack of some given
+capacity with some elements of a given set of available items of various types in the most
+profitable way. The input to the problem consists of:
+
+$\blacksquare$ $C$, the total weight capacity of the knapsack;
+
+$\blacksquare$ a positive integer $N$, the number of item types;
+
+$\blacksquare$ a vector $Q$, where $Q[I ]$ is the available number of items of type $I$ ;
+
+$\blacksquare$ a vector $W$, where $W[I ]$ is the weight of each item of type $I$ , satisfying $0 < W[I ] \leq C$;
+and
+
+$\blacksquare$ a vector $P$, where $P[I ]$ is the profit gained by storing an item of type $I$ in the knapsack.
+
+All input values are non-negative integers. The problem is to fill the knapsack with elements
+whose total weight does not exceed $C$, such that the total profit of the knapsack is
+maximal. The output is a vector $F$, where $F[I ]$ contains the number of items of type $I$
+that are put into the knapsack.
+
+The $\textbf{knapsack}$ problem is a variation of the integer-knapsack problem, in which instead of
+discrete items, there are materials. The difference is that instead of working with integer
+numbers, we may put into the knapsack any quantity of material $I$ which does not exceed
+the available quantity $Q[I ]$. The vectors $W$ and $P$ now contain the weight and profit,
+respectively, of one quantity unit of material $I$ . All input and output values are now
+non-negative real numbers, not necessarily integers.
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.14]
+    \
+
+    (a) Design a greedy algorithm for the knapsack problem.
+
+    (b) What is your algorithm’s output for the input given in Exercise 4.13(b), and what is
+    the total profit of the knapsack now?
+\end{problem}
+
+\begin{solution} 
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.9]
+    \
+
+Write a program implementing the maximal polygonal distance algorithm.
+\end{problem}
+
+\begin{solution} 
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[DH 4.13]
+    \
+    
+    (a) Design a dynamic planning algorithm for the integer-knapsack problem.
+    
+    (b) What is your algorithm’s output for the input
+    
+    $\blacksquare$ $N = 5$
+    
+    $\blacksquare$ $C = 103$
+
+    $\blacksquare$ $Q = [3,1,4,5,1]$
+    
+    $\blacksquare$ $W = [10,20,20,8,7]$
+
+    $\blacksquare$ $P = [17,42,35,16,15]$
+
+    and what is the total profit of the knapsack?
+\end{problem}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[SM: 14.75]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[UD: 14.15]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.1]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.6]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.7]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.11]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
