@@ -41,3 +41,59 @@ int main(){
 
 //单调队列
 
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+#define max 1000050
+int a[max];
+long long sum[max*2+1];
+int index[max*2+1];
+
+int main(){
+    int n=0;
+    int ans=0;
+
+    while (scanf("%d",&n)){
+        if(n==0)break;
+        ans=0;
+        sum[0]=0;
+        for (int i = 0; i < n; ++i) {
+            scanf("%d",&a[i]);
+            sum[i+1]=sum[i]+a[i];
+        }
+        for (int j = n; j < 2*n; ++j) {
+            sum[j+1]=sum[j]+a[j-n];
+        }
+
+//        Monotone queue
+//        sum[0]=0;
+        int head=0;
+        int tail=0;
+        index[0]=0;
+        index[++tail]=1;
+        //index[0]=0;index[1]=1;tail=1;
+
+        for (int k = 1; k < 2 * n; ++k) {
+            if(k>=n){
+                //k==n means the first test, all the first sum have been calculated
+                //index[head] means the least number's index in the queue
+                //compare the sum[index[1]] with sum[0]=0
+
+                //on other conditions, compare the sum[index[head]] with the sum[k-n]
+                while (tail>head&&index[head]<k-n+1){
+                    head++;
+                }
+                if(sum[index[head]]>=sum[k-n])ans++;
+            }
+
+            while (tail>head&&sum[index[tail]]>sum[k+1]){
+                tail--;
+            }
+            index[++tail]=k+1;
+        }
+        
+        printf("%d\n",ans);
+    }
+    return 0;
+}
