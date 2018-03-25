@@ -39,7 +39,7 @@ int main(){
     return 0;
 }
 
-//单调队列
+//使用单调队列，将数据长度变成2n，时间复杂度O(N)
 
 #include <iostream>
 #include <cstdio>
