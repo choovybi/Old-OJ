@@ -3,76 +3,62 @@ Strategic Game
 #include <iostream>
 #include <cstdio>
 #include <cstring>
-#include <math.h>
+#include <algorithm>
 
 #define max 1501
 using namespace std;
-int t_child[max];
-int t_father[max];
+int t_child[max]={-1};
+int t_father[max]={-1};
 int tree[max][2];
 int n=0;
-int be=0;
-int notbe=0;
 
 void DP(int root);
-//动态规划
 
 int main(){
     int index=0;
     int childnum=0;
     int childindex=0;
-    while (scanf("%d",&n)){
-        memset(t_child,-1, sizeof(t_child));
-        memset(t_father,-1, sizeof(t_father));
-        int root=-1;
 
+    while (cin>>n){
+        int root=-1;
         for (int i = 0; i < n; ++i) {
             scanf("%d:(%d)",&index,&childnum);
             t_child[index]=childnum;
-            //表示index有几个子树
-            if(root==-1){
-                root=index;
-            }//将第一个输入的数变成新的根节点
+            if(root==-1) {
+                root = index;
+            }
             for (int j = 0; j < childnum; ++j) {
-                scanf("%d",&childindex);
+                cin>>childindex;
                 t_father[childindex]=index;
-                //表示childindex的父亲为index
             }
             if(t_father[root]==index){
                 root=index;
-            }//找到根节点
+            }
         }
 
         DP(root);
-        cout<<min(tree[root][0],tree[root][1])<<endl;
-        //输出根节点放守卫与不放守卫中最少的情况
+        printf("%d\n",min(tree[root][0],tree[root][1]));
     }
 
     return 0;
 }
 
 void DP(int root){
+    int be=0;
+    int notbe=0;
     if(t_child[root]==0){
-        //如果当前根节点没有子节点
         tree[root][0]=0;
         tree[root][1]=1;
         return;
     } else{
         for (int i = 0; i < n; ++i) {
-            //遍历所有的点，看那个是它的子节点
             if(t_father[i]==root){
-                //如果找到了子节点
                 DP(i);
-                //遍历子节点，求出子节点放守卫与不放守卫的情况
                 be+=min(tree[i][1],tree[i][0]);
-                //如果要有人，就选每个孩子最少的情况，然后把孩子的情况全加起来
                 notbe+=tree[i][1];
-                //如果没有人，那每一个孩子就一定要有人，把它们的情况全部加起来
             }
         }
         tree[root][1]=be+1;
-        //放守卫
         tree[root][0]=notbe;
-        //不放守卫
     }
 }
