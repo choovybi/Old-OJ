@@ -1,0 +1,642 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{2-4 分治法与递归}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[TC 4.1-5]
+\
+
+Use the following ideas to develop a nonrecursive, linear-time algorithm for the maximumsubarray
+problem. Start at the left end of the array, and progress toward the right,
+keeping track of the maximum subarray seen so far. Knowing a maximum subarray of
+$A[i..j]$, extend the answer to find a maximum subarray ending at index $j+1$ by using the
+following observation: a maximum subarray of $A[1.. j +1]$ is either a maximum subarray
+of $A[1..j]$ or a subarray $A[1..j + 1]$, for some $1 \leq i \leq j + 1$. Determine a maximum
+subarray of the form $A[i..j+1]$ in constant time based on knowing a maximum subarray
+ending at index $j$.
+\end{problem}
+
+\begin{solution} 
+\
+
+\begin{lstlisting}[language=C++] 
+int findmax(A,n){
+    if(n==1){
+        max=(1,1,1)
+        }
+    //start end value
+    else if(A[n]<0){
+        max=findmax(A,n-1);
+    }
+    else{
+        sum=0;
+        for(int j=max[0],j<max[1];++j){
+            sum+=A[j];
+            if(sum<A[n]){
+                max[0]=j;
+                max[1]=n;
+            }
+        }
+    }
+    return max;
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+\end{lstlisting} 
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[TC 4.3-3]
+\
+
+We saw that the solution of $T(n)= 2T([n/2]) + n$ is $O(n\log(n))$. Show that the solution
+of this recurrence is also $\varOmega(n\log(n))$. Conclude that the solution is $\vartheta(n\log(n))$.
+\end{problem}
+
+\begin{solution}
+\
+
+guess that the solution of this recurrence is $\varOmega(n\log(n))$
+
+Let $0<c\leq \frac{1}{4}$
+
+$T(n)\geq 2((c[n/2]\log([n/2]))+n\geq cn\log(n/2)+n==cn\log(n)-cn\log(2)+n\geq cn\log(n)$
+
+so for every $n$ when $c1\geq 1$ and $c2\leq \frac{1}{4}$, $c1n\log(n)\leq T(n)\leq c2n\log(n)$
+
+so $T(n)=\vartheta(n\log(n))$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 4.4-2]
+    \
+
+    Use a recursion tree to determine a good asymptotic upper bound on the recurrence
+    $T(n)=T(n/2)+n^2$. Use the substitution method to verify your answer.
+\end{problem}
+
+\begin{solution}
+\
+
+Because $T(n)=T(n/2)+n^2$,
+
+so $T(n)=cn^2+\frac{1}{4} c n^2+(\frac{1}{4})^2cn^2+..+(\frac{1}{4})^{\log(n-1)cn^2}+\vartheta(1)$
+
+$T(n)=\sum_{i=0}^{\log(n-1)}(\frac{1}{4})^{i}cn^2+\vartheta(1)<\sum_{i=0}^{\infty}(\frac{1}{4})^{i}cn^2+\vartheta(1)$
+
+$=\frac{1}{1-(1/4)}cn^2+\vartheta(1)$
+
+$=\frac{4}{3}cn^2+\vartheta(1)$
+
+$=O(n^2)$
+
+$\textbf{PROVE}$
+
+$T(n)\leq c(n/2)^2+n^2=\frac{1}{4}n^2+n^2\leq cn^2$
+
+this have been proved.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 4.5-3]
+    \
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    Use the master method to show that the solution to the binary-search recurrence
+    $T(n)=T(n/2)+\vartheta(1)$ is $T(n)=\vartheta(\log(n))$.(See Exercise 2.3-5 for a description
+    of binary search.)
+\end{problem}
+
+\begin{solution}
+\
+
+$a=1$ $b=2$ $f(n)=\vartheta(1)$
+
+because $f(n)=\vartheta(1)=\vartheta(n^0)$
+
+corresponding to condition 2
+
+so $T(n)=\vartheta(n^{\log(1)})\lg(n)=\vartheta(\lg(n))$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 4.4]
+\
+
+Fibonacci numbers
+\end{problem}
+
+\begin{solution} 
+\
+
+(a)
+
+$z+zF(z)+z^2F(z)=z+\sum_{i=0}^{\infty}F_{i}z^{i+1}+\sum_{i=0}^{\infty}F_{i}z^{i+2}$
+
+$=0+z+\sum_{i=1}^{\infty}F_{i-1}z^{i}+\sum_{i=2}^{\infty}F_{i-2}z^{i}$
+
+$=0+z+\sum_{i=2}^{\infty}(F_{i-1}+F_{i-2})z^{i}=0+z+\sum_{i=2}^{\infty}F_{i}z^{i}$
+
+$=\sum_{i=0}^{\infty}F_{i}z^{i}=F(z)$
+
+(b)
+
+using the (a)'s conclusion.
+
+because $F(z)=z+zF(z)+z^2F(z)$ so $F(z)=\frac{z}{1-z-z^2}$
+
+let $\phi$ and $\hat{\phi}$ in the equation.
+
+$(1-\phi z)(1-\phi \hat{\phi})$=$1-z-z^2$=$\frac{1}{\sqrt{5}(\frac{1}{1-\phi z}-\frac{1}{1-\hat{\phi}}}$.
+
+(c)
+
+using mathmatical induction to prove it
+
+(1)$ i=0 F_{0}=0$
+
+$i=1 F_{1}=1=\frac{1}{\sqrt{5}}(\sqrt{5})$
+
+(2) assume that $F_{k}=\frac{1}{\sqrt{5}}((\phi)^2-(\hat(\phi))^2)$ holds on
+
+(3) then $F_{k+1}=F_{k}+F_{k-1}=\frac{1}{\sqrt{5}}((\phi)^{k}+(\hat{\phi})^{k}+\frac{1}{\sqrt{5}}((\phi)^{k-1}+(\hat{\phi})^{k-1}))$
+
+$=\frac{1}{\sqrt{5}}((\frac{1+\sqrt{5}}{2})^{k}+(\frac{1-\sqrt{5}}{2})^{k})+\frac{1}{\sqrt{5}}((\frac{1+\sqrt{5}}{2})^{k-1}+(\frac{1-\sqrt{5}}{2})^{k-1})$
+
+$=\frac{1}{\sqrt{5}}((\frac{1+\sqrt{5}}{2})^{k+1}+(\frac{1-\sqrt{5}}{2})^{k+1})$
+
+so according to (1)(2)(3) $F_{i}=\frac{1}{\sqrt{5}}((\phi)^i-(\hat{\phi})^i)$ holds on for every $i$
+
+(d) according to (c) $F_{i}=\frac{1}{\sqrt{5}}((\phi)^i-(\hat{\phi})^i)$ holds on for every $i$
+
+and we also know that $F_{i}$ is integer for every $i$
+
+so we should prove that $-\frac{1}{2}\leq F_{i}-\frac{(\phi)^i}{\sqrt{5}}\leq \frac{1}{2}$
+
+that is $-\frac{1}{2}\leq \frac{(\hat{\phi})^i}{\sqrt{5}}\leq \frac{1}{2} $
+
+because $\|(\hat{\phi})\|<1$ so $(\|(\hat{\phi})\|)^i<\|(\hat{\phi})\|<\frac{1}{2}$
+
+so $F_{i}=\frac{(\phi)^i}{\sqrt{5}}$ rounded to nearest integer.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[DH 4.9]
+
+% \end{problem}
+
+% \begin{solution} 
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+%  
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[SM: 14.75]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[UD: 14.15]
+
+% \end{problem}
+
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.1]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[UD: 15.6]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.7]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.11]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
