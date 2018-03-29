@@ -1,0 +1,60 @@
+Crazy Tank
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+#define maxn 205
+#define pi 3.1415926
+
+double v[maxn]={0};
+int h,l1,r1,l2,r2=0;
+
+int solve(int num);
+
+int main() {
+    int num=0;
+    while (true){
+        cin>>num;
+        if(num==0)break;
+        cin>>h>>l1>>r1>>l2>>r2;
+        for (int i = 0; i < num; ++i) {
+            cin>>v[i];
+        }
+
+        cout<<solve(num)<<endl;
+    }
+    return 0;
+}
+
+int solve(int num){
+    double angle=0;
+    double t=0;
+    double vx=0;
+    double vy=0;
+    double x=0;
+    int max=0;
+
+    while(angle<=180){
+        int cnt=0;
+        for (int i = 0; i < num; ++i) {
+            vx=v[i]*sin(angle*pi/180);
+            vy=v[i]*cos(angle*pi/180);
+            t=(vy+sqrt(vy*vy+19.6*h))/9.8;
+            x=vx*t;
+            if(x>=l2&&x<=r2){
+                cnt=0;
+                break;
+            }
+            if(x>=l1&&x<=r1){
+                cnt++;
+            }
+        }
+        if(cnt>max)max=cnt;
+        angle+=0.36;
+    }
+
+    return max;
+}
+
+//Tips；cos和sin函数是弧度制表示不是角度制表示
