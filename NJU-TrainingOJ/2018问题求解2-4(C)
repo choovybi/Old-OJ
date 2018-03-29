@@ -1,0 +1,56 @@
+Physics Experiment
+
+#include <iostream>
+#include <stdio.h>
+#include <cmath>
+#include <algorithm>
+
+using namespace std;
+#define maxn 105
+
+
+double solve(double T0);
+double ans[maxn]={0};
+double g=10.0;
+int c=0;
+int N=0;
+double H,R,T=0;
+double t=0;
+
+int main() {
+    cin>>c;
+    for (int i = 0; i < c; ++i) {
+        cin>>N>>H>>R>>T;
+        t=sqrt((2.0*H)/g);
+        for (int k = 0; k < N; ++k) {
+            ans[k]=solve(T-k);
+        }
+
+        sort(ans,ans+N);
+
+        for (int j = 0; j < N; ++j) {
+            printf("%.2f ",ans[j]+j*2.0*R/100.0);
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+
+double solve(double T0){
+    int circle=(int)(T0/t);
+
+    if(T0<0)return H;
+    else if(circle%2==0){
+        //falling
+        double t0=T0-circle*t;
+        return H-0.5*g*t0*t0;
+
+    } else if(circle%2==1){
+        //rising
+        double t0=(circle+1)*t-T0;
+        //rising and falling are symmetry!
+        return H-0.5*g*t0*t0;
+    }
+}
+
+//Tips:两小球相碰相当于穿过，要先算出每个小球无障碍运动的位移，然后根据排序结果来判断第i个小球在哪个位置
