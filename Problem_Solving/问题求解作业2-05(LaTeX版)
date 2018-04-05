@@ -1,0 +1,729 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{2-5 递归及其数学基础}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.1-16]
+\
+
+An alternate version of the Ear Lemma states that a triangulated
+polygon is either a triangle with three ears or has at least two ears.
+(This version does not specify that the ears are nonadjacent.) What
+happens if we try proving this by induction, using the same
+decomposition that we used in proving the Ear Lemma?
+
+
+\end{problem}
+
+\begin{solution} 
+\
+
+If we try proving this by induction, using the same decomposition that we used in proving the Ear Lemma.
+
+First, the base case is almost the same.
+
+Second, these splited triangulated polygons are either a triangle with three ears or a larger polygon with two ears which can be adjacent.
+
+If a polygon is a triangle the new diagonal will eliminate two of the ears, leaving one ear in the triangle.
+
+If it is a larger polygon the diagonal can be incident to at most two ears which can be adjacent.
+
+So, there might be at least zero remaining ear in this subproblem.
+
+At least on remaining ear in triangle and at least zero remaining ear in this subproblem means that there might at least one ear in the oriangle triangulated polygon.
+
+Thus we can not prove this new Ear Lemma if we use the same decomposition that we used before.
+
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[CS 4.1-17]
+\
+
+There is a relationship between the number of vertices in a polygon
+and the number of triangles in any triangulation of that polygon.
+State this relationship and prove it by induction.
+
+\end{problem}
+
+\begin{solution}
+\
+
+The number of triangle in any triangulation of a polygon is equal to the number of vertices in that polygon minus two。
+
+(1) base case: triangle has three vertices and the number of triangles in any triangulation of a triangle is one. Three minus two equals to one, so the hypothesis holds.
+
+(2) inductive hypothesis: suppose that for a polygon which has $k$ vertices($k\geq 3$) the hypothesis holds that the number of triangles in any triangulation is $k-2$
+
+(3) inductive step: for a polygon which has $k+1$ vertices, the additional one vertice can only be put outside the polygon that has $k$ vertices.
+To be a new polygon, the additional vertice should be connected to two existed vertices, so they become a new triangulated triangle. So th number of triangles in any triangulation of this polygon is $(k-2)+1=k-1=(k+1)-2$.
+So the hypothesis holds.
+
+(4) inductive conclusion: The number of triangle in any triangulation of a polygon is equal to the number of vertices in that polygon minus two。$\blacksquare$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.2-8]
+\
+
+At the end of each year, a state fish hatchery puts 2000 fish into a
+lake. The number of fish in the lake at the beginning of the year
+doubles by the end of the year due to reproduction. Give a
+recurrence for the number of fish in the lake after $n$ years, and solve
+the recurrence.
+
+\end{problem}
+
+\begin{solution}
+\
+
+The equation is as follows:
+
+\begin{equation}  
+    T(n)=\left\{  
+                 \begin{array}{lr}  
+                 2T(n-1)+2000 & (n>1) \\  
+                 2000 & (n=1)
+                 \end{array}  
+    \right.  
+    \end{equation}  
+
+According to the formula above, the answer is:
+
+\[T(n)=2^{n}\times2000+2000\times\frac{1-2^{n}}{1-2}=2000\times(2^{n+1}-1)\]
+
+Bring it back to checkout, the equation above still holds, so the answer is correct.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.2-11]
+\
+
+Solve the recurrence $T(n) = 2T(n - 1) + n2^n$
+, with the initial
+condition $T(0) = 1$.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+
+\end{problem}
+
+\begin{solution}
+\
+
+According to the problem:
+
+\begin{equation}  
+    T(n)=\left\{  
+                 \begin{array}{lr}  
+                 2T(n-1)+n2^{n} & (n>0) \\  
+                 1 & (n=0)
+                 \end{array}  
+    \right.  
+    \end{equation}  
+
+Using the formula above, the answer is as follows:
+
+\[T(n)=2^{n}+\sum_{i=1}^{n}2^{n-i}i2^{i}=2^{n}+\sum_{i=1}^{n}i2^{n}=(n^2+n+2)2^{n-1}\]
+
+Bring it back to checkout, the equation above still holds, so the answer is correct.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.3-9]
+\
+
+Draw recursion trees, and use them to find big $\theta$ bounds on the
+solutions to the following recurrences. For each, assume that
+$T(1) = 1$ and that $n$ is a power of the appropriate integer.
+
+a. $T(n) = 8T(n/2) + n$
+
+b. $T(n) = 8T(n/2) + n^3$
+
+c. $T(n) = 3T(n/2) + n$
+
+d. $T(n) = T(n/4) + 1$
+
+e. $T(n) = 3T(n/3) + n^2$
+
+\end{problem}
+
+\begin{solution} 
+\
+
+见页4
+
+%插入图片的方法：
+\begin{figure}%[!htb]
+    \includegraphics[height = 0.50\textheight]{1.jpg}
+    \caption{(1)}
+   %\fig{width = 0.70\textwidth}{1.jpg}{caption}
+   %\fignocaption{width = 0.70\textwidth}{1.jpg}
+\end{figure} 
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.4-1]
+\
+
+Use the master theorem to give big $\theta$ bounds on the solutions to
+the following recurrences. For each, assume that $T(1) = 1$ and that
+n is a power of the appropriate integer.
+
+a. $T(n) = 8T(n/2) + n$
+
+b. $T(n) = 8T(n/2) + n^3$
+
+c. $T(n) = 3T(n/2) + n$
+
+d. $T(n) = T(n/4) + 1$
+
+e. $T(n) = 3T(n/3) + n^2$
+
+\end{problem}
+
+\begin{solution} 
+\
+
+According to the master theorem.
+
+(a) because $\log_{2}{8}=3>1$ so $T(n)=\theta(n^{3})$
+
+(b) because $\log_{2}{8}=3$ so $T(n)=\theta(n^{3}\lg{n})$
+
+(c) because $\log_{2}{3}>1$ so $T(n)=\theta(n^{\log_{2}{3}})$
+
+(d) because $\log_{4}{1}=0$ so $T(n)=\theta(\lg{n})$
+
+(e) because $\log_{3}{3}=1<2$ so $T(n)=\theta(n^2)$
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+%  
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.4-6]
+\
+
+Extend the proof of the preliminary version of the master theorem
+(Theorem 4.9) to the case $T(1) = d$.
+
+\end{problem}
+
+\begin{solution}
+\
+
+Think about the recursion tree for this recurrence. There will be $1+\log_{b}{n}$ levels.
+At each level, the number of subproblems will be multiplied by a;
+so, the number of subproblems at level i will be $a^{i}$.
+Each subproblem at level $i$ is a problem of size $n/b^{i}$.
+A subproblem of size $n/b^{i}$ requires $(n/b^{i})^c$ additional work,
+and because there are $a^i$ problems on Level $i$,
+the total number of units of work on Level $i$ is
+$a^{i}(\frac{n}{b^i})^c=n^c(\frac{a}{b^c})^i$.
+
+At the bottom level, $n/b^i=1$ and there are $a^i$ subproblems, each requiring
+$d$ unit of work, so the bottom work should be multiplied to $d$
+
+In general, we compute the total work done by summing the expression.
+This gives
+\[\sum_{i=0}^{\log_{b}{n}-1}n^c(\frac{a}{b^c})^i+d=\theta(n^c)\]
+This concludes the proof of Case 1. Case 2 and Case 3 are just the similar as Case 1.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[CS 4.5-8]
+\
+
+Show by induction that
+
+\begin{equation}  
+    T(n)=\left\{  
+                 \begin{array}{lr}  
+                 8T(n/2)+n\lg(n) &  \\  
+                 d &    
+                 \end{array}  
+    \right.  
+    \end{equation}  
+
+    has $T(n) = O(n^3)$ for any solution $T(n)$.
+\end{problem}
+
+\begin{solution}
+\
+
+First we assume that $T(n)\leq cn^3+f(n)$ where $c\geq d$ and $f(1)\geq 0$
+
+Let $f(n)=n\lg{n}-2n^2$
+
+Base case: Let $n=1$, then $T(1)=d<c+f(1)$ holds.
+
+inductive hypothesis: $T(k)\leq ck^3+f(k)$ holds for every $k$.
+
+inductive step: $T(2k)=8T(k)+(2k)log(2k)\leq 8ck^3+8f(k)+(2k)log(2k)= c(2k)^3+8k\lg{k}-16k^2\leq c(2k)^3-8k^2+2k\lg{2k}=c(2n)^3+f(2n)$
+
+conclusion: $T(n)=O(n^3)$ for any solution $T(n)$ holds.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CS 4.5-9]
+\
+
+Is the big $O$ upper bound in Problem 9 actually a big $\theta$ bound?
+
+\end{problem}
+    
+\begin{solution}
+\
+
+Yes, it is actually the big $\theta$ bound.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CS 4.5-10]
+\
+
+Give the best big $O$ upper bound you can for the solution to the
+recurrence
+
+\[T(n)=2T(\frac{n}{3}-3)+n\]
+
+(making an informed guess is not a bad idea here). Then prove by
+induction that your upper bound is correct.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+the upper bound is $O(n)$
+
+Base case: $T(n)\leq cn$ holds.
+
+inductive hypothesis: $T(k)\leq ck$ holds for every $k\geq 9$
+
+inductive step: for $k=\frac{n}{3}-3$, $T(\frac{n}{3}-3)=\frac{T(k)-k}{2}\leq \frac{(c-1)k}{2}$
+because $k\geq 9$ so when $0<c\leq 1$. $T(\frac{n}{3}-3)=O(\frac{n}{3}-3)$ holds.
+
+conclusion: the upper bound is $O(n)$.
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.7]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.11]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb	 %begin the feedback section (Optional)
+%这一部分是用来写反馈(feedback)的
+
+%你可以写：
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
