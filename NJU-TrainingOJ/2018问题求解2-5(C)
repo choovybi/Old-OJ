@@ -1,0 +1,35 @@
+小孩报数问题
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+string str[65];
+int alive[65]={0};
+int n,w,s=0;
+char ch;
+int index=0;
+
+int main() {
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>str[i];
+    }
+    cin>>w>>ch>>s;
+    index=w-1;
+    for (int j = 0; j < n; ++j) {
+        for (int i = 1; i < s; ++i) {
+            while(alive[(index+1)%n]==1){
+                index=(index+1)%n;
+            }
+            index=(index+1)%n;
+        }
+
+        cout<<str[index]<<endl;
+        alive[index]=1;
+        while(j!=n-1&&alive[index]==1){
+            index=(index+1)%n;
+        }
+    }
+    return 0;
+}
