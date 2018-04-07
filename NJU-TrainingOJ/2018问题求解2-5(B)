@@ -1,0 +1,189 @@
+Ultra-QuickSort
+
+//错误解法1
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define maxn 500050
+
+int arr[maxn];
+int arr_c[maxn][2];
+int sum=0;
+int abs(int x){
+    if(x<0)return -x;
+}
+
+int main() {
+    int n=0;
+    while (true){
+        cin>>n;
+        if(n==0)break;
+        else{
+            sum=0;
+            for (int i = 0; i < n; ++i) {
+                cin>>arr[i];
+                arr_c[i][0]=arr[i];
+                arr_c[i][1]=i;
+            }
+            sort(arr,arr+n);
+            for (int j = 0; j < n; ++j) {
+                for (int i = 0; i < n; ++i) {
+                    if(arr[i]==arr_c[j][0]){
+                        sum+=abs(i-arr_c[j][1]);
+                        for (int k = j+1; k <= i+j; ++k) {
+                            if(arr_c[k][1]<=i)arr_c[k][1]--;
+                        }
+                    }
+                }
+            }
+            cout<<sum<<endl;
+        }
+    }
+    return 0;
+}
+//这种简单的模拟会出现时间超限Time Limit Exceeded的问题
+
+//错误解法2
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define maxn 500050
+
+int arr[maxn];
+int sum=0;
+
+void swap(int n);
+
+int main() {
+    int n=0;
+    while (true){
+        cin>>n;
+        if(n==0)break;
+        else{
+            sum=0;
+            for (int k = 0; k < n; ++k) {
+                cin>>arr[k];
+            }
+
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n - i-1; ++j) {
+                    if(arr[j]>arr[j+1])swap(j);
+                }
+            }
+            cout<<sum<<endl;
+        }
+    }
+    return 0;
+}
+
+void swap(int n){
+    int temp=0;
+    temp=arr[n];
+    arr[n]=arr[n+1];
+    arr[n+1]=temp;
+    sum++;
+}
+//冒泡排序也会出现时间超限Time Limit Exceeded的问题
+
+//错误解法3
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define maxn 500050
+
+int arr[maxn];
+long long ans=0;
+long long mergesort(int l,int r){
+    if(r-1==l)return 0;
+    int m=(l+r)/2;
+    ans=mergesort(l,m)+mergesort(m,r);
+    for (int i = l; i < m ; ++i) {
+        for (int j = m; j < r; ++j) {
+            if(arr[j]<arr[i])ans++;
+        }
+    }
+    return ans;
+}
+
+int main() {
+    int n=0;
+    while (true){
+        cin>>n;
+        if(n==0)break;
+        else{
+            for (int k = 0; k < n; ++k) {
+                cin>>arr[k];
+            }
+            cout<<mergesort(0,n)<<endl;
+        }
+    }
+    return 0;
+}
+
+//merge的时候如果朴素的比较会出现时间超限Time Limit Exceeded的问题
+
+//正确解法
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define maxn 500050
+
+int arr[maxn];
+int arr1[maxn];
+long long ans=0;
+long long mergesort(int l,int r){
+    if(r-1==l)return 0;
+
+    int m=(l+r)/2;
+    ans=mergesort(l,m)+mergesort(m,r);
+//    for (int i = l; i < m ; ++i) {
+//        for (int j = m; j < r; ++j) {
+//            if(arr[j]<arr[i])ans++;
+//        }
+//    }
+    int p = l, q = m, c = l;
+//    use variant p,q and c to represent the location in left array right arr and merged array
+//    time consumed is O(n)
+    while (p < m || q < r) {
+        if (q >= r || (p < m &&  arr[p] <= arr[q])){
+            arr1[c] = arr[p];
+            c++;
+            p++;
+        }
+        else {
+            ans += m - p;
+            arr1[c] = arr[q];
+            c++;
+            q++;
+        }
+    }
+
+    for (int i = l; i < r; i++) arr[i] = arr1[i];
+    
+    return ans;
+}
+
+int main() {
+    int n=0;
+    while (true){
+        cin>>n;
+        if(n==0)break;
+        else{
+            for (int k = 0; k < n; ++k) {
+                cin>>arr[k];
+            }
+            cout<<mergesort(0,n)<<endl;
+        }
+    }
+    return 0;
+}
+
+//归并排序，在合并的时候使用p,q和c三个变量，这样使得合并的时间复杂度是O(n)总体的时间复杂度是O(nlog(n))
