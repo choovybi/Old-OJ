@@ -1,0 +1,23 @@
+折线分割平面
+
+#include <iostream>
+using namespace std;
+#define maxn 10050
+
+int num=0;
+int n=0;
+long long arr[maxn];
+
+int main() {
+    arr[1]=2;
+    for (int i = 2; i <= maxn-50; ++i) {
+        arr[i]=arr[i-1]+4*i-3;
+    }
+    cin>>num;
+    for (int j = 0; j < num; ++j) {
+        cin>>n;
+        cout<<arr[n]<<endl;
+    }
+
+    return 0;
+}
