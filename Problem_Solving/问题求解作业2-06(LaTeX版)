@@ -1,0 +1,791 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{2-6 算法方法}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.1]
+\
+
+Consider the problem of summing the salaries of employees earning more than their direct
+manager, assuming each employee has a single manager. The employees are labeled 1, 2,
+etc. Write algorithms that solve the problem for each of the following representations of
+the input data:
+
+(a) The input is given by an integer $N$ and a two-dimensional array $A$, where $N$ is the number of employees,
+$A[I,1]$ is the salary of the $I$th employee and $A[I,2]$ is the label of his or her manager.
+
+(b) The input is given by a binary tree constructed as follows: The root of the tree represents
+the first employee. For every node $V$ of the tree representing the $I$th employee,
+
+$\blacksquare$ $V$ contains the salary of the $I$th employee;
+
+$\blacksquare$ the first offspring of $V$ is a leaf containing the label of the manager of the $I$th
+employee; and
+
+$\blacksquare$ if there are more than $I$employees, the second offspring of $V$ is the node that
+represents the $I + 1$th employee.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+(a) 
+
+Using a two-dimensional array
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    #include <iostream>
+    using namespace std;
+    #define maxn 1050
+    int A[maxn][2]={0};
+    
+    int main() {
+        int n,a,b=0;
+        int N=0;
+        cin>>N;
+        for (int i = 0; i < N; ++i) {
+            cin>>A[i][0]>>A[i][1];
+        }
+        for (int j = 0; j < N; ++j) {
+            a=A[j][0];
+            b=A[A[j][1]][0];
+            if(a>b)n++;
+        }
+    
+        cout<<n<<endl;
+    
+        return 0;
+    }
+\end{lstlisting}
+
+(b) 
+
+Using a binary tree
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    #include <iostream>
+    using namespace std;
+    
+    #define maxn 1050
+    
+    struct node{
+        int salary=0;
+        int manager=0;
+        node pNext;
+    };
+    
+    int salary[maxn]={0};
+    
+    int main(){
+        int n=0;
+        int count=0;
+        node employee;
+        while (NULL != employee.salary){
+            salary[n]=employee.salary;
+            n++;
+            employee=employee.pNext;
+        }
+        while (NULL != employee.salary){
+            if(employee.salary>salary[employee.manager]){
+                count++;
+                employee=employee.pNext;
+            }
+        }
+        cout<<count<<endl;
+    
+        return 0;
+    }
+\end{lstlisting}
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[DH 4.8]
+\
+
+Prove that the maximal distance between any two points on a polygon occurs between
+two of the vertices.
+
+\end{problem}
+
+\begin{solution}
+\
+
+Suppose that the maximal distance between any two points on a polygon occurs
+between the two points on the edge of the polygon.
+
+then denote them as point $A$ and $B$, and denote the two vectors of the edge where point $B$ located as $C$ and $D$
+
+connect $A$ and $C$ and $D$ respectively to form a triangle and point $B$ located between $B$ and $C$
+
+So the two angles $\angle ABC$ and $\angle ABD$ must have one over or equal to $\frac{\pi}{2}$,
+according to the ``cosine law'' there must exists one edge ``AC'' or ``AD''
+longer than $AB$ in contrast with the assumption the $AB$ is the longest distance of the polygon.
+Similar to the proving above, if a point is on the edge of the polygon and another is a vertice can't be
+the longest distance either.
+So the maximal discrete must between any two points on a polygon occurs between
+two of the vertices.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.9]
+\
+
+Write a program implementing the maximal polygonal distance algorithm.
+
+\end{problem}
+
+\begin{solution}
+
+\begin{remark}	% Optional
+以下解答参考了网站``https://blog.csdn.net/hitfanyu/article/details/5522589'' %$\ldots$
+%\noindent 以下解答是与  同学讨论得到的。
+\end{remark}
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+//`计算凸包直径，输入凸包ch，顶点个数为n，按逆时针排列，输出直径的平方` 
+int dist2(Point ch1,Point ch2){
+    int dist=0;
+    dist=(ch1.x-ch2.x)*(ch1.x-ch2.x)+(ch1.y-ch2.y)*(ch1.y-ch2.y);
+    return dist;
+}//`计算距离的平方`
+int cross(Point ch1,Point ch2,Point ch3){
+    int area=0;
+    
+    Point vec1.x=ch1.x-ch2.x;
+    Point vec1.y=ch1.y-ch2.y;
+    Point vec2.x=ch1.x-ch3.x;
+    Point vec2.y=ch2.y-ch3.y;
+    area=vec1.x*vec2.x+vec1.y*vec2.y;
+
+    return area;
+}//`计算两个向量的叉乘`
+int rotating_calipers(Point *ch,int n)  {  
+    int length=n;
+    int q=1; //`q表示当前点的踵点`
+    int ans=0;  
+    ch[n]=ch[0];  
+    for(int p=0;p<length;p++)  {  
+        while(cross(ch[p+1],ch[p],ch[q+1])>cross(ch[p+1],ch[p],ch[q]))  
+            q=(q+1)%n;  
+        ans=max(ans,max(dist2(ch[p],ch[q]),dist2(ch[p+1],ch[q+1])));              
+    }  
+    return ans;   
+} 
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.12]
+\
+
+Write in detail the greedy algorithm described in the text for finding a minimal spanning
+tree. The integer-knapsack problem asks to find a way to fill a knapsack of some given
+capacity with some elements of a given set of available items of various types in the most
+profitable way. The input to the problem consists of:
+
+$\blacksquare$ $C$, the total weight capacity of the knapsack;
+
+$\blacksquare$ a positive integer $N$, the number of item types;
+
+$\blacksquare$ a vector $Q$, where $Q[I]$ is the available number of items of type $I$ ;
+
+$\blacksquare$ a vector $W$, where $W[I]$ is the weight of each item of type $I$, satisfying $0 < W[I] \leq C$;
+and
+
+$\blacksquare$ a vector $P$, where $P[I]$ is the profit gained by storing an item of type $I$ in the knapsack.
+
+All input values are non-negative integers. The problem is to fill the knapsack with elements
+whose total weight does not exceed $C$, such that the total profit of the knapsack is
+maximal. The output is a vector $F$,where $F[I]$ contains the number of items of type $I$
+that are put into the knapsack.
+
+The $\textbf{napsack}$ problem is a variation of the integer-knapsack problem, in which instead of
+discrete items, there are materials. The difference is that instead of working with integer
+numbers, we may put into the knapsack any quantity of material $I$ which does not exceed
+the available quantity $Q[I]$. The vectors $W$ and $P$ now contain the weight and profit,
+respectively, of one quantity unit of material $I$. All input and output values are now
+non-negative real numbers, not necessarily integers.
+
+\end{problem}
+
+\begin{solution}
+\
+
+To find a minimal spanning tree
+
+Firstly find the shortest edge of path of the whole graph and record the two vertices of the edge.
+
+Then find the shortest edge connecting with the recorded vertices, with the limit that there does not exist any circle.
+
+Finally, connect all the vertices of the graph and calculate the whole cost of the roads
+
+And this process above will produce a minimal spanning tree.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[DH 4.14]
+\
+
+(a) Design a dynamic planning algorithm for the integer-knapsack problem.
+
+(b) What is your algorithm’s output for the input
+
+$\blacksquare$ $N = 5$
+
+$\blacksquare$ $C = 103$
+
+$\blacksquare$ $Q = [3,1,4,5,1]$
+
+$\blacksquare$ $W = [10,20,20,8,7]$
+
+$\blacksquare$ $P = [17,42,35,16,15]$
+
+and what is the total profit of the knapsack?
+
+\end{problem}
+
+\begin{solution} 
+\
+
+(a) This is a typical knapsack problem and its ``state transition equation'' is like follows:
+\[F[i,c]=max\{F[i-1,C-kW[i]]+kP[i]\|0\leq kW[i]\leq c,k\leq Q[i]\}\]
+
+and the $F[i,c]$ in it means the most valuable ways of puting the $i$th object in the bag of capacity of $v$
+
+So the program is:
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    #include <iostream>
+    using namespace std;
+    #define maxn 1050
+    int C=0; //means the whole capacity
+    int Q[maxn]; //means the number of each object
+    int W[maxn]; //means the weight of each object
+    int P[maxn]; //means the profit ot each object
+    
+    int F(int index,int capacity){
+        if(index==0){
+            int num=0;
+            while(num*W[0]<=capacity&&num<=Q[0]){
+                num++;
+            }
+            num--;
+            return num*P[0];
+        }
+        
+        int n=Q[index]; //means the number of the index object
+        int maximun=0;
+        for (int i = 0; i <= n; ++i) {
+            if(i*W[i]<=capacity){
+                if(F(index-1,capacity-i*W[i])+i*P[i]>maximun){
+                    maximun=F(index-1,capacity-i*W[i])+i*P[i];
+                }
+            }
+        }
+        return maximun;
+    }
+    
+    int main(){
+        int C=0;
+        int N=0;
+        cin>>C>>N;
+        for (int i = 0; i < N; ++i) {
+            cin>>Q[i]>>W[i]>>P[i];
+        }
+    
+        cout<<F(N-1,C)<<endl;
+    
+        return 0;
+    }
+\end{lstlisting}
+
+(b) According to my program the output is [0,0,1,2,1]
+
+and total profit of the knapscak is 194.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[CS 4.4-1]
+% \
+
+
+% \end{problem}
+
+% \begin{solution} 
+% \
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+%  
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[CS 4.4-6]
+% \
+
+
+
+% \end{problem}
+
+% \begin{solution}
+% \
+
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+% \begin{problem}[CS 4.5-8]
+% \
+
+
+% \end{problem}
+
+% \begin{solution}
+% \
+
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CS 4.5-9]
+% \
+
+% \end{problem}
+    
+% \begin{solution}
+% \
+
+
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CS 4.5-10]
+% \
+
+% \end{problem}
+    
+% \begin{solution}
+% \
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.7]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.11]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+\begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\beginfb	 %begin the feedback section (Optional)
+% 这一部分是用来写反馈(feedback)的
+
+% 你可以写：
+% \begin{itemize}
+
+% \end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
