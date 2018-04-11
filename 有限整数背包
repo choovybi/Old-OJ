@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+
+#define maxn 1050
+
+int C=0; //means the whole capacity
+int Q[maxn]; //means the number of each object
+int W[maxn]; //means the weight of each object
+int P[maxn]; //means the profit ot each object
+int n[maxn]; //means the time of each object
+
+int F(int index,int capacity){
+    if(index==0){
+        int num=0;
+        while(num*W[index]<=capacity && num<=Q[index]){
+            num++;
+        }
+        num--;
+        return num*P[index];
+    }
+
+    int maximun=0;
+    for (int i = 0; i <= Q[index]; ++i) {
+        if(i*W[index]<=capacity){
+            if(F(index-1,capacity-i*W[index])+i*P[index]>maximun){
+                maximun=F(index-1,capacity-i*W[index])+i*P[index];
+                n[index]=i;
+            }
+        }
+    }
+    return maximun;
+}
+
+int main(){
+    int C=0;
+    int N=0;
+    cin>>C>>N;
+    for (int i = 0; i < N; ++i) {
+        cin>>Q[i]>>W[i]>>P[i];
+    }
+    
+    cout<<F(N-1,C)<<endl;
+    
+    for (int j = 0; j < N; ++j) {
+        cout<<n[j]<<endl;
+    }
+    
+    return 0;
+}
