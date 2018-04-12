@@ -1,0 +1,65 @@
+Lining Up
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+#define maxn 705
+#define inf 999999999
+double slope[maxn]={0};
+double cor[maxn][2];
+int N=0;
+double k;
+int maximun=0;
+
+int main() {
+    while(true){
+        cin>>N;
+        if(N==0)break;
+
+        for (int i = 0; i < N; ++i) {
+            cin>>cor[i][0];
+            cin>>cor[i][1];
+        }
+        maximun=1;
+
+        for (int j = 0; j < N; ++j) {
+            int length=0;
+            for (int i = 0; i < N; ++i) {
+                if(i!=j){
+                    if(cor[j][0]==cor[i][0]){
+                        k=inf;
+                    } else{
+                        k=(cor[j][1]-cor[i][1])/(cor[j][0]-cor[i][0]);
+                    }
+                    slope[length]=k;
+                    length++;
+                }
+            }
+
+
+            int times=1;
+
+            sort(slope,slope+N-1);
+            double cur=slope[0];
+
+            for (int l = 1; l < N-1; ++l) {
+                if(slope[l]==cur){
+                    times++;
+                    if(times>maximun){
+                        maximun=times;
+                    }
+                } else{
+                    cur=slope[l];
+                    times=1;
+                }
+            }
+        }
+        if(N==1)cout<<1<<endl;
+        else{
+            cout<<maximun+1<<endl;
+        }
+    }
+    return 0;
+}
