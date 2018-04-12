@@ -1,0 +1,99 @@
+The Castle
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+#define maxn 51
+#define maxn1 2500
+
+bool wall[maxn][maxn][4]={false};
+int room[maxn][maxn]={0};
+int res[maxn1]={0};
+int m=0;
+int n=0;
+int length=0;
+
+void DFS(int i,int j);
+bool judge(int i,int j){
+    return i>j;
+}
+
+int main() {
+    int val=0;
+    cin>>m;
+    cin>>n;
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin>>val;
+            if(val==0)continue;
+            else if(val==1)wall[i][j][0]=true;
+            else if(val==2)wall[i][j][1]=true;
+            else if(val==4)wall[i][j][2]=true;
+            else if(val==8)wall[i][j][3]=true;
+            else if(val==3){
+                wall[i][j][0]=true;
+                wall[i][j][1]=true;
+            } else if(val==5){
+                wall[i][j][0]=true;
+                wall[i][j][2]=true;
+            } else if(val==9){
+                wall[i][j][0]=true;
+                wall[i][j][3]=true;
+            } else if(val==6){
+                wall[i][j][1]=true;
+                wall[i][j][2]=true;
+            } else if(val==10){
+                wall[i][j][1]=true;
+                wall[i][j][3]=true;
+            } else if(val==12){
+                wall[i][j][2]=true;
+                wall[i][j][3]=true;
+            } else if(val==7){
+                wall[i][j][0]=true;
+                wall[i][j][1]=true;
+                wall[i][j][2]=true;
+            } else if(val==11){
+                wall[i][j][0]=true;
+                wall[i][j][1]=true;
+                wall[i][j][3]=true;
+            } else if(val==13){
+                wall[i][j][0]=true;
+                wall[i][j][2]=true;
+                wall[i][j][3]=true;
+            } else if(val==14){
+                wall[i][j][1]=true;
+                wall[i][j][2]=true;
+                wall[i][j][3]=true;
+            } else if(val==15){
+                wall[i][j][0]=true;
+                wall[i][j][1]=true;
+                wall[i][j][2]=true;
+                wall[i][j][3]=true;
+            }
+        }
+    }
+
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if(room[i][j]==0){
+                DFS(i,j);
+                length++;
+            }
+        }
+    }
+    sort(res,res+length,judge);
+    cout<<length<<endl;
+    cout<<res[0]<<endl;
+
+    return 0;
+}
+
+void DFS(int i,int j){
+    res[length]++;
+    room[i][j]=1;
+    if(!wall[i][j][0]&&room[i][j-1]==0)DFS(i, j - 1);
+    if(!wall[i][j][1]&&room[i-1][j]==0)DFS(i - 1, j);
+    if(!wall[i][j][2]&&room[i][j+1]==0)DFS(i, j + 1);
+    if(!wall[i][j][3]&&room[i+1][j]==0)DFS(i + 1, j);
+}
