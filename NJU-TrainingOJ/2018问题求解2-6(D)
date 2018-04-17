@@ -1,0 +1,62 @@
+The Troublesome Frog
+IOI2002题目
+思路：暴力求解
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+#define maxn 5005
+int cor[maxn][maxn]={0};
+
+struct node{
+    int x,y;
+    bool operator<(const node &a)const {
+        return a.y!=y ? y<a.y : x<a.x;
+    }
+}p[maxn];
+
+int main() {
+    int r,c,n=0;
+    int ans=0;
+    cin>>r>>c;
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>p[i].x;
+        cin>>p[i].y;
+        cor[p[i].x][p[i].y]=1;
+    }
+    
+    sort(p,p+n);
+
+    int count=2;
+
+    for (int j = 0; j < n; ++j) {
+        for (int i = j+1; i < n; ++i) {
+            int dx=p[i].x-p[j].x;
+            int dy=p[i].y-p[j].y;
+            int inx=p[j].x-dx;
+            int iny=p[j].y-dy;
+            if(inx>=1&&inx<=r&&iny>=1&&iny<=c)continue;
+            int nowx=p[i].x+dx;
+            int nowy=p[i].y+dy;//这里错写成了p[i].x
+            count=2;
+            while (nowx>=1&&nowx<=r&&nowy>=1&&nowy<=c){
+                if(cor[nowx][nowy]==1){
+                    count++;
+                    nowx+=dx;
+                    nowy+=dy;
+                } else{
+                    count=0;
+                    break;
+                }
+            }
+            if(count>ans)ans=count;
+        }
+    }
+
+    if(ans>2)cout<<ans<<endl;
+    else cout<<0<<endl;
+
+    return 0;
+}
