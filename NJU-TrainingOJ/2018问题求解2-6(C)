@@ -1,0 +1,122 @@
+Jurassic Remains
+
+1.错误答案
+
+#include <iostream>
+#include <string>
+#include <map>
+
+#define maxn 24
+using namespace std;
+
+int N=0;
+string str;
+int bistore[maxn]={0};
+int ans=0;
+
+int bitcount(int x){
+    return x == 0 ? 0 : bitcount(x / 2) + (x & 1);
+}
+
+map<int,int> p;
+
+int main() {
+    cin>>N;
+
+    for (int i = 0; i < N; ++i) {
+        cin>>str;
+        for (int j = 0; j < str.length(); ++j) {
+            bistore[j]^=(1<<(str[j]-'A'));
+        }
+    }
+
+    int a=N/2;
+    int b=N-a;
+
+    p.clear();
+
+    for(int i=0;i<(1<<a);i++)//折半,二进制枚举
+    {
+        int x=0;
+        for(int j=0;j<a;j++)
+        {
+            x^=((i>>j)&1)*bistore[j];
+        }
+        if(p.count(x)||bitcount(p[x])<bitcount(i))///没有这种状态||选这种状态下，串数最多的
+            p[x]=i;
+    }
+    
+    for(int i=0;i<(1<<b);i++)
+    {
+        int x=0;
+        for(int j=0;j<b;j++)
+        {
+            x^=((i>>j)&1)*bistore[j+a];
+        }
+
+        if(p.count(x)&&(bitcount(p[x])+bitcount(i))>bitcount(ans))//相遇，寻找最大
+        {
+            ans=(i<<a)|p[x];//注意是i，a,别把上半部分保存的给搞没了
+        }
+    }
+
+    cout<<bitcount(ans)<<endl;
+
+    int ff=0;
+    for(int i=0;i<N;i++)
+    {
+        if((ans>>i)&1)//输出选择
+        {
+            cout<<i+1<<' ';
+        }
+    }
+    cout<<endl;
+
+    return 0;
+}
+
+2.正确答案
+
+#include<cstdio>
+#include<map>
+#include <iostream>
+#include <string>
+
+#define MAXN 30
+using namespace std;
+
+int n,a[MAXN];
+string s;
+map<int ,int > F;
+
+int bitcount(int x) {return x? bitcount(x/2)+(x&1):0;} //计算一个数二进制表示后所包含的1的个数
+int main() {
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>s;
+        a[i] = 0;
+        for (int j = 0; s[j]; ++j) a[i] ^= (1 << (s[j] - 'A'));//将字符串转化成数
+    }
+
+    F.clear();//每次记得清空映射
+    int n1 = n / 2, n2 = n - n1;
+
+    for (int i = 0; i < (1 << n1); ++i){ //枚举前n/2个数的每种状态{
+        int x = 0;
+        for (int j = 0; j < n1; ++j) x ^= ((i >> j) & 1) * a[j];//计算每种状态的异或和
+        if (F.count(x) || bitcount(i) > bitcount(F[x])) F[x] = i;//F记录每个异或值所对应的字符串选取状态
+    }
+    int ans = 0;//答案记录最终的选取状态
+    for (int i = 0; i < (1 << n2); ++i){  //枚举后n/2个数的每种状态
+        int x = 0;
+        for (int j = 0; j < n2; ++j) x ^= ((i >> j) & 1) * a[j + n1];//计算每种状态的异或和
+        if (F.count(x) && bitcount(i) + bitcount(F[x]) > bitcount(ans)) ans = (i << n1) | F[x];
+        //如果找到异或和与前n/2个数中的相同的异或和，那么更新答案
+    }
+
+    cout<<bitcount(ans)<<endl;
+    for (int i = 0; i < n; ++i) if ((ans >> i) & 1) cout<<i+1<<' ';
+    cout<<endl;
+
+    return 0;
+}
