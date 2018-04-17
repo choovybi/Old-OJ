@@ -1,6 +1,6 @@
 The Troublesome Frog
 IOI2002题目
-思路：暴力求解
+思路：暴力求解 + 剪枝
 
 #include <iostream>
 #include <algorithm>
@@ -60,3 +60,5 @@ int main() {
 
     return 0;
 }
+
+题解来自：https://blog.csdn.net/qq_33362864/article/details/53121842
