@@ -1,4 +1,5 @@
 Jurassic Remains
+思路：暴力求解 + 位运算 + 中间相遇法
 
 1.错误答案
 
@@ -120,3 +121,5 @@ int main() {
 
     return 0;
 }
+
+题解来自：https://blog.csdn.net/keshuai19940722/article/details/18995013
