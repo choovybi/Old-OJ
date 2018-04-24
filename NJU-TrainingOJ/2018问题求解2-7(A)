@@ -1,0 +1,54 @@
+Probability|Given
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <algorithm>
+#include <iomanip>
+
+using namespace std;
+
+int N,r=0;
+double p[21]={0};
+int kase=0;
+
+int main() {
+    while (cin>>N>>r){
+        if(N==0&&r==0)break;
+        kase++;
+        for (int i = 0; i < N; ++i) {
+            cin>>p[i];
+        }
+
+        string str;
+        double sum=0;
+        double ans[21]={0};
+
+        for (int k = 0; k < N -r; ++k) {
+            str+='0';
+        }
+        for (int l = 0; l < r; ++l) {
+            str+='1';
+        }
+
+        do{
+            double subsum=1.0;
+            for (int i = 0; i < N; ++i) {
+                if(str[i]=='0')subsum*=(1-p[i]);
+                if(str[i]=='1')subsum*=p[i];
+            }
+            for (int j = 0; j < N; ++j) {
+                if(str[j]=='1')ans[j]+=subsum;
+            }
+            sum+=subsum;
+        }while(next_permutation(str.begin(),str.end()));
+
+        cout<<"Case "<<kase<<":"<<endl;
+        for (int j = 0; j < N; ++j) {
+            cout<<fixed<<setprecision(6)<<ans[j]/sum<<endl;
+        }
+    }
+    return 0;
+}
+//string 此法极为巧妙，配合next_permutation(str.begin(),str.end())食用味道更佳
