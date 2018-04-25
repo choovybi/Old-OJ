@@ -1,0 +1,103 @@
+Football
+
+1. 基本做法：使用朴素的动态规划（会发生TLE）
+
+#include <iostream>
+#include <cmath>
+
+#define maxn 130
+using namespace std;
+
+double p[maxn][maxn]={0};
+double dp[maxn][8]={0};
+int n=0;
+
+int main() {
+    while (true){
+        cin>>n;
+        if(n==-1)break;
+        for (int i = 0; i < pow(2,n); ++i) {
+            for (int j = 0; j < pow(2,n); ++j) {
+                cin>>p[i][j];
+            }
+        }
+
+        for (int k = 0; k < pow(2,n); ++k) {
+            if(k%2==0)dp[k][1]=p[k][k+1];
+            else if(k%2==1)dp[k][1]=p[k][k-1];
+        }
+        for (int i = 2; i <= n ; ++i) {
+            for (int j = 0; j < pow(2,n); ++j) {
+                int pre=int(pow(2,i-1));
+                int pos=int(pow(2,i));
+                if(j<pre){
+                    for (int k = pre; k < pos ; ++k) {
+                        dp[j][i]+=dp[j][i-1]*dp[k][i-1]*p[j][k];
+                    }
+                } else{
+                    for (int k = 0; k < pre; ++k) {
+                        dp[j][i]+=dp[j][i-1]*dp[k][i-1]*p[j][k];
+                    }
+                }
+            }
+        }
+        int maxi=0;
+        int index=0;
+        for (int l = 0; l < pow(2,n); ++l) { //这里是pow(2,n)个数看哪一个到n轮的可能性最大
+            if(dp[l][n]>maxi)index=l;
+        }
+        cout<<index+1<<endl;
+    }
+    return 0;
+}
+//还会出现complie error的错误！
+
+2. 使用（移位）和动态规划以及（二进制表示）来解决
+
+#include <iostream>
+#include <cstring>
+
+#define maxn 200
+using namespace std;
+
+double p[maxn][maxn]={0};
+double dp[maxn][10]={0};
+int n=0;
+
+int main() {
+    while (true){
+        cin>>n;
+        if(n==-1)break;
+        int num=(1<<n);
+        for (int i = 0; i < num; ++i) {
+            for (int j = 0; j < num; ++j) {
+                cin>>p[i][j];
+            }
+        }
+        memset(dp,0, sizeof(dp));
+        for (int k = 0; k < num; k+=2) {
+            dp[k][0]=p[k][k+1];
+            dp[k+1][0]=p[k+1][k];
+        }
+        for (int j = 1; j < n ; ++j) {
+            for (int i = 0; i < num; ++i) {
+                for (int l = 0; l < num; ++l) {
+                    if(((l>>j)^1)==(i>>j)){
+                        dp[i][j]+=dp[i][j-1]*dp[l][j-1]*p[i][l];
+                    }
+                }
+            }
+        }
+
+        double maxi=dp[0][n-1];
+        int index=0;
+        for (int l = 1; l < num; ++l) {
+            if(dp[l][n-1]>maxi){
+                maxi=dp[l][n-1];
+                index=l;
+            }
+        }
+        cout<<index+1<<endl;
+    }
+    return 0;
+}
