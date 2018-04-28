@@ -1,0 +1,73 @@
+Jersey Politics
+
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+#include <algorithm>
+
+#define maxn 65
+using namespace std;
+
+int k=0;
+int num[3*maxn]={0};
+int index[3*maxn]={0};
+int ans1[maxn]={0};
+int ans2[maxn]={0};
+int ans3[maxn]={0};
+
+bool cmp(int l,int r){
+    return num[l]<num[r];
+}
+
+int main() {
+    cin>>k;
+    for (int i = 0; i < 3 * k; ++i) {
+        cin>>num[i];
+        index[i]=i;
+    }
+    sort(index,index+3*k,cmp);
+    int res1 = 0, res2 = 0, res3 = 0;
+    for (int j = 0; j < k; ++j) {
+        ans1[j]=index[j];
+        res1+=num[index[j]];
+    }
+    for (int l = k; l < 3 * k; ++l) {
+        if ((l - k) & 1) {
+            ans3[(l - k) / 2] = index[l];
+            res3+=num[index[l]];
+        } else{
+            ans2[(l - k) / 2]=index[l];
+            res2+=num[index[l]];
+        }
+    }
+    int r=500*k;
+    while(true) {
+        int p2,p3=0;
+        p2 = rand() % k;
+        p3 = rand() % k;
+        res2=res2+num[ans3[p3]]-num[ans2[p2]];
+        res3=res3+num[ans2[p2]]-num[ans3[p3]];
+        swap(ans2[p2],ans3[p3]);
+        //两者互换
+        if(res2>r && res3>r)break;
+    }
+
+    sort(ans1,ans1+k,cmp);
+    sort(ans2,ans2+k,cmp);
+    sort(ans3,ans3+k,cmp);
+    for (int m = 0; m < k; ++m) {
+        cout<<ans1[m]+1<<endl;
+    }
+    for (int n = 0; n < k; ++n) {
+        cout<<ans2[n]+1<<endl;
+    }
+    for (int i1 = 0; i1 < k; ++i1) {
+        cout<<ans3[i1]+1<<endl;
+    }
+    return 0;
+}
+
+//Tips:将数组排序，最后的一个区域放弃
+//将前面的两个区中两个元素随意互换
+//计算两个区域总共的Jersey牛数量是否超过3*k个
+//如果两个区域都超过3*k个，则脱离循环，输出地区下标
