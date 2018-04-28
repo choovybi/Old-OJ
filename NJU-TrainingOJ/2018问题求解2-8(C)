@@ -1,0 +1,52 @@
+Shuffle
+//思路：滑动窗口+枚举起点
+//此题为跟网络题解对拍，仍需要加强思考！
+
+#include <iostream>
+#include <cstring>
+#define maxn 500050
+using namespace std;
+
+int arr[maxn],cnt[maxn],num,s,n;
+bool ok[maxn];
+
+int main() {
+    cin>>num;
+    for (int i = 0; i < num; ++i) {
+        cin>>s;
+        cin>>n;
+        memset(arr,0, sizeof(arr));
+        //因为s不同，所以在下一次输入中arr的值不会被精准地全部替换
+        //因此，每一次数据都需要彻底地进行memset()来重置！
+        for (int j = 1; j <= n; ++j) {
+            cin>>arr[j+s];
+        }
+        int total=0;
+        memset(ok,0, sizeof(ok));
+        memset(cnt,0, sizeof(cnt));
+        for (int k = 2; k <= s+n; ++k) {
+            if (arr[k-1]){
+                cnt[arr[k-1]]--;
+                if(cnt[arr[k-1]]==1)total--;
+            }
+            if (arr[k+s-1]){
+                cnt[arr[k+s-1]]++;
+                if(cnt[arr[k+s-1]]==2)total++;
+            }
+            ok[k]=!total;
+        }
+        int ans=0;
+        for (int l = 2; l <= s+1; ++l) {
+            int flag=1;
+            for (int j = l; j <= n+s;j+=s) {
+                if(!ok[j]){
+                    flag=0;
+                    break;
+                }
+            }
+            if(flag==1)ans++;
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
