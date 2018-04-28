@@ -1,0 +1,140 @@
+Matrix Multiplication
+
+1. 会出现TLE和WA的诡异问题
+
+#include <iostream>
+#include <cstdlib>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#define maxn 510
+using namespace std;
+
+int n=0;
+int A[maxn][maxn]={0};
+int B[maxn][maxn]={0};
+int C[maxn][maxn]={0};
+
+int main() {
+    while (cin>>n){
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&A[i][j]);
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&B[i][j]);
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&C[i][j]);
+            }
+        }
+        int flag= 1;
+        for (int m = 0; m <=60000&&flag; ++m) {
+            int x,y=0;
+            x=rand()%n;
+            y=rand()%n;
+            int res=0;
+            for (int i = 0; i < n; ++i) {
+                res+=A[x][i]*B[i][y];
+            }
+            if(res!=C[x][y])flag=0;
+        }
+        if(flag==1)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+    return 0;
+}
+
+2. 网络题解
+
+#include<stdio.h>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+#define maxn 501
+int n,a[maxn][maxn],b[maxn][maxn],c[maxn][maxn];
+int main()
+{
+    srand((unsigned)time(0));
+    while(~scanf("%d",&n))
+    {
+        for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+                scanf("%d",&a[i][j]);
+        for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+                scanf("%d",&b[i][j]);
+        for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+                scanf("%d",&c[i][j]);
+        int flag=1;
+        for(int i=1;i<=40001&&flag;i++)
+        {
+            int x,y;
+            int temp=0;
+            x=rand()%n+1;
+            y=rand()%n+1;
+            for(int k=1;k<=n;k++)
+                temp+=a[x][k]*b[k][y];
+            if(temp!=c[x][y])flag=0;
+        }   
+        if(flag)printf("YES\n");
+        else printf("NO\n");
+    }
+    return 0;
+}
+
+3. 修改后的AC解
+
+#include <iostream>
+#include <cstdlib>
+#include <cstdio>
+#include <algorithm>
+#include <cmath>
+#include <time.h>
+#define maxn 510
+using namespace std;
+
+int n=0;
+int A[maxn][maxn]={0};
+int B[maxn][maxn]={0};
+int C[maxn][maxn]={0};
+
+int main() {
+    srand((unsigned)time(0));
+    while (~scanf("%d",&n)){
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&A[i][j]);
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&B[i][j]);
+            }
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                scanf("%d",&C[i][j]);
+            }
+        }
+        int flag= 1;
+        for (int m = 0; m <=60000&&flag==1; ++m) {
+            int x,y=0;
+            x=rand()%n;
+            y=rand()%n;
+            int res=0;
+            for (int i = 0; i < n; ++i) {
+                res+=A[x][i]*B[i][y];
+            }
+            if(res!=C[x][y])flag=0;
+        }
+        if(flag==1)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+    return 0;
+}
