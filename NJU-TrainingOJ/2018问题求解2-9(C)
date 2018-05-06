@@ -1,0 +1,65 @@
+The Happy Worm
+
+#include <iostream>
+#include <algorithm>
+
+#define maxn 131075
+using namespace std;
+typedef struct stone{
+    int x,y;
+}stone;
+stone s[maxn];
+
+bool compx(stone a,stone b){
+    if(a.x<b.x)return true;
+    else if(a.x==b.x){
+        return a.y < b.y;
+    } else return false;
+}
+bool compy(stone a,stone b){
+    if(a.y<b.y)return true;
+    else if(a.y==b.y){
+        return a.x < b.x;
+    } else return false;
+}
+
+int t=0;
+int m,n,k=0;
+int ans=0;
+
+int main() {
+    cin>>t;
+    for (int i = 0; i < t; ++i) {
+        cin>>n>>m>>k;
+        for (int j = 1; j <= k; ++j) {
+            scanf("%d %d",&s[j].x,&s[j].y);
+        }
+        ans=0;
+        s[0].x=1;s[0].y=0;
+        s[k+1].x=n;s[k+1].y=m+1;
+        sort(s+1,s+1+k,compx);
+        for (int l = 1; l <= k+1; ++l) {
+            if(s[l-1].x==s[l].x){
+                if((s[l].y-s[l-1].y)>2)ans++;
+            } else{
+                ans+=s[l].x-s[l-1].x-1;
+                if(m-s[l-1].y>=2)ans++;
+                if(s[l].y>2)ans++;
+            }
+        }
+        s[0].x=0;s[0].y=1;
+        s[k+1].x=n+1;s[k+1].y=m;
+        sort(s+1,s+1+k,compy);
+        for (int l = 1; l <= k+1; ++l) {
+            if(s[l-1].y==s[l].y){
+                if((s[l].x-s[l-1].x)>2)ans++;
+            } else{
+                ans+=s[l].y-s[l-1].y-1;
+                if(n-s[l-1].x>=2)ans++;
+                if(s[l].x>2)ans++;
+            }
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
