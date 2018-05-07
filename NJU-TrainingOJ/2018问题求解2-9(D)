@@ -1,0 +1,39 @@
+//思路：因为数据量过大，所以使用二分答案+O(N)判定
+//算每两个数之间的差再来排序会超时！
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+
+using namespace std;
+#define maxn 100005
+int N=0;
+int X[maxn];
+
+int main() {
+    while (cin>>N){
+        for (int i = 1; i <= N; ++i) {
+            cin>>X[i];
+        }
+        sort(X+1,X+N+1);
+        int l=0,r=X[N],mid,m=(N-1)*N/4,num,k;
+        if((N*(N-1)/2)&1)m++;
+        if(N==1){
+            printf("0\n");
+            continue;
+        }
+        while (l<r){
+            mid=(l+r)>>1;
+            k=1;
+            num=0;
+            for (int i = 2; i <= N; ++i) {
+                while (X[i]-X[k]>mid)k++;
+                num+=(i-k);
+            }
+            if(num>=m)r=mid;
+            else l=mid+1;
+        }
+        cout<<l<<endl;
+    }
+    return 0;
+}
