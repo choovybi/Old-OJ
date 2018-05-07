@@ -1,0 +1,49 @@
+Parallelogram Counting
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+#define maxn 1005
+#define maxn1 550000
+
+struct node{
+    int x,y;
+}cor[maxn],dis[maxn1];
+int t,n=0;
+bool cmp(node a,node b){
+    if(a.x!=b.x)
+        return a.x<b.x;
+    return a.y<b.y;
+}
+
+int main() {
+    cin>>t;
+    while (t--){
+        cin>>n;
+        for (int i = 0; i < n; ++i) {
+            scanf("%d  %d",&cor[i].x,&cor[i].y);
+        }
+        int k=0;
+        for (int i = 0; i < n -1 ; ++i) {
+            for (int j = i+1; j < n; ++j) {
+                dis[k].x=cor[i].x+cor[j].x;
+                dis[k].y=cor[i].y+cor[j].y;
+                k++;
+            }
+        }
+        sort(dis,dis+k,cmp);
+        int l=1;
+        int sum=0;
+        for (int m = 1; m < k; ++m) {
+            if(dis[m].x==dis[m-1].x&&dis[m].y==dis[m-1].y){
+                l++;
+            } else{
+                sum+=l*(l-1)/2;
+                l=1;
+            }
+        }
+        cout<<sum<<endl;
+    }
+    return 0;
+}
