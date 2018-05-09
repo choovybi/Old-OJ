@@ -1,0 +1,738 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{2-9 排序与选择}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[TC 7.1.3]
+\
+
+Give a brief argument that the running time of $PARTITION$ on a subarray of size $n$
+is $\varTheta(n)$.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+every element of the array $A$ should be compared with the element $A[A.length]$
+once, so the running time of $PARTITION$ on a subarray of size $n$ is $\varTheta(n)$
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[TC 7.2.4]
+\
+
+Banks often record transactions on an account in order of the times of the transactions,
+but many people like to receive their bank statements with checks listed in
+order by check number. People usually write checks in order by check number, and
+merchants usually cash them with reasonable dispatch. The problem of converting
+time-of-transaction ordering to check-number ordering is therefore the problem of
+sorting almost-sorted input. Argue that the procedure $INSERTION-SORT$ would
+tend to beat the procedure $QUICKSORT$ on this problem.
+
+\end{problem}
+
+\begin{solution}
+\
+
+According to the knowledge that we have konwn, the average running time of $QUICKSORT$ is $\varTheta(nlgn)$.
+
+While the time-of-transaction ordered statements are almost sorted, so the running time of $INSERTION-SORT$ can be $\varTheta(n)$.
+
+So the procedure $INSERTION-SORT$ would tend to beat the procedure $QUICKSORT$ on this problem.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 7.3.2]
+\
+
+When $RANDOMIZED-QUICKSORT$ runs, how many calls are made to the random-number
+generator $RANDOM$ in the worst case? How about in the best case? Give
+your answer in terms of $\varTheta-notation$.
+
+\end{problem}
+
+\begin{solution}
+\
+
+% \begin{remark}	% Optional
+% 以下解答参考了网站``https://blog.csdn.net/hitfanyu/article/details/5522589'' %$\ldots$
+% %\noindent 以下解答是与  同学讨论得到的。
+% \end{remark}
+The number of calls to the random-number generator $RANDOM$ on the worst case is $\varTheta(n)$.
+
+The number of calls to the random-number generator $RANDOM$ on the best case is $\varTheta(lgn)$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 7.4.2]
+\
+
+Show that quicksort's best-case running time is $\varOmega(nlgn)$.
+
+\end{problem}
+
+\begin{solution}
+\
+
+The best case of $QUICKSORT$ is that every time the pivot $A[p]$ can split the whole array to two subarrays which have almost the same
+length. According to this, we can calculate that the number of calls to the random-number generator $RANDOM$ is $\varOmega(lgn)$.
+After having the random pivot, we need to form two partition by comparing every element with the pivot, whose running time is $\varOmega(n)$.
+So, the quicksort's best-case running time is $\varOmega(nlgn)$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 7.5]
+\
+
+One way to improve the $RANDOMIZED-QUICKSORT$ procedure is to partition
+around a pivot that is chosen more carefully than by picking a random element
+from the subarray. One common approach is the $median-of-3$ method: choose
+the pivot as the median (middle element) of a set of 3 elements randomly selected
+from the subarray. (See Exercise 7.4-6.) For this problem, let us assume that the
+elements in the input array $A[1\cdots n]$ are distinct and that $n \geq 3$. We denote the
+sorted output array by $A'[1\cdots n]$. Using the median-of-3 method to choose the
+pivot element $x$, define $pi = \Pr{x = A'[i]}$.
+
+a. Give an exact formula for $p_i$ as a function of $n$ and $i$ for $i = 2,3,\cdots,n - 1$.
+(Note that $p_1 = p_n = 0$.)
+
+b. By what amount have we increased the likelihood of choosing the pivot as
+$x = A'[\lfloor (n+1)/2 \rfloor]$, the median of $A[1\cdots n]$, compared with the ordinary
+implementation? Assume that $n \rightarrow \infty$, and give the limiting ratio of these
+probabilities.
+
+c. If we define a ``good'' split to mean choosing the pivot as $x = A'[i]$, where
+$n/3 \leq i \leq 2n/3$, by what amount have we increased the likelihood of getting
+a good split compared with the ordinary implementation? ($Hint$: Approximate
+the sum by an integral.)
+
+d. Argue that in the $\varOmega(nlgn)$ running time of quicksort, the median-of-3 method
+affects only the constant factor.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+a. The exact formula for $p_i=\frac{1\times C_{i-1}^1\times C_{n-i}^1}{C_n^3}=\frac{6(i-1)(n-i)}{n(n-1)(n-2)}$
+
+b. The likelihood of choosing the pivot as $x = A'[\lfloor (n+1)/2 \rfloor]$ randomly is $\frac{1}{n}$.
+The likelihood of choosing the pivot as $x = A'[\lfloor (n+1)/2 \rfloor]$ using median of three numbers is almost $\frac{3}{2}\times\frac{1}{n}$.
+So the likelihood is increased fifty percent as $n\rightarrow \infty$.
+
+c. The likelihood of choosing a good pivot randomly is $\frac{1}{3}$
+The likelihood of choosing a good pivot using median of three numbers is almost equal to $\frac{1}{2}-\frac{2}{n}$.
+So the likelihood is increased fifty percent as $n\rightarrow \infty$.
+
+d. We know that the average running time of $RANDOM-QUICKSORT$ is $O(nlgn)$.
+Because we use median of three numbers as the pivot, so the average probablity of calling the procedure $RANDOMIZED-PARTITION$ is $O(lgn)$.
+And every element should be compared with a pivot so every partition has running time $O(n)$. So the
+average running time of quicksort using median-of-3 method is also $O(nlgn)$. So it can only affect the constant factor. 
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+\begin{problem}[TC 8.1.4]
+\
+
+Suppose that you are given a sequence of $n$ elements to sort. The input sequence
+consists of $n/k$ subsequences, each containing $k$ elements. The elements in a given
+subsequence are all smaller than the elements in the succeeding subsequence and
+larger than the elements in the preceding subsequence. Thus, all that is needed to
+sort the whole sequence of length $n$ is to sort the $k$ elements in each of the $n/k$
+subsequences. Show an $\varOmega(nlgk)$ lower bound on the number of comparisons
+needed to solve this variant of the sorting problem. ($Hint$: It is not rigorous to
+simply combine the lower bounds for the individual subsequences.)
+
+\end{problem}
+
+\begin{solution} 
+\
+
+We can use quicksort to sort this array. Because the sequence of arrays has been decided so we just need to sort every subarray.
+We only need to produce one pivot and use the same pivot to partition all the subarrays.
+So the running time is equal to the time of sort only one subarray.
+According to this we get $lgk$ pivots, and the comparisons happen n times for each pivot.
+So the lower bound on the number of comparisons needed to solve this variant of the sorting problem is $nlgk$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+ 
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 8.2.4]
+\
+
+Describe an algorithm that, given $n$ integers in the range $0$ to $k$, preprocesses its
+input and then answers any query about how many of the $n$ integers fall into a
+range $[a\cdots b]$ in $O(1)$ time. Your algorithm should use $\varTheta(n+k)$ preprocessing
+time.
+
+\end{problem}
+
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+MYSORT(A,k)
+    let C[0..k],D[0..k] be a new array
+    for i=0 to k
+        C[i]=0
+        D[i]=0
+    for j=1 to A.length
+        C[A[j]]=C[A[j]]+1
+    for i=1 to k
+        D[i]=C[i]+C[i-1]
+\end{lstlisting}
+
+the number of numbers between $[a,b]$ is $D[b]-D[a]+C[a]$ whose running time is $O(1)$.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 8.3.4]
+\
+
+Show how to sort $n$ integers in the range $0$ to $n^3 - 1$ in $O(n)$ time.
+
+\end{problem}
+
+\begin{solution}
+\
+
+We can use modulus to sort this array. First we can create a new array called $C$ with length of $n$.
+Evey element of the array is a new array.Then every time we have a new number we use modulus method to process it, if more than one number has the same modulus number, we
+use a sort algorithm based on comparing to sort them. According to this, we create an algorithm using $O(n)$ time to sort $n$ integers
+in the range $0$ to $n^3-1$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC 8.4.2]
+\
+
+Explain why the worst-case running time for bucket sort is $\varTheta(n^2)$. What simple
+change to the algorithm preserves its linear average-case running time and makes
+its worst-case running time $O(nlgn)$?
+
+\end{problem}
+    
+\begin{solution}
+\
+
+If all the numbers are mapped to the same bucket, and then the running time of bucket sort is the same as insertion sort.
+And we all know that the running time of insertion sort is $O(n^2)$, so the worst running time for bucket sort is $\varTheta(n^2)$.
+
+To improve the bucket sort we only need to replace the insertion sort we used in bucket sort with quicksort.
+We can improve its worst-case running time to $O(nlgn)$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC 8.2]
+\
+
+Suppose that we have an array of $n$ data records to sort and that the key of each
+record has the value 0 or 1. An algorithm for sorting such a set of records might
+possess some subset of the following three desirable characteristics:
+
+1. The algorithm runs in $O(n)$ time.
+
+2. The algorithm is stable.
+
+3. The algorithm sorts in place, using no more than a constant amount of storage
+space in addition to the original array.
+
+a. Give an algorithm that satisfies criteria 1 and 2 above.
+
+b. Give an algorithm that satisfies criteria 1 and 3 above.
+
+c. Give an algorithm that satisfies criteria 2 and 3 above.
+
+d. Can you use any of your sorting algorithms from parts (a)–(c) as the sorting
+method used in line 2 of $RADIX-SORT$, so that $RADIX-SORT$ sorts $n$ records
+with $b$-bit keys in $O(bn)$ time? Explain how or why not.
+
+e. Suppose that the $n$ records have keys in the range from 1 to $k$. Show how to
+modify counting sort so that it sorts the records in place in $O(n+k)$ time. You
+may use $O(k)$ storage outside the input array. Is your algorithm stable? ($Hint$:
+How would you do it for $k = 3$?)
+
+\end{problem}
+    
+\begin{solution}
+\
+
+a. counting-sort satisfies criteria 1 and 2 above.
+
+b. 
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    MYSORT(A)
+        let j be a new number
+        j=0
+        for i=0 to A.length
+            if(A[i]==0)
+                j=j+1
+                swap(A[i],A[j])
+\end{lstlisting}
+
+c. insertion-sort satisfies criteria 2 and 3 above.
+
+d. counting-sort can be used in line 2 of $RADIX-SORT$. Because $RADIX-SORT$ is stable so the sorting method must be stable too.
+And the running time of counting-sort is $O(n)$, so the time used to sort $n$ records with $b$-bit keys is $O(bn)$.
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[TC 9.1.1]
+\
+
+Show that the second smallest of $n$ elements can be found with $n + \lceil lgn \rceil - 2$
+comparisons in the worst case. ($Hint$: Also find the smallest element.)
+
+\end{problem}
+    
+\begin{solution}
+\
+
+We can use journalist algorithm to prove it. First we let every two element to compare with each other
+and then we record them all and the element they are compared. So we need $n-1$ comparisons to get the
+smallest element. And then we compare those elements which have been compared with the smallest element.
+The number of elements that have been compared with the smallest is $\lceil lgn \rceil$, so we need $\lceil lgn \rceil-1$ comparisons.
+According to this, we need $n + \lceil lgn \rceil - 2$ comparisons to get the second smallest element.
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[TC 9.3.7]
+\
+
+Describe an $O(n)$-time algorithm that, given a set $S$ of $n$ distinct numbers and
+a positive integer $k \leq n$, determines the $k$ numbers in $S$ that are closest to the
+median of $S$.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    MYALGORITHM(S,p,r,n,k)
+        let mid be a new number
+        let dis[1..n],B[1..k] be a new array
+        mid=RANDOMIZED-SELECT(S,p,r,\frac{n}{2})
+        for i=0 to n
+            if(A[i]>=mid)dis[i]=A[i]-mid
+            if(A[i]<mid)dis[i]=mid-A[i]
+        COUNTING-SORT(dis)
+        for i=0 to k
+            B[i]=dis[i]
+        return B
+\end{lstlisting}
+
+We know that the running time of RANDOMIZED-SELECT is $O(n)$
+and COUNTING-SORT is also $O(n)$. Besides, every circulation costs $O(n)$
+According to the analysis above, the whole running time is $O(n)$
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.12]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+\begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\beginfb	 %begin the feedback section (Optional)
+% 这一部分是用来写反馈(feedback)的
+
+% 你可以写：
+% \begin{itemize}
+
+% \end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
