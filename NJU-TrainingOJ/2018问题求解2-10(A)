@@ -1,0 +1,36 @@
+Fence Repair
+//使用优先队列，在C++的queue头文件里
+//加上greater<int>，可以从top依次递增
+
+#include <iostream>
+#include <queue>
+#include <cstdio>
+
+#define maxn 20005
+using namespace std;
+priority_queue<int,vector<int>,greater<int> >q;
+//greater<int> is must!
+
+long long ans=0;
+
+int main() {
+    int N=0;
+    cin>>N;
+    for (int i = 0; i < N; ++i) {
+        int ele=0;
+        scanf("%d",&ele);
+        q.push(ele);
+    }
+    while (true){
+        int ele1=q.top();
+        q.pop();
+        if(q.empty())break;
+        int ele2=q.top();
+        q.pop();
+        ans+=ele1+ele2;
+        q.push(ele1+ele2);
+    }
+    cout<<ans<<endl;
+
+    return 0;
+}
