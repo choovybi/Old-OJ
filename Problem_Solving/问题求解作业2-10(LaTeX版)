@@ -1,0 +1,907 @@
+%%%%% hw.tex: LaTeX template for homework %%%%%
+%%%%% Feel free to modify it (mainly the 'preamble' file). %%%%%
+%%%%% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{amsmath}%数学工具宏包
+\usepackage{indentfirst}%首行缩进
+\usepackage{graphicx}%插入图片并进行设置
+\usepackage{listings}%用来插入代码
+\usepackage{xcolor}
+%\usepackage{fontspec}%用来改变插入代码的高亮和字体
+\usepackage{multirow}%使用多栏宏包
+\usepackage{ctex}%载入中文包
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{mathabx}
+
+
+%%%%%%%%%%%%%%%%%%%%
+\title{2-10 基本数据结构}
+\me{毕秋宇}{171860624}
+\date{\today}%今日日期
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+% \begin{problem}[]	% Note: use '[]' (instead of '()' or '{}') to provide additional information
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+%\begin{remark}	% Optional
+%  以下解答参考了书籍/网站/讲义 $\ldots$。
+%
+%  \noindent 以下解答是与  同学讨论得到的。
+%\end{remark}
+
+
+
+%%%%%%%%%%
+
+
+%%%%%%%%%%
+
+\begin{problem}[MA 2.6]
+\
+
+Show that the invariance of ADT stacks is not violated by its $PUSH$ operations.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+(1). Before $PUSH$ operation the stack is well-organized and there are no two elements have the same time-stamp but different keys.
+After doing the $PUSH$ operation, the time-stamp of the new element is unique. So the stack is still well-organized that is the meaning of ``not violate the stacks''.
+
+(2). Before $PUSH$ operation, the time-stamp $c$ is the biggest. after doing the $PUSH$ operation, the time-stamp has changed to a new number and
+the new number is biggest in the stack.
+
+(3). Before $PUSH$ operation, we have the assumption that the stack is not full, and there are at least one location left.
+After doing the $PUSH$, the stack will not has overflow problem.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.1.4]
+\
+
+Rewrite $ENQUEUE$ and $DEQUEUE$ to detect underflow and overflow of a queue.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+QUEUE-EMPTY(Q)
+    if Q.head == Q.tail
+        return TRUE
+    else return FALSE
+QUEUE-FULL(Q)
+    if Q.head == Q.tail%Q.length + 1
+ENQUEUE(Q,x)
+    if QUEUE-FULL(Q)
+        error "overflow"
+    else
+        Q[Q.tail]=x
+        if Q.tail == Q.length
+            Q.tail = 1
+        else Q.tail = Q.tail + 1
+DEQUEUE(Q)
+    if QUEUE-EMPTY(Q)
+        error "underflow"
+    else 
+        x = Q[Q.head]
+        if Q.tail = Q.length
+            Q.head = 1
+        else Q.head = Q.head + 1
+        return x
+\end{lstlisting}
+
+\end{solution}
+
+%%%%%%%%%
+%\newpage  % page-break; comment it out if not necessarily
+%这个的作用是主动开始新的一页
+%%%%%%%%%
+
+\begin{problem}[TC 10.1.5]
+\
+
+Whereas a stack allows insertion and deletion of elements at only one end, and a
+queue allows insertion at one end and deletion at the other end, a $deque$ (double-
+ended queue) allows insertion and deletion at both ends. Write four $O(1)$-time
+procedures to insert elements into and delete elements from both ends of a deque
+implemented by an array.
+
+\end{problem}
+
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+LENQUEUE(Q,x)
+    Q[Q.left]=x
+    if Q.left==1
+        Q.left=Q.length
+    else Q.left=Q.left-1
+RENQUEUE(Q,x)
+    Q[Q.right]=x
+    if Q.right==Q.length
+        Q.right=1
+    else Q.right=Q.right+1
+LDEQUEUE(Q)
+    x=Q[Q.left]
+    if Q.left=Q.length
+        Q.left=1
+    else Q.left=Q.left+1
+    return x
+RDEQUEUE(Q)
+    x=Q[Q.right]
+    if Q.right=1
+        Q.right=Q.length
+    else Q.right=Q.right-1
+    return x
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.1.6]
+\
+
+Show how to implement a queue using two stacks. Analyze the running time of the
+queue operations.
+
+\end{problem}
+
+\begin{solution}
+\
+
+Using two stacks named as input-stack and output-stack.
+
+When do the input operation, push all the element into the input-stack and push the element to the top of the input-stack.
+
+When do the output operation, push all the element into the output-stack and pop the element from the top of the output-stack.
+
+So the running time of queue operation is $O(n)$.
+% \begin{remark}	% Optional
+% 以下解答参考了网站``https://blog.csdn.net/hitfanyu/article/details/5522589'' %$\ldots$
+% %\noindent 以下解答是与  同学讨论得到的。
+% \end{remark}
+
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.2.1]
+\
+
+Can you implement the dynamic-set operation $INSERT$ on a singly linked list
+in $O(1)$ time? How about $DELETE$ ?
+
+\end{problem}
+
+\begin{solution}
+\
+
+$INSERT$ can be implemented in $O(1)$ time, but $DELETE$ can't.
+because firstly you need to find the location of the element and then do the $DELETE$ operation.
+So the running time of $DELETE$ are $O(n)$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.2.2]
+\
+
+Implement a stack using a singly linked list $L$. The operations $PUSH$ and $POP$
+should still take $O(1)$ time.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+PUSH(L,x)
+    x.next=L.nil.next
+    L.nil.next=x
+POP(L)
+    x=L.nil.next
+    L.nil.next=L.nil.next.next
+    x.next=NIL
+    return x
+\end{lstlisting}
+
+\end{solution}
+% %%%%%%%%%%
+
+% %%%%%%%%%%
+
+\begin{problem}[TC 10.2.3]
+\
+
+Implement a queue by a singly linked list $L$. The operations $ENQUEUE$ and
+$DEQUEUE$ should still take $O(1)$ time.
+
+\end{problem}
+
+\begin{solution} 
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+ENQUEUE(L,x)
+    x.next=L.nil.next
+    L.nil.next=x
+DEQUEUE(L)
+    x=L.top
+    top--
+    L.top.next=NIL
+    return x
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+ 
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.2.6]
+\
+
+The dynamic-set operation $UNION$ takes two disjoint sets $S_1$ and $S_2$ as input, and
+it returns a set $S = S_1 \cup S_2$ consisting of all the elements of $S_1 and S_2$ . The
+sets $S_1$ and $S_2$ are usually destroyed by the operation. Show how to support $UNION$
+in $O(1)$ time using a suitable list data structure.
+
+\end{problem}
+
+\begin{solution}
+\
+
+Using two singly linked lists to implement this $UNION$ operation.
+When we do the $UNION$ operation, we only need to let the $next$ of the last element of $S_1$ leading to the
+head of the set $S_2$. By doing so, we can implement the $UNION$ operation in $O(1)$ time.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+
+\begin{problem}[TC 10.3.4]
+\
+
+It is often desirable to keep all elements of a doubly linked list compact in storage,
+using, for example, the first m index locations in the multiple-array representation.
+(This is the case in a paged, virtual-memory computing environment.) Explain
+how to implement the procedures $ALLOCATE-OBJECT$ and $FREE-OBJECT$ so that
+the representation is compact. Assume that there are no pointers to elements of the
+linked list outside the list itself. ($Hint$: Use the array implementation of a stack.)
+
+\end{problem}
+
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+ALLOCATE-OBJECT(T)
+    T.top++;
+    x=T.top
+    FREE=T.top++
+    return x
+FREE-OBJECT(T,x)
+    T.key[x]=T.key[T.top]
+    T.next[x]=T.next[T.top]
+    T.prev[x]=T.prev[T.top]
+    T.prev[T.next[x]]=x
+    T.next[T.prev[x]]=x
+    T.top--
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC 10.3.5]
+\
+
+Let L be a doubly linked list of length $n$ stored in arrays $key$,$prev$, and $next$ of
+length $m$. Suppose that these arrays are managed by $ALLOCATE-OBJECT$ and
+$FREE-OBJECT$ procedures that keep a doubly linked free list $F$ . Suppose further
+that of the $m$ items, exactly $n$ are on list $L$ and $m - n$ are on the free list. Write
+a procedure $COMPACTIFY-LIST(L,F)$ that, given the list $L$ and the free list $F$,
+moves the items in $L$ so that they occupy array positions $1,2,\cdots,n$ and adjusts the
+free list $F$ so that it remains correct, occupying array positions $n+1,n+2,\cdots,m$.
+The running time of your procedure should be $\varTheta(n)$, and it should use only a
+constant amount of extra space. Argue that your procedure is correct.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+COMPACTIFY-LIST(L,F)
+    new array arr
+    while F.next!=NIL do
+        arr[F.key]=TRUE
+        F=F.next
+        DELETE-LIST(F,F.prev)
+    new pointers left=1 and right=m
+    while(left<right)
+        while(arr[left]!=TRUE)left++
+        while(arr[right]==TRUE)right--
+        pre[left]=pre[right]
+        next[left]=next[right]
+        key[left]=key[right]
+        next[right]=left
+        right--
+        left++
+    for i=0 to i<right
+        if(prev[i]>=right)
+            prev[i]=next[prec[i]]
+        if(next[i]>=right)
+            next[i]=next[next[i]]
+    for j=n to j<m
+        next[j]=j+1
+    next[m]=NIL
+\end{lstlisting}
+
+Firstly we find all the element of the free list and then denote them as arr[]=TRUE
+Then we create to pointers left and right, if left meet an element that have not been marked and right meet an element that has been marked.
+we exchange those two element. Finally we can ensure that $L$'s element are in $1,2,\cdots,n$ locations.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC 10.4.2]
+\
+
+Write an $O(n)$-time recursive procedure that, given an $n$-node binary tree, prints
+out the key of each node in the tree.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+RECURSIVE-PROCEDURE(T)
+    cout<<T.key
+    while(T.left!=NIL)
+        RECURSIVE-PROCEDURE(T.left)
+    while(T.right!=NIL)
+        RECURSIVE-PROCEDURE(T.right)
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[TC 10.4.3]
+\
+
+Write an $O(n)$-time nonrecursive procedure that, given an $n$-node binary tree,
+prints out the key of each node in the tree. Use a stack as an auxiliary data structure.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+NONRECURSIVE-PROCEDURE(T)
+    a new stack S
+    count=0
+    S[count]=T
+    count++
+    while(count<n)
+        TREE=S[--count]
+        if(TREE.left)
+        S[++count]=TREE.left
+        if(T.right)
+        S[++count]=TREE.right
+    for int i from 1 to n
+        cout<<S[i].key
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[TC 10.4.4]
+\
+
+Write an $O(n)$-time procedure that prints all the keys of an arbitrary rooted tree
+with $n$ nodes, where the tree is stored using the left-child, right-sibling representa-
+tion.
+
+\end{problem}
+    
+\begin{solution}
+\
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+RECURSIVE-PROCEDURE(T)
+    cout<<T.key
+    while(T.left-child!=NIL)
+        RECURSIVE-PROCEDURE(T.left-child)
+    while(T.right-sibling!=NIL)
+        RECURSIVE-PROCEDURE(T.right-sibling)
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+\begin{problem}[TC 10.3]
+\
+
+\textbf{Searching a sorted compact list}
+
+Exercise 10.3-4 asked how we might maintain an $n$-element list compactly in the
+first $n$ positions of an array. We shall assume that all keys are distinct and that the
+compact list is also sorted, that is, $key[i]<key[next[i]]$ for all $i = 1, 2,\cdots,n$ such
+that $next[i] \neq NIL$ . We will also assume that we have a variable $L$ that contains
+the index of the first element on the list. Under these assumptions, you will show
+p
+that we can use the following randomized algorithm to search the list in $O(\sqrt{n})$
+expected time.
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    COMPACT-LIST-SEARCH(L,n,k)
+    i = L
+    while i >= NIL and key[i] < k
+        j = RANDOM(1,n)
+        if key[i] < key[j] and key[j] <= k
+            i = j
+            if key[i] == k
+                return i
+        i = next[i]
+    if i == NIL or key[i] > k
+        return NIL
+    else return i
+\end{lstlisting}
+
+If we ignore lines 3–7 of the procedure, we have an ordinary algorithm for
+searching a sorted linked list, in which index i points to each position of the list in
+turn. The search terminates once the index $i$ “falls off” the end of the list or once
+$key[i]\geq k$.In the latter case, if $key[i] = k$, clearly we have found a key with the
+value $k$. If, however, $key[i] > k$, then we will never find a key with the value $k$,
+and so terminating the search was the right thing to do.
+
+Lines 3–7 attempt to skip ahead to a randomly chosen position $j$ . Such a skip
+benefits us if $key[j]$ is larger than $key[i]$ and no larger than $k$; in such a case, $j$
+marks a position in the list that $i$ would have to reach during an ordinary list search.
+Because the list is compact, we know that any choice of $j$ between 1 and $n$ indexes
+some object in the list rather than a slot on the free list.
+
+Instead of analyzing the performance of $COMPACT-LIST-SEARCH$ directly, we
+shall analyze a related algorithm, $COMPACT-LIST-SEARCH^{'}$ , which executes two
+separate loops. This algorithm takes an additional parameter $t$ which determines
+an upper bound on the number of iterations of the first loop.
+
+\begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+    COMPACT-LIST-SEARCH(L,n,k,t)
+    i = L
+    for q = 1 to t
+        j = RANDOM(1,n)
+        if key[i]<key[j] and key[j]<= k
+            i = j
+            if key[i] == k
+                return i
+    while i \neq NIL and key[i]<k
+        i = next[i]
+    if i == NIL or key[i]>k
+        return NIL
+    else return i
+\end{lstlisting}
+
+To compare the execution of the algorithms $COMPACT-LIST-SEARCH(L,n,k)$
+and $COMPACT-LIST-SEARCH'(L,n,k,t)$, assume that the sequence of integers
+returned by the calls of $RANDOM(1,n)$ is the same for both algorithms.
+
+\textbf{a}. Suppose that $COMPACT-LIST-SEARCH(L,n,k)$ takes $t$ iterations of the \textbf{while}
+loop of lines 2–8. Argue that $COMPACT-LIST-SEARCH'(L,n,k,t)$ returns the
+same answer and that the total number of iterations of both the \textbf{for} and \textbf{while}
+loops within $COMPACT-LIST-SEARCH^{'}$ is at least $t$.
+
+In the call $COMPACT-LIST-SEARCH^{'}(L,n,k,t)$, let $X_t$ be the random variable that
+describes the distance in the linked list (that is, through the chain of next pointers)
+from position $i$ to the desired key $k$ after $t$ iterations of the for loop of lines 2–7
+have occurred.
+
+\textbf{b}. Argue that the expected running time of $COMPACT-LIST-SEARCH^{'}(L,n,k,t)$
+is $O(t+E[X_t]/$.
+
+\textbf{c}. Show that $E[X_t] \leq  \sum_{r=1}^n(1-r/n)^t$. ($Hint$: Use equation (C.25).)
+
+\textbf{d}. Show that $\sum_{r=0}^{n-1}r^t\leq n^{t+1}/(t+1)$.
+
+\textbf{e}. Prove that $E[X_t]\leq n/(t+1)$.
+
+\textbf{f}. Show that $COMPACT-LIST-SEARCH ^{'}(L,n,k,t)$ runs in $O(t + n/t)$ expected
+time.
+
+\textbf{g}. Conclude that $COMPACT-LIST-SEARCH$ runs in $O(\sqrt{n})$ expected time.
+
+\textbf{h}. Why do we assume that all keys are distinct in $COMPACT-LIST-SEARCH$ ? Ar-
+gue that random skips do not necessarily help asymptotically when the list con-
+tains repeated key values.
+\end{problem}
+    
+\begin{solution}
+\
+
+\textbf{a}. (1).Only think about $for$ loop we can know that $for$ loop using $t$ times of iterations.
+So the total number of iterations of both the $for$ and $while$ loops is at least $t$.
+(2).Because we do $t$ times of iterations in the first algorithm, so if the first algorithm can find the answer,
+the second one can also find it. If the first algorithm can't find the answer, in the second algorithm because we make the same
+$t$ numbers of iterations so we can not find the $k$ either. So their results are just the same.
+
+\textbf{b}. Firstly we make $t$ times of guess, so the running time of it is $t$, if we haven't find the element $k$
+by random guess, then we need to scran the list to get the element $k$. Because the average distance between $i$ and $k$.
+So the whole running time is $O(t+E[X_t])$
+
+\textbf{c}. $\Pr{X_{t}\geq r}=(\frac{n-r}{n})^{t}=(1-\frac{r}{n})^{t}$.
+$E[X_{t}]=\sum_{r=1}^{\infty}\Pr{X_t\geq r}=\sum_{r=1}^{n}\Pr{X_t\geq r}=\sum_{r=1}^{n}(1-\frac{r}{n})^t$
+
+\textbf{d}. $\sum_{r=0}^{n-1}r^{t}\leq\int_{0}^{n}x^tdx=\frac{n^{t+1}}{t+1}$.
+
+\textbf{e}. $E[X_t]\leq \sum_{r=1}^{n}(1-\frac{r}{n})^{t}=\sum_{r=0}^{n-1}(\frac{r}{n})^{t}=\frac{1}{n^{t}}\sum_{r=0}^{n-1}r^{t}\leq \frac{1}{n^{t}}\frac{n^{t+1}}{t+1}=\frac{n}{t+1}$.
+
+\textbf{f}. By $\textbf{a}$ we know that the running time of the second algorithm is $O(t+E[X_t])$, so the
+running time of it is $O(t+\frac{n}{t+1})=O(t+\frac{n}{t})$.
+
+\textbf{g}. To make the running time of the second algorithm be the shortest. We
+need to let $t=\frac{n}{t}$ so we have $t=\sqrt{n}$, the running time of the first algorithm is $O(\sqrt{n})$.
+
+\textbf{h}. If the list has duplicates, then random skip can't reduce the time of approaching the element $k$.
+Because we assume that the list has been sorted, so if the list has duplicates, we can't use this assumption.
+We still need to scan those elements to avoid that we skip to a duplicates number.
+So the running time of it is $O(n)$, that is to say random-skip makes no sense.
+
+\end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.13]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.14]
+
+% \end{problem}
+    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+    
+%%%%%%%%%%
+% \begin{problem}[UD: 15.15]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 15.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16,19]
+
+% \end{problem}
+        
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+        
+%%%%%%%%%%
+% \begin{problem}[UD: 16.20]
+
+% \end{problem}
+            
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+            
+%%%%%%%%%%
+% \begin{problem}[UD: 16.21]
+
+% \end{problem}
+                
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                
+%%%%%%%%%%
+% \begin{problem}[UD: 16.22]
+
+% \end{problem}
+                    
+% \begin{solution}
+
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{problem}[UD: 9.4]
+
+% \end{problem}
+                    
+% \begin{solution}
+                        
+% \end{solution}
+%%%%%%%%%%
+                    
+%%%%%%%%%%
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+%\begin{proof}	
+%\end{proof}
+
+%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+\begincorrection	% begin the ``correction'' part (Optional)
+% % % % %
+% % % % %%%%%%%%%%%
+% \begin{problem}[14.70]
+
+% \end{problem}
+% % % %
+% % \begin{cause}
+% % 没有看到是``English sentence''
+% % \end{cause}
+
+
+% % % %
+% % % %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% % %%%%%%%%%%%
+
+% % %%%%%%%%%%%
+%\begin{problem}[UD 8.11]
+%\noindent (c) What is the converse of ``if $A_\alpha \cap A_\beta\neq \emptyset$, then $A_\alpha = A_\beta$''
+
+%\noindent (f) If $\{A_\alpha:\alpha\in I\}$ is a pairwise disjoint collection of sets, does is follow that $\bigcap_{\alpha\in I}A_\alpha = \emptyset$?
+%\end{problem}
+%     %     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+% % %%%%%%%%%%
+
+% % %%%%%%%%%%
+%\begin{problem}[UD 9.13]
+
+%\end{problem}
+% %
+% %\begin{cause}
+% %%  简述错误原因（可选）。
+% %\end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\beginfb	 %begin the feedback section (Optional)
+% 这一部分是用来写反馈(feedback)的
+
+% 你可以写：
+% \begin{itemize}
+
+% \end{itemize}
+
+
+%%%%%%%%%%
+
+%\begin{problem}[DH 10.8]
+%  这是一个错题订正的模板
+
+%\end{problem}
+% %
+% \begin{cause}
+%     没有看清是奇数的积和偶数的和，认为都是和了
+% %  简述错误原因（可选）。
+% \end{cause}
+% %
+% %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+% %%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%
+%\begin{problem}[DH 11.7]
+    %  这是一个错题订正的模板
+
+%\end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+%\begin{revision}
+
+%\end{revision}
+
+%\begin{problem}[UD 14.15]
+
+%\end{problem}
+%\begin{revision}
+
+%\end{revision}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{problem}[DH 22.1]
+
+% \end{problem}
+%     %
+%     % \begin{cause}
+        
+%     % %  简述错误原因（可选）。
+%     % \end{cause}
+%     %
+%     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \newpage
+% \begin{problem}[DH 23.3]
+
+% \end{problem}
+% %     %
+% %     % \begin{cause}
+        
+% %     % %  简述错误原因（可选）。
+% %     % \end{cause}
+% %     %
+% %     %% Or use the ``solution'' environment
+% \begin{revision}
+
+% \end{revision}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The following content serves as an reminder.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%插入项目符号的方法：
+%	
+%
+%\textcircled{2}
+%
+%\textcircled{3}
+
+% %插入图片的方法：
+% \begin{figure}[!htb]
+%     \includegraphics[width = 0.30\textwidth]{a.png}
+% 	\caption{(a)}
+%    %\fig{width = 0.30\textwidth}{hello.png}{caption}
+%    %\fignocaption{width = 0.30\textwidth}{hello.png}
+% \end{figure} 
+
+
+%插入表格的方法：
+% \begin{table}[h]
+% \begin{tabular}{|c|c|c|}
+% 	\hline number & antecedent & conclusion\tabularnewline
+% 	\hline 
+% 	\textcircled{a} & If it is raining & I will stay home\tabularnewline
+% 	\hline 
+% 	\textcircled{b} & if the baby cries & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{c} & only if the fire alarm goes off & I wake up\tabularnewline
+% 	\hline 
+% 	\textcircled{d} & If $x$ is odd & then $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{e} & only if $x$ is odd & The number $x$ is prime\tabularnewline
+% 	\hline 
+% 	\textcircled{f }& only if you have an invitation & You can come to the party\tabularnewline
+% 	\hline 
+% 	\textcircled{g} & I leave the house & the bel rings\tabularnewline
+% 	\hline
+% \end{tabular}
+% \end{table}
+
+%\rightarrow 或者 \to表示右箭头
+%\neg 或者 \lnot表示非
+%\vee 或者 \lor表示并集
+%\wedge 或者 \land表示交集
+
+% $180^\circ$ 表示180°
+
+%插入代码的方法：
+% \lstset{language=c}
+% \begin{lstlisting}%使用C语言
+%     numbers=left,
+%     numberstyle=\tiny\menlo,
+%     basicstyle=[\small\menlo]
+%     %使用Menlo字体
+% \end{lstlisting}
+
+% 完美地插入代码的方法：
+% \begin{lstlisting}[language={[ANSI]C++}, keywordstyle=\color{blue!70}, commentstyle=\color{red!50!green!50!blue!50}, escapeinside=``, basicstyle=\fontsize{10}{10}]
+% //`这个插入代码命令中可以有中文注释，但是要输出中文必须使用逃逸字符,用两个单引号将其中的中文逃逸`
+% \end{lstlisting}
+
+% 数学公式中的大括号：
+% $$ f(x)=\left\{
+%     \begin{aligned}
+%     2-x &  & if\ x<1 \\
+%     1/x &  & otherwise 
+%     \end{aligned}
+%     \right.
+% $$
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
