@@ -1,0 +1,48 @@
+//思路：求直方图中最大矩形的面积，维持一个递增栈
+
+#include <iostream>
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+int n=0;
+
+long long largestRectangleArea(vector<long long> height) {
+    vector<int> s;
+    height.push_back(0);
+
+    int i = 0;
+    long long maxArea = 0;
+
+    while (i<height.size()){
+        if(s.empty()||height[i]>height[s.back()]){
+            s.push_back(i);
+            i++;
+        } else{
+            long long temp=s.back();
+            s.pop_back();
+            maxArea=max(maxArea,height[temp]*(s.empty()?i:i-s.back()-1));
+        }
+    }
+    return maxArea;
+}
+
+int main() {
+    while (cin>>n){
+        if(n==0){
+            cout<<endl;
+            break;
+        }
+
+        vector<long long> height;
+        long long num=0;
+        for (int i = 0; i < n; ++i) {
+            scanf("%lld",&num);
+            height.push_back(num);
+        }
+        cout<<largestRectangleArea(height)<<endl;
+    }
+
+    return 0;
+}
