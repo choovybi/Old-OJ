@@ -1,0 +1,35 @@
+//考点：将多叉树转变成二叉树，方法（左儿子右兄弟实现）
+
+#include <iostream>
+#include <string>
+using namespace std;
+string s;
+int i,height1,height2;
+
+void solve(int level1,int level2);
+
+int main() {
+    int t=0;
+    while (cin>>s&&s!="#"){
+        t++;
+        i=0;
+        height1=0;
+        height2=0;
+
+        solve(0,0);
+        cout<<"Tree "<<t<<": "<<height1<<" => "<<height2<<endl;
+    }
+    return 0;
+}
+
+void solve(int level1,int level2){
+    int tempson=0;
+    while (s[i]=='d'){
+        i++;
+        tempson++;
+        solve(level1+1,level2+tempson);
+    }
+    height1=level1>height1?level1:height1;
+    height2=level2>height2?level2:height2;
+    i++;
+}
