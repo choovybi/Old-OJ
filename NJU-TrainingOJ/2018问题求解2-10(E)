@@ -1,0 +1,97 @@
+//这题太恶心了！
+//使用树状数组，将树结构转变成数组结构，以下代码可作为树状数组的模板。
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#define maxn 100005
+using namespace std;
+
+struct node{
+    int to;
+    int next;
+};
+int n,cnt,index=0;
+node edge[maxn*2];
+int head[maxn];
+int s[maxn];
+int e[maxn];
+int c[maxn];
+bool is_used[maxn];
+char useless[5];
+
+void init(){
+    memset(head,-1, sizeof(head));
+    cnt=1;
+}
+void addedge(int from,int to){
+    edge[cnt].to=to;
+    edge[cnt].next=head[from];
+    head[from]=cnt++;
+}
+void dfs(int fa,int too){
+    s[too]=++index;
+    for (int i = head[too]; i != -1 ; i=edge[i].next) {
+        int to=edge[i].to;
+        if(to!=fa){
+            dfs(too,to);
+        }
+    }
+    e[too]=index;
+}
+int lowbit(int x){
+    return x&(-x);//这里不能写错！
+}
+void update(int x,int tmp){
+    while (x<=n){
+        c[x]+=tmp;
+        x+=lowbit(x);
+    }
+}
+int getsum(int x){
+    int sum=0;
+    while (x){
+        sum+=c[x];
+        x-=lowbit(x);
+    }
+    return sum;
+}
+
+int main() {
+    scanf("%d",&n);
+    init();
+    for (int i = 1; i < n; ++i) {
+        int x,y;
+        scanf("%d%d",&x,&y);
+        addedge(x,y);
+        addedge(y,x);
+    }
+    dfs(-1,1);
+    for (int j = 1; j <=n ; ++j) {
+        update(j,1);
+        is_used[j]=1;
+    }
+    int q=0;
+    scanf("%d",&q);
+    for (int k = 1; k <=q; ++k) {
+        scanf("%s",useless);
+        if(useless[0]=='C'){
+            int x;
+            scanf("%d",&x);
+            if(is_used[x]==1){
+                is_used[x]=0;
+                update(s[x],-1);
+            } else{
+                is_used[x]=1;
+                update(s[x],1);
+            }
+        } else{
+            int x;
+            scanf("%d",&x);
+            printf("%d\n",getsum(e[x])-getsum(s[x]-1));
+        }
+    }
+
+    return 0;
+}
