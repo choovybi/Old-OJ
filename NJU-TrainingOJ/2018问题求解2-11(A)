@@ -1,0 +1,58 @@
+//易超时，只需要维护保存最小值的数组q2和保存最大值的数组q1
+
+#include <iostream>
+#include <algorithm>
+#include <cstdio>
+using namespace std;
+
+bool cmp1(int x,int y){
+    return x>y;
+}
+int n1,n2,n,num=0;
+int len1,len2=0;
+double sum=0;
+
+int main(){
+    while(cin>>n1>>n2>>n){
+        if(n1==0&&n2==0&&n==0)break;
+        else{
+            sum=0;
+            len1=0;
+            len2=0;
+            int q1[10]={0};
+            int q2[10]={100000005,100000005,100000005,100000005,100000005,
+                        100000005,100000005,100000005,100000005,100000005};
+            for (int i = 0; i < n; ++i) {
+                scanf("%d",&num);
+                sum+=num;
+                if(num>q1[0]&&len1<n1){
+                    q1[0]=num;
+                    len1++;
+                    sort(q1,q1+n1);
+                } else if(num>q1[0]&&len1>=n1){
+                    q1[0]=num;
+                    sort(q1,q1+n1);
+                }
+
+                if(num<q2[0]&&len2<n2){
+                    q2[0]=num;
+                    len2++;
+                    sort(q2,q2+n2,cmp1);
+                } else if(num<q2[0]&&len2>=n2){
+                    q2[0]=num;
+                    sort(q2,q2+n2,cmp1);
+                }
+            }
+            int sum1=0;
+            int sum2=0;
+            for (int j = 0; j < n1; ++j) {
+                sum1+=q1[j];
+            }
+            for (int k = 0; k < n2; ++k) {
+                sum2+=q2[k];
+            }
+            printf("%.6f\n",(sum-sum1-sum2)/(n-n1-n2));
+        }
+    }
+    return 0;
+}
