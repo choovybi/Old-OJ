@@ -1,0 +1,47 @@
+Running Median
+//运用了一个非常重要的STL函数：nth_element(start,n,end)
+//该函数将从start到end数组中的第n个数放在下标为n-1的位置上，并且前面的比n小，后面的比n大
+//该函数没有返回值，可以直接用下标调用排好序的数组中的元素！！！
+//该函数就是用来找数组中的第n个元素！！！
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+
+#define maxn 10000
+using namespace std;
+int res[maxn]={0};
+int ans[maxn]={0};
+
+int p=0;
+int num=0;
+int len=0;
+int index=0;
+int sum=0;
+int cnt=0;
+
+int main() {
+    cin>>p;
+    for (int i = 0; i < p; ++i) {
+        len=0;
+        scanf("%d %d",&index,&sum);
+        for (int k = 0; k < sum; ++k) {
+            scanf("%d",&num);
+            res[k]=num;
+            if(k%2==0){
+                nth_element(res,res+((k+1)/2),res+k+1);
+                ans[len]=res[k/2];
+                len++;
+            }
+        }
+
+        cout<<index<<' '<<len<<endl;
+        for (int j = 0; j < len; ++j) {
+            if(j>0&&j%10==0)putchar('\n');
+            if(j%10)putchar(' ');
+            printf("%d",ans[j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
