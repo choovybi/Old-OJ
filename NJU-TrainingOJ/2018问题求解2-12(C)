@@ -1,0 +1,36 @@
+//简单二分法
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+
+#define maxn 4005
+using namespace std;
+
+int n,ans=0;
+int a[maxn],b[maxn],c[maxn],d[maxn];
+int sum[maxn*maxn];
+
+int main() {
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        scanf("%d %d %d %d",&a[i],&b[i],&c[i],&d[i]);
+    }
+    int count=0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            sum[count++]=a[i]+b[j];
+        }
+    }
+    sort(sum,sum+count);
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            int sums = -(c[i] + d[j]);
+            ans += upper_bound(sum, sum + count, sums) - lower_bound(sum, sum + count, sums);
+            //这里的格式是upper_bound(数组首，数组尾，)
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
