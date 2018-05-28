@@ -1,0 +1,43 @@
+//思路：尺取法+记录数据方式
+
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <map>
+#include <set>
+#include <cstring>
+
+#define maxn  1000005
+using namespace std;
+
+int p=0;
+int a[maxn];
+
+int main() {
+    while (cin>>p){
+        set<int> S;
+        for (int i = 1; i <= p; ++i) {
+            scanf("%d",&a[i]);
+            S.insert(a[i]);
+        }
+        int sum=S.size();
+        int s=1;
+        int e=1;
+        int ans=0;
+        int rec = 0x7fffffff;
+        map<int,int> book;
+        while (true){
+            while (ans<sum && e<p+1){
+                if(!book[a[e++]]++){
+                    ans++;
+                }
+            }
+            if(ans<sum)break;
+            rec=min(rec,e-s);
+            if(--book[a[s++]]==0)
+                ans--;
+        }
+        cout<<rec<<endl;
+    }
+    return 0;
+}
