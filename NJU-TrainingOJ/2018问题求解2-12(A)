@@ -1,0 +1,58 @@
+//方程的解数...较难
+
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+using namespace std;
+
+int n,m,ans;
+int k[10],p[10];
+unsigned pk[160][40];
+const int mod=4000037;
+struct ha{
+    int num;
+    unsigned v;
+}Hash[4000037];
+int HASH(unsigned x){
+    int t=x%mod;
+    while (Hash[t].num>0&&Hash[t].v!=x)
+        t=(t+1)%mod;
+    return t;
+}
+void dfs1(int dep, unsigned v){
+    if(dep>n/2){
+        int t=HASH(v);
+        Hash[t].num++;
+        Hash[t].v=v;
+        return;
+    }
+    for(int i = 1; i<= m; ++i)
+        dfs1(dep+1,v+k[dep]*pk[i][p[dep]]);
+};
+void dfs2(int dep, unsigned v){
+    if(dep>n){
+        ans+=Hash[HASH(v)].num;
+        return;
+    }
+    for (int i = 1; i <= m; ++i) {
+        dfs2(dep+1,v-k[dep]*pk[i][p[dep]]);
+    }
+}
+int main() {
+    scanf("%d",&n);
+    scanf("%d",&m);
+    for (int i = 1; i <= n; ++i) {
+        scanf("%d %d",k+i,p+i);
+    }
+    for (int i = 1; i <= m ; ++i) {
+        pk[i][0]=1;
+        for (int j = 1; j <= 32 ; ++j) {
+            pk[i][j]=pk[i][j-1]*i;
+        }
+    }
+    ans=0;
+    dfs1(1,0);
+    dfs2(n/2+1,0);
+    printf("%d\n",ans);
+    return 0;
+}
