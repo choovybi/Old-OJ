@@ -1,0 +1,71 @@
+Binary Tree
+//将中序遍历（根左右）的二叉搜索树转为前序遍历（左根右）
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int n=0;
+string str;
+struct Node{
+    char data;
+    struct Node* parent;
+    struct Node* left;
+    struct Node* right;
+};
+
+Node *root=new Node;
+
+void readdata(){
+    root->parent=NULL;
+    root->data=str[0];
+    root->left=NULL;
+    root->right=NULL;
+    Node *p=NULL;
+    Node *x=root;
+    int len=1;
+    for (int i = 1; i < str.length();++i) {
+        p=new Node;
+        while ((x->left!=NULL&&x->right!=NULL)||len>=n){
+            x=x->parent;
+            len--;
+        }
+        if(x->left==NULL&&len<n){
+            p->data=str[i];
+            p->left=NULL;
+            p->right=NULL;
+            p->parent=x;
+            x->left=p;
+            x=p;
+            len++;
+        } else if(x->right==NULL&&len<n){
+            p->data=str[i];
+            p->left=NULL;
+            p->right=NULL;
+            p->parent=x;
+            x->right=p;
+            x=p;
+            len++;
+        }
+    }
+}
+
+void printbitree(Node *x){
+    if(x!=NULL){
+        printbitree(x->left);
+        if(x->data!='#'){
+            cout<<x->data;
+        }
+        printbitree(x->right);
+    }
+}
+
+int main() {
+    cin>>n;
+    cin>>str;
+
+    readdata();
+    printbitree(root);
+
+    return 0;
+}
