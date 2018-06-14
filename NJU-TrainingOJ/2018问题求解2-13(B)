@@ -1,0 +1,167 @@
+BST
+//问题出在：删除的时候，没有将要删除节点的子节点的父亲节点置为要删除节点的父亲节点
+
+
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int key;
+    struct Node *parent;
+    struct Node *left;
+    struct Node *right;
+};
+
+void InsertNode(Node *T,int key);
+void DeleteNode(Node *T,int key);
+void FindRightMin(Node *T);
+void PrintMid(Node *T);
+void PrintPre(Node *T);
+void PrintPost(Node *T);
+
+int n=0;
+char op;
+int key=0;
+Node *Nil=new Node;
+
+int main(){
+    Nil->parent=NULL;
+    Nil->left=NULL;
+    Nil->right=NULL;
+    Nil->key=-1;
+
+    cin>>n;
+    for (int i = 0; i < n; ++i) {
+        cin>>op;
+        cin>>key;
+        if(op=='A'){
+            InsertNode(Nil,key);
+        } else if(op=='D'){
+            DeleteNode(Nil,key);
+        }
+    }
+
+    PrintMid(Nil->right);
+    cout<<endl;
+    PrintPre(Nil->right);
+    cout<<endl;
+    PrintPost(Nil->right);
+    cout<<endl;
+
+    return 0;
+}
+
+void InsertNode(Node *T,int key){
+    if(key<T->key&&T->left==NULL){
+        Node *p=new Node;
+        p->key=key;
+        p->left=NULL;
+        p->right=NULL;
+        p->parent=T;
+        T->left=p;
+    }else if(key>T->key&&T->right==NULL){
+        Node *p=new Node;
+        p->key=key;
+        p->right=NULL;
+        p->left=NULL;
+        p->parent=T;
+        T->right=p;
+    } else if(key<T->key&&T->left!=NULL){
+        InsertNode(T->left,key);
+    } else if(key>T->key&&T->right!=NULL){
+        InsertNode(T->right,key);
+    }
+}
+
+void DeleteNode(Node *T,int key){
+    if(T->key==key){
+        if(T->right==NULL&&T->left==NULL){
+            if(T->parent->left==T){
+                T->parent->left=NULL;
+                delete(T);
+            } else if(T->parent->right==T){
+                T->parent->right=NULL;
+                delete(T);
+            }
+        } else if(T->left==NULL&&T->right!=NULL){
+            if(T->parent->left==T){
+                T->right->parent=T->parent;
+                T->parent->left=T->right;
+                delete(T);
+            } else if(T->parent->right==T){
+                T->right->parent=T->parent;
+                T->parent->right=T->right;
+                delete(T);
+            }
+        } else if(T->right==NULL&&T->left!=NULL){
+            if(T->parent->left==T){
+                T->left->parent=T->parent;
+                T->parent->left=T->left;
+                delete(T);
+            } else if(T->parent->right==T){
+                T->left->parent=T->parent;
+                T->parent->right=T->left;
+                delete(T);
+            }
+        } else if(T->left!=NULL&&T->right!=NULL){
+            FindRightMin(T);
+        }
+    } else if(key<T->key&&T->left!=NULL){
+        DeleteNode(T->left,key);
+    } else if(key>T->key&&T->right!=NULL){
+        DeleteNode(T->right,key);
+    }
+}
+
+void FindRightMin(Node *T){
+    Node *p=T->right;
+    while (p->left!=NULL){
+        p=p->left;
+    }
+
+    if(p->right==NULL){
+        T->key=p->key;
+        if(p->parent->right==p){
+            p->parent->right=NULL;
+            delete(p);
+        } else if(p->parent->left==p){
+            p->parent->left=NULL;
+            delete(p);
+        }
+    } else if(p->right!=NULL){
+        T->key=p->key;
+        if(p->parent->left==p){
+            p->right->parent=p->parent;
+            p->parent->left=p->right;
+            delete(p);
+        } else if(p->parent->right==p){
+            p->right->parent=p->parent;
+            p->parent->right=p->right;
+            delete(p);
+        }
+    }
+}
+
+void PrintMid(Node *T){
+    if(T!=NULL){
+        PrintMid(T->left);
+        cout<<T->key<<' ';
+        PrintMid(T->right);
+    }
+}
+
+void PrintPre(Node *T){
+    if(T!=NULL){
+        cout<<T->key<<' ';
+        PrintPre(T->left);
+        PrintPre(T->right);
+    }
+}
+
+void PrintPost(Node *T){
+    if(T!=NULL){
+        PrintPost(T->left);
+        PrintPost(T->right);
+        cout<<T->key<<' ';
+    }
+}
