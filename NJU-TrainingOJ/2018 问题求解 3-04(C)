@@ -1,0 +1,113 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-10-29 00:58
+* Filename      : C.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const int maxm = 105;
+const int maxn = 5050;
+int N, K = 0;
+int f[maxn] = {0};
+int r[maxn] = {0};
+
+typedef struct{
+    int a, b;
+}Node;
+Node node[maxm];
+typedef struct{
+    int a, b, price;
+}Edge;
+Edge edge[maxn];
+
+int cmp(const void *a, const void *b){
+    return ((Edge*)a)->price -((Edge*)b)->price;
+}
+
+void init_set(int n){
+    for(int i(0); i<n; ++i){
+        f[i] = i;
+        r[i] = 0;
+    }
+}
+
+int find_set(int x){
+    if(f[x] != x)f[x] = find_set(f[x]);
+    return f[x];
+}
+
+void union_set(int a, int b){
+    int fa = find_set(a);
+    int fb = find_set(b);
+    if(r[a]<r[b])f[fa] = fb;
+    else{
+        f[fb] = fa;
+        if(r[fa] == r[fb])r[fa]++;
+    }
+}
+
+int Krustal(int n){
+    // cout<<"n is "<<n<<endl;
+    // cout<<"K is "<<K<<endl;
+    int res = 0;
+    int cnt = 0;
+    for(int i(0); i<n; ++i){
+        if(find_set(edge[i].a)!=find_set(edge[i].b)){
+        // cout<<"a is "<<edge[i].a<<" b is "<<edge[i].b<<" price is "<<edge[i].price<<endl;
+            union_set(edge[i].a, edge[i].b);
+            // if(edge[i].price > res){
+                // res = edge[i].price;
+                // cnt++;
+            // }
+            // if(cnt == K)return res;
+            cnt++;
+            if(cnt == N - K)return edge[i].price;
+        }
+    }
+}
+int main(){
+    int a, b = 0;
+    int num = 0;
+    scanf("%d%d%*c", &N, &K);
+    init_set(N);
+    for(int i(0); i<N; ++i){
+        scanf("%d%d%*c",&a ,&b);
+        node[i].a = a;
+        node[i].b = b;
+        // cout<<"a is "<<node[i].a<<" b is "<<node[i].b<<endl;
+    }
+    for(int i(0); i<N; ++i){
+        for(int j = i; j<N; ++j){
+            if(i!=j){
+                edge[num].a = i;
+                edge[num].b = j;
+                edge[num].price = fabs(node[i].a - node[j].a) + fabs(node[i].b - node[j].b);
+                // cout<<"a is "<<edge[num].a<<" b is "<<edge[num].b<<" price is "<<edge[num].price<<endl;
+                num++;
+            }
+        }
+    }
+    qsort(edge, num, sizeof(edge[0]), cmp);
+    cout<<Krustal(num)<<endl;
+    return 0;
+}
