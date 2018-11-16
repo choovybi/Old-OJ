@@ -1,0 +1,98 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-02 10:00
+* Filename      : A.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const int maxn = 21;
+int M, N = 0;
+int begx, begy = 0;
+int step = 0;
+int minstep = 0;
+int maze[maxn][maxn]={0};
+const int direct[4][2] = {
+    {0, -1}, // up
+    {1, 0}, // right
+    {0, 1}, // down
+    {-1, 0}, // left
+};
+
+void dfs(const int &x, const int &y, int step){
+    if(step >= 10 || step > minstep)return;
+    for(int d(0); d<4; ++d){
+        // cout<<"d:"<<d<<endl;
+        int curx = x;
+        int cury = y;
+        while(curx >= 0 && curx < N && cury >= 0 && cury<M){
+            // loop condition should focus!
+            // continue to run until meet the barrier
+            switch(maze[curx][cury]){
+            case 0:{
+                       curx += direct[d][0];
+                       cury += direct[d][1];
+                       break;
+                       // continue
+                    }
+            case 1:{
+                       if(!((curx-direct[d][0]==x)&&(cury-direct[d][1]==y))){ // if not face to the barrier
+                           maze[curx][cury] = 0; // clear the barrier
+                           dfs(curx-direct[d][0], cury-direct[d][1], step + 1); // in this case dfs
+                           maze[curx][cury] = 1; // recover the situation
+                       }
+                       curx = -1;
+                       break; // break out from the loop
+                   }
+            case 3:{
+                       minstep = min(minstep, step + 1);
+                       curx = -1;
+                       break; // break out from the loop
+                   }
+            default:{break;}
+            }
+        }
+    }
+}
+
+int main(){
+    while(true){
+        scanf("%d%d%*c", &M, &N);
+        // cout<<"M="<<M<<" "<<"N="<<N<<endl;
+        // M is col N is row
+        if(M == 0 && N == 0)break;
+        for(int i(0); i<N; ++i){
+            for(int j(0); j<M; ++j){
+                scanf("%d", &maze[i][j]);
+                if(maze[i][j]==2){
+                    begx = i;
+                    begy = j; 
+                    maze[i][j] = 0; // start point 
+                }
+            }
+        }
+        minstep = 11; // must initialize the minstep!
+        dfs(begx, begy, 0);
+        if(minstep > 10)minstep = -1;
+        printf("%d\n",minstep);
+    }
+}
