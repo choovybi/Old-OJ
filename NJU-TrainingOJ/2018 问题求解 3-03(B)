@@ -1,0 +1,120 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-10-18 20:29
+* Filename      : B.cpp
+* Description   : 
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const int maxn = 3e5;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int N,K,M = 0;
+int f[maxn] = {0};
+int r[maxn] = {0};
+int nEdge = 0;
+ 
+typedef struct{
+    int a,b,price;
+}Node;
+Node node[maxn];
+ 
+int cmp(const void *a, const void *b){
+    return ((Node*)a)->price - ((Node*)b)->price;
+}
+ 
+void init_set(int n){
+    for(int i=1; i<=n; ++i){
+        f[i] = i;
+        r[i] = 0;
+    }
+}
+ 
+int find_set(int x){
+    if(f[x] != x){
+        f[x] = find_set(f[x]);    
+    }
+    return f[x];
+}
+ 
+void union_set(int a, int b){
+    int fa = find_set(a);
+    int fb = find_set(b);
+    if(r[a] < r[b]){
+        f[fa] = fb;
+    }else{
+        f[fb] = fa;
+        if(r[fa] == r[fb])r[fa]++;
+    }
+}
+ 
+int Kruskal(int n){
+    // n is the number of edges m is the number of nodes
+    int res = 0;
+    nEdge = 0;
+    for(int i=0; i < n ; ++i){
+        if(find_set(node[i].a)!=find_set(node[i].b)){
+            // cout<<"a is "<<node[i].a<<" a's root is "<<find_set(node[i].a)<<endl;
+            // cout<<"b is "<<node[i].b<<" b's root is "<<find_set(node[i].b)<<endl;
+            // printf("a_root is %d, b_root is %d\n",find_set(node[i].a),find_set(node[i].b));
+            union_set(node[i].a, node[i].b);
+            // printf("a_root is %d, b_root is %d\n",find_set(node[i].a),find_set(node[i].b));
+            res += node[i].price;
+            nEdge++;
+        }
+    }
+    return res;
+}
+ 
+int main(){
+    int a,b,price = 0;
+    scanf("%d%d%d%*c",&N, &K, &M);
+    init_set(N);
+    // printf("N is %d,K is %d,M is %d\n",N,K,M);
+    for(int i=0; i < K; ++i){
+        scanf("%d%d%*c",&a,&b);
+        node[i].a = a;
+        node[i].b = b;
+        union_set(a,b);
+    }
+    for(int j=K; j < M+K; ++j){
+        scanf("%d%d%d%*c",&a,&b,&price);
+        node[j].a = a;
+        node[j].b = b;
+        node[j].price = price;
+    }
+    qsort(node, M+K, sizeof(node[0]), cmp);
+    // for(int k=0; k < M+K; ++k){
+        // cout<<node[k].price<<endl;
+    // }
+    int res = Kruskal(M+K);
+    nEdge++;
+    printf("%d %d\n",nEdge,res);
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1543
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:164 ms
+    Memory:10140 kb
+****************************************************************/
