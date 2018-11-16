@@ -1,0 +1,98 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-10-23 10:01
+* Filename      : a.cpp
+* Description   : 
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#include <stdlib.h>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const int maxn = 5050;
+const int MAXN = 105;
+int N=0;
+typedef struct{
+    int a,b,price;
+}Edge;
+Edge edge[maxn];
+int f[MAXN] = {0};
+int r[MAXN] = {0};
+
+int cmp(const void *a, const void *b){
+    return ((Edge*)a)->price - ((Edge*)b)->price;
+}
+
+void init_set(int n){
+    for(int i(0); i<n; ++i){
+        f[i] = i;
+        r[i] = 0;
+    }
+}
+
+int find_set(int x){
+    if(f[x] != x){
+        f[x] = find_set(f[x]);
+    }
+    return f[x];
+}
+
+void union_set(int a, int b){
+    int fa = find_set(a);
+    int fb = find_set(b);
+    if(r[a]<r[b])f[fa] = fb;
+    else{
+        f[fb] = fa;
+        if(r[fa]==r[fb])r[fa]++;
+    }
+}
+
+int Krustal(int n){
+    int res = 0;
+    for(int i(0); i<n;++i){
+        if(find_set(edge[i].a)!=find_set(edge[i].b)){
+            // cout<<"a is:"<<edge[i].a<<" b is:"<<edge[i].b<<" price is:"<<edge[i].price<<endl;
+            union_set(edge[i].a,edge[i].b);
+            res += edge[i].price;
+        }
+    }
+    return res;
+}
+
+int main(){
+    scanf("%d%*c",&N);
+    int trash=0;
+    int num=0;
+    init_set(N);
+    for(int i(0);i<N;++i){
+        for(int j(0);j<N;++j){
+            if(j>i){
+                edge[num].a = i;
+                edge[num].b = j;
+                scanf("%d",&edge[num].price);
+                num++;
+            }else scanf("%d",&trash); 
+            if(j == N-1)getchar();
+        }
+    }
+    qsort(edge,num,sizeof(edge[0]),cmp);
+    cout<<Krustal(num)<<endl;
+    return 0;
+}
