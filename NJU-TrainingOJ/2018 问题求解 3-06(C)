@@ -1,0 +1,101 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-08 10:28
+* Filename      : C.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+// #define maxq 50005
+#define maxn 1000005
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const long long INF = 1e17+7;
+struct qnode{
+    int v;  // index from 1 to n
+    ll c; // distance of the qnode from 1
+    qnode(int _v = 0, ll _c = 0):v(_v),c(_c){}
+    bool operator < (const qnode &r)const{
+        return c > r.c;
+    }
+};
+struct Edge{
+    // edge from "index" of the vector
+    int to; // edge point to "to"
+    int w; // weight of the path "w"
+    int min; // min cost of the path "min"
+    Edge(int _to, int _w, int _min):to(_to), w(_w), min(_min){}
+};
+
+vector<Edge>E[maxn]; // array of vector of node
+bool vis[maxn]; // qnode i been visited
+ll dis[maxn]; // distance form 1 to qnode i
+
+void initialize_single_source(int n){
+    for(int i(1); i<=n; ++i){
+        dis[i] = INF; // distance is infinity
+    }
+}
+
+void dijkstra(int n, int start){
+    memset(vis, false, sizeof(vis)); // all qnode are not visited
+    initialize_single_source(n);
+    priority_queue<qnode> que; // priority queue of the qnode
+    while(!que.empty())que.pop(); // s = \emptyset
+    dis[start] = 1;
+    que.push(qnode(start, 1));
+    while(!que.empty()){
+        qnode tmp = que.top(); // extract min of que
+        que.pop();
+        int u = tmp.v;
+        if(vis[u])continue;
+        vis[u] = true;
+        // for each vertex adjacent to u
+        for(int i(0); i<E[u].size(); ++i){
+            int ito = E[u][i].to; // from u to ito
+            int iw = E[u][i].w; // weight of path u->ito
+            // cout<<"from:"<<u<<"; to:"<<ito<<"; wight:"<<iw<<endl;
+            // can't pass the path
+            if(log2((dis[u]+iw*1.0) / dis[u]*1.0) < E[u][i].min)continue;
+            // if dis[ito] > dis[u] + iw then relax
+            if(!vis[ito] && dis[ito] > dis[u] + iw){
+                dis[ito] = dis[u] + iw;
+                que.push(qnode(ito, dis[ito]));
+            }
+        }
+    }
+    if(dis[n]==INF)printf("-1\n");
+    else printf("%d\n", (int)log2(dis[n]));
+}
+
+int main(){
+    int T,n,m,u,v,a,b = 0;
+    scanf("%d", &T);
+    while(T--){
+        scanf("%d%d", &n, &m);
+        for(int i(1); i<=n; ++i)E[i].clear(); // edge from qnode i must be cleared
+        for(int i(0); i<m; ++i){
+            scanf("%d%d%d%d", &u, &v, &a, &b);
+            E[u].push_back(Edge(v,a,b));
+            // cout<<road[i][0]<<","<<road[i][1]<<","<<road[i][2]<<","<<road[i][3]<<endl;
+        }
+        dijkstra(n, 1);
+    }
+    return 0;
+}
