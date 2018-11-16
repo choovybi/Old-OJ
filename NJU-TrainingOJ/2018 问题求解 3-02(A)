@@ -1,0 +1,83 @@
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<cmath>
+#include<cstring>
+#include<string>
+#include<iterator>
+#include<utility>
+#include<valarray>
+#include<algorithm>
+using namespace std;
+ 
+const int maxn=10015;
+int n=0,E=0,C=0,times=0;
+int T=0;
+int latest=0;
+// pair <int,int,bool> rla[maxn];
+struct RLA{
+    int l;
+    int r;
+    bool a;
+};
+RLA rla[maxn];
+// int l[maxn]={0};
+// int r[maxn]={0};
+// int a[maxn]={0};
+void greed();
+bool comp(const RLA &a,const RLA &b);
+ 
+int main(){
+    cin>>T;
+    while(T--){
+        // cnt=0;
+        // memset(a,0,n);
+        // memset(l,0,n);
+        // memset(r,0,n);
+        times=0;
+        cin>>n>>E>>C;
+        for(int i=0;i<n;++i){
+            cin>>rla[i].l>>rla[i].r;
+            rla[i].a=1;
+        }
+        greed();
+        // cout<<times<<endl;
+        if(C*times>E){
+            cout<<"Bad Ending"<<endl;
+        }else{
+            cout<<"Good Ending"<<endl;
+        }
+    }
+    return 0;
+}
+ 
+void greed(){
+    sort(rla,rla+n,comp);
+    // TODO
+    latest =rla[0].r;
+    times++;
+    for(int i=0;i<n;++i){
+        // if(rla[i].l>latest)break;
+        if(rla[i].a==true&&rla[i].l<=latest){
+            rla[i].a=false;
+        }else if(rla[i].l>latest){
+            latest = rla[i].r;
+            rla[i].a=false;
+            times++;
+        }
+    }
+}
+ 
+bool comp(const RLA &a,const RLA &b){
+     if(a.r<b.r)return true;
+     else if(a.r==b.r&&a.l<b.l)return true;
+     else return false;
+ }
+/**************************************************************
+    Problem: 1538
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:216 ms
+    Memory:1668 kb
+****************************************************************/
