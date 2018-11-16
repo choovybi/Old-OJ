@@ -1,0 +1,93 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-10-18 20:31
+* Filename      : A.cpp
+* Description   : 
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int T = 0;
+int N,M = 0;
+#define maxn 100005
+int f[maxn] = {0};// who is its father
+int r[maxn] = {0};// the relation with its father
+int a,b = 0;
+char ch;
+ 
+void init_set(int n){
+    for(int i=1; i<=n; ++i){
+        f[i] = i;
+        // father is itself
+        r[i] = 0;
+        // the relation with father is the same
+    }
+}
+ 
+int find_set(int x){
+    if(f[x]!=x){
+        int fx = f[x];
+        f[x] = find_set(f[x]); // path compression
+        r[x] = (r[x] + r[fx])%2;
+        return f[x]; // why it is needed?
+    }
+    return f[x];
+}
+ 
+void union_set(int a, int b){
+    int fa = find_set(a);
+    int fb = find_set(b);
+    f[fa] = fb;
+    r[fa] = (r[a] + r[b] + 1)%2;
+}
+ 
+int main(){
+    scanf("%d%*c",&T);
+    while(T--){
+        scanf("%d%d%*c", &N, &M);
+        // printf("n is% d, m is %d\n", N, M);
+        init_set(N);
+        for(int i=0; i<M; ++i){
+            scanf("%c%d%d%*c", &ch, &a, &b);
+            if(ch == 'A'){
+                if(find_set(a)!=find_set(b)){
+                    printf("Not sure yet.\n");
+                }else if(r[a]==r[b]){
+                    printf("In the same gang.\n");
+                }else if(r[a]!=r[b]){
+                    printf("In different gangs.\n");
+                }
+            }else if(ch == 'D'){
+                union_set(a,b);
+            }
+        }
+    }
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1542
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:2328 kb
+****************************************************************/
