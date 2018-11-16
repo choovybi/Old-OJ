@@ -1,0 +1,141 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-05 20:21
+* Filename      : B.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#define maxn 105
+#define keymaxn 15
+#define jgmaxn 15
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int N, M = 0;
+char mp[maxn][maxn];
+int dx[4] = {0, 0, -1, 1};
+int dy[4] = {1, -1, 0, 0};
+int f[maxn][maxn][keymaxn][jgmaxn];
+int sx, sy;
+int cnt;
+int ans;
+map<pair<int, int>, int>jg;
+struct Node{
+    int x, y, k, s, step;
+};
+queue<Node> q;
+
+void init(){
+    memset(f, INF, sizeof(f));
+    jg.clear();
+    cnt = 0;
+    ans = INF;
+    for(int i(1); i<=N; ++i){
+        for(int j(1); j<=N; ++j){
+            cin>>mp[i][j];
+            if(mp[i][j] == 'S')sx = i, sy = j, mp[i][j] = '.';
+            else if(mp[i][j]=='J')jg[make_pair(i, j)] = ++cnt;
+        }
+    }
+    f[sx][sy][0][0] = 0;
+}
+
+bool ok(int x, int y){
+    if(x>=1 && x<=N && y>=1 && y<=N && mp[x][y]!='@')return true;
+    return false;
+}
+
+void bfs(Node st){
+    while(!q.empty())q.pop();
+    q.push(st);
+    while(!q.empty()){
+        Node cur = q.front();
+        q.pop();
+        Node next;
+        for(int i(0); i<4; ++i){
+            int newx = cur.x + dx[i];
+            int newy = cur.y + dy[i];
+            if(!ok(newx, newy))continue;
+            next.x = newx;
+            next.y = newy;
+            if(mp[newx][newy] == 'J'){
+                int th = jg[make_pair(newx, newy)];
+                if(cur.s & (1<<(th-1))){
+                    next.s = cur.s;
+                    next.k = cur.k;
+                    next.step = cur.step + 1;
+                }else{
+                    next.s = (cur.s|(1<<(th-1)));
+                    next.k = cur.k;
+                    next.step = cur.step + 2;
+                }
+                if(next.step<f[newx][newy][next.k][next.s]){
+                    f[newx][newy][next.k][next.s] = next.step;
+                    q.push(next);
+                }
+            }else if(mp[newx][newy]>='1' && mp[newx][newy]<='9'){
+                int th = mp[newx][newy] - '0';
+                if(th == cur.k + 1)next.k = cur.k + 1;
+                else next.k = cur.k;
+                next.s = cur.s;
+                next.step = cur.step + 1;
+                if(next.step < f[newx][newy][next.k][next.s]){
+                    f[newx][newy][next.k][next.s] = next.step;
+                    q.push(next);
+                }
+            }else if(mp[newx][newy] == '.'){
+                next.k = cur.k;
+                next.s = cur.s;
+                next.step = cur.step + 1;
+                if(next.step < f[newx][newy][next.k][next.s]){
+                    f[newx][newy][next.k][next.s] = next.step;
+                    q.push(next);
+                }
+            }else if(mp[newx][newy] == 'D'){
+                next.k = cur.k;
+                next.s = cur.s;
+                next.step = cur.step + 1;
+                if(next.step < f[newx][newy][next.k][next.s]){
+                    f[newx][newy][next.k][next.s] = next.step;
+                }
+                if(next.k == M)ans = min(f[newx][newy][next.k][next.s], ans);
+                else q.push(next);
+            }
+        }
+    }
+}
+
+int main(){
+    while(true){
+        cin>>N>>M;
+        if(N==0 && M==0)break;
+        init();
+        Node temp;
+        temp.x = sx;
+        temp.y = sy;
+        temp.k = 0;
+        temp.s = 0;
+        temp.step = 0;
+        bfs(temp);
+        if(ans==INF)cout<<"gg"<<endl;
+        else cout<<ans<<endl;
+    }
+    return 0;
+}
