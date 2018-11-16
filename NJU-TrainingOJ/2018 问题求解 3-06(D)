@@ -1,0 +1,96 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-13 23:44
+* Filename      : D.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#define maxn 1010
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 10000000;
+int n, m = 0;
+int start, dest = 0;
+int u, v, cc = 0;
+bool vis[maxn];
+int pre[maxn];
+int w[maxn][maxn] = {0};
+int dis[maxn] = {0};
+
+void initialize(){
+    for(int i(0); i<maxn; ++i){
+        for(int j(0); j<maxn; ++j){
+            w[i][j] = INF;
+        }
+    }
+}
+
+void init(){
+    for(int i(1); i<=n; ++i){
+        dis[i] = INF;
+        vis[i] = false;
+        pre[i] = -1;
+    }
+    dis[start] = 0;
+}
+
+void dijkstra(){
+    init();    
+    for(int i(1); i<=n; ++i){
+        int k = -1;
+        int min = INF;
+        for(int j(1); j<=n; ++j){
+            if(!vis[j]&&dis[j]<min){
+                min = dis[j];
+                k = j;
+            }
+        }
+        if(k==-1)break;
+        vis[k] = true;
+        for(int j(1); j<=n; ++j){
+            if(!vis[j]&&dis[k]+w[k][j]<dis[j]){
+                dis[j] = dis[k]+w[k][j];
+                pre[j] = k;
+            }
+        }
+    }
+    if(dis[dest]==INF)printf("-1\n");
+    else{
+        printf("%d\n", dis[dest]);
+        for(int i(1); i<=n; ++i){
+            for(int j(1); j<=n; ++j){
+                printf("%d ",dis[j]-dis[i]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+int main(){
+    initialize();
+    scanf("%d%d%*c", &n, &m);
+    for(int i(0); i<m; ++i){
+        scanf("%d%d%d%*c", &u, &v, &cc);
+        w[u][v] = min(cc, w[u][v]);
+    }
+    scanf("%d%d%*c", &start, &dest);
+    dijkstra();
+    return 0;
+}
