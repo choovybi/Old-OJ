@@ -1,0 +1,21 @@
+MAKEFILE_LIST_LASTWORD = $(lastword $(MAKEFILE_LIST))
+MAKEFILE_PATH := $(abspath $(MAKEFILE_LIST_LASTWORD))
+MAKEFILE_DIR := $(dir $(MAKEFILE_PATH))
+MAKEFILE_DIR_PATSUBST := $(patsubst %/,%,$(MAKEFILE_DIR))
+CURRENT_DIR := $(notdir $(MAKEFILE_DIR_PATSUBST))
+.PHONY: run tst ini cpy cln
+run:
+	@gcc $(CURRENT_DIR).cpp -o $(CURRENT_DIR) -lstdc++
+	@./$(CURRENT_DIR) < in
+tst:
+	@gcc $(CURRENT_DIR).cpp -o $(CURRENT_DIR) -lstdc++
+	@./$(CURRENT_DIR) < in > out
+	@diff out ans
+ini:
+	@vim $(CURRENT_DIR).cpp
+	@vim in
+	@vim ans
+cpy:
+	@ccat $(CURRENT_DIR).cpp | pbcopy
+cln:
+	@rm ./$(CURRENT_DIR)
