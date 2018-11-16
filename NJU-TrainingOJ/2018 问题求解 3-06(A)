@@ -1,0 +1,84 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-13 22:51
+* Filename      : A.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#define maxn 55
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+struct Edge{
+    int to;
+    int w;
+    Edge(int _to, int _w):to(_to), w(_w){};
+};
+int dest, ansdep, n, m = 0;
+int ans = INF;
+int trail[100005];
+int route[100005];
+vector<Edge> E[maxn];
+vector<int> V;
+void dfs(int w1, int w2, int cur, int val, int depth){
+    if(val>ans)return;
+    else{
+        if(cur==dest){
+            if(val<ans){
+                ans = val;
+                memcpy(route, trail, sizeof(trail));
+                ansdep = depth;
+            }
+            return;
+        }
+        for(int i(0); i<E[cur].size(); ++i){
+            trail[depth+1] = E[cur][i].to;
+            dfs(w2, V[E[cur][i].to], E[cur][i].to, val+(w1+w2)*E[cur][i].w, depth+1);
+            trail[depth+1] = 0;
+        }
+    }
+}
+
+int main(){
+    int s1, s2 = 0;
+    scanf("%d%d%d%d%*c", &n, &m, &s1, &s2);
+    int weight = 0;
+    V.clear();
+    V.push_back(0);
+    for(int i(0); i<n; ++i){
+        scanf("%d%*c", &weight);
+        V.push_back(weight);
+    }
+    int ifrom, ito = 0;
+    for(int j(0); j<m; ++j){
+        scanf("%d%d%d%*c", &ifrom, &ito, &weight);
+        E[ifrom].push_back(Edge(ito, weight));
+    }
+    scanf("%d%*c", &dest);
+    vector<int> vec;
+    vec.clear();
+    dfs(s1, s2, 0, 0, 0);
+    vec.clear();
+    dfs(s2, s1, 0, 0, 0);
+    for(int i(0); i<=ansdep; ++i){
+        printf("%d ",route[i]);
+    }
+    return 0;
+}
