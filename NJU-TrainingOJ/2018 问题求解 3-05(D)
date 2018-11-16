@@ -1,0 +1,90 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail->com
+* Last modified : 2018-11-02 14:38
+* Filename      : D->cpp
+* Description   : Please contact me if you have questions->
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#define maxn 105
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int num = 0;
+int t = 0;
+int dep = 0;
+int biTree[maxn][3]={0};
+int pre[maxn] = {0};
+int mid[maxn] = {0};
+queue<int> q;
+
+int reCBT(int ps, int ms, int n){
+    // the needed number is pre[ps]
+    // search mid array from positon ms
+    if(n==0)return -1; // if no child return -1
+    int i=0;
+    for(i=0; pre[ps] != mid[ms+i]; ++i); // needed number is ms+i position of the mid array
+    biTree[pre[ps]][0] = reCBT(ps+1, ms, i); // left child is pre[ps+1], from ms, length is i
+    biTree[pre[ps]][1] = reCBT(ps+i+1, ms+i+1, n-i-1); // right child is pre[ps+i+1], from ms+i+1, length is n-i-1
+    return pre[ps]; // return the current number
+}
+
+void BFS(){
+    while(!q.empty())q.pop();
+    q.push(t);
+    biTree[t][2] = 1;
+    dep = 0;
+    while(!q.empty()){
+        int cur = q.front();
+        q.pop();
+        if(biTree[cur][0]!=-1){
+            q.push(biTree[cur][0]);
+            biTree[biTree[cur][0]][2] = biTree[cur][2] + 1;
+        }
+        if(biTree[cur][1]!=-1){
+            q.push(biTree[cur][1]);
+            biTree[biTree[cur][1]][2] = biTree[cur][2] + 1;
+        }
+        if(biTree[cur][2]==dep)cout<<" "<<cur;
+        if(biTree[cur][2]!=dep){
+            if(dep!=0)cout<<endl;
+            dep = biTree[cur][2];
+            cout<<cur;
+        }
+    }
+}
+
+int main(){
+    scanf("%d%*c", &num);
+    for(int i(1); i <= num; ++i){
+        scanf("%d", &pre[i]);
+    }
+    for(int i(1); i <= num; ++i){
+        scanf("%d", &mid[i]);
+    }
+    // cout<<"num = "<<num<<endl;
+    t = reCBT(1, 1, num);
+    BFS();
+    cout<<endl;
+    // cout<<"t="<<t<<endl;
+    // for(int i(0); i<num; ++i){
+        // cout<<"lab:"<<i<<", left:"<<biTree[i][0]<<", right:"<<biTree[i][1]<<endl;
+    // }
+    return 0;
+}
