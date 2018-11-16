@@ -1,0 +1,130 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-08 16:05
+* Filename      : B.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#define maxn 150
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int n = 0;
+int num = 0;
+int cnt = 0;
+double wall[25][5] = {0};
+double dis[maxn] = {0};
+struct Edge{
+    int to;
+    double w;
+    Edge(int _to, double _w):to(_to), w(_w){}
+};
+vector<Edge>E[maxn];
+double node[maxn][2] = {0};
+
+bool check(int n1, int n2){
+    // cout<<"x="<<node[n2][0]<<endl;
+    // cout<<"y="<<node[n2][1]<<endl;
+    bool flag = true;
+    double tmp = 0;
+    double k = (node[n2][1]-node[n1][1])/(node[n2][0]-node[n1][0]);
+    // cout<<n1<<" and "<<n2<<" ascent:"<<k<<endl;
+    for(int m(0); m < cnt; ++m){
+        if(wall[m][0]>node[n1][0] && wall[m][0]<node[n2][0]){
+            tmp = node[n1][1] + k*(wall[m][0]-node[n1][0]);
+            // cout<<"computed val:"<<tmp<<endl;
+            // cout<<"wall 1:"<<wall[m][1]<<"wall 2:"<<wall[m][2]<<"wall 3:"<<wall[m][3]<<"wall 4:"<<wall[m][4]<<endl;
+            if((tmp>wall[m][1] && tmp<wall[m][2])||(tmp>wall[m][3] && tmp<wall[m][4])){
+                // cout<<"ascent:"<<k<<" wall:"<<m<<endl;
+                continue;
+            }
+            else flag = false;
+        }else if(wall[m][0]>node[n2][0])break;
+    }
+    return flag;
+}
+
+void dijkstra(int n, int start){
+    for(int i(0); i<n; ++i){
+        dis[i] = INF;
+    }
+    priority_queue<int> que;
+    while(!que.empty())que.pop();
+    dis[start] = 0;
+    que.push(0);
+    while(!que.empty()){
+        int tmp = que.top();
+        que.pop();
+        for(int i(0); i<E[tmp].size(); ++i){
+            int ito = E[tmp][i].to;
+            double iw = E[tmp][i].w;
+            if(dis[ito] > dis[tmp] + iw){
+                dis[ito] = dis[tmp] + iw;
+                que.push(ito);
+            }
+        }
+    }
+    printf("%.2f\n",dis[n-1]);
+}
+
+int main(){
+    double x, a1, b1, a2, b2 = 0;
+    double w = 0;
+    node[num][0] = 0; // start point's x index
+    node[num][1] = 5; // start point's y index
+    num++;
+    scanf("%d%*c", &n);
+    for(int i(0); i < n; ++i){
+        scanf("%lf%lf%lf%lf%lf%*c", &x, &a1, &b1, &a2, &b2);
+        wall[cnt][0] = x;
+        node[num][0] = x;
+        node[num][1] = a1;
+        wall[cnt][1] = a1; num++;
+        node[num][0] = x;
+        node[num][1] = b1;
+        wall[cnt][2] = b1; num++;
+        node[num][0] = x;
+        node[num][1] = a2;
+        wall[cnt][3] = a2; num++;
+        node[num][0] = x;
+        node[num][1] = b2;
+        wall[cnt][4] = b2; num++; cnt++;
+    }
+    node[num][0] = 10; // end point's x index
+    node[num][1] = 5; num++; // end point's y index
+    // for(int i(0); i < num; ++i){
+        // cout<<"x="<<node[i][0]<<" y="<<node[i][1]<<endl;
+    // }
+    // for(int i(0); i < cnt; ++i){
+        // cout<<"wall:"<<wall[i][0]<<";"<<wall[i][1]<<endl;
+    // }
+    // cout<<wall[0][0]<<"!"<<endl;
+    for(int j(0); j < num; ++j){
+        for(int k(j+1); k < num; ++k){
+            if((node[j][0]!=node[k][0])&&(check(j,k))){
+                w = sqrt(pow(node[j][0]-node[k][0],2) + pow(node[j][1]-node[k][1],2));
+                E[j].push_back(Edge(k,w));
+                // cout<<"j:"<<j<<"k:"<<k<<"w:"<<w<<endl;
+            }
+        }
+    }
+    dijkstra(num, 0);
+    return 0;
+}
