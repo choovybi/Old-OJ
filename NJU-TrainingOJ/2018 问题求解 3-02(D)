@@ -1,0 +1,56 @@
+#include<iostream>
+#include<stdio.h>
+#include<stdlib.h>
+#include<cmath>
+#include<cstring>
+#include<string>
+#include<iterator>
+#include<utility>
+#include<valarray>
+#include<algorithm>
+using namespace std;
+ 
+const int maxn=100005;
+int T=0;
+int N=0;
+ 
+ 
+pair <long, long> ab[maxn];
+bool comp(pair<long, long> c1,pair<long, long> c2){
+    return min(c1.first,c2.second)<min(c1.second,c2.first)||(min(c1.first,c2.second)==min(c1.second,c2.first)&&c1.first<c2.first);
+}
+ 
+int main(){
+    cin>>T;
+    while(T--){
+        cin>>N;
+        for(int i=0;i<N;++i){
+            cin>>ab[i].first>>ab[i].second;    
+        }
+        sort(ab,ab+N,comp);
+        long long suma=0;//cost
+        long long sumb=0;//earn
+        for(int j=0;j<N;++j){
+            // cout<<ab[j].first<<" "<<ab[j].second<<endl;
+            if(sumb<ab[j].first){
+                suma+=sumb;
+                sumb=0;
+            }else if(sumb>=ab[j].first){
+                suma+=ab[j].first;
+                sumb-=ab[j].first;
+            }
+            sumb+=ab[j].second;
+        }
+        cout<<suma<<endl;
+    }
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1541
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:1340 ms
+    Memory:2332 kb
+****************************************************************/
