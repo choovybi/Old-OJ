@@ -1,0 +1,134 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-15 10:38
+* Filename      : D.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxn 125
+#define maxe 250
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 10000000;
+int n, m, w = 0;
+int a, b, v = 0;
+int ans = 0;
+int e[maxn][maxn] = {0};
+int f[maxn][maxn] = {0};
+int d[maxn][maxn] = {0};
+int road[maxn] = {0};
+
+struct Node{
+    int id, weight;
+    bool operator < (const Node &r)const{
+        return weight > r.weight;
+    }
+};
+Node node[maxn];
+priority_queue<Node> q;
+bool vis[maxn];
+
+void init(){
+    for(int i(1); i<=n; ++i){
+        for(int j(1); j<=n; ++j){
+            e[i][j] = INF;
+            f[i][j] = INF;
+            d[i][j] = INF;
+            if(i==j){
+                e[i][j] = 0;
+                f[i][j] = 0;
+                d[i][j] = 0;
+            }
+        }
+    }
+}
+
+void floyd(){
+    for(int i(1); i<=n; ++i)
+        for(int j(1); j<=n; ++j)
+            for(int k(1); k<=n; ++k)
+                f[j][k] = min(f[j][k], f[j][i]+f[i][k]);
+}
+
+void dijkstra(int start, int no){
+    for(int i(1); i<=n; ++i){
+        node[i].id = i;
+        node[i].weight = INF;
+        vis[i] = false;
+        for(int j(1); j<=n; ++j){
+            if(((i==no)||(j==no)) && i!=j )d[i][j] = INF;
+            else d[i][j] = e[i][j];
+        }
+    }
+    node[start].weight = 0;
+    q.push(node[start]);
+    while(!q.empty()){
+        Node cur = q.top();
+        q.pop();
+        int curid = cur.id;
+        if(vis[curid])continue;
+        vis[curid] = true;
+        for(int j(1); j<=n; ++j){
+            if(j!=curid && !vis[j] && node[j].weight > node[curid].weight + d[curid][j]){
+                node[j].weight = node[curid].weight + d[curid][j];
+                q.push(node[j]);
+            }
+        }
+    }
+}
+
+int main(){
+    scanf("%d%d%d%*c", &n, &m, &w);
+    init();
+    for(int i(0); i<m; ++i){
+        scanf("%d%d%d%*c", &a, &b, &v);
+        e[a][b] = v;
+        f[a][b] = v;
+        d[a][b] = v;
+    }
+    floyd();
+    // for(int i(1); i<=n; ++i){
+        // for(int j(1); j<=n; ++j){
+            // cout<<f[i][j]<<" ";
+        // }
+        // cout<<endl;
+    // }
+    // for(int i(1); i<=n; ++i){
+        // for(int j(1); j<=n; ++j){
+            // cout<<d[i][j]<<" ";
+        // }
+        // cout<<endl;
+    // }
+
+    for(int i(0); i<w; ++i){
+        ans = INF;
+        for(int j(1); j<=n; ++j){
+            scanf("%d", &road[j]);
+        }
+        getchar();
+        for(int k(1); k<=n; ++k){
+            dijkstra(k, road[k]);
+            ans = min(ans, node[road[road[k]]].weight+f[road[road[k]]][road[k]]+f[road[k]][road[road[k]]]);
+        }
+        if(ans>=INF)printf("bug\n");
+        else printf("%d\n", ans);
+    }
+    return 0;
+}
