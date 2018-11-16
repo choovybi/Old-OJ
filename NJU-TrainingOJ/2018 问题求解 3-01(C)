@@ -1,0 +1,90 @@
+#include <iostream>
+#include <cmath>
+#include <string.h>
+#include <string>
+#include <algorithm>
+#include <cstdio>
+#include <cstdlib>
+ 
+using namespace std;
+ 
+int num[2][40];
+bool flag= false;
+int n=0;
+int m=0;
+long long ans=0;
+long long table[40][40];
+ 
+int main() {
+    cin>>n;
+    cin>>m;
+    for (int i = 0; i < n; ++i) {
+        num[0][i]=0;
+        num[1][i]=m+1;
+        string grid;
+        cin>>grid;
+        for (int j = 0; j < m; ++j) {
+            flag=false;
+            if (grid[j]=='.'){
+                continue;
+            } else if(grid[j]=='B'){
+                num[0][i]=j+1;
+                flag=true;
+                for (int k = 0; k < i; ++k) {
+                    if(num[0][i]>num[0][k]){
+                        num[0][k]=num[0][i];
+                    }
+                }
+            } else{
+                num[1][i]=min(j+1,num[1][i]);
+                if(flag){
+                    cout<<"0"<<endl;
+                    return 0;
+                }
+                for (int k = i; k < n; ++k) {
+                    if (num[1][i]<num[1][k]){
+                        num[1][k]=num[1][j];
+                    }
+                }
+            }
+        }
+    }
+ 
+    for (int l = 0; l < n; ++l) {
+        if(num[0][l]>num[0][l-1]&&l!=0){
+            cout<<"0"<<endl;
+            return 0;
+        } else if(num[0][l]>=num[1][l]){
+            cout<<'0'<<endl;
+            return 0;
+        }
+    }
+     
+    memset(table,0, sizeof(table));
+    for (int j=num[0][0]; j < num[1][0]; ++j) {
+        table[0][j]=1;
+    }
+    for (int l1 = 1; l1 < n; ++l1) {
+        table[l1][num[0][l1]]=0;
+        for (int i = num[0][l1]; i <= m ; ++i) {
+            table[l1][num[0][l1]]+=table[l1-1][i];
+        }
+        for (int j = num[0][l1]+1; j < num[1][l1]; ++j) {
+            table[l1][j]=table[l1][j-1]-table[l1-1][j-1];
+        }
+    }
+ 
+    for (int m1 = 0; m1 <= m; ++m1) {
+        ans+=table[n-1][m1];
+    }
+    cout<<ans<<endl;
+    return 0;
+}
+/**************************************************************
+    Problem: 1537
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:1560 kb
+****************************************************************/
