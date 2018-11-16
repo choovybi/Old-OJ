@@ -1,0 +1,115 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-10-29 00:59
+* Filename      : D.cpp
+* Description   : Please contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-8;
+const int INF = 0x3f3f3f3f;
+const int MaxNode = 15;
+const int MAxEdge = 100;
+int T = 0;
+int N, M = 0;
+int adj[MaxNode][MaxNode] = {0};
+double mat[MaxNode][MaxNode] = {0};
+
+int sgn(double x){
+    if(fabs(x)<eps)return 0;
+    if(x < 0)return -1;
+    else return 1;
+}
+
+double b[MaxNode][MaxNode];
+double det(double  a[][MaxNode], int n){
+    int i, j, k = 0;
+    int sign = 0;
+    double ret = 1;
+    for(i = 0; i < n; ++i){
+        for(j = 0; j <= n; ++j){
+            b[i][j] = a[i][j];
+        }
+    }
+    // for(int i1(0); i1 < n; ++i1){
+        // for(int i2(0); i2 < n; ++i2){
+            // cout<<b[i1][i2]<<" ";
+        // }
+        // cout<<endl;
+    // }
+    for(i = 0; i < n; ++i){
+        if(sgn(b[i][i]) == 0){
+            for(j = i+1; j<n; ++j){
+                if(sgn(b[j][i]) != 0)break;
+            }
+            if(j == n)return 0;
+            for(k = i; k < n; ++k){
+                swap(b[i][k], b[j][k]);
+            }
+            sign++;
+        }
+        ret *= b[i][i];
+        for(k = i+1; k < n; ++k){
+            b[i][k] /= b[i][i];
+        }
+        for(j = i+1; j < n; ++j){
+            for(k = i+1; k <= n; ++k){
+                b[j][k] -= b[j][i] * b[i][k];
+            }
+        }
+    }
+    if (sign & 1)ret = -ret;
+    return ret;
+}
+
+int main(){
+    scanf("%d%*c",&T);
+    int a, b = 0;
+    while(T--){
+        scanf("%d%d%*c", &N, &M);
+        memset(mat, 0, sizeof(mat));
+        memset(adj, 0, sizeof(adj));
+        while(M--){
+            scanf("%d%d%*c", &a, &b);
+            a--;
+            b--;
+            adj[a][b] = 1;
+            adj[b][a] = 1;
+        }
+        for(int i(0); i < N; ++i){
+            for(int j(0); j < N; ++j){
+                if((i != j)&&adj[i][j]){
+                    mat[i][i]++;
+                    mat[i][j] = -1;
+                }
+            }
+        }
+        // for(int j(1); j <= N; ++j){
+            // for(int k(1); k <= N; ++k){
+                // cout<<mat[j][k]<<" ";
+            // }
+            // cout<<endl;
+        // }
+        double ans = det(mat, N-1);
+        printf("%.0lf\n",ans);
+        if(T!=0)getchar();
+    }
+    return 0;
+}
