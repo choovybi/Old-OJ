@@ -1,0 +1,92 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-22 10:19
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+#define maxn 1005
+int dfn[maxn], low[maxn];
+bool vis[maxn];
+vector<int>edge[maxn];
+int child[maxn];
+int num, son;
+
+void init(){
+    memset(vis, 0, sizeof(vis));
+    memset(child, 0, sizeof(child));
+    vis[1] = true;
+    num = 0;
+    son = 0;
+}
+
+void tarjan(int u){
+    dfn[u] = low[u] = ++num;
+    vis[u] = true;
+    for(int i(0); i<edge[u].size(); ++i){
+        int v = edge[u][i];
+        if(!vis[v]){
+            tarjan(v);
+            low[u] = min(low[u], low[v]);
+            if(dfn[u] <= low[v]){
+                if(u!=1)child[u]++;
+                else son++;
+            }
+        }
+        else low[u] = min(low[u], dfn[v]);
+    }
+}
+
+int main(){
+    int u, v = 0;
+    int num = 1;
+    while(true){
+        while(true){
+            scanf("%d%d", &u, &v);
+            if(!u && !v)break;
+            edge[u].push_back(v);
+            edge[v].push_back(u);
+        }
+        init();
+        tarjan(1);
+        // if(num>1)printf("\n");
+        printf("Network #%d\n", num++);
+        bool flag = true;
+        child[1] = son - 1;
+        for(int i(1); i<=1000; ++i){
+            if(child[i]>0){
+                flag = false;
+                printf("SPF node %d leaves %d subnets\n", i, child[i]+1);
+            }
+        }
+        if(flag)printf("No SPF nodes\n");
+
+        for(int i(1); i<=1000; ++i)edge[i].clear();
+        scanf("%d", &u);
+        if(u==0)break;
+        scanf("%d", &v);
+        edge[u].push_back(v);
+        edge[v].push_back(u);
+    }
+    return 0;
+}
