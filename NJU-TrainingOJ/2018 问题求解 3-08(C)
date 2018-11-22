@@ -1,0 +1,142 @@
+/*********************************************************
+* Author        : ArthurEdge
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-22 16:31
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+#define maxn 1005
+#define maxm 50005
+vector<int>V[maxn];
+int cutv[maxn];
+int dfn[maxn];
+int low[maxn];
+int vis[maxn];
+int par[maxn];
+int have[maxn];
+int n,m;
+int nume; // number of cute
+int numv;
+int cnt; // number of dfs times
+struct Edge
+{
+	int from, to; 
+}cute[100005];
+bool  cmp(Edge a,Edge b)
+{
+	if(a.from!=b.from)
+		return a.from < b.from;
+	else
+		return a.to < b.to;
+}
+void dfs(int u) {
+	// record u's child
+	int child = 0;
+    // is u been visited?
+	vis[u] = 1;
+	// initialzie dfn and low
+	dfn[u] = low[u] = ++cnt;
+	for(int i=0;i<V[u].size();i++) {
+		int v = V[u][i];
+		// if v is not visited then uv is tree cute
+		if(!vis[v]) {
+			child++;
+			par[v] = u;
+			dfs(v);
+			low[u] = min(low[u], low[v]);
+			//case (1)
+			if(par[u] == 0 && child > 1) {
+				//printf("articulation vector: %d\n", u);
+				if(have[u]==0){
+					cutv[numv++]=u;
+					have[u]=1;
+				}
+			}
+ 
+			//case (2)
+			if(par[u] != 0L && low[v] >= dfn[u]) {
+				//printf("articulation vector: %d\n", u);
+				if(have[u]==0){
+					cutv[numv++]=u;
+					have[u]=1;
+				}
+			}
+			//bridge
+			if(low[v] > dfn[u]) {
+				//printf("bridge: %d %d\n", u, v);
+				if(u<v){
+					cute[nume++].from = u;
+					cute[nume-1].to = v;
+				}
+				else{
+					cute[nume++].from = v;
+					cute[nume-1].to = u;
+				}
+			}
+		}
+		// if v is visited then us is back cute
+		else if(v != par[u]) {
+			low[u] = min(low[u], dfn[v]);
+		}
+	}
+}
+
+void init(){
+    memset(par,0,sizeof(par));
+	memset(dfn,0,sizeof(dfn));
+	memset(low,0,sizeof(low));
+	memset(vis,0,sizeof(vis));
+	memset(have,0,sizeof(have));
+	nume=0;
+	numv=0;
+    cnt=0;
+}
+
+int main(){
+	int u,v;
+    scanf("%d%d%*c", &n, &m);
+    init();
+	for(int i=0;i<=n;i++){
+			V[i].clear();
+	}
+	for(int i=0;i<m;i++){
+		scanf("%d%d%*c",&u,&v);
+		V[u].push_back(v);
+		V[v].push_back(u);
+	}
+	dfs(1);
+	sort(cutv,cutv+numv);
+	if(numv==0)
+        printf("Null\n");
+	else{
+        printf("%d", cutv[0]);
+		for(int i=1;i<numv;i++){
+            printf(" %d", cutv[i]);
+		}
+        printf("\n");
+	}
+	sort(cute,cute+nume,cmp);
+	for(int i=0;i<nume;i++){
+        printf("%d %d\n", cute[i].from, cute[i].to);
+	}
+}
