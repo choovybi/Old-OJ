@@ -89,3 +89,104 @@ int main(){
     printf("%d\n", (leaf+1)/2);
     return 0;
 }
+
+// 上述代码会TLE
+// 下面的代码实现更好
+
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-24 00:03
+* Filename      : D.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+#define maxn 5005
+int adj[maxn][maxn];
+bool vis[maxn];
+int sta[maxn], low[maxn], dfn[maxn], color[maxn], scc[maxn];
+int n, m, sum, top, cnt;
+
+vector <int> edge[maxn];
+
+void tarjan(int cur, int fa){
+    low[cur] = dfn[cur] = ++cnt;
+    sta[++top] = cur;
+    vis[cur] = true;
+    int v;
+    for(int i(0); i<edge[cur].size(); ++i){
+        v = edge[cur][i];
+        if(!dfn[v]){
+            tarjan(v,cur);
+            low[cur] = min(low[cur], low[v]);
+        }else if(v!=fa && vis[v])
+            low[cur] = min(low[cur], dfn[v]);
+    }
+    if(dfn[cur] == low[cur]){
+        sum++;
+        do{
+            v = sta[top--];
+            vis[v] = false;
+            color[v] = sum;
+        }while(v != cur);
+    }
+}
+
+void init(){
+    memset(adj, 0, sizeof(adj));
+    memset(dfn, 0, sizeof(dfn));
+    memset(vis, 0, sizeof(vis));
+    memset(scc, 0, sizeof(scc));
+    for(int i(0); i< maxn; ++i) 
+        edge[i].clear();
+    cnt = sum = top = 0;
+}
+
+int main(){
+    int u, v = 0;
+    while(scanf("%d%d%*c", &n, &m) != EOF){
+        init();
+        for(int i(0); i<m; ++i){
+            scanf("%d%d%*c", &u, &v);
+            if(adj[u][v])continue;
+            edge[u].push_back(v);
+            edge[v].push_back(u);
+            adj[u][v] = adj[v][u] = 1;
+        }
+        for(int i(1); i<=n; ++i)
+            if(!dfn[i])
+                tarjan(i, -1);
+        for(int i(1); i<=n; ++i){
+            for(int j(0); j<edge[i].size(); ++j){
+                v = edge[i][j];
+                if(color[i] != color[v])
+                    scc[color[v]]++;
+            }
+        }
+        int ans = 0;
+        for(int i(1); i<=sum; ++i)
+            if(scc[i]==1)
+                ans++;
+        printf("%d\n", (ans+1)/2);
+    }
+    return 0;
+}
