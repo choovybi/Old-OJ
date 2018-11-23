@@ -140,3 +140,4 @@ int main(){
         printf("%d %d\n", cute[i].from, cute[i].to);
 	}
 }
+
