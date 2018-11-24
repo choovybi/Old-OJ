@@ -1,0 +1,679 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-3：图的基本概念}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[CZ: 1.2]	% NOTE: use '[]' (instead of '()' or '{}') to provide additional information
+  % Find a word ($\ldots$) $\ldots$ （抄写或简述题目）
+    仿照例1.1，自己用9名编辑和8个委员会构造一个例子，并画出相应的图
+\end{problem}
+
+\begin{solution}
+
+    这9名编辑分成8个委员会：$c_1=\{1,2,3\}$,$c_2=\{1,3,4,5\}$,$c_3=\{2,5,6,7\}$,
+    $c_4=\{4,7,8,9\}$,$c_5=\{2,6,7\}$,$c_6=\{6,8,9\}$,$c_7=\{1,3,9,10\}$,$c_8=\{1,6\}$.当这9名编辑在星期五都出席的情况下，为了使8个委员会都能够成功举行会议。建立如下图模型：
+
+\begin{figure}[htbp]
+\centering\includegraphics[width=3.5in]{11.png}
+% /caption{something}/label{fig:1}
+\end{figure}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 1.3] 
+  % A problem here.
+    设$S={2,3,4,7,11,13}$,画出一个图$G$，其顶点集是$S$，而且对于$i,j\in S$，当$i+j\in S$或者$|i-j|\in S$，则$ij\in E(G)$.
+\end{problem}
+
+\begin{solution}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{2};
+	\node (n2) at (2,0)  	{3};
+	\node (n3) at (3,2) 	{4};
+	\node (n4) at (2,4) 	{7};
+	\node (n5) at (0,4) 	{11};
+    \node (n6) at (-1,2)    {13};
+	% \draw (n1)--(n2);
+    \draw (n1)--(n3);
+    \draw (n1)--(n5);
+    \draw (n1)--(n6);
+	\draw (n2)--(n3);
+	\draw (n3)--(n4);
+    \draw (n3)--(n5);
+	\draw (n4)--(n5);
+    \draw (n5)--(n6);
+	% \draw (n1) .. controls (-2,-2.5)  ..(n4);
+	% \draw (n1) .. controls (2,-3.5) 	..(n5);
+	\end{tikzpicture}
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 1.11]
+  % 假设这是一道需要证明的题目。
+
+    如图1.20所示的图$G$，设$U={u,w},X={e,f}$，其中$e=ru,f=vw$.画出$G$的子图$G-U$和$G-X$.
+\end{problem}
+
+\begin{solution}
+
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{$x$};
+	\node (n2) at (2,0)  	{$y$};
+	\node (n3) at (4,0) 	{$z$};
+	% \node (n4) at (0,2) 	{u};
+	\node (n5) at (2,2) 	{$v$};
+    % \node (n6) at (4,2)     {w};
+    \node (n7) at (0,4)     {$r$};
+    \node (n8) at (2,4)     {$s$};
+    \node (n9) at (4,4)     {$t$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n3);
+    \draw (n2)--(n5);
+	\draw (n5)--(n7);
+	\draw (n5)--(n8);
+    \draw (n5)--(n9);
+	\draw (n7)--(n8);
+    \draw (n8)--(n9);
+        % \caption{G-U}
+\end{tikzpicture}
+$G-U$
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{$x$};
+	\node (n2) at (2,0)  	{$y$};
+	\node (n3) at (4,0) 	{$z$};
+    \node (n4) at (0,2) 	{$u$};
+	\node (n5) at (2,2) 	{$v$};
+    \node (n6) at (4,2)     {$w$};
+    \node (n7) at (0,4)     {$r$};
+    \node (n8) at (2,4)     {$s$};
+    \node (n9) at (4,4)     {$t$};
+    \draw (n1)--(n2);
+    \draw (n1)--(n4);
+    \draw (n2)--(n3);
+    \draw (n2)--(n5);
+    \draw (n3)--(n6);
+    \draw (n4)--(n5);
+    % \draw (n4)--(n7);
+	\draw (n5)--(n7);
+	\draw (n5)--(n8);
+    \draw (n5)--(n9);
+    \draw (n6)--(n9);
+	\draw (n7)--(n8);
+    \draw (n8)--(n9);
+\end{tikzpicture}
+$G-X$
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 1.12]
+  % A problem here.
+    根据图1.20中的图G，对于下面每一条，给出例子或者说明这样的例子为什么不存在.
+    (a) 一条长为6的$x-y$链.
+    (b) 一条不是$v-w$路的$v-w$迹.
+    (c) 一条长为2的$r-z$路.
+    (d) 一条长为3的$x-z$路.
+    (e) 一条长为$d(x,t)$的$x-t$路.
+    (f) 一条长为10的回路.
+    (g) 一条长为8的圈.
+    (h) 一条长为$diam(G)$的测地线.
+\end{problem}
+
+\begin{solution}
+\
+    
+    (a) $x-u-v-t-w-z-y$
+
+    (b) $v-s-t-v-w$
+
+    (c) 不存在，因为$r$和$z$的距离为3，所以不存在长为2的路
+
+    (d) 不存在，若存在长为3的$x-z$链，则存在长为2的$x-y$链或$x-w$，而$x-w$链的距离为3，所以长为2的$x-w$链不存在。即必须要存在长为2的$x-y$链，则要存在长为1的$x-x$或$x-v$或$x-z$链，而$x-x$链长为0，$x-v$链和$x-z$链距离为2，所以长为2的$x-y$也不存在，所以长为3的$x-z$路不存在.
+
+    (e) $x-y-v-t$
+
+    (f) $x-u-v-r-s-t-v-w-z-y-x$
+
+    (g) $x-u-r-s-t-w-z-y-x$
+
+    (h) $diam(G)=3$ $x-u-v-t$
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 1.24]
+  % A problem here.
+    判断图1.34中的图$G_1$与$G_2$是否为二部的.若它为二部的，重新画出它以标出部集；若不是，则说明原因.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+    $G_1$是二部图，两个部集为$\{q_{1},r_{1},u_{1},w_{1},t_{1},y_{1}\}$和$x_{1},v_{1},z_{1},s_{1}$
+
+    $G_2$不是二部的，因为其包含奇圈$x_{2}-r_{2}-w_{2}-s_{2}-t_{2}-z_{2}-y_{2}-x_{2}$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 2.1]
+  % A problem here.
+    给出满足下列条件的图或说明这样的图为什么不存在:
+
+    (a) 阶为7的图，顶点的度分别为$1,1,1,2,2,3,3$.
+    
+    (b) 阶为7的图，顶点的度分别为$1,2,2,2,3,3,7$.
+    
+    (c) 阶为4的图，顶点的度分别为$1,3,3,3$.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+
+    (a) 有奇数个奇点
+
+    (b) 有顶点的度为7，等于阶数
+
+    (c) 任意两个顶点的度之和大于等于4，所以此图为完全图，而有一顶点度为1，矛盾
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 2.19]
+  % A problem here.
+    构造所有可能的6阶和7阶正则图.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (2,0)     {}; 
+    \node (n3) at (3,2)     {};
+    \node (n4) at (2,4)     {};
+    \node (n5) at (0,4)     {};
+    \node (n6) at (-1,2)    {};
+\end{tikzpicture}
+0正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{};
+	\node (n2) at (2,0)  	{};
+	\node (n3) at (3,2) 	{};
+    \node (n4) at (2,4) 	{};
+	\node (n5) at (0,4) 	{};
+    \node (n6) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n3)--(n4);
+    \draw (n5)--(n6);
+\end{tikzpicture}
+1正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{};
+	\node (n2) at (2,0)  	{};
+	\node (n3) at (3,2) 	{};
+    \node (n4) at (2,4) 	{};
+	\node (n5) at (0,4) 	{};
+    \node (n6) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n2)--(n3);
+    \draw (n3)--(n4);
+    \draw (n4)--(n5);
+    \draw (n5)--(n6);
+    \draw (n6)--(n1);
+\end{tikzpicture}
+2正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{};
+	\node (n2) at (2,0)  	{};
+	\node (n3) at (3,2) 	{};
+    \node (n4) at (2,4) 	{};
+	\node (n5) at (0,4) 	{};
+    \node (n6) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n1)--(n4);
+    \draw (n2)--(n3);
+    \draw (n2)--(n5);
+    \draw (n3)--(n4);
+    \draw (n3)--(n6);
+    \draw (n4)--(n5);
+    \draw (n5)--(n6);
+    \draw (n6)--(n1);
+\end{tikzpicture} 
+3正则 
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (0,0)		{};
+	\node (n2) at (2,0)  	{};
+	\node (n3) at (3,2) 	{};
+    \node (n4) at (2,4) 	{};
+	\node (n5) at (0,4) 	{};
+    \node (n6) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n1)--(n4);
+    \draw (n1)--(n3);
+    \draw (n1)--(n5);
+    \draw (n2)--(n3);
+    \draw (n2)--(n5);
+    \draw (n2)--(n4);
+    \draw (n2)--(n6);
+    \draw (n3)--(n4);
+    \draw (n3)--(n5);
+    \draw (n3)--(n6);
+    \draw (n4)--(n5);
+    \draw (n4)--(n6);
+    \draw (n5)--(n6);
+    \draw (n6)--(n1);
+\end{tikzpicture} 
+5正则 
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (3,0)     {}; 
+    \node (n3) at (4.5,2)   {};
+    \node (n4) at (3.5,4)   {};
+    \node (n5) at (1.5,5.5) {};
+    \node (n6) at (-0.5,4)  {};
+    \node (n7) at (-1.5,2)  {};
+\end{tikzpicture}
+0正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (3,0)     {}; 
+    \node (n3) at (4.5,2)   {};
+    \node (n4) at (3.5,4)   {};
+    \node (n5) at (1.5,5.5) {};
+    \node (n6) at (-0.5,4)  {};
+    \node (n7) at (-1.5,2)  {};
+    \draw (n1)--(n2);
+    \draw (n2)--(n3);
+    \draw (n3)--(n4);
+    \draw (n4)--(n5);
+    \draw (n5)--(n6);
+    \draw (n6)--(n7);
+    \draw (n7)--(n1);
+\end{tikzpicture}
+2正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (3,0)     {}; 
+    \node (n3) at (4.5,2)   {};
+    \node (n4) at (3.5,4)   {};
+    \node (n5) at (1.5,5.5) {};
+    \node (n6) at (-0.5,4)  {};
+    \node (n7) at (-1.5,2)  {};
+    \draw (n1)--(n2);
+    \draw (n1)--(n3);
+    \draw (n1)--(n6);
+    \draw (n2)--(n4);
+    \draw (n2)--(n7);
+    \draw (n3)--(n5);
+    \draw (n4)--(n6);
+    \draw (n5)--(n7);
+    \draw (n2)--(n3);
+    \draw (n3)--(n4);
+    \draw (n4)--(n5);
+    \draw (n5)--(n6);
+    \draw (n6)--(n7);
+    \draw (n7)--(n1);
+\end{tikzpicture}
+4正则
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (3,0)     {}; 
+    \node (n3) at (4.5,2)   {};
+    \node (n4) at (3.5,4)   {};
+    \node (n5) at (1.5,5.5) {};
+    \node (n6) at (-0.5,4)  {};
+    \node (n7) at (-1.5,2)  {};
+    \draw (n1)--(n2);
+    \draw (n1)--(n3);
+    \draw (n1)--(n4);
+    \draw (n1)--(n5);
+    \draw (n1)--(n6);
+    \draw (n1)--(n7);
+    \draw (n2)--(n3);
+    \draw (n2)--(n4);
+    \draw (n2)--(n5);
+    \draw (n2)--(n6);
+    \draw (n2)--(n7);
+    \draw (n3)--(n4);
+    \draw (n3)--(n5);
+    \draw (n3)--(n6);
+    \draw (n3)--(n7);
+    \draw (n4)--(n5);
+    \draw (n4)--(n6);
+    \draw (n4)--(n7);
+    \draw (n5)--(n6);
+    \draw (n5)--(n7);
+    \draw (n6)--(n7);
+\end{tikzpicture}
+6正则
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 2.31]
+  % A problem here.
+    证明：序列$d_1,d_2,\cdots,d_n$是可图的当且仅当$n-d_1-1,n-d_2-1,\cdots,n-d_n-1$是可图的.
+\end{problem}
+
+\begin{solution}
+\
+
+    (1).首先生成完全图称为$K_n$，则每一个顶点的度为$n-1$，由于$d_1,d_2,\cdots,d_n$是可图的，记其生成的图为$G$，则$K_n-G=\bar{G}$亦是可图的，而$\bar{G}$的度序列为$n-1-d_1,n-1-d_2,\cdots,n-1-d_n$.
+
+    (2).生成完全图称为$K_n$，则每一个顶点的度为$n-1$，由于$n-d_1-1,n-d_2-1,\cdots,n-d_n-1$是可图的，记其生成的图为$G$，则$K_n-G=\bar{G}$亦是可图的，而$\bar{G}$的度序列为$d_1,d_2,\cdots,d_n$.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 3.1]
+  % A problem here.
+    列举三个阶和边数均为5的非同构图.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (2,0)     {}; 
+    \node (n3) at (3,2)     {};
+    \node (n4) at (1,3.5)   {};
+    \node (n5) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n2)--(n3);
+    \draw (n3)--(n4);
+    \draw (n4)--(n5);
+    \draw (n5)--(n1);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (2,0)     {}; 
+    \node (n3) at (3,2)     {};
+    \node (n4) at (1,3.5)   {};
+    \node (n5) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n2)--(n3);
+    \draw (n1)--(n5);
+    \draw (n1)--(n4);
+    \draw (n2)--(n4);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+    \node (n1) at (0,0)     {};	
+    \node (n2) at (2,0)     {}; 
+    \node (n3) at (3,2)     {};
+    \node (n4) at (1,3.5)   {};
+    \node (n5) at (-1,2)    {};
+    \draw (n1)--(n2);
+    \draw (n4)--(n5);
+    \draw (n3)--(n4);
+    \draw (n1)--(n4);
+    \draw (n2)--(n4);
+\end{tikzpicture}
+\end{solution}
+%%%%%%%%%%
+\newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 3.2]
+  % A problem here.
+    列举三个彼此不同构的图，要求它们有相同阶，相同边数以及相同度序列.
+\end{problem}
+
+\begin{solution}
+    \
+
+有相同阶，相同边数以及相同度序列，但彼此不同构的图
+\begin{figure}[!htbp]
+\centering\includegraphics[width=2.5in]{2.png}
+% /caption{something}/label{fig:1}
+\end{figure}
+\begin{figure}[!htbp]
+\centering\includegraphics[width=2.5in]{3.png}
+% /caption{something}/label{fig:1}
+\end{figure}
+\begin{figure}[!htbp]
+\centering\includegraphics[width=2.5in]{4.png}
+% /caption{something}/label{fig:1}
+\end{figure}
+
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 17.4-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+  % 可使用如下命令插入图片：
+  % \begin{verbatim}    \fig{width = 0.30\textwidth}{figs/hello.png}{caption}
+  %   \fignocaption{width = 0.30\textwidth}{figs/hello.png}
+  % \end{verbatim}
+  % 插入数学公式：
+  % \begin{verbatim}
+  %   $E = mc^2$
+  % \end{verbatim}
+  % 得到 $E = mc^2$。
+  % \begin{verbatim}
+  %   \[
+  %     E = mc^2
+  %   \]
+  % \end{verbatim}
+  % 得到
+  % \[
+  %   E = mc^2
+  % \]
+
+  % The ``remark'' environments (when needed) must be 
+  % put before the ``solution''/``revision''/``proof'' environments.
+  % \begin{remark}	% Optional
+  %   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+  %   \noindent 以下解答是与 XXX 同学讨论得到的。
+  % \end{remark}
+
+  % \newpage  % continue in a new page
