@@ -1,0 +1,390 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-10：旅行问题}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[CZ: 6.4]	
+Give an example of a graph G such that
+
+    (a). both $G$ and $\bar{G}$ are Eulerian.
+
+    (b). $G$ is Eulerian but $\bar{G}$ is not.
+
+    (c). neither $G$ nor $\bar{G}$ is Eulerian and both $G$ and $\bar{G}$ contain an Eulerian trail.
+
+    (d). neither $G$ nor $\bar{G}$ is Eulerian, but $G$ contains an Eulerian trail and $\bar{G}$ does not.
+
+    (e). $G$ contains an Eulerian trail and an edge $e$ such that $G − e$ is Eulerian.
+\end{problem}
+
+\begin{solution}
+    \
+
+    (a). $G$如下所示，$G$和$\bar{G}$都是Eulerian
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{1.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{figure}
+
+    (b). $G$如下所示，$G$是Eulerian，但$\bar{G}$不是Eulerian
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{2.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{figure}
+
+    (c). $G$和$\bar{G}$如下所示，$G$和$\bar{G}$都不是Eulerian，但是都含有Eulerian trial
+\begin{figure}[H]
+\centering
+\begin{minipage}[htbp]{0.48\textwidth}
+\centering
+\includegraphics[scale=0.20]{3.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{minipage}
+\begin{minipage}[htbp]{0.48\textwidth}
+\centering
+\includegraphics[scale=0.20]{4.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{minipage}
+\end{figure}
+
+    (d). $\bar{G}$如下所示，$G$和$\bar{G}$都不是Eulerian，但是$G$含有Eulerian trial，而$\bar{G}$不含有
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{5.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{figure}
+
+    (e). $G$如(d)中所示，$\bar{G}$如下所示，$G$含有Eulerian trial，且含有一条边$e=<1,4>$使得$G-e$是Eulerian，
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.20]{6.png}
+% \caption{this is a figure demo}
+% \label{fig:label}
+\end{figure}
+
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 6.6] 
+  % A problem here.
+    Let $G$ be a connected regular graph that is not Eulerian. Prove that if $\bar{G}$ is connected, then $\bar{G}$ is Eulerian.
+
+\end{problem}
+
+\begin{proof}
+    假设$G$是由$n$个点构成的非Euler的$k$正则图，所以可知$k$为奇数。
+    
+    (1). 假设$n$为奇数，每个点的度为$k$，由于$k$为奇数，所以$nk$亦为奇数，而由于所有顶点总的度为$2E$应该为偶数，所以矛盾，$n$不为奇数。
+
+    (2). 假设$n$为偶数，每个点的度为$k$。则在$\bar{G}$中，每个点的度为$n-1-k$，由于$n$为偶数,$k$为奇数，所以$n-1-k$为偶数。如果$\bar{G}$ 是连通的，并且又有所有顶点的度为偶数，则$\bar{G}$是Euler的。
+\end{proof}
+
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 6.10]
+    Let $G$ be a 6-regular graph of order 10 and let $u, v \in V(G)$. Prove that $G$, $G − v$ and $G − u − v$ are all Hamiltonian.
+
+\end{problem}
+
+\begin{proof}
+    \
+
+在图$G$中，由于$G$是10阶的6正则图，所以对于任意点$w$，均有$degw =  6 \geq n/2$，所以$G$是Hamilton的。
+
+在图$G-v$中，原本不与$v$直接相连的点的度仍为6，与$v$直接相连的点的度变为5，左移对于任意点$w$，均有$degw \geq 5 = n/2$，所以$G-v$是Hamilton的。
+
+在图$G-v-u$中，顶点数$n=8$，假设$w$在原本的图中与$v$和$u$都相连，则$degw = 6-2 = 4 \geq n/2$，假设$w$在原图中与$v,w$其中一者不相连或都不相连，则$degw \geq 4 \geq n/2$，所以有$G-v-w$是Hamilton的。
+\end{proof}
+
+  % 假设这是一道需要证明的题目。
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 6.12]
+  % A problem here.
+    Let G be a 3-regular graph of order 12 and $H$ a 4-regular graph of order 11.
+
+    (a). Is $G + H$ Eulerian?
+
+    (b). Is $G + H$ Hamiltonian?
+
+\end{problem}
+
+\begin{solution}
+    \
+    
+    (a). $G+H$是Eulerian，因为对于原本在$G$中的点$v$，$degv = 3+11 = 14$是偶数；对于原本在$H$中的点$u$，$degu = 4+12=16$也是偶数，所以$G+H$中所有节点的度均为偶数，所以$G+H$是Eulerian。
+
+    (b). $G+H$是Hamilton，因为对于任意的顶点$v$，我们有$degv \geq 14 \geq 23/2 = n/2$，所以根据推论6.7有$G+H$是Hamiltonian。
+
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 6.20]
+  % A problem here.
+    Let $G$ be a graph of order $n \geq 3$ having the property that for each $v \in V(G)$, there is a Hamiltonian path with initial vertex $v$. Show that $G$ is 2-connected (connected, order at least 3 and no cut-vertices) but not necessarily Hamiltonian.
+
+\end{problem}
+
+\begin{proof}
+  % Proof here.
+    假设$G$不是连通的，那么存在两点$v$和$u$，图$G$不包含$u-v$的路，这与$G$含有Hamilton路相矛盾。假设$G$含有割点$w$，那么不存在一条路从$w$出发最终能够经过所有的顶点并且仅经过割点$w$一次，这也与$G$含有Hamilton路相矛盾。所以$G$是连通的，阶至少为3且不含割点，即$G$是二连通的。Peterson图满足上诉要求但是Peterson图不是Hamiltonian。
+\end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CZ: 5.22]
+%
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CZ: 5.26]
+%
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CZ: 5.34]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.2-8]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-3]
+%   % A problem here.
+%
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}	% Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
