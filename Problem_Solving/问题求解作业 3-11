@@ -1,0 +1,341 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-11：图中的匹配与覆盖}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[CZ: 8.3]	
+Figure 8.5 shows two bipartite graphs $G_1$ and $G_2$ , each with partite sets $U = {v, w, x, y, z }$ and $W = {a, b, c, d, e}$. In each case, can $U$ be matched to $W$?
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{1.png}
+\caption{8.5}
+\label{fig:label}
+\end{figure}
+\end{problem}
+
+\begin{solution}
+    \
+
+$G_1$可以，对应的匹配为$v-a$,$w-b$,$x-e$,$y-c$,$z-d$
+
+$G_2$不可以，因为$v,x,y$对应的为${a,c}$基为$2<3$，所以$U$不能够匹配到$W$上。
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 8.5] 
+  % A problem here.
+Prove that every tree has at most one perfect matching.
+\end{problem}
+
+\begin{proof}
+    \
+
+    由于一个叶结点只能够与它相邻的结点匹配，所以如果一个结点与两个或以上的叶结点相连，那么这个树不存在完美匹配，所以每个结点最多与一个叶结点相连。
+
+    去掉叶结点与其相连的结点，则会产生若干不相连的树，这些树也会有自身的叶子结点，重复上述过程，最终每个结点会成为某一个删除操作后的叶结点或者与特定叶结点相匹配的非叶结点，或者是孤立点，如果存在有孤立点，那么该树不存在完美匹配。如果不存在孤立点，那么经过上诉操作，结点所匹配的结点是固定的，所以任一树，至多包含一个完美匹配。
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 8.14]
+Prove that a graph $G$ without isolated vertices has a perfect matching if and only if $\alpha'(G) = \beta'(G)$ 
+
+\end{problem}
+
+\begin{proof}
+    \
+
+    首先证明充分性：由于不含孤立点的图$G$有完美匹配，所以$\alpha_{1}(G)=\frac{n}{2}$。而这个基为$\frac{n}{2}$的匹配中的每条边都不邻接，假设还有边$v-w$，则$v,w$已经有别的边覆盖，所以$v-w$会与完美匹配中的某两条边邻接，所以该匹配中的边的基数为相互不邻接边的最大个数即$\beta_{1}(G)=\alpha_{1}(G)=\frac{n}{2}$。
+
+    其次证明必要性：由于$\alpha_{1}(G)$要有意义，所以图$G$中不含有孤立点。所以根据定理8.7有$\alpha_{1}(G)+\beta_{1}(G)=n$，而又有$\alpha_{1}(G)=\beta_{1}(G)$，所以最终有$\alpha_{1}(G)=\beta_{1}(G)=\frac{n}{2}$。由于$\beta_{1}(G)=\frac{n}{2}$，所以这$\frac{n}{2}$条相互不邻接的边所覆盖了$n$个结点，根据完美匹配的定义，这匹配即为完美匹配，所以图$G$有完美匹配。
+\end{proof}
+
+  % 假设这是一道需要证明的题目。
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 8.16]
+  % A problem here.
+Prove that if $G$ is a graph of order $n$, maximum degree $\bigtriangleup$ and having no isolated vertices, then $\alpha(G)\geq \frac{n}{\bigtriangleup + 1}$
+\end{problem}
+
+\begin{proof}
+    \
+    
+    假设$\alpha(G)<\frac{n}{\bigtriangleup+1}$，那么$\alpha(G)\times(\bigtriangleup+1)<n$，由于$\alpha(G)$是能够覆盖所有边的顶点的最小个数，由于$\bigtriangleup$是最大度，所以这$\alpha(G)$个点最多连接$\alpha(G)\times\bigtriangleup$个不同的顶点，所以该图最多有$\alpha(G)\times\bigtriangleup + \alpha(G)$的不同的顶点，而又有$\alpha(G)\times(\bigtriangleup+1)<n$，与图$G$的阶为$n$相矛盾，所以$\alpha(G)\geq \frac{n}{\bigtriangleup + 1}$成立
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 8.18]
+  % A problem here.
+Give an example of a 5-regular graph that contains no 1-factor.
+\end{problem}
+
+\begin{solution}
+  % Proof here.
+    例子如下所示，其中结点$1,2,3,4$外部的连接情况与$5$类似，故在图中略去。
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{2.png}
+\caption{不含1因子的5正则图}
+\label{fig:label}
+\end{figure}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 8.21]
+Use Tutte’s characterization of graphs with 1-factors (Theorem 8.10) to show that $K_{3,5}$ does not have a 1-factor.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+    如下图所示，取$G$的真子集$S={1,2,3}$，则$G-S={4,5,6,7,8}$均为孤立点，则有$k_{0}(G-S)=5 > |S|$，所以根据定理8.10可得$K_{3,5}$没有1因子。
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{3.png}
+\caption{$K_{3,5}$}
+\label{fig:label}
+\end{figure}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 8.24]
+Show that every 3-regular bridgeless graph contains a 2-factor.
+\end{problem}
+
+\begin{proof}
+    根据之前章节的知识可知，无桥的$3$正则图一定包含一条能够经过所有结点的$Hamilton$通路，而又由于图是$3$正则图，所以图的结点数为偶数，所以$Hamilton$通路所进过的结点数也是偶数个，假设为$v_1,v_2,v_3,v_4,\cdots,v_{2k-1},v_{2k}$，该$Hamilton$通路即为2因子，2因子包含的边分别为$v_1-v_2-v_3,\cdots,v_{2k-1}-v_{2k}-v_1$，所以不含桥的3正则图包含2因子得证。
+\end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[CZ: 5.34]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.2-8]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-3]
+%   % A problem here.
+%
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!H]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}	% Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
