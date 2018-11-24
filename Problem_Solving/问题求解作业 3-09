@@ -1,0 +1,375 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-9：图中的连通度和距离}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[CZ: 5.4]	
+    Prove that if $v$ is a cut-vertex of a graph $G$, then $v$ is not a cut-vertex of the complement $\bar{G}$ of $G$.
+\end{problem}
+
+\begin{solution}
+
+    因为$v$为图$G$的割点，根据推论5.4得存在与$v$不同的两点$u$和$w$，使得$v$位于$G$的任意一条$u-w$路上。而有$v$不在边$uw$上，所以$uw\in \bar{G}$，再据推论5.4得$v$不为图$\bar{G}$的割点。
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 5.8] 
+  % A problem here.
+    \
+
+    (a). Let $G$ be a nontrivial connected graph. Prove that if $v$ is an end-vertex of a spanning tree of $G$, then $v$ is not a cut-vertex of $G$.
+
+(b). Use (a) to give an alternative proof of the fact that every nontrivial connected graph contains at least two vertices that are not cut-vertices.
+
+(c). Let $v$ be a vertex in a nontrivial connected graph $G$. Show that there exists a spanning tree of $G$ that contains all edges of $G$ that are incident with $v$.
+
+(d). Prove that if a connected graph $G$ has exactly two vertices that are not cut-vertices, then $G$ is a path. [Recall that if a tree contains a vertex of degree exceeding 2, then $T$ has more than two end-vertices.]
+\end{problem}
+
+\begin{solution}
+\
+
+    (a). 由于$v$是$G$的生成树的一个端点，所以任意两个与$v$不同的点$u$和$w$，都必定存在$u-root-w$这样的通路不经过$v$，所以根据推论5.4可得$v$不是$G$的割点。
+
+    (b). 由于$G$是非平凡连通图，所以以任意顶点作为$root$建立生成树，该生成树一定有两个端点，由$(a)$可得生成树的端点一定不为割点，所以任意一个非平凡的连通图至少包含两个不是割点的顶点。
+
+    (c). 以$v$为$root$，使用广度优先遍历算法得到生成树，则该任意与顶点$v$相邻的结点都为$v$的孩子，任意与$v$相连的边都被包含在此生成树中。
+
+    (d). 使用反证法。假设$G$不是一条路，即$G$包含一个顶点的度大于$2$，不失一般性假设该顶点为$v$，则以$v$为$root$构建生成树，则$v$有大于$2$个孩子，则该生成树有大于$2$个端点，根据$(a)$，可得图$G$有大于两个非割点的顶点.
+
+\end{solution}
+
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 5.10]
+    Prove that a connected graph $G$ of size at least 2 is nonseparable if and only if any two adjacent edges of $G$ lie on a common cycle of $G$.
+\end{problem}
+
+\begin{solution}
+    \
+    
+    首先证明充分性：假设存在两条不邻接的边不位于$G$的某一个圈上，不失一般性假设这两条不邻接的边为$ab$和$cd$，则对于两条边距离最远的两点不失一般性假设为$a$和$d$在位于$a-d$路径上一定存在一点$v$，有$v$位于$a-d$的任意一条路上。因为如果有$a-d$路不包含点$v$，那么此条$a-d$路与$a-v-d$则形成了一个圈，矛盾。所以存在割点$v$，即连通图$G$是可分的，与连通图$G$不可分矛盾。
+
+    其次证明必要性：因为任意两条不邻接的边都位于$G$的某个圈上，所以$G$中的任意两点$u$和$w$，对于任意$v\neq u\neq w$一定存在一条路$u-w$不经过$v$，则$v$不为割点。由于$v,u,w$的任意性，所以任意一点$v\in G$，有$v$不为割点，所以图$G$是不可分割的。
+
+\end{solution}
+
+  % 假设这是一道需要证明的题目。
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 5.12]
+  % A problem here.
+    If a connected graph $G$ contains three blocks and $k$ cut-vertices, what are the possible values for $k$? Explain your answer.
+
+\end{problem}
+
+\begin{solution}
+    \
+
+$k$的值为$1,2$，具体如下图所示：
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.25]{1.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.25]{2.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+如果$k=0$则图$G$不存在割点，即$G$为不可分图。若$k\geq 3$，则图$G$至少拥有$4$个连通分块。所以$k$的可能取值为$1,2$
+\end{solution}
+%%%%%%%%%%
+\newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 5.18]
+  % A problem here.
+    Let $PG$ be the Petersen graph. Give an example of
+
+    (a). a minimum vertex-cut in $PG$.
+
+    (b). a vertex-cut $U$ in $PG$ such that $U$ is not a minimum vertex-cut of $PG$ and no proper subset of $U$ is a vertex-cut of $PG$.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.3]{3.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+
+    (a). $PG$的一个最小点割为$\{1,2,5\}$
+
+    (b). $PG$的一个极小点割为$\{1,3,5,8\}$，没有此极小点割没有真子集是点割。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 5.22]
+    \
+    
+    (a) Prove that if $G$ is a $k$-connected graph and $e$ is an edge of $G$, then $G − e$ is $(k − 1)$-connected.
+
+    (b) Prove that if $G$ is a $k$-edge-connected graph and $e$ is an edge of $G$, then $G − e$ is $(k − 1)$edge-connected.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+    
+    (a). 因为删除的边$e$可能包含最小点割中的点不失一般性假设为$u$，或者不包含，而不可能包含两个最小点割中的点。所以$\kappa(G-e)\geq \kappa(G)-1 \geq k-1$，所以$G-e$是$k-1$连通的。 
+
+    (b). 因为删除的边$e$自生可能在最小边割中，也可能不在。所以$\lambda(G-e)\geq \lambda(G-e) \geq k-1$，所以$G-e$是$k-1$边连通的。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 5.26]
+    Prove that if $G$ is a graph of order $n$ such that $\delta(G) \geq (n − 1)/2$, then $\lambda(G) = \delta(G)$.
+
+\end{problem}
+
+\begin{solution}
+    假设$\lambda(G)\neq \delta(G)$，则有$\lambda(G)<\delta(G)$。假设最小边割将图$G$分割为$G_1$和$G_2$，不失一般性假设其中较小$G_1$的度记为$k$，有$k\leq \frac{n}{2}$。而又有$\delta(G_1)\geq \delta(G)\geq \frac{n-1}{2}$。$\lambda(G)\geq k\times \delta(G_1)-k\times(k-1)$，根据假设$k\times \delta(G_1) - k\times(k-1)\leq\lambda(G)<\delta(G)$，解之得$\delta(G) < k$矛盾，所以$\lambda(G) = \delta(G)$。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 5.34]
+  % A problem here.
+    Prove Theorem 5.18: Let $G$ be a $k$-connected graph and let $S$ be any set of $k$ vertices. If a graph $H$ is obtained from $G$ by adding a new vertex $w$ and joining $w$ to the vertices of $S$, then $H$ is also $k$-connected.
+\end{problem}
+
+\begin{solution}
+    对于新加入的顶点$w$，由于$w$跟$S$中的$k$个顶点相连，所以当删除$n<k$个顶点时$w$仍然与图$G$中的点相连，而对于其他点，由于原本他们在图$G$中也要删除至少$k$个点才能分割，所以$H$中所有的点，必须要删除大于$k$个点才能分割，所以$H$亦为$k$连通的。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.2-8]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25.3-3]
+%   % A problem here.
+%
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 25-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}	% Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
