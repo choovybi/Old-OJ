@@ -1,0 +1,479 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-5：树}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.4]	% NOTE: use '[]' (instead of '()' or '{}') to provide additional information
+    设$G$是连通图，$e_1,e_2$是$G$的两条边。证明：$G-e_1-e_2$有三个连通分支当且仅当$e_1$与$e_2$都是$G$中的割边。
+\end{problem}
+
+\begin{solution}
+    首先证明必要性，假设$e_1=uv$,$e_2=wx$，由于$e_1$是图$G$的割边，根据割边定义$G-e_1$包含两个连通分支设为$G_1$和$G_2$。不失一般性可设$e_2=wx\in G_1$，又由于$e_2=wx$是$G$的割边，因此$e_2$亦为$G_2$的割边，因此$G_2-e_2$包含两个连通分支，因此$G-e_1-e_2$包含三个连通分支。
+    其次证明充分性，由于$G$是连通图而$G-e_1-e_2$具有三个连通分支，因此不失一般性可设$e_1=uv$,$e_2=wx$，且$u\in G_1$,$v,w\in G_2$,$x\in G_3$。因此$uv$为$G$的一条割边，$wx$为$G$的一条割边，即$e_1$与$e_2$都是$G$中的割边。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.8] 
+  % A problem here.
+    证明：若图$G$的每个顶点的度至少是2，则$G$含有一个圈
+\end{problem}
+
+\begin{solution}
+    因为图$G$的每个顶点的度至少是2，因此图$G$没有端点。而根据定理4.3可得此图不含有非平凡树，因此根据树的定义，图$G$必定含有圈。
+
+\end{solution}
+
+%%%%%%%%%%
+
+% \newpage
+%%%%%%%%%%
+\begin{problem}[CZ: 4.14]
+  % 假设这是一道需要证明的题目。
+    已知某个35阶的树$T$含有25个度为1的顶点，2个度为2的顶点，3个度为4的顶点，1个度为5的顶点，和2个度为6的顶点。它还含有2个具有相同（未知的）度$x$的顶点。$x$是多少？
+\end{problem}
+\begin{solution}
+    根据定理4.7可得树$T$的总度为$(35-1)\times2=68$，而根据条件$25\times1+2\times2+3\times4+1\times5+2\times6+2\times x=68$，解之得$x=5$。
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.22]
+  % A problem here.
+    设$T$是一个n阶树。证明：$T$的补图$\Bar{T}$的边数与$K_{n-1}$的边数相同。
+\end{problem}
+
+\begin{solution}
+
+    因为$T$是一个n阶树，因此$T$的边数为$n-1$，可得$T$的补图$\Bar{T}$的边数为$\frac{n(n-1)}{2}-(n-1)=\frac{(n-1)(n-2)}{2}$与$K_{n-1}$的边数相同。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.26]
+  % A problem here.
+    证明：连通图的一条边$e$是割边当且仅当$e$属于$G$的任一生成树。
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    首先使用反证法证明充分性：假设$e=uv$不属于$G$中的某一生成树$T$，因为$e$是割边，所以$G-e$得到两个连通分量$G_1$和$G_2$。不失一般性假设$u\in G_1$,$v\in G_2$，因为$T$不包含$e$，所以有$T\subset G_1$或$T\subset G_2$，则$v\notin T$或者$u\notin T$，根据生成树的定义可知$T$不为生成树，矛盾。
+
+    \noindent 其次使用反证法证明必要性：假设$e=uv$属于$G$的任一生成树但$e$不为连通图的割边，则除了$uv$有别的路假设为$e_1=uw,e_2=wv$能够连通$u$和$v$两点，则包含$e=uv$的生成图设为$G_1$可以变换成包含$e_1$和$e_2$的生成图，所以$e=uv$不属于此生成树$G$，矛盾。
+    
+    \noindent 综上，所以连通图的一条边$e$是割边当且仅当$e$属于$G$的任一生成树。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.28]
+  % A problem here.
+    分别应用Kruskal算法与Prim算法寻找图4.12中赋权图的一个最小生成树。在每种情况下，都要说明该树是如何构造的（仿照图4.8与图4.9）.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+Kruskal算法：
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)		{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n5) at (3,1) 	{$x$};
+    \node (n7) at (2,0)     {$y$};
+    \node (n8) at (0,0)     {$z$};
+    % \draw (n8)--(n9);
+        % \caption{G-U}
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+    \draw (n2)--(n3);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+    \draw (n2)--(n3);
+    \draw (n3)--(n5);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+    \draw (n2)--(n3);
+    \draw (n3)--(n5);
+    \draw (n3)--(n4);
+\end{tikzpicture}
+\
+
+Prim算法：
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n5) at (3,1) 	{$x$};
+    \node (n7) at (2,0)     {$y$};
+    \node (n8) at (0,0)     {$z$};
+    % \draw (n8)--(n9);
+        % \caption{G-U}
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n2)--(n3);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n2)--(n3);
+    \draw (n1)--(n2);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n2)--(n3);
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+    \draw (n2)--(n3);
+    \draw (n3)--(n5);
+\end{tikzpicture}
+\
+
+\begin{tikzpicture}[> = stealth, % arrow head style
+	shorten > = 1pt, % don't touch arrow head to node
+	auto,
+	node distance = 3cm, % distance between nodes
+	semithick % line style
+	,scale=.8,auto=left,every node/.style={circle,fill=blue!20}]
+	\node (n1) at (-1,1)	{$u$};
+	\node (n2) at (0,2)  	{$v$};
+	\node (n3) at (2,2) 	{$w$};
+	\node (n4) at (3,1) 	{$x$};
+    \node (n5) at (2,0)     {$y$};
+    \node (n6) at (0,0)     {$z$};
+    \draw (n1)--(n2);
+    \draw (n2)--(n6);
+    \draw (n2)--(n3);
+    \draw (n3)--(n5);
+    \draw (n3)--(n4);
+\end{tikzpicture}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.30]
+  % A problem here.
+    设$G$为连通赋权图，$T$为$G$的一个最小生成树。证明：$T$是$G$的唯一的最小生成树当且仅当$G$的不属于$T$的任一边$e$的权值都大于$T+e$的圈上其他边的权值。
+\end{problem}
+
+\begin{solution}
+    首先使用反证法证明充分性：假设在$T+e$的圈上存在$e_1$的权值大于等于$e$，则可将最小生成树$T$中的边$e_1$换成$e$，得到的生成树$T_1$的总权值不大于$T$的总权值，与$T$为$G$的唯一最下生成树矛盾。
+
+    \noindent 其次证明必要性：因为$G$的不属于$T$的任一边的$e$的权值都大于$T+e$的圈上其他边的权值，所以$T$包含的边的总权值即为最小的总权值，则根据定义，$T$是$G$的唯一的最小生成树。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[CZ: 4.36]
+  % A problem here.
+    确定图4.20中的图$G$的生成树的个数。
+\end{problem}
+
+\begin{solution}
+    类1:不包含$G$中间的大圈，有$15$种；
+    类2:包含$G$中间大圈的一条边，则有$5\times(3\times12)=180$种；
+    类3:包含$G$中间大圈的两条边，则有$10\times(3\times3\times9)=810$种；
+    类4:包含$G$中间大圈的三条边，则有$10\times(3\times3\times3\times6)=1620$种；
+    类5:包含$G$中间大圈的四条边，则有$5\times(3\times3\times3\times3\times3)=1215$种。
+    
+    \noindent 综上$G$的生成树的总数为$15+180+810+1620+1215=3840$种。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 21-1]
+%   % A problem here.
+%
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+% \begin{problem}[CZ: 3.2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 17.4-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+  % 可使用如下命令插入图片：
+  % \begin{verbatim}    \fig{width = 0.30\textwidth}{figs/hello.png}{caption}
+  %   \fignocaption{width = 0.30\textwidth}{figs/hello.png}
+  % \end{verbatim}
+  % 插入数学公式：
+  % \begin{verbatim}
+  %   $E = mc^2$
+  % \end{verbatim}
+  % 得到 $E = mc^2$。
+  % \begin{verbatim}
+  %   \[
+  %     E = mc^2
+  %   \]
+  % \end{verbatim}
+  % 得到
+  % \[
+  %   E = mc^2
+  % \]
+
+  % The ``remark'' environments (when needed) must be 
+  % put before the ``solution''/``revision''/``proof'' environments.
+  % \begin{remark}	% Optional
+  %   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+  %   \noindent 以下解答是与 XXX 同学讨论得到的。
+  % \end{remark}
+
+  % \newpage  % continue in a new page
