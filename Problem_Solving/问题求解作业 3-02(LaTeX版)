@@ -1,0 +1,361 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-2：贪心算法}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.1-2]	% NOTE: use '[]' (instead of '()' or '{}') to provide additional information
+  % Find a word ($\ldots$) $\ldots$ （抄写或简述题目）
+    Suppose that instead of always selecting the first activity to finish, we instead select the last activity to start that is compatible with all previously selected activities. Describe how this approach is a greedy algorithm, and prove that it yields an optimal solution.
+\end{problem}
+
+\begin{solution}
+将所有活动按照开始时间从大到小排序，初始化时开始时间为正无穷，选择开始时间最大并结束时间小于目前开始时间的活动，更新开始时间。进行迭代，即可得到最大兼容活动集。
+
+    证明：先证明最晚开始的活动在某个最大兼容活动子集中。令$A_k$是$S_k$的一个最大兼容活动子集，且$a_j$是$A_k$中开始时间最晚的活动。若$a_j = a_m$，则已证明$a_m$在$S_k$的某个最大兼容活动子集中。若$a_j\neq a_m$，令集合$A_k^{\prime}=A_k-{a_j}\bigcup{a_m}$，即将$A_k$中的$a_j$的替换为$a_m$。而$f_m\leq f_j$。由于$|A_k^{\prime}|=|A_k|$，因此得出结论$A_k^{\prime}$也是$S_k$的一个最大兼容活动子集，且它包含$a_m$。而由于已经得知活动选择问题具有最优子结构性质，所以使用此种贪心算法会产生最优解。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.1-3]
+  % A problem here.
+Not just any greedy approach to the activity-selection problem produces a maximum-size set of mutually compatible activities. Give an example to show that the approach of selecting the activity of least duration from among those that are compatible with previously selected activities does not work. Do the same for the approaches of always selecting the compatible activity that overlaps the fewest other remaining activities and always selecting the compatible remaining activity with the earliest start time.
+\end{problem}
+
+\begin{solution}
+\
+
+持续时间最短者，可举出反例：$(1,4)(3,5)(4,7)(7,10)$，在这些活动之中最大兼容活动子集为$(1,4),(4,7),(7,10)$，而如果根据持续时间最短者来进行贪心，则是$(3,5)(7,10)$不是最优解。
+
+与其他活动重叠最少者，可举出反例：$(0,2)(1,3)(1,3)(2,4)(3,5)(4,6)(5,7)(5,7)(6,8)$，在这些活动之中最大兼容活动子集为$(0,2)(2,4)(4,6)(6,8)$，而如果根据与其他活动从红蝶最少者进行贪心，则首先会选中$(3,5)$无法得到最优解。
+
+最早开始者，可举出反例：$(0,10)(1,2)(2,3)(3,4)$在这些活动中最大兼容活动子集为$(1,2)(2,3)(3,4)$，而如果根据最早开始者进行贪心，则会选中$(0,10)$无法得到最优解。
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TC: 16.2-1]
+  % 假设这是一道需要证明的题目。
+ Prove that the fractional knapsack problem has the greedy-choice property.
+
+\end{problem}
+
+\begin{solution}
+即需要证明做出局部最优选择可以得到全局最优解。现证明考虑非空子问题$S_k$，令$a_m$是$S_k$中单位价值最高的物品，则$a_m$在最优解中。
+
+    证明：令$A_k$是$S_k$的一个最优解，且$a_j$是$A_k$中单位价值最高的物品。若$a_j=a_m$，则已证明$a_m$在$S_k$的最优解中。若$a_j\neq a_m$，令集合$A_k^{\prime}=A_k-{a_j}\bigcup{a_m}$，即将$A_k$中的$a_j$替换为$a_m$。所以$a_j$是$A_k$中价值最大的物品，而物品占据的总空间没有变大，由于$|A_k^{\prime}|==|A_k|$，因此得出结论$A_k^{\prime}$也是$S_k$的一个最优解，且它包含$a_m$。
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.2-2]
+  % A problem here.
+Give a dynamic-programming solution to the 0-1 knapsack problem that runs in $O(nW)$  time, where $n$ is the number of items and $W$ is the maximum weight of items that the thief can put in his knapsack.
+\end{problem}
+
+\begin{solution}
+\begin{lstlisting}
+#include<iostream>
+using namespace std;  
+#define N
+#define V
+
+int main(){
+	int value[N + 1]  = {0, 6, 3, 5, 4, 6};
+	int weight[N + 1] = {0, 2, 2, 6, 5, 4};
+	int f[N + 1][V + 1] = {0};
+ 
+	int i = 1;
+	int j = 1;
+	for(i = 1; i <= N; i++){
+		for(j = 1; j <= V; j++){
+			if(j < weight[i]){
+				f[i][j] = f[i - 1][j];
+			}
+			else{
+				int x = f[i - 1][j];
+				int y = f[i - 1][j - weight[i]] + value[i];
+				f[i][j] = x < y ? y : x;
+			}
+		}
+	}
+	for(i = N; i >= 1; i--){
+		for(j = 1; j <= V; j++){
+			printf("d",f[i][j]);
+		}
+		cout << endl;
+	}
+	return 0;  
+}
+\end{lstlisting}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.3-2]
+  % A problem here.
+Prove that a binary tree that is not full cannot correspond to an optimal prefix code.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+因为如果一棵二叉树不是满二叉树，那么一定存在节点只有一个子节点。则可以得出此节点的编码是多余的，可以用其子节点覆盖当前节点而功能没有任何改变。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.3-5]
+  % A problem here.
+Prove that if we order the characters in an alphabet so that their frequencies are monotonically decreasing, then there exists an optimal code whose codeword lengths are monotonically increasing.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+假设字母表为:${c_1,c_2,\cdots ,c_n}$，
+字母出现的频率分别是$f_1,f_2,\cdots ,f_n$，
+且有$f_1\geq f_2 \geq \cdots f_n$，
+那么有最优编码使得$d(c_1)\leq d(c_2)\cdots d(c_n)$。
+现假设在最优编码集$T$中，
+存在$i<j,f_i\geq f_j$并且有$d(c_i)\geq d(c_j)$。
+可以交换$c_i$和$c_j$的编码，得到新的编码集$T^{\prime}$
+得到新的编码$f_i^{\prime}\geq f_j^{\prime}$且$d^{\prime}(c_i)<d^{\prime}(c_j)$，则
+    $B(T)-B(T^{\prime})=\sum_{k=1}^{n}f_k(d(c_k)-d^{\prime}(c_k))=f_i[(d(c_i)-d^{\prime}(c_i))]-f_j[(d(c_j)-d^{\prime}(c_j))]=(f_i-f_j)[d(c_i)-d(c_j)]\geq 0$
+因为$T$是最优编码，所以$T^{\prime}$也是字母集的最优编码，且码字长度单调递增
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.3-8]
+  % A problem here.
+Suppose that a data file contains a sequence of 8-bit characters such that all 256 characters are about equally common: the maximum character frequency is less than twice the minimum character frequency. Prove that Huffman coding in this case is no more efficient than using an ordinary 8-bit fixed-length code.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+由于最高频率的字符出现频率也低于最低频率字符的两倍，所以任意两个字符出现频率之和都要高于单个字符出现频率。因此我们可以构建深度为1的128棵二叉树。又因为任意四个字符出现频率之和要高于两个字符出现频率，因此我们可以构建出深度为2的64棵满二叉树，以此类推我们可以构建出深度为8的一棵满二叉树，所有字符都在深度为8的节点上，因此跟定常编码相比没有优势。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 16.1]
+  % A problem here.
+$\textbf{Coin changing}$
+
+Consider the problem of making change for $n$ cents using the fewest number of coins. Assume that each coin’s value is an integer.
+
+    \textbf{a.} Describe a greedy algorithm to make change consisting of quarters, dimes, nickels, and pennies. Prove that your algorithm yields an optimal solution.
+
+    \textbf{b.} Suppose that the available coins are in the denominations that are powers of $c$,i.e.,the denominations are $c^{0},c^{1},\cdots,c^{k}$for some integers $c>1$ and $k\geq 1$. Show that the greedy algorithm always yields an optimal solution.
+
+    \textbf{c.} Give a set of coin denominations for which the greedy algorithm does not yield an optimal solution. Your set should include a penny so that there is a solution for every value of $n$.
+
+    \textbf{d.} Give an $O(nk)$-time algorithm that makes change for any set of $k$ different coin denominations, assuming that one of the coins is a penny.
+\end{problem}
+
+\begin{solution}
+
+(a). 贪心算法：先使用面值最大的硬币，如果剩余要找零的硬币面值小于，最大硬币的面值，则使用面值第二大的硬币，以此类推。
+首先，易得找零问题具有最优子结构。假设在子问题中需要找n美分硬币，此时的最优解为$T$，在$T$中，若未优先使用当前最大面值$k_n$，则一定存在$a_1\times k_1+\cdots+a_{n-1}\times k_{n-1}=k_n+a^{\prime}_1\times k_1+\cdots+a^{\prime}_{n-1}\times k_{n-1}$，且有$k_1+\cdots+k_{n-1}\geq 1+k_1+\cdots+k_{n-1}$则可将其做替换，替换后的找零解为$T^{\prime}$，由于$T$是最优解，所以$T^{\prime}$也为找零问题的最优解，即证得贪心算法可以找到最优解。
+
+\noindent (b). 根据(a)中的贪心策略我们总是先用面值最大的硬币直到剩余硬币的面值小于当前可用的面值最大的硬币。因此在解决此问题中，如果我们要使用面值小于$c_i$的硬币去找总面值大于$c_i$的零钱，则一定可以有一种替换方式：使用面值为$c_i$的硬币和数量更少的面值小于$c_i$的硬币去完成找零，所以在这种情况下,使用面值小于$c_i$的硬币所能完成的最优找零数额是$c_i - 1$，因此贪心算法总能够找到最优解。
+\noindent (c). $(1,3,4)$找6元零钱，使用贪心算法是$(4,1,1)$，而此时最优的解法应该是$(3,3)$
+
+\noindent (d). 可以使用动态规划算法来求解此问题
+\begin{lstlisting}
+#include <stdio.h>
+#include <iostream>
+using namespace std;
+
+void makeChange(int values[], int types, int total, int coinUsed[], int cointTrack[]){
+        coinUsed[0] = 0;
+        cointTrack[0] = 0;
+        for(int i = 1; i<= total; i ++){
+                int mincoin = i;
+                int lastin  = 0;
+                for(int j = 0; j < types; j ++){
+                        if(values[j] <= i){
+                                if(coinUsed[i - values[j]] + 1 < mincoin){
+                                  mincoin = coinUsed[i - values[j]] + 1;
+                                  lastin = values[j];
+                                }
+                        }
+                }
+                coinUsed[i] = mincoin;
+                cointTrack[i] = lastin;
+        }
+        while(total>0){
+                total -= cointTrack[total];
+        }
+}
+int main(){
+        int value[]={1,...};
+        int size=sizeof(value)/sizeof(*value);
+        int money=n;
+        int* coinsUsed=new int[money+1];
+        int* coinsTrack=new int[money+1];
+        makeChange(value,size,money,coinsUsed,coinsTrack);
+        return 0;
+}
+
+
+\end{lstlisting}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 17.1-3]
+  % A problem here.
+    Suppose we perform a sequence of $n$ operations on a data structure in which the $i$ th operation costs $i$ if $i$ is an exact power of 2, and 1 otherwise. Use aggregate analysis to determine the amortized cost per operation.
+\end{problem}
+
+\begin{solution}
+    由题意可知，总代价记为$T$，可得$T=n-\lfloor lgn \rfloor + (1+2+\cdots+2^{\lfloor lgn \rfloor}) \leq n + 2n = 3n$
+因此每个操作得代价为$O(n)/n=O(1)$
+  % Solution here.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 17.2-2]
+  % A problem here.
+Redo Exercise 17.1-3 using an accounting method of analysis.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+假设每一步操作代价为3，对于第$i$步操作，
+如果其是2的幂，则使用存储的信用来支付代价，
+否则，支付1代价，并且将2存储为信用，
+    所以可得$\sum_{i=1}^{n}c_i^{\prime}-c_i=\sum_{i=1}^{n}c_i^{\prime}-\sum_{i=1}^{n}c_i\geq 0$，所以摊还代价为$O(1)$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 17.4-1]
+  % A problem here.
+Suppose that we wish to implement a dynamic, open-address hash table. Why might we consider the table to be full when its load factor reaches some value $\alpha$ that is strictly less than 1? Describe briefly how to make insertion into a dynamic, open-address hash table run in such a way that the expected value of the amortized cost per insertion is  $O(1)$. Why is the expected value of the actual cost per insertion not necessarily $O(1)$ for all insertions?
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+(1). 当我们每次进行插入尝试的时候，我们找到一个空槽的概率为$1-\alpha$，因此插入一个新的元素的摊还代价是$\frac{1}{1-\alpha}$，当$\alpha \rightarrow 1$时可知代价已足够大，因此我们可以认为表满。
+
+\noindent (2). 可以设置一种算法，当装载因子$\alpha$达到$\frac{1}{2}$时扩展散列表，这样插入新元素的摊还代价为$O(1)$，而当$\alpha = frac{1}{2}$时操作的代价为$O(n)$。总体的摊还代价为$O(1)$。
+
+\noindent (3). 因为虽然不是所有的插入操作的代价都是$O(1)$，某几步操作的代价是$O(n)$，但计算摊还代价的时候要处以操作总数，所以摊还代价还是$O(1)$，并没有获得数量级上的提高。
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+  % 可使用如下命令插入图片：
+  % \begin{verbatim}    \fig{width = 0.30\textwidth}{figs/hello.png}{caption}
+  %   \fignocaption{width = 0.30\textwidth}{figs/hello.png}
+  % \end{verbatim}
+  % 插入数学公式：
+  % \begin{verbatim}
+  %   $E = mc^2$
+  % \end{verbatim}
+  % 得到 $E = mc^2$。
+  % \begin{verbatim}
+  %   \[
+  %     E = mc^2
+  %   \]
+  % \end{verbatim}
+  % 得到
+  % \[
+  %   E = mc^2
+  % \]
+
+  % The ``remark'' environments (when needed) must be 
+  % put before the ``solution''/``revision''/``proof'' environments.
+  % \begin{remark}	% Optional
+  %   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+  %   \noindent 以下解答是与 XXX 同学讨论得到的。
+  % \end{remark}
+
+  % \newpage  % continue in a new page
