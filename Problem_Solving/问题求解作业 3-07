@@ -1,0 +1,423 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-7：单源最短路径算法}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.1-2]	
+Prove Corollary 24.3.
+\end{problem}
+
+\begin{solution}
+    首先证明充分性：因为$|V|$为有限数值，权重也为有限数值，且不包含从源结点$s$可以到达的权重为负的环路，存在一条从源结点$s$到结点$v$的路径。所以当$\textsc{Bellman-Ford}$算法终止时，$v.d = \delta(s,v)$，为经过的所有路径权重之和，因此$v.d < \infty$。
+
+    \noindent 其次证明必要性：因为$\textsc{Bellman-Ford}$算法终止时，有$v.d < \infty$，根据引理24.2我们有算法终止时$v.d = \delta{s,v} < \infty$，根据$\delta{s,v}$的定义，可得存在一条从结点$s$到结点$v$的路径。
+\end{solution}
+%%%%%%%%%%
+\newpage
+%%%%%%%%%%
+\begin{problem}[TC: 24.1-3] 
+  % A problem here.
+    Given a weighted, directed graph $G = (V, E)$ with no negative-weight cycles, let $m$ be the maximum over all vertices  $v\in V$ of the minimum number of edges in a shortest path from the source $s$ to $v$. (Here, the shortest path is by weight, not the number of edges.) Suggest a simple change to the Bellman-Ford algorithm that allows it to terminate in $m + 1$ passes, even if $m$ is not known in advance.
+\end{problem}
+
+\begin{solution}
+    记录循环开始时的值，当循环结束后跟开始时相比值不发生变化，则该次循环为第$m+1$次循环。
+
+    \noindent 其算法如下：
+\begin{algorithm}[!h]
+    \caption{$\textsc{Bellman-Ford}(G,w,s)$}
+\label{alg1}
+\begin{algorithmic}
+    \STATE $\textsc{Initialize-Single-Source}(G,s)$
+    \FOR{ $i=1$ to $|V|-1$ }
+    \FOR{ each $v\in G.V$ }
+    \STATE $temp = v.d$
+    \ENDFOR
+    \FOR{ each $edge(u,v)\in G.E$ }
+    \STATE $\textsc{Relax}(u,v,w)$
+    \ENDFOR
+    \FOR{ each $v\in G.V$ }
+    \IF{ $temp != v.d$ }
+    \STATE goto $F$ 
+    \ENDIF
+    \ENDFOR
+    \ENDFOR
+    \STATE $F:$
+    \FOR{ each $edge(u,v)\in G.E$ }
+    \IF{ $v.d > u.d + w(u,v)$ }
+    \RETURN FALSE
+    \ENDIF
+    \RETURN TRUE
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TC: 24.1-4]
+  % 假设这是一道需要证明的题目。
+    Modify the Bellman-Ford algorithm so that it sets $v.d$ to $-\infty$ for all vertices $v$ for which there is a negative-weight cycle on some path from the source to $v$.
+\end{problem}
+
+\begin{solution}
+    由于存在权重为负值的回路仅在判断$v.d > u.d + w(u,v)$中有影响，所以只要在进入$if$后进行修改即可，具体代码如下：
+\begin{algorithm}[!h]
+    \caption{$\textsc{Bellman-Ford}(G,w,s)$}
+\label{alg1}
+\begin{algorithmic}
+    \STATE $\textsc{Initialize-Single-Source}(G,s)$
+    \FOR{ $i=1$ to $|V|-1$ }
+    \FOR{ each $edge(u,v)\in G.E$ }
+    \STATE $\textsc{Relax}(u,v,w)$
+    \ENDFOR
+    \ENDFOR
+    \FOR{ each $edge(u,v)\in G.E$ }
+    \IF{ $v.d > u.d + w(u,v)$ }
+    \STATE $v.d = -\infty$
+    \ENDIF
+    \RETURN TRUE
+    \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.2-2]
+  % A problem here.
+    Suppose we change line 3 of $\textsc{Dag-Shortest-Paths}$ to read
+
+    \noindent 3 $\textbf{for}$ the first $|V|-1$ vertices, taken in topologically sorted order
+
+    \noindent Show tha the procedure would remain correct.
+\end{problem}
+
+\begin{solution}
+    由于对此有向无环图进行过拓扑排序，所以排在第$|V|$位的结点不指向任何的结点，所以只对前$|V|-1$个结点所连的边进行松弛处理结果依然正确。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.3-2]
+  % A problem here.
+    Give a simple example of a directed graph with negative-weight edges for which Digkstra's algorithm produces incorrect answers. Why doesn't the proof of Theorem 24.6 go through when negative-weight edges are allowed?
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    将下图中$t$指向$y$的2替换为$-6$，则$\textsc{Dijkstra}$算法在其上运行时产生不正确的结果。
+
+    \noindent 假设结点$y$是从结点$s$到结点$u$的一条最短路径上位于$u$前面的一个结点。因为并不是所有的边的权值均为非负值，所以没有$\delta(s,y)\leq \delta(s,u)$，因此不能得到$y.d = u.d$。即将结点$u$加入集合$S$时，$u.d \neq \delta(s,u)$，
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1.0]{1.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.3-4]
+
+    Professor Gaedel has written a program that he claims implements Dijkstra’s algorithm. The program produces $v.d$ and $v.\pi$ for each vertex $v\in V$. Give an $O(V+E)$-time algorithm to check the output of the professor’s program. It should determine whether the $d$ and $\pi$ attributes match those of some shortest-paths tree. You may assume that all edge weights are nonnegative.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    (1). 检测是否有$s.d=0$并且$s.\pi = NIL$
+
+    \noindent (2). 检测是否有$v.d = v.\pi.d + w(v.\pi, v)$
+
+    当上诉两个条件有任意一个不满足，则算法错误。否则，运行一轮$\textsc{Bellman-Ford}$算法，如果$v.d$的值发生了改变，则算法错误，反之算法正确。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.3-7]
+
+    Let $G=(V,E)$ be a weighted, directed graph with positive weight function $w:E\rightarrow{1,2,\cdots,W}$ for some positive integer W , and assume that no two vertices have the same shortest-path weights from source vertex$s$. Now suppose that we deﬁne an unweighted, directed graph $G' = (V \cup V', E')$ by replacing each edge $(u,v)\in E$ with $w(u,v)$ unit-weight edges in series. How many vertices does $G'$ have? Now suppose that we run a breadth-ﬁrst search on $G'$. Show that the order in which the breadth-ﬁrst search of $G'$ colors vertices in $V$ black is the same as the order in which Dijkstra’s algorithm extracts the vertices of $V$ from the priority queue when it runs on $G$.
+\end{problem}
+
+\begin{solution}
+
+    假设有两个结点记为$u$和$v$，不失一般性假设在运行$\textsc{Dijkstra}$算法时，结点$u$先取出队列，结点$v$后取出队列。由于算法过程，我们可以得到$u.d < v.d$且有$d[u] < d[v]$，而又有在图上进行广度优先遍历时，结点$u$在第$d[u]$步操作中被染成黑色，结点$v$在第$d[v]$步操作中被染成黑色，所以广度优先搜索将$V$中结点涂上黑色的次序与$\textsc{Dijkstra}$算法运行时从优先队列中抽取结点的次序相同。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.5-2]
+  % A problem here.
+    Give an example of a weighted, directed graph $G=(V,E)$ with weight function $w: E\rightarrow \mathbb{R}$ and source vertex $s$ such that $G$ satisﬁes the following property: For every edge $(u,v)\in E$, there is a shortest-paths tree rooted at $s$ that contains $(u,v)$ and another shortest-paths tree rooted at $s$ that does not contain $(u,v)$.
+\end{problem}
+
+\begin{solution}
+    如图所示，取图中任意一条边，从结点$s$到$a$和$b$都有包含此条边和不包含此条边的最短路径。
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{2.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24.5-5]
+  % A problem here.
+    Let $G=(V,E)$ be a weighted, directed graph with no negative-weight edges. Let $s\in V$ be the source vertex, and suppose that we allow $v.\pi$ to be the predecessor of $v$ on $any$ shortest path to $v$ from source $s$ if $v\in V-{s}$ is reachable from $s$, and $\textsc{NIL}$ otherwise. Give an example of such a graph $G$ and an assignment of $\pi$ values that produces a cycle in $G_{\pi}$.(By Lemma 24.16, such an assignment cannot be produced by a sequence of relaxation steps.)
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    如图所示，图中所形成的$G_{\pi}$即形成了一条环路。
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{3.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24-2]
+  % A problem here.
+    A $d$-dimensional box with dimensions $(x_1,x_2,\cdots,x_d)$ $\textbf{nests}$ within another box with dimensions $(y_1,y_2,\cdots,y_d)$ if there exists a permutation $\pi$ on ${1,2,\cdots,d}$ such that $x_{\pi(1)}<y1, x_{\pi(2)}<y2, \cdots,x_{\pi(d)}<yd$.
+
+    $\textbf{a}.$ Argue that the nesting relation is transitive.
+
+    $\textbf{b}.$ Describe an efﬁcient method to determine whether or not one $d$-dimensional box nests inside another.
+
+    $\textbf{c}.$ Suppose that you are given a set of $n$ $d$-dimensional boxes ${B_1,B_2,\cdots,B_n}$. Give an efﬁcient algorithm to ﬁnd the longest sequence ${B_{i_1},{B_{i_2}},\cdots, B_{i_k}}$ of boxes such that $B_{i_j}$nests within $B_{i_{j+1}}$ for $j = 1,2,\cdots,k-1$. Express the running time of your algorithm in terms of $n$ and $d$.
+\end{problem}
+
+\begin{solution}
+    \
+
+    $\textbf{a}$. 假设有$x=(x_1,x_2,\cdots,x_d)$,$y=(y_1,y_2,\cdots,y_d)$和$z=(z_1,z_2,\cdots,z_d)$，假设存在排列$\pi$有$x_{\pi(i)}<y_i$对于任意的$i$属于$1$到$d$成立，并且存在排列$\pi_1$有$y_{\pi_{1}(i)}<z_i$对于任意的$i$属于$1$到$d$。那么一定有$\pi_{2}(i) = \pi_{1}(\pi(i))$则$x_{\pi_{2}(i)}<y_i$对于任意的$i$属于$1$到$d$恒成立。
+
+    $\textbf{b}$. 首先将一个盒子的所有维度进行排序，排序后的盒子$x$嵌套在盒子$y$中当且仅当$x_i < y_i$对于任意的$i$属于$1$到$d$成立。整个算法的时间复杂度是排序的算法$O(dlgd)$
+
+    $\textbf{c}$. 将每个盒子构造成一个结点，如果有盒子$u$嵌套在盒子$v$中，则有有向线段$(u,v)$，使用求解有向无环图中单源最短路径问题的$\textsc{Dag-Shortest-Paths}$算法即可找到最长的嵌套序列。算法的时间复杂度为$O(dn^2+dnlgd)$。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 24-3]
+  % A problem here.
+    $\textbf{Arbitrage}$ is the use of discrepancies in currency exchange rates to transform one unit of a currency into more than one unit of the same currency. For example, suppose that 1 U.S. dollar buys 49 Indian rupees, 1 Indian rupee buys 2 Japanese yen, and 1 Japanese yen buys 0:0107 U.S. dollars. Then, by converting currencies, a trader can start with 1 U.S. dollar and buy $49\times2\times0.0107=1.0486$ U.S.dollars, thus turning a proﬁt of 4:86 percent.
+
+    Suppose that we are given $n$ currencies $c_1,c_2,\cdots,c_n$ and $n\times n$ table $R$ of exchange rates, such that one unit of currency $c_i$ buys $R[i,j]$ units of currency $c_j$.
+
+    $\textbf{a}$. Given an efﬁcient algorithm to determine whether or not there exists a sequence of currencies $\langle c_{i_1}, c_{i_2},\cdots,c_{i_k} \rangle$ such that
+
+    \[R[i_1,i_2],R[i_2,i_3]\cdots R[i_{k-1},i_k],R[i_k,i_1]>1.\]
+    Analyze the running time of your algorithm.
+
+    $\textbf{b}$. Give an efﬁcient algorithm to print out such a sequence if one exists. Analyze the running time of your algorithm.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    \
+
+    $\textbf{a}$. 可以使用$\textsc{Bellman-Ford}$算法进行求解，每个货币构造成为一个结点，如果货币之间可以进行兑换则两个结点之间有有向边边相连，连线的权重根据兑换的利率进行设置。由于每两个货币之间都能够自由兑换，所以该图是一个完全图，而在该图上运行$\textsc{Bellman-Ford}$算法的时间复杂度为$O(n^2)\times n = O(n^3)$。
+
+    $\textbf{b}$. 首先我们需要找到包含$\textbf{a}$问中点的一个权重为负的回路，使用$\textsc{Bellman-Ford}$算法进行求解时，记录访问到的结点，直到最后访问到了已被访问过的结点。接下来可以使用$\textsc{PrintPath}$算法打印这样的序列，算法当访问了已经访问过的结点时停止。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.4-3]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}	% Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
