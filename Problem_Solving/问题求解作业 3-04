@@ -1,0 +1,366 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-4：用于动态等价关系的数据结构}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.1-2]	% NOTE: use '[]' (instead of '()' or '{}') to provide additional information
+    Show that after all edges are processed by $\textsc{Connected-Components}$, two vertices are in the same connected component if and only if they are in the same set.
+\end{problem}
+
+\begin{solution}
+(1). 假设两顶点$i,j$在相同的连通分量中但不在同一集合内，则定存在边$edge(i,j)$，由于$\textsc{Connected-Components}$遍历了所有边，所以$edge(i,j)$被处理到，因此有$\textsc{Union}(i,j)$所以$i,j$在同一个集合中，矛盾。
+
+\noindent (2). 假设$i,j$在相同的集合内但不在同一连通分量中，则定有$\textsc{Union}(i,j)$，则存在边$edge(i,j)$，则$i,j$在同一连通分量中，矛盾。
+
+\noindent 综合(1)(2)两顶点在相同的连通分量中当且仅当它们在相同的集合中。
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.1-3] 
+  % A problem here.
+    During the execution of $\textsc{Connected-Components}$ on an undirected graph $G=(V,E)$ with $k$ connected components, how many times is $\textsc{Find-Set}$ called? How many times is $\textsc{Union}$ called? Express your answers in terms of $|V|$,$|E|$, and $k$.
+\end{problem}
+
+\begin{solution}
+    $\textsc{Find-Set}$需要调用$2|E|$次，$\textsc{Union}$需要调用$|V|-k$次。
+\end{solution}
+
+%%%%%%%%%%
+
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TC: 21.2-1]
+  % 假设这是一道需要证明的题目。
+    Write pseudocode for $\textsc{Make-Set}$, $\textsc{Find-Set}$, $\textsc{Union}$ using the linked-list representation and the weighted-union heuristic. Make sure to specify the attributes that you assume for set objects and list objects.
+\end{problem}
+\begin{solution}
+\
+
+\begin{algorithm}[!h]
+    \caption{$\textsc{Make-Set}(v)$}
+    \label{alg1}
+    \begin{algorithmic}
+    % \REQUIRE $n \geq 0 \vee x \neq 0$
+    % \ENSURE $y = x^n$
+    \STATE $new\ set$ 
+    \STATE $v.next = set$
+    \STATE $v.repr = set$
+    \STATE $set.head = v$
+    \STATE $set.tail = v$
+    \STATE $set.length = 1$;
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[!h]
+    \caption{$\textsc{Find-Set}(v)$}
+    \label{alg2}
+    \begin{algorithmic}
+    % \REQUIRE $n \geq 0 \vee x \neq 0$
+    % \ENSURE $y = x^n$
+    \RETURN $ v.repr$
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[!h]
+    \caption{$\textsc{Union}(v,w)$}
+    \label{alg3}
+    \begin{algorithmic}
+    % \REQUIRE $n \geq 0 \vee x \neq 0$
+    % \ENSURE $y = x^n$
+        \STATE $\textbf{if}$ $v.repr.length >= w.repr.length$
+        \STATE $\ \ set1 = v.repr$
+        \STATE $\ \ set2 = w.repr$
+        \STATE $\textbf{else}$
+        \STATE $\ \ set1 = w.repr$
+        \STATE $\ \ set2 = v.repr$
+        \STATE $cur = set2.head$
+        \STATE $\textbf{while}$ $cur!=NULL$
+        \STATE $\textbf{do}$
+        \STATE $\ \ set1.tail.next = cur$
+        \STATE $\ \ set1.tail = cur$
+        \STATE $\ \ cur.repr = set1$
+        \STATE $\ \ cur = cur.next$
+        \STATE $\ \ set1.length++$
+        \STATE $\textbf{free}$ $set2$
+    \end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.2-3]
+  % A problem here.
+    Adapt the aggregate proof of Theorem 21.1 to obtain amortized time bounds of $O(1)$ for $\textsc{Make-Set}$ and $\textsc{Find-Set}$ and $O(lg n)$ for $\textsc{Union}$ using the linked-list representation and the weighted-union heuristic.
+\end{problem}
+
+\begin{solution}
+    
+    由于$\textsc{Make-Set}$和$\textsc{Find-Set}$操作单次耗时$O(1)$，因此$n$次的摊还代价为$O(1)$
+
+\noindent 而根据定理$21.1$对于$n$次操作$\textsc{Union}$，花费总时间为$O(nlgn)$，因此$\textsc{Union}$摊还代价为$O(lgn)$
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.2-6]
+  % A problem here.
+    Suggest a simple change to the $\textsc{union}$ procedure for the linked-list representation that removes the need to keep the $tail$ pointer to the last object in each list. Whether or not the weighted-union heuristic is used, your change should not change the asymptotic running time of the $\textsc{Union}$ procedure. ($Hint$: Rather than appending one list to another, splice them together.)
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+\begin{algorithm}[!h]
+    \caption{$\textsc{Union}(v,w)$}
+    \label{alg4}
+    \begin{algorithmic}
+    % \REQUIRE $n \geq 0 \vee x \neq 0$
+    % \ENSURE $y = x^n$
+        \STATE $\textbf{if}$ $v.repr.length >= w.repr.length$
+        \STATE $\ \ set1 = v.repr$
+        \STATE $\ \ set2 = w.repr$
+        \STATE $\textbf{else}$
+        \STATE $\ \ set1 = w.repr$
+        \STATE $\ \ set2 = v.repr$
+        \STATE $cur = set2.head$
+        \STATE $\textbf{while}$ $cur!=NULL$
+        \STATE $\textbf{do}$
+        \STATE $\ \ cur.repr = set1$
+        \STATE $\ \ cur = cur.next$
+        \STATE $\ \ set1.length++$
+        \STATE $\textbf{free}$ $set2$
+    \end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.3-1]
+  % A problem here.
+    Redo Exercise 21.2-2 using a disjoint-set forest with union by rank and path compression.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    图中$0-15$代表题目中的$1-16$
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{1.png}
+\caption{before $\textsc{Find-Set}$}
+\label{fig:label}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{2.png}
+\caption{after $\textsc{Find-Set}(x_1)$}
+\label{fig:label}
+\end{figure}
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.5]{3.png}
+\caption{after $\textsc{Find-Set}(x_8)$}
+\label{fig:label}
+\end{figure}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21.3-2]
+  % A problem here.
+    Write a nonrecursive version of $\textsc{Find-Set}$ with path compression.
+\end{problem}
+
+\begin{solution}
+\begin{algorithm}[!h]
+    \caption{$\textsc{Find-Set}(v)$}
+    \label{alg5}
+    \begin{algorithmic}
+    % \REQUIRE $n \geq 0 \vee x \neq 0$
+    % \ENSURE $y = x^n$
+        \STATE $w = v$
+        \STATE $\textbf{while}$ $w != v.p$
+        \STATE $\ \ y = y.p$
+        \STATE $\textbf{end while}$
+        \STATE $\textbf{while}(x!=x.p)$
+        \STATE $\textbf{do}$
+        \STATE $\ \ u = v.p$
+        \STATE $\ \ v.p = w$
+        \STATE $\ \ v = u$
+        \STATE $\textbf{end}$
+        \STATE $\textbf{return}$ $v$
+    \end{algorithmic}
+\end{algorithm}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[Tc: 21.3-3]
+  % A problem here.
+    Give a sequence of $m$ $\textsc{Make-Set}$, $\textsc{Union}$, and $\textsc{Find-set}$ operations, $n$ of which are $\textsc{Make-Set}$ operations, that takes $\Omega(m\lg n)$ time when we use union by rank only.
+\end{problem}
+
+\begin{solution}
+    首先进行$n$次的$\textsc{Make-Set}$操作，然后递归地将秩相同的集合合并，每一次$\textsc{Find-Set}$在有根树的叶节点查询。
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 21-1]
+  % A problem here.
+    $\textbf{Off-line minimum}$
+
+\noindent The $\textbf{off-line minimum problem}$ asks us to maintain a dynamic set $T$ of elements from the domain ${1,2,\cdots,n}$ under the operations $\textsc{Insert}$ and $\textsc{Extract-Min}$. We are given a sequence $S$ of $n$ $\textsc{Insert}$ and $m$ $\textsc{Extract-Min}$ calls, where each key in ${1,2,\cdots,n}$ is inserted exactly once. We wish to determine which key is returned by each $\textsc{Extract-Min}$ call. Speciﬁcally, we wish to ﬁll in an array $extracted[1..m]$, where for $i = 1, 2, \cdots , m , extracted[i]$ is the key returned by the $i$th $\textsc{Extract-Min}$ call. The problem is ``off-line'' in the sense that we are allowed to process the entire sequence $S$ before determining any of the returned keys.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+    (a). $extracted[1..m] = {4,3,2,6,8,1}$
+
+    \noindent (b). 首先遍历了从$1$到$n$的所有元素，所以一定能取到最小的元素，而由于序列插入的元素不重复所以不会取到重复的元素，每一次合并操作之后剩余的序列变短而问题的结构不变，因此最终取得的数组是正确的。
+
+    \noindent (c). 让$K_l$和$K_j$代表不相交集合，将$K_l = K_l\cup K_j$变为$\textsc{Union}(K_l,K_j)$即可实现.
+
+    \noindent 其中worst-case为$O(n\alpha(n))$
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+% \begin{problem}[CZ: 3.2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 17.4-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+%
+% \end{solution}
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+  % 可使用如下命令插入图片：
+  % \begin{verbatim}    \fig{width = 0.30\textwidth}{figs/hello.png}{caption}
+  %   \fignocaption{width = 0.30\textwidth}{figs/hello.png}
+  % \end{verbatim}
+  % 插入数学公式：
+  % \begin{verbatim}
+  %   $E = mc^2$
+  % \end{verbatim}
+  % 得到 $E = mc^2$。
+  % \begin{verbatim}
+  %   \[
+  %     E = mc^2
+  %   \]
+  % \end{verbatim}
+  % 得到
+  % \[
+  %   E = mc^2
+  % \]
+
+  % The ``remark'' environments (when needed) must be 
+  % put before the ``solution''/``revision''/``proof'' environments.
+  % \begin{remark}	% Optional
+  %   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+  %   \noindent 以下解答是与 XXX 同学讨论得到的。
+  % \end{remark}
+
+  % \newpage  % continue in a new page
