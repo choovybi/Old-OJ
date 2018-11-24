@@ -1,0 +1,402 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex 						   %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}  
+\lstset{breaklines}
+
+%%%%%%%%%%%%%%%%%%%%
+\title{3-6：图的计算机表示以及遍历}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism	% always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw	% begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.1-3]	
+
+\end{problem}
+
+\begin{solution}
+    (1).对于链表表示的图,求其转置即遍历链表中的每一条边,如有边$(u,v)$,则在新的链表中添加边$(v,u)$,对于每一个链表我们最多会扫过$|V|$个点,因此程序运行时间为$O(|E|\times|V|)$.
+
+    \noindent(2).对于邻接矩阵表示的图,求其转置即遍历邻接矩阵,当遍历到$a_{ij}$时将新邻接矩阵中的$a_{ji}$赋值为$a_{ij}$,因此程序运行时间为$O(|V|^2)$.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.1-8] 
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+    假设与$u$相连的边的条数为$n$,则判断边$(u,v)$是否在图中的期望时间值是$O(\frac{n}{2})$.这种表示方法的缺陷就是,相比于链表表示占用了更多的空间,而相比于邻接矩阵表示,查询边是否在图中需要消耗更多的时间.
+    当链表中元素个数小于$\frac{|E|}{|V|}$时使用链表,当元素个数大于$\frac{|E|}{|V|}$时使用散列表,相较于散列表新方法在新建图的时候需要消耗较多的时间.
+\end{solution}
+
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TC: 22.2-3]
+  % 假设这是一道需要证明的题目。
+\end{problem}
+\begin{solution}
+    下证明将算法第18行删去之后,DFS的过程不变.假设节点的颜色由单个位存放,仅能记录$white$和$gray$两种颜色,则算法$0-11$行仍然保持不变.在$12-17$行$for$循环中,仅在从优先队列中拿出的节点$u$有相邻节点颜色为$white$时才进行,因此算法过程也没有变化.所以当算法的第$18$行删去之后,DFS的过程依然不变.
+\end{solution}
+
+% \begin{remark}	
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。	
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.2-4]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+
+    如果使用邻接矩阵来进行表示,则在邻接矩阵中先遍历第$s$行,找到与点$s$相连的$n_s$个节点将他们的颜色标记为$gray$.然后遍历这$n_s$行找到颜色仍然为$white$的节点重复上述过程.因此BFS的运行时间是$O(n)$.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.2-5]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+
+    假设$u.d$的值与邻接链表里出现的次序有关,由于同一个图有多种邻接链表的表示,因此同一个图中节点$u$的属性$u.d$可能不同.而$u.d$表示的是广度优先搜索算法所计算出的从源节点$s$到节点$u$之间的距离,由于距离应是点$u$到$s$的最小值,因此如果图不发生变化那么$u.d$的值应不会发生变化,矛盾.所以$u.d$与邻接链表里出现的次序无关.
+
+    \noindent 例如在$(d)$过程时,如果在节点$w$的邻接链表中$x$在$t$前面,则$x$比$t$先进入优先队列,先展开$x$节点,在广度优先树中$u$和$y$的父节点都是$x$,与图中示意 的广度优先搜索树不同.因此BFS所计算出的广度优先搜索树可以因邻接链表中的次序不同而不同.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.3-6]
+
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+
+    假设$u$的深度小于$v$,则可定义先探索$(u,v)$为树边,先探索$(v,u)$为后向边.因为使用的是深度优先算法,所以如果先探索$(u,v)$,则节点$v$必定没有被探索过,因为如果节点$v$已经被探索过但是边$(u,v)$还没有被标记,那么说明$u$在$v$的子树中,而一开始假设$u$的深度小于$v$矛盾,所以节点$v$未被探索,所以$(u,v)$为树边.而先探索$(v,u)$则$u$一定已经被探索过,因为如果$u$未被探索过,则$u$在$v$的深度优先搜索树中与假设$u$的深度小于$v$相矛盾.因此证明了根据吸纳探索$(u,v)$还是$(v,u)$来分类树边或后向边与列表中的四种类型的次序进行分类是等价的.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.3-7]
+
+\end{problem}
+
+\begin{solution}
+    改进后的伪代码如下:
+\begin{algorithm}
+    \caption{DFS(G)}
+    \label{alg1}
+    \begin{algorithmic}
+        \STATE $time \gets time + 1$
+        \STATE $u.d\gets time$
+        \STATE $u.color \gets GRAY$
+        \STATE $push(u)$
+        \WHILE{$!empty(stack)$}
+        \STATE $u \gets top()$
+        \STATE $leaf \gets true$
+        \FOR{ each $v\in Adj[u]$ }
+        \IF{$v.color \gets WHITE$}
+        \STATE $v.color \gets GRAY$
+        \STATE $v.\pi \gets u$
+        \STATE $time \gets time + 1$
+        \STATE $v.d \gets time$
+        \STATE $push(v)$
+        \STATE $leaf \gets false$
+        \STATE $break$
+        \ENDIF
+        \ENDFOR
+        \IF{$leaf == true$}
+        \STATE $u.color \gets BLACK$
+        \STATE $time \gets time + 1$
+        \STATE $u.f \gets time$
+        \STATE $pop(u)$
+        \ENDIF
+        \ENDWHILE
+    \end{algorithmic}
+\end{algorithm}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.3-8]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{1.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}   
+如上图所示,包含一条从节点$4$到节点$1$的路径.在进行深度优先搜索时,从节点$3$开始,若先搜索$2$,则再搜索$1$,最后搜索$4$.虽然$4.d<1.d$但是节点$1$为节点$2$的后代不为节点$4$的后代.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.3-9]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{2.png}
+% \caption{this is a figure demo}
+\label{fig:label}
+\end{figure}   
+如上图所示,有向图$G$包含一条从节点$3$到节点$1$的路径,如果从节点$2$开始遍历,先搜索$3$,在搜索$1$则$3.f < 1.d$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.3-12]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+    \
+
+能够获得连通分量的深度优先搜索如上:
+\begin{algorithm}[!ht]
+    \caption{$\textsc{Dfs}(G)$}
+    \label{alg1}
+    \begin{algorithmic}
+        \FOR{each vertex $u\in G.v$}
+        \STATE $u.color \gets WHITE$
+        \STATE $u.\pi \gets NIL$
+        \STATE $u.cc \gets 0$
+        \ENDFOR
+        \STATE $k \gets 0$
+        \STATE $time \gets 0$
+        \FOR{each vertex $u\in G.V$}
+        \IF{$u.color == WHITE$}
+        \STATE $k\gets k + 1$
+        \ENDIF
+        \ENDFOR
+        \STATE $\textsc{Dfs-Visit}(G,u)$
+    \end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[!ht]
+    \caption{$\textsc{Dfs-Visit}(G,u)$}
+    \label{alg1}
+    \begin{algorithmic}
+        \STATE $u.color \gets GRAY$
+        \STATE $time \gets time + 1$
+        \STATE $u.d \gets time$
+        \STATE $u.cc \gets k$
+        \FOR{each $v\in Adj[u]$}
+        \IF{$v.color == WHITE$}
+        \STATE $v.\pi \gets u$
+        \STATE $\textsc{Dfs-Visit}(G,v)$
+        \ENDIF
+        \ENDFOR
+        \STATE $u.color \gets BLACK$
+        \STATE $time \gets time + 1$
+        \STATE $u.f \gets time$
+    \end{algorithmic}
+\end{algorithm}
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.4-2]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+  % Solution here.
+
+    首先将图进行拓扑排序,如果$s$排序在$t$之后,则$t$与$s$的简单路径数等于所有与$t$相邻的节点与$s$的简单路径数之和,以此类推可以在线性时间内得到$s$和$t$之间的简单路径的数量.若$s$排序在$t$之前,则类似.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.4-3]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+    使用深度优先搜索搜索每一个节点,如果搜索到了已经被标记过了的节点,则返回图$G$包含环路,否则返回不包含回路.由于根据之前的定理已知,在有向图中边仅为树边或后向边,由于没有后向边所以仅有树边.因为在算法中所有的节点仅仅搜索到一次,因此算法的运行时间为$O(V)$与$|E|$无关.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.5-5]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+
+    首先运行$\textsc{Strongly-Connected-Components}(G)$算法,然后将这些连通分量进行连接,随遇原本的边$(u,v)$如果$u$所在的的连通分量和$v$所在的连通分量不同,则连接$u.index$和$v.index$,此算法的时间复杂度为$O(V+E)$.
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TC: 22.5-7]
+  % A problem here.
+\end{problem}
+
+\begin{solution}
+    首先使用$\textsc{Strongly-Connected-Components}(G)$算法,得到连通分量图,接下来只需要判断连通分量图是否是半连通的,此时使用拓扑排序算法,如果能够有$(v_1,v_2)\cdots(v_{k-1},v_{k})$都存在,则连通分量图是半连通的,因此可以得到图$G$是否是半连通的.
+
+    \noindent 因为$\textsc{Strongly-Connected-Components}(G)$算法耗时$O(V+E)$,而拓扑排序算法耗时$O(V+E)$,所以总耗时为$O(V+E)$
+
+    \noindent 由于$\textsc{Strongly-Connected-Components}(G)$的正确性在前面已经有所证明,所以仅证明如果$(v_1,v_2)\cdots(v_{k-1},v_k)$都存在则,图是半连通的.仅考虑$v_1,v_2,v_3$,如果拓扑排序之后$(v_1,v_2)(v_2,v_3)$都存在,则$\forall v_i$,有$v_i \to v_j$或$v_j \to v_i$存在.而$v_i$又为连通分量,所以图$G$整个为半连通的.$\blacksquare$
+
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection	% begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb	% begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!ht]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be 
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}	% Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
