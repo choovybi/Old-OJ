@@ -114,13 +114,13 @@ Prove that a graph $G$ without isolated vertices has a perfect matching if and o
 %%%%%%%%%%
 \begin{problem}[CZ: 8.16]
   % A problem here.
-Prove that if $G$ is a graph of order $n$, maximum degree $\bigtriangleup$ and having no isolated vertices, then $\alpha(G)\geq \frac{n}{\bigtriangleup + 1}$
+Prove that if $G$ is a graph of order $n$, maximum degree $\bigtriangleup$ and having no isolated vertices, then $\beta(G)\geq \frac{n}{\bigtriangleup + 1}$
 \end{problem}
 
 \begin{proof}
     \
     
-    假设$\alpha(G)<\frac{n}{\bigtriangleup+1}$，那么$\alpha(G)\times(\bigtriangleup+1)<n$，由于$\alpha(G)$是能够覆盖所有边的顶点的最小个数，由于$\bigtriangleup$是最大度，所以这$\alpha(G)$个点最多连接$\alpha(G)\times\bigtriangleup$个不同的顶点，所以该图最多有$\alpha(G)\times\bigtriangleup + \alpha(G)$的不同的顶点，而又有$\alpha(G)\times(\bigtriangleup+1)<n$，与图$G$的阶为$n$相矛盾，所以$\alpha(G)\geq \frac{n}{\bigtriangleup + 1}$成立
+    假设$\beta(G)<\frac{n}{\bigtriangleup+1}$，那么$\beta(G)\times(\bigtriangleup+1)<n$，由于$\beta(G)$是相互不邻接的顶点的最大个数，由于$\bigtriangleup$是最大度，所以这$\beta(G)$个点最多连接$\beta(G)\times\bigtriangleup$个不同的顶点，所以该图最多有$\beta(G)\times\bigtriangleup + \beta(G)$的不同的顶点，而又有$\beta(G)\times(\bigtriangleup+1)<n$，与图$G$的阶为$n$相矛盾，所以$\beta(G)\geq \frac{n}{\bigtriangleup + 1}$成立
 \end{proof}
 %%%%%%%%%%
 % \newpage
