@@ -1,0 +1,432 @@
+"
+" Author        : ArthurBi
+" Email         : Arthurbqy1999@gmail.com
+" Last modified : 2018-09-29 11:56
+" Filename      : .vimrc
+" Description   :
+"
+filetype off                  " required
+
+" 插件配置到此结束，下面是常规配置
+"
+" Configuration file for vim
+runtime! mac.vim
+let mapleader=";"   " 定义mapleader为‘;’键
+
+set modelines=0		" CVE-2007-2438
+
+" Normally we use vim-extensions. If you want true vi-compatibility
+" remove change the following statements
+set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+set backspace=2		" more powerful backspacing
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+
+let skip_defaults_vim=1
+" 显示行号
+set number
+" 显示标尺
+set ruler
+" 历史纪录
+set history=1000
+" 输入的命令显示出来，看的清楚些
+set showcmd
+" 状态行显示的内容
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+" 启动显示状态行1，总是显示状态行2
+set laststatus=2
+" 语法高亮显示
+syntax on
+syntax enable
+set fileencodings=utf-8,gb2312,gbk,cp936,latin-1
+set termencoding=utf-8
+set fileformat=unix
+set encoding=utf-8
+set background=dark
+" 配色方案
+colorscheme desert
+" colorscheme solarized
+" 指定配色方案是256色
+set t_Co=256
+let g:solarized_termcolors=16
+set wildmenu
+" 去掉有关vi一致性模式，避免以前版本的一些bug和局限，解决backspace不能使用的问题
+set backspace=indent,eol,start
+set backspace=2
+ 
+" 启用自动对齐功能，把上一行的对齐格式应用到下一行
+set autoindent
+" 依据上面的格式，智能的选择对齐方式，对于类似C语言编写很有用处
+set smartindent
+" 用空格代替tab
+set expandtab
+ 
+" 设置显示制表符的空格字符个数,改进tab缩进值，默认为8，现改为4
+set tabstop=4
+" 统一缩进为4，方便在开启了et后使用退格(backspace)键，每次退格将删除X个空格
+set softtabstop=4
+ 
+" 设定自动缩进为4个字符，程序中自动缩进所使用的空白长度
+set shiftwidth=4
+" 设置帮助文件为中文(需要安装vimcdoc文档)
+set helplang=cn
+ 
+" 显示匹配的括号
+set showmatch
+set mat=2
+
+" 代码折叠
+set foldenable
+" 折叠方法
+" manual    手工折叠
+" indent    使用缩进表示折叠
+" expr      使用表达式定义折叠
+" syntax    使用语法定义折叠
+" diff      对没有更改的文本进行折叠
+" marker    使用标记进行折叠, 默认标记是 {{{ 和 }}}
+set foldmethod=manual
+" 在左侧显示折叠的层次
+set foldcolumn=4
+
+" 文件缩进及tab个数
+au FileType html,python,vim,javascript setl shiftwidth=4
+au FileType html,python,vim,javascript setl tabstop=4
+au FileType java,php setl shiftwidth=4
+au FileType java,php setl tabstop=4
+" 高亮搜索的字符串
+set hlsearch
+" 检测文件的类型
+filetype on
+filetype plugin on
+filetype indent on
+ 
+" C风格缩进
+set cindent
+set completeopt=longest,menu
+" 功能设置
+ 
+" 去掉输入错误提示声音
+set noeb
+" 自动保存
+set autowrite
+" 突出显示当前行 
+set cursorline
+highlight CursorLine cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+" 突出显示当前列
+set cursorcolumn
+highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+"设置光标样式为竖线vertical bar
+" Change cursor shape between insert and normal mode in iTerm2.app
+if $TERM_PROGRAM =~ "iTerm"
+let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
+" 共享剪贴板
+set clipboard+=unnamed
+" 文件被改动时自动载入
+set autoread
+" 顶部底部保持3行距离
+set scrolloff=3
+
+" ctags配置
+set tags=[path]/tags
+set tags=./tags,tags;$HOME
+
+"""""""""""""""""""
+" VIM一键编译并运行(;b)
+"""""""""""""""""""
+
+map <leader>b :call CompileRunGcc()<CR>
+
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!gcc % -o %<"
+        exec "!time ./%<"
+        " exec "!rm ./%<"
+    elseif &filetype == 'cpp'
+        exec "!gcc -lstdc++ % -o %<"
+        exec "!time ./%<"
+        " exec "!rm ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python %"
+    elseif &filetype == 'html'
+        exec "!safari % &"
+    elseif &filetype == 'go'
+        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!safari %.html &"	
+    endif
+endfunc
+
+"""""""""""""""
+" VIM一键gdb调试(;g)
+"""""""""""""""
+" map <leader>g :call Debug()<cr>
+" 
+" func! Debug()
+    " exec "w"
+    " exec "!gcc -lstdc++ % -o %< " 
+    " exec "!gdb %<"
+" endfunc
+
+"""""""""""""""
+" VIM一键实现OJ模板(;ta)
+"""""""""""""""
+
+map <leader>ta :call SetTemplateACM()<cr>
+
+func! SetTemplateACM()
+    exec "!echo -n "" > %"
+    let l = 0
+    if &filetype == 'cpp'
+        let l = l + 1 | call setline(l,"#include <cstdio>")
+        let l = l + 1 | call setline(l,"#include <cstring>")
+        let l = l + 1 | call setline(l,"#include <algorithm>")
+        let l = l + 1 | call setline(l,"#include <iostream>")
+        let l = l + 1 | call setline(l,"#include <string>")
+        let l = l + 1 | call setline(l,"#include <vector>")
+        let l = l + 1 | call setline(l,"#include <stack>")
+        let l = l + 1 | call setline(l,"#include <bitset>")
+        let l = l + 1 | call setline(l,"#include <cstdlib>")
+        let l = l + 1 | call setline(l,"#include <cmath>")
+        let l = l + 1 | call setline(l,"#include <set>")
+        let l = l + 1 | call setline(l,"#include <list>")
+        let l = l + 1 | call setline(l,"#include <deque>")
+        let l = l + 1 | call setline(l,"#include <map>")
+        let l = l + 1 | call setline(l,"#include <queue>")
+        let l = l + 1 | call setline(l,"using namespace std;")
+        let l = l + 1 | call setline(l,"typedef long long ll;")
+        let l = l + 1 | call setline(l,"const double PI = acos(-1.0);")
+        let l = l + 1 | call setline(l,"const double eps = 1e-6;")
+        let l = l + 1 | call setline(l,"const int INF = 0x3f3f3f3f;")
+        let l = l + 1 | call setline(l,"")
+        let l = l + 1 | call setline(l,"int main(){")
+        let l = l + 1 | call setline(l,"")
+        let l = l + 1 | call setline(l,"    return 0;")
+        let l = l + 1 | call setline(l,"}")
+    endif
+    call AddAuthor()
+    exec "w!"
+endfunc
+
+"""""""""""""""
+" VIM一键实现普通模板(;tp)
+"""""""""""""""
+
+map <leader>tp :call SetTemplate()<cr>
+
+func! SetTemplate()
+    exec "!echo -n "" > %"
+    let l = 0
+    if &filetype == 'c'
+        let l = l + 1 | call append(l,"#include <stdio.h>")
+        let l = l + 1 | call append(l,"#include <stdlib.h>")
+        let l = l + 1 | call append(l,"")
+        let l = l + 1 | call append(l,"int main(){")
+        let l = l + 1 | call append(l,"")
+        let l = l + 1 | call append(l,"    return 0;")
+        let l = l + 1 | call append(l,"}")
+        let l = l + 1 | call append(l,"")
+    elseif &filetype == 'cpp'
+        let l = l + 1 | call append(l,"#include <iostream>")
+        let l = l + 1 | call append(l,"#include <string>")
+        let l = l + 1 | call append(l,"#include <cstdlib>")
+        let l = l + 1 | call append(l,"using namespace std;")
+        let l = l + 1 | call append(l,"")
+        let l = l + 1 | call append(l,"int main(){")
+        let l = l + 1 | call append(l,"")
+        let l = l + 1 | call append(l,"    return 0;")
+        let l = l + 1 | call append(l,"}")
+        let l = l + 1 | call append(l,"")
+    elseif &filetype == 'python'
+        let l = l + 1 | call append(l,"import pandas as pd")
+        let l = l + 1 | call append(l,"import numpy as np")
+        let l = l + 1 | call append(l,"import urllib")
+        let l = l + 1 | call append(l,"import sklearn")
+        let l = l + 1 | call append(l,"")
+    endif
+    call AddAuthor()
+    exec "w!"
+endfunc
+"""""""""""""""
+" VIM一键实现makefile模板(;tm)
+"""""""""""""""
+
+map <leader>tm :call SetTemplateMakefile()<cr>
+
+func! SetTemplateMakefile()
+    exec "!echo -n "" > %"
+    let l = 0
+    let l = l + 1 | call setline(l,"MAKEFILE_LIST_LASTWORD = $(lastword $(MAKEFILE_LIST))")
+    let l = l + 1 | call setline(l,"MAKEFILE_PATH := $(abspath $(MAKEFILE_LIST_LASTWORD))")
+    let l = l + 1 | call setline(l,"MAKEFILE_DIR := $(dir $(MAKEFILE_PATH))")
+    let l = l + 1 | call setline(l,"MAKEFILE_DIR_PATSUBST := $(patsubst %/,%,$(MAKEFILE_DIR))")
+    let l = l + 1 | call setline(l,"CURRENT_DIR := $(notdir $(MAKEFILE_DIR_PATSUBST))")
+    let l = l + 1 | call setline(l,".PHONY: run tst ini cpy cln")
+    let l = l + 1 | call setline(l,"run:")
+    let l = l + 1 | call setline(l,"	@gcc $(CURRENT_DIR).cpp -o $(CURRENT_DIR) -lstdc++")
+    let l = l + 1 | call setline(l,"	@./$(CURRENT_DIR) < in")
+    let l = l + 1 | call setline(l,"tst:")
+    let l = l + 1 | call setline(l,"	@gcc $(CURRENT_DIR).cpp -o $(CURRENT_DIR) -lstdc++")
+    let l = l + 1 | call setline(l,"	@./$(CURRENT_DIR) < in > out")
+    let l = l + 1 | call setline(l,"	@diff out ans")
+    let l = l + 1 | call setline(l,"ini:")
+    let l = l + 1 | call setline(l,"	@vim $(CURRENT_DIR).cpp")
+    let l = l + 1 | call setline(l,"	@vim in")
+    let l = l + 1 | call setline(l,"	@vim ans")
+    let l = l + 1 | call setline(l,"cpy:")
+    let l = l + 1 | call setline(l,"	@ccat $(CURRENT_DIR).cpp | pbcopy")
+    let l = l + 1 | call setline(l,"cln:")
+    let l = l + 1 | call setline(l,"	@rm ./$(CURRENT_DIR)")
+    let l = l + 1 | call setline(l,"")
+    call AddAuthor()
+    exec "w!"
+endfunc
+
+"""""""""""""""
+" AddAuthur和AddTitlec,AddTitlep以及UpdateTitlec,UpdateTitlep
+"""""""""""""""
+
+function AddAuthor()
+        let n=1
+        if &filetype == 'c'
+            while n < 5
+                    let line = getline(n)
+                    if line =~'^\s*\*\s*\S*Last\s*modified\s*:\s*\S*.*'
+                            call UpdateTitlec()
+                            return
+                    endif
+                    let n = n + 1
+            endwhile
+            call AddTitlec()
+        elseif &filetype == 'cpp'
+            while n < 5
+                    let line = getline(n)
+                    if line =~'^\s*\*\s*\S*Last\s*modified\s*:\s*\S*.*'
+                            call UpdateTitlec()
+                            return
+                    endif
+                    let n = n + 1
+            endwhile
+            call AddTitlec()
+        elseif &filetype == 'python'
+            while n < 5
+                    let line = getline(n)
+                    if line =~'^\s*\*\s*\S*Last\s*modified\s*:\s*\S*.*'
+                            call UpdateTitlep()
+                            return
+                    endif
+                    let n = n + 1
+            endwhile
+            call AddTitlep()
+        endif
+endfunction
+
+function UpdateTitlec()
+        normal m'
+        execute '/* Last modified\s*:/s@:.*$@\=strftime(": %Y-%m-%d %H:%M")@'
+        normal "
+        normal mk
+        execute '/* Filename\s*:/s@:.*$@\=": ".expand("%:t")@'
+        execute "noh"
+        normal 'k
+        echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+endfunction
+
+function UpdateTitlep()
+        normal m'
+        execute '## Last modified\s*:/s@:.*$@\=strftime(": %Y-%m-%d %H:%M")@'
+        normal "
+        normal mk
+        execute '## Filename\s*:/s@:.*$@\=": ".expand("%:t")@'
+        execute "noh"
+        normal 'k
+        echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+endfunction
+
+function AddTitlec()
+        call append(0,"/*********************************************************")
+        call append(1,"* Author        : ArthurBi")
+        call append(2,"* Email         : Arthurbqy1999@gmail.com")
+        call append(3,"* Last modified : ".strftime("%Y-%m-%d %H:%M"))
+        call append(4,"* Filename      : ".expand("%:t"))
+        call append(5,"* Description   : Pls contact me if you have questions.")
+        call append(6,"*********************************************************/")
+        echohl WarningMsg | echo "Successful in adding the title." | echohl None
+endfunction
+
+function AddTitlep()
+        call append(0,"##########################################################")
+        call append(1,"# Author        : ArthurBi")
+        call append(2,"# Email         : Arthurbqy1999@gmail.com")
+        call append(3,"# Last modified : ".strftime("%Y-%m-%d %H:%M"))
+        call append(4,"# Filename      : ".expand("%:t"))
+        call append(5,"# Description   : Pls contact me if you have questions.")
+        call append(6,"##########################################################")
+        echohl WarningMsg | echo "Successful in adding the title." | echohl None
+endfunction
+
+" 自定义注释高亮
+:hi MyCustomColor cterm  = bold,underline ctermbg = yellow ctermfg = red
+:call matchadd('MyCustomColor','\W\zs(TODO\|FIXME\|CHANGED\|BUG\|NOTE\|INFO\|IDEA)')
+
+" VIM记住文件光标退出位置
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" 插件配置！！！
+"
+" nerd tree toggle配置
+
+map <silent>,, :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in = 1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd StdinReadPre * let s:std_in = 1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+map <C-n> :NREDTreeToggle<CR>
+map <silent><C-c> :close<CR>
+
+" nerd commenter配置
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting ans inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrialingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+"
+let g:NERDToggleCheckAllLines = 1
+let g:NERDSpaceDelims = 1
+map cc <plug>NERDCommenterComment<CR>
+map cu <plug>NERDCommenterUncomment<CR>
+map cs <plug>NERDCommenterSexy<CR>
+map ci <plug>NERDCommenterInvert<CR>
+map cy <plug>NERDCommenterYank<CR>
+map ce <plug>NERDCommenterYoEOL<CR>
+map c<space> <plug>NERDCommenterToggle<CR>
