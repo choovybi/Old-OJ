@@ -1,0 +1,139 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-24 18:40
+* Filename      : test.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const int mod = 1000000000 + 7;
+const int maxn = 405;
+const int maxm = 10005;
+int T,n,m,p[maxn],maxv,root,cnt[maxn],g[maxn][maxn];
+int vis[maxn], dep, count;
+struct node {
+    int a, b;
+}a[maxm];
+vector<int>vec[maxn];
+ 
+void dfs(int u) {
+    for(int v = 1; v <= maxv; v++) if(g[u][v]) {
+        g[u][v]--;
+        g[v][u]--;
+        dfs(v);
+        printf("%d %d\n",v, u);
+    }
+}
+ 
+bool ham(int u){
+    if(dep == n)
+        return true;
+    for(int i=0; i<vec[u].size(); i++){
+        int v = vec[u][i];
+        if(vis[v])
+            continue;
+        vis[v] = true;
+        dep++;
+        if(ham(v))
+            return true;
+        dep-- ;
+        vis[v] = 0;
+    }
+    return false;
+}
+ 
+int _find(int x) {
+    return p[x] == x ? x : p[x] = _find(p[x]); 
+}
+ 
+int main() {
+    scanf("%d%*c",&n);
+    scanf("%d%*c",&m);
+    memset(cnt, 0, sizeof(cnt));
+    memset(g, 0, sizeof(g));
+    memset(vis, 0, sizeof(vis));
+    maxv = 0;
+    for(int i=1; i<=n; i++)
+        vec[i].clear();
+    for(int i=1; i<=n; i++)
+        p[i] = i;
+    for(int i=1; i<=m; i++){
+        int u, v = 0;
+        scanf("%d%d%*c",&u,&v);
+        a[i].a = u;
+        a[i].b = v;
+        cnt[a[i].a]++;
+        cnt[a[i].b]++;
+        g[a[i].a][a[i].b]++;
+        g[a[i].b][a[i].a]++;
+        maxv = max(maxv, max(a[i].a, a[i].b));
+        int x = _find(a[i].a);
+        int y = _find(a[i].b);
+        if(x != y) p[x] = y;
+ 
+        if(u!=v){
+            vec[u].push_back(v);
+            vec[v].push_back(u);
+        }
+    }
+    int head=0,count=0;
+    for(int i=1; i<=n; i++)
+        if(vec[i].size() == 1){
+            head=i;///找起点
+            count++;
+        }
+    if(count>2){
+        // cout<<"hello"<<endl;
+        printf("Miss Shizue\n");
+        return 0;
+    }else{
+        if(head == 0)head=1;///没有度数为1，即是个环
+        dep=1;
+        if(!ham(head)){
+            printf("Miss Shizue\n");
+            return 0;
+        }
+    }
+/*                                  */
+    bool ok = true;
+    for(int i=1;i<=maxv;i++) {
+        if(cnt[i] == 0) continue;
+        if((cnt[i] & 1) || (_find(i) != _find(maxv))) {
+            ok = false;
+            break;
+        }
+    }
+    if(ok){
+        printf("Find Leon\n");
+        for(int i=1;i<=maxv;i++)dfs(i);
+    }else printf("Miss Leon\n");
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1568
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:0 ms
+    Memory:2280 kb
+****************************************************************/
