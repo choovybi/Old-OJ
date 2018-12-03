@@ -1,0 +1,111 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-11-27 10:33
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const int MAX_N = 30;
+const int MAX_LEN = 1005;
+int component_cnt = 0;
+int out_cnt = 0;
+int in_cnt = 0;
+int odd_cnt = 0;
+bool gold = true;
+bool silver = true;
+int N = 0;
+int fa[MAX_N], in[MAX_N], out[MAX_N];
+char Code[MAX_LEN];
+ 
+int Find(int x) {
+    return fa[x] == x ? x : fa[x] = Find(fa[x]);
+}
+ 
+void Union(int x, int y) {
+    int Fx = Find(x);
+    int Fy = Find(y);
+    if(Fx != Fy)
+        fa[Fx] = Fy;
+}
+ 
+void Init() {
+    memset(in, 0, sizeof(in));
+    memset(out, 0, sizeof(out));
+    for(int i = 0; i < MAX_N; i++)
+        fa[i] = i;
+    out_cnt = 0;
+    in_cnt = 0;
+    odd_cnt = 0;
+    gold = true;
+    silver = true;
+}
+ 
+int main() {
+    Init();
+    scanf("%d%*c", &N);
+    while(N--) {
+        scanf("%s", Code);
+        int u = Code[0] - 'a';
+        int v = Code[strlen(Code) - 1] - 'a';
+        Union(u, v);
+        out[u]++;
+        in[v]++;
+    }
+ 
+    for(int i = 0; i < 26; i++) {
+        if((fa[i] == i) && (in[i] + out[i] > 0))
+            component_cnt++;
+        if(in[i] != out[i]) {
+            if(in[i] == out[i] + 1)
+                in_cnt++;
+            else if (in[i] == out[i] - 1)
+                out_cnt++;
+            else
+                gold = false;
+        }
+        if((in[i] + out[i]) % 2)
+            odd_cnt++;
+    }
+    if(component_cnt!=1)
+        gold = silver = false;
+    gold &= ((out_cnt == 1 && in_cnt == 1) || (out_cnt == 0 && in_cnt == 0) );
+    if (odd_cnt == 1 || odd_cnt > 2)
+        silver = false;
+         
+    if(gold)
+        printf("Gold\n");
+    else if(silver)
+        printf("Silver\n");
+    else
+        printf("Nothing\n");
+    return 0;
+}
+ 
+/**************************************************************
+    Problem: 1567
+    User: 171860624
+    Language: C++
+    Result: 正确
+    Time:28 ms
+    Memory:1548 kb
+****************************************************************/
