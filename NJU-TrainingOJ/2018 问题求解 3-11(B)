@@ -1,0 +1,99 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-12-13 13:52
+* Filename      : B.cpp
+* tcription   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+
+#define maxn 505
+int M[maxn][maxn];
+int pre[maxn];
+int n, N, F, D;
+queue<int>q;
+
+inline bool bfs(int s, int t){
+    memset(pre, -1, sizeof(pre));
+    while(!q.empty()) q.pop();
+    pre[s] = -1;
+    int index = 0;
+    q.push(s);
+    while(!q.empty()){
+        index = q.front();
+        q.pop();
+        for(int i(0); i<=n+1; ++i){
+            if(pre[i] == -1 && M[index][i] > 0){
+                pre[i] = index;
+                if(i == t)
+                    return true;
+                q.push(i);
+            }
+        }
+    }
+    return false;
+}
+
+inline int max_flow(int s, int t){
+    int ans = 0;
+    while(bfs(s, t)){
+        int res = INF;
+        for(int i(t); i != s; i = pre[i])
+            res = min(res, M[pre[i]][i]);
+        for(int i(t); i != s; i = pre[i]){
+            M[pre[i]][i] -= res;
+            M[i][pre[i]] += res;
+        }
+        ans += res;
+    }
+    return ans;
+}
+
+int main(){
+    int s = 0, t;
+    scanf("%d%d%d", &N, &F, &D);
+    n = N*2 + F + D;
+    memset(M, 0, sizeof(M));
+    t = n+1;
+    for(int i(1); i<=F; ++i)
+        M[s][i] = 1;
+    for(int i(1+F+2*N); i<=D+F+2*N; ++i)
+        M[i][t] = 1;
+    for(int i(1+F); i<=N+F; ++i)
+        M[i][i+N] = 1;
+    for(int i(1); i<=N; ++i){
+        int f, d, id = 0;
+        scanf("%d%d", &f, &d);
+        for(int j(0); j<f; ++j){
+            scanf("%d", &id);
+            M[id][i+F] = 1;
+        }
+        for(int j(0); j<d; ++j){
+            scanf("%d", &id);
+            M[i+F+N][id+F+2*N] = 1;
+        }
+        // getchar();
+    }
+    printf("%d\n", max_flow(s, t));
+    return 0;
+}
+
