@@ -1,0 +1,114 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-12-18 10:31
+* Filename      : B.cpp
+* Description   : Undirected graph minimum cut
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxn 255
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int cnt = 0;
+int M[maxn][maxn];
+int v[maxn];
+int dis[maxn];
+bool vis[maxn];
+
+inline int Stoer_Wagner(int n){
+    int res = INF;
+    for(int i(0); i<n; ++i)
+        v[i] = i;
+    while(n>1){
+        int k, pre = 0;
+        memset(vis, 0, sizeof(vis));
+        memset(dis, 0, sizeof(dis));
+        for(int i(1); i<n; ++i){
+            k = -1;
+            for(int j(1); j<n; ++j){
+                if(!vis[v[j]]){
+                    dis[v[j]] += M[v[pre]][v[j]];
+                    if(k == -1 || dis[v[k]] < dis[v[j]])
+                        k = j;
+                }
+            }
+            vis[v[k]] = true;
+            if(i == n-1){
+                res = min(res, dis[v[k]]);
+                for(int j(0); j<n; ++j){
+                    M[v[pre]][v[j]] += M[v[j]][v[k]];
+                    M[v[j]][v[pre]] += M[v[j]][v[k]];
+                }
+                v[k] = v[--n];
+            }
+            pre = k;
+        }
+    }
+    return res;
+}
+
+// transfer string x to index 0 to n-1
+string s[maxn];
+inline int Find(string x){
+    for(int i(0); i<=cnt; ++i){
+        // cout<<x<<endl;
+        // cout<<s[i]<<endl;
+        if(x.compare(s[i])==0)
+            return i;
+    }
+    return -1;
+}
+
+int main(){
+    int n, m = 0;
+    int inx, iny = 0;
+    cnt = 0;
+    string x, y;
+    scanf("%d%d", &n, &m);
+    memset(M, 0, sizeof(M));
+    while(m--){
+        cin>>x>>y;
+        inx = Find(x);
+        iny = Find(y);
+        if(inx == -1){
+            s[cnt] = x;
+            // cout<<"s[cnt]"<<s[cnt]<<endl;
+            cnt++;
+            inx = Find(x);
+            // cout<<inx<<endl;
+        }
+        if(iny == -1){
+            s[cnt] = y;
+            cnt++;
+            iny = Find(y);
+            // cout<<iny<<endl;
+        }
+        M[inx][iny] = 1;
+        M[iny][inx] = 1;
+    }
+    // for(int i(0); i<n; ++i){
+        // for(int j(0); j<n; ++j){
+            // printf("%d ", M[i][j]);
+        // }
+        // printf("\n");
+    // }
+    printf("%d\n", Stoer_Wagner(n));
+    return 0;
+}
