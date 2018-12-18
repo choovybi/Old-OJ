@@ -1,0 +1,151 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2018-12-18 10:29
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxe 1005
+#define maxn 30
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+int T, n, d, cnt = 0;
+int sum = 0;
+char s[maxn];
+char W[maxn][maxn];
+int M[maxn][maxn];
+
+struct Edge{
+    int to;
+    int cap;
+    int rev;
+};
+vector<Edge> v[maxe];
+bool vis[maxe];
+
+inline void add_Edge(int from, int to, int cap){
+    v[from].push_back((Edge){to, cap, v[to].size()});
+    v[to].push_back((Edge){from, 0, v[from].size()-1});
+}
+
+inline int dfs(int s, int t, int f){
+    if(s == t) return f;
+    vis[s] = true;
+    for(int i(0); i<v[s].size(); ++i){
+        Edge &tmp = v[s][i];
+        if(vis[tmp.to] == false && tmp.cap > 0){
+            int df = dfs(tmp.to, t, min(f, tmp.cap));
+            if(df > 0){
+                tmp.cap -= df;
+                v[tmp.to][tmp.rev].cap += df;
+                return df;
+            }
+        }
+    }
+    return 0;
+}
+
+inline int max_flow(int s, int t){
+    int ans = 0;
+    for(;;){
+        memset(vis, false, sizeof(vis));
+        int f = dfs(s, t, INF);
+        if(f==0) return ans;
+        ans += f;
+    }
+}
+
+inline void init(){
+    int m = cnt;
+    for(int i(0); i<2*n*m+1; ++i)
+        v[i].clear();
+    for(int i(1); i<=n; ++i){
+        for(int j(1); j<=m; ++j){
+//  Manhattan distance to add the edge
+            for(int x(-d); x<=d; ++x){
+                if(i+x<=0 || i+x>n){
+                    add_Edge(n*m+(i-1)*m+j, 2*n*m+1, INF);
+                    continue;
+                }
+                for(int y(abs(x)-d); y<=d-abs(x); ++y){
+                    if(j+y<=0 || j+y>m){
+                        add_Edge(n*m+(i-1)*m+j, 2*n*m+1, INF);
+                        continue;
+                    }
+                    if(x==0 && y==0)
+                        add_Edge((i-1)*m+j, n*m+(i-1)*m+j, M[i-1][j-1]);
+                    else
+                        add_Edge(n*m+(i-1)*m+j, (i+x-1)*m+(j+y), INF);
+                }
+            }
+            if(W[i-1][j-1] == 'L'){
+                add_Edge(0, (i-1)*m+j, 1);
+                sum++;
+            }
+        }
+    }
+}
+
+int main(){
+    scanf("%d%*c", &T);
+    int tmp = T;
+    while(T--){
+        scanf("%d%d", &n, &d);
+        memset(M, 0, sizeof(M));
+        sum = 0;
+
+        for(int i(0); i<n; ++i){
+            cnt = 0;
+            cin>>s;
+            while(true){
+                int w = s[cnt] - '0';
+                if(w<0)
+                    break;
+                else{
+                    M[i][cnt] = w;
+                    cnt++;
+                }
+            }
+        }
+        for(int i(0); i<n; ++i){
+            cnt = 0;
+            cin>>s;
+            while(true){
+                if(s[cnt] != 'L' && s[cnt] != '.')
+                    break;
+                else{
+                    W[i][cnt] = s[cnt];
+                    cnt++;
+                }
+            }
+        }
+        init();
+        int res = sum-max_flow(0, 2*n*cnt+1);
+        printf("Case #%d: ", tmp-T);
+        if(res ==0)
+            printf("no gift was left behind.\n");
+        else if(res == 1)
+            printf("1 gift was left behind.\n");
+        else
+            printf("%d gifts were left behind.\n", res);
+    }
+    return 0;
+}
