@@ -1,0 +1,367 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex                         %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumerate}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}
+\lstset{breaklines}
+%%%%%%%%%%%%%%%%%%%%
+\title{4-4：群同态基本定理与正规子群课前作业}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism   % always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw    % begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TJ: 9.19]
+    Prove that $S_3 \times \mathbb{Z}_{2}$ is isomorphic to $D_6$. Can you make a conjecture about $D_{2n}$ ? Prove your conjecture.
+\end{problem}
+
+\begin{proof}
+    Firstly, we can rewrite $S_{3}$ as the type of Dihedral group $D_{3}$.Define a map $\phi:D_3\times \mathbb{Z}_{2}\to D_{6}$ by $\phi((\sigma^{k}\tau^{h},\epsilon))=\sigma^{k+3\epsilon}\tau^{h}$.  We must show that $\phi$ is bijective and preserves the group operation. The map $\phi$ is one-to-one and onto because
+    \[\phi((0,(1)))=e\]
+    \[\phi((0,(23)))=\tau\]
+    \[\phi((0,(13)))=\sigma^{2}\tau\]
+    \[\phi((0,(12)))=\sigma\tau\]
+    \[\phi((0,(123)))=\sigma^{2}\]
+    \[\phi((0,(321)))=\sigma\]
+    \[\phi((1,(1)))=\sigma^{3}\]
+    \[\phi((1,(23)))=\sigma^{3}\tau\]
+    \[\phi((1,(13)))=\sigma^{5}\tau\]
+    \[\phi((1,(12)))=\sigma^{4}\tau\]
+    \[\phi((1,(123)))=\sigma^{5}\]
+    \[\phi((1,(321)))=\sigma^{4}\]
+    Conjecture : Every $D_{2n}$ is isomorphic to $S_{n}\times \mathbb{Z}_2$\\
+    From above, we know that $S_{n}$ can be rewrited to the type of $D_{n}$. So we can define a map $\phi:S_{n}\times\mathbb{Z}_{2}\to D_{2n}$ by $\phi((\sigma^{k}\tau^{h},\epsilon))=\sigma^{k+\epsilon n}\tau^{h}$\\
+    $\phi((\sigma^{k_{1}}\tau^{h_{1}},\epsilon_{1})(\sigma^{k_{2}}\tau^{h_{2}},\epsilon_{2}))=\phi((\sigma^{k_{1}+k_{2}}\tau^{h_{1}+h_{2}}),\epsilon_{1}+\epsilon_{2})=\sigma^{(k_{1}+k_{2})+(\epsilon_{1}+\epsilon_{2})n}\tau^{h_{1}+h_{2}}=\\
+    \phi((\sigma^{k_{1}}\tau^{h_{1}},\epsilon_{1}))\phi((\sigma^{k_{2}}\tau^{h_{2}},\epsilon_{2}))$\\
+    By definiton the map $\phi$ is onto $D_{2n}$. To show that the map is injective, assume that $(\sigma^{k_{1}}\tau^{h_1},\epsilon_{1})=m\neq n=(\sigma^{k_2}\tau^{h_{2}},\epsilon_{2})$. If we can show that $\phi(m)\neq\phi(n)$, then we are done. Suppose that $k_{1}\neq k_{2},h_{1}\neq h_{2},\epsilon_{1}\neq\epsilon_{2}$, and we assume that $\phi(m)=\phi(n)$. Then $\sigma^{k_{1}+\epsilon_{1}n}\tau^{h_{1}}=\sigma^{k_{2}+\epsilon_{2}n}\tau^{h_{2}}$ or $\sigma^{(k_{1}-k_{2})+(\epsilon_{1}-\epsilon_{2})n}\tau^{h_{1}-h_{2}}=e$, which is impossible since $\k_{1}\neq k_{2},h_{1}\neq h_{2}$ and $\epsilon_{1}\neq\epsilon_{2}$.\\
+    So $\phi$ is bijective, $S_{n}\times\mathbb{Z}_{2}\cong D_{2n}$.
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 9.46]
+    % A problem here.
+    Let $G$ and $H$ be isomorphic groups. If $G$ has a subgroup of order $n$, prove that $H$ must also have a subgroup of order $n$.
+\end{problem}
+
+\begin{proof}
+    Because $G$ and $H$ are isomorphic groups, there exists a map $\phi:H\to G$ which is bijective and preserves the group operation.\\
+    \noindent We can create a group $H^{\prime}$ that is if $x\in G^{\prime}$, then $y=\phi(x)\in H^{\prime}$. $G^{\prime}$ is the subgroup of $G$, we get $e\in G^{\prime}$, if $a,b\in G^{\prime}$ then $ab\in G^{\prime}$ and $\forall x\in G^{\prime},x^{-1}\in G^{\prime}$.\\
+    \noindent We also know that $\phi$ preserves the group operation, so $\phi(e)=e\in H^{\prime}$, if $c=\phi(a),d=\phi(b)\in H^{\prime}$ then $cd=\phi(a)\phi(b)=\phi(ab)\in H^{\prime}$ and $\forall y=\phi(x)\in H^{\prime},\phi(x^{-1})=\phi(x)^{-1}=y^{-1}\in H^{\prime}$. We prove that $H^{\prime}$ is a subgroup of $H$. Because $\phi$ is bijective, so the order of $H^{\prime}$ is same as $G^{\prime}$ which is $n$. So $H$ must also have a subgroup of order $n$ that is $H^{|prime}$.
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 10.1(a,c)]
+    (a). $G = S_4$ and $H = A_4$\\
+    (c). $G = S_4$ and $H = D_4$
+\end{problem}
+
+\begin{solution}
+    (a). $H=A_4$ is a normal subgroup of $G=S_{4}$.\\
+    $H=A_{4}=\{e, (123), (132), (124), (142), (134), (143), (234), (243), (12)(34), (13)(24), (14)(23)\}$\\
+    $(12)A_{4}={(12),(13),(14),(23),(24),(34),(1342),(1432),(1234),(1243),(1324),(1423)}$\\
+    \begin{tabular}{|c|c|c|}
+        \hline
+        &$A_{4}$ & $(12)A_{4}$\\
+        \hline
+        $A_{4}$ & $A_{4}$ & $(12)A_{4}$ \\
+        \hline
+        $(12)A_{4}$ & $(12)A_{4}$ & $A_{4}$ \\
+        \hline
+    \end{tabular}\\
+    \noindent (b). $D_{4}$ is not a normal subgroup of $G=S_{4}$.
+\end{solution}
+
+% 假设这是一道需要证明的题目。
+% \begin{remark}
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TJ: 10.12]
+    % A problem here.
+    Define the $\textbf{centralizer}$ of an element $g$ in a group $G$ to be the set
+    \[C(g) = {x \in G : xg = gx}.\]
+    Show that $C(g)$ is a subgroup of $G$. If $g$ generates a normal subgroup of $G$, prove that $C(g)$ is normal in $G$.
+\end{problem}
+
+\begin{proof}
+    Firstly, $g\in G, eg=g=ge$, so $e\in C(g)$.\\
+    If $x,y\in C(g)$ we get $xg=gx,yg=gy$, then $(xy)g=xgy=g(xy)$ that is to say $xy\in C(g)$.\\
+    $\forall x\in C(g)$, $\exists x^{-1}\in C(g)$ makes $x^{-1}xg=x^{-1}gx=gx^{-1}x=g$\\
+    So $C(g)$ is a subgroup of $G$.\\
+    Because $g$ generates a normal subgroup of $G$, $\forall a\in G$, $aga^{-1}=g^{n}$. We need to prove that $\forall a\in G$, we have $axa^{-1}=a(gxg^{-1})a^{-1}\in C(g)$. That is need to prove $axa^{-1}g=gaxa^{-1}$. $a^{-1}(axa^{-1}g)a=xa^{-1}ga=xg^{n}=g^{n}x=a^{-1}gax=a^{-1}gaxa^{-1}a=a^{-1}(gaxa^{-1})a$. So $axa^{-1}g=gaxa^{-1}$, $C(g)$ is normal in $G$.
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 11.2(b,d,e)]
+    % A problem here.
+    Which of the following maps are homomorphisms? If the map is a homomorphism, what is the kernel?\\
+    (b). $\phi : \mathbb{R}^* \to GL_2(\mathbb{R})$ defined by
+    \[\phi(a)=\left(
+    \begin{matrix}
+        1 & 0\\
+        0 & a
+    \end{matrix}
+    \right)\]
+    \noindent (d). $\phi : GL_{2}(\mathbb{R}) \to \mathbb{R}^{*}$ defined by
+    \[\phi\left(\left(
+    \begin{matrix}
+        a & b\\
+        c & d
+    \end{matrix}
+    \right)\right)=ad-bc\]
+    \noindent (e). $\phi : \mathbb{M}_{2}(\mathbb{R}) \to \mathbb{R}$ defined by
+    \[\phi\left(\left(
+    \begin{matrix}
+        a & b\\
+        c & d
+    \end{matrix}
+    \right)\right)=b\]
+\end{problem}
+\begin{solution}
+    (b). This map $\phi$ is homomorphisms, the kernel of $\phi$ is ${0}$.\\
+    \noindent (d). This map $\phi$ is homomorphisms, the kernel of $\phi$ is $\left\{\left|\left(\begin{matrix}
+        a & b\\
+        c & d
+    \end{matrix}\right)\right|=0\right\}$\\
+    \noindent (e). This map $\phi$ is homomorphisms, the kernel of $\phi$ is $\left\{
+        \left(
+        \begin{matrix}
+            a&0\\
+            c&d
+        \end{matrix}
+        \right)
+        \right\}$
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TJ: 4.1]
+% \end{problem}
+%
+% \begin{solution}
+%     % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TJ: 4.12]
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.2-6]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-3]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+%
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.4-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection    % begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb    % begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!H]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}    % Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
