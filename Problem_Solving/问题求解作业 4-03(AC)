@@ -1,0 +1,331 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex                         %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumerate}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}
+\lstset{breaklines}
+%%%%%%%%%%%%%%%%%%%%
+\title{4-3：置换群与拉格朗日定理课后作业}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism   % always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw    % begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TJ: 5.5]
+    List all of the subgroups of $S_4$.
+\end{problem}
+
+\begin{solution}
+    $\{(1)\}$\\
+    $\{(1),(12)\}$\\
+    $\{(1),(13)\}$\\
+    $\{(1),(14)\}$\\
+    $\{(1),(23)\}$\\
+    $\{(1),(24)\}$\\
+    $\{(1),(34)\}$\\
+    $\{(1),(12)(34)\}$\\
+    $\{(1),(13)(24)\}$\\
+    $\{(1),(14)(23)\}$\\
+    $\{(1),(123),(132)\}$\\
+    $\{(1),(124),(142)\}$\\
+    $\{(1),(134),(143)\}$\\
+    $\{(1),(234),(243)\}$\\
+    $\{(1),(12),(34),(12)(34)\}$\\
+    $\{(1),(13),(24),(13)(24)\}$\\
+    $\{(1),(14),(23),(14)(23)\}$\\
+    $\{(1),(12)(34),(13)(24),(14)(23)\}$\\
+    $\{(1),(12)(34),(1324),(4231)\}$\\
+    $\{(1),(13)(24),(1234),(4321)\}$\\
+    $\{(1),(14)(23),(1243),(3421)\}$\\
+    $\{(1),(12),(13),(23),(123),(321)\}$\\
+    $\{(1),(12),(14),(24),(124),(421)\}$\\
+    $\{(1),(13),(14),(34),(134),(431)\}$\\
+    $\{(1),(23),(24),(34),(234),(432)\}$\\
+    $\{(1),(1234),(4321),(13),(24),(13)(24),(12)(34),(14)(23)\}$\\
+    $\{(1),(1324),(4231),(12),(34),(12)(34),(13)(24),(14)(23)\}$\\
+    $\{(1),(1243),(3421),(14),(23),(14)(23),(12)(34),(13)(24)\}$\\
+    $\{(1),(12)(43),(13)(24),(14)(23),(123),(321),(124),(421),(134),(431),(234),(432)\}$\\
+    $S_{4}$
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 5.16]
+    % A problem here.
+    Find the group of rigid motions of a tetrahedron. Show that this is the same group as $A_4$.
+\end{problem}
+
+\begin{solution}
+    We know that rigit motion will not change the characteristic of tetrahedron. we have three types:
+    \begin{enumerate}[a.]
+        \item $id$
+        \item $(123),(124),(134),(234),(321),(421),(431),(432)$
+        \item $(12)(34),(13)(24),(14)(23)$
+    \end{enumerate}
+    There are totally 12 elements in the group of rigid motions of tetrahedron, and we will find that it is just $A_4$
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 5.29]
+    Recall that the $\mathbf{center}$ of a group $G$ is
+    \[Z(G) = \{g \in G : gx = xg\ \mathrm{for}\ \mathrm{all}\ x \in G\}.\]
+    Find the center of $D_8$. What about the center of $D_{10}$? What is the center of $D_n$?
+\end{problem}
+
+\begin{solution}
+    The $\mathbf{center}$ of group $D_{8}=\{id,r^{4}\}$, $\mathbf{center}$ of group $D_{10}=\{id,r^{5}\}$.\\
+    We can write $g\in D$ as $g=r^{i}s^{j}$, we need to find the $g$ that can make $r^{i}s^{j}x=xr^{i}s^{j}$, we just need $rx=xr,sx=xs$.\\
+    Rewrite $x$ as $x=r^{k}s^{l}$, $r^{k+1}s^{l}=r^{k}s^{l}r\iff rs^{l}=s^{l}r$. If $l=1$, we have $rs=sr\iff r=srs\iff r=r^{-1}\iff r^{2}=id$. However if $l>1$, we can not guarantee above equation to be conformed, $l=1$.\\
+    $x=r^{k}s$, and we have $r^{k+1}s=sr^{k+1},sr^{k}s=r^{k}s^{2}\iff r^{-k}=r^{k}\iff r^{2k}=id$, we also know that the order of group is $n$, $r^{2k}=id\iff k=\frac{n}{2}$.\\
+    From above we can know that $\mathbf{center}$ of group $D_{n}$ is $\{id,r^{\frac{n}{2}}\}$ if $n$ is even, and $\{id\}$ if $n$ is odd.
+\end{solution}
+
+% 假设这是一道需要证明的题目。
+% \begin{remark}
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TJ: 3.42]
+%     % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+% \end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+% \begin{problem}[TJ: 3.49]
+%     % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TJ: 4.1]
+% \end{problem}
+%
+% \begin{solution}
+%     % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TJ: 4.12]
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.2-6]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-3]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+%
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.4-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection    % begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb    % begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!H]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}    % Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
