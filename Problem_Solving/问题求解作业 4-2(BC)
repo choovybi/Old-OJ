@@ -1,0 +1,421 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% File: hw.tex                         %
+% Description: LaTeX template for homework.                %
+%
+% Feel free to modify it (mainly the 'preamble' file).     %
+% Contact hfwei@nju.edu.cn (Hengfeng Wei) for suggestions. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMPORTANT NOTE: Compile this file using 'XeLaTeX' (not 'PDFLaTeX') %
+%
+% If you are using TeXLive 2016 on windows,                          %
+% you may need to check the following post:                          %
+% https://tex.stackexchange.com/q/325278/23098                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}  % modify this file if necessary
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumerate}
+%Tikz画图
+\usepackage{tikz}
+\usetikzlibrary{arrows,graphs} %指明是图库
+\lstset{
+    columns=fixed,
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\tiny\color{gray},                       % 设定行号格式
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=c++,                                        % 设置语言
+}
+\lstset{breaklines}
+%%%%%%%%%%%%%%%%%%%%
+\title{4-2：群论初步课前作业}
+\me{毕秋宇}{171860624}
+\date{\today}     % you can specify a date like ``2017年9月30日''.
+%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%
+\noplagiarism   % always keep this
+%%%%%%%%%%%%%%%%%%%%
+\beginthishw    % begin ``this homework (hw)'' part
+
+%%%%%%%%%%
+\begin{problem}[TJ: 3.3]
+    Write out Cayley tables for groups formed by the symmetries of a rectangle and for $(\mathbb{Z}_4 , +)$. How many elements are in each group? Are the groups the same? Why or why not?
+\end{problem}
+
+\begin{solution}
+    \
+
+    \begin{table}[H]
+        \centering
+        \caption{Cayley table for rectangle}\label{tab:yourlabel}
+        \begin{tabular}{l|llll}
+            \textbf{$o$} & \textbf{$id$} & \textbf{$\rho$} & \textbf{$\mu_1$} & \textbf{$\mu_2$}\\
+            \hline
+            $\textbf{$id$}$ & $id$ & $\rho$ & $\mu_1$ & $\mu_2$ \\
+            $\textbf{$\rho$}$ & $\rho$ & $id$ & $\mu_2$ & $\mu_1$ \\
+            $\textbf{$\mu_1$}$ & $\mu_1$ & $\mu_2$ & $id$ & $\rho$ \\
+            $\textbf{$\mu_2$}$ & $\mu_2$ & $\mu_1$ & $\rho$ & $id$ \\
+        \end{tabular}
+    \end{table}
+    \begin{table}[H]
+        \centering
+        \caption{Cayley table for $\mathbb{Z}_4$}\label{tab:yourlabel}
+        \begin{tabular}{l|llll}
+            \textbf{+} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3}\\
+            \hline
+            $\textbf{0}$ & 0 & 1 & 2 & 3 \\
+            $\textbf{1}$ & 1 & 2 & 3 & 0 \\
+            $\textbf{2}$ & 2 & 3 & 0 & 1 \\
+            $\textbf{3}$ & 3 & 0 & 1 & 2 \\
+        \end{tabular}
+    \end{table}
+    \noindent    four elements for both groups.\\
+    The groups are different, because the Cayley tables are different.
+\end{solution}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 3.7]
+    % A problem here.
+    Let $S = \mathbb{R} \ \{−1\}$ and define a binary operation on $S$ by $a ∗ b = a + b + ab$. Prove that $(S, ∗)$ is an abelian group.
+\end{problem}
+
+\begin{proof}
+    \noindent   First, we should prove that it is a group, and then prove it is abelian group.\\
+    (1). $(a*b)*c=(a+b+ab)*c=a+b+ab+c+ac+bc+abc=a+(b+c+bc)+a(b+c+bc)=a*(b+c+bc)=a*(b*c)$\\
+    (2). Identity element is $0$, for all $x\in S$, we get $x*0=x+0+x0=x$\\
+    (3). For each element $a\in S$, inverse element is $\frac{-a}{1+a}$, $a*\frac{-a}{1+a}=0$, because $-1$ is not in $S$, so $\frac{-a}{1+a}$ must exist.\\
+    So, $S$ is a group.\\
+    And then, $a*b=a+b+ab=b+a+ba=b*a$, for all $a,b\in S$, so $S$ is an abelian group.
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 3.39]
+    Let $T = \{z \in \mathbb{C}^∗ : |z| = 1\}$. Prove that $T$ is a subgroup of $\mathbb{C}^∗$.
+\end{problem}
+
+\begin{proof}
+    \noindent According to Proposition 3.30\\
+    (1). The identity $e$ of $\mathbb{C}^{*}$ is $1$, and $|1|=1$ so $1$ is in $T$.\\
+    (2). $T={1, -1, i, -i}$, $|a*b|=1$ for all $a,b\in T$.\\
+    (3). The inverse elements for $1,-1,i,-i$ are $1,-1,-i,i$, they are all included in $T$.\\
+    So $T$ is a subgroup of $\mathbb{C}^{*}$
+\end{proof}
+
+% 假设这是一道需要证明的题目。
+% \begin{remark}
+%   Refer to book.
+% \end{remark}
+
+% \begin{proof}
+%   证明略。
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TJ: 3.42]
+    % A problem here.
+    Let $G$ be the group of $2 \times 2$ matrices under addition and
+    \[H=\left\{\left(
+    \begin{matrix}
+        a & b \\
+        c & d
+    \end{matrix}
+    \right):
+    a+b=0
+        \right\}.\]
+    Prove that H is a subgroup of G.
+\end{problem}
+
+\begin{proof}
+    \noindent According to Proposition 3.30\\
+    (1). The identity $e$ of $G$ is
+    $\left(
+    \begin{matrix}
+        0 & 0 \\
+        0 & 0
+    \end{matrix}
+    \right)$, and $0+0=0$ so
+    $\left(
+    \begin{matrix}
+        0 & 0 \\
+        0 & 0
+    \end{matrix}
+    \right)$ is in $H$.\\
+    (2). For all element
+    $x=\left(
+    \begin{matrix}
+        a & b \\
+        c & d
+    \end{matrix}
+    \right)$ and
+    $y=\left(
+    \begin{matrix}
+        e & f \\
+        g & h
+    \end{matrix}
+    \right)$ in $H$,
+    $x+y=\left(
+    \begin{matrix}
+        a & b \\
+        c & d
+    \end{matrix}
+    \right)+
+    \left(
+    \begin{matrix}
+        e & f \\
+        g & h
+    \end{matrix}
+    \right)=
+     \left(
+    \begin{matrix}
+        a+e & b+f \\
+        c+g & d+h
+    \end{matrix}
+    \right)
+    $, $a+e+d+h=(a+d)+(e+h)=0$, so for all $x,y\in H, x+y\in H$\\
+    (3). If
+    $x=\left(
+    \begin{matrix}
+        a & b \\
+        c & d
+    \end{matrix}
+    \right)\in H$, that is to say $a+b=0$, and
+    $-x=\left(
+    \begin{matrix}
+        -a & -b \\
+        -c & -d
+    \end{matrix}
+    \right)$, $-a+-b=0$, so $-x\in H$.\\
+    So $H$ is a subgroup of $G$
+\end{proof}
+%%%%%%%%%%
+% \newpage
+%%%%%%%%%%
+\begin{problem}[TJ: 3.49]
+    % A problem here.
+    Let $a$ and $b$ be elements of a group $G$. If $a^4 b = ba$ and $a^3 = e$, prove that $ab = ba$.
+\end{problem}
+
+\begin{proof}
+    $ab=e(ab)=a^3(ab)=a^4b=ba$
+\end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TJ: 4.1]
+    Prove or disprove each of the following statements.
+    \begin{enumerate}[(a).]
+        \item All of the generators of $\mathbb{Z}^{60}$ are prime.
+        \item $U(8)$ is cyclic.
+        \item $\mathbb{Q}$ is cyclic.
+        \item If every proper subgroup of a group $G$ is cyclic, then $G$ is a cyclic group.
+        \item A group with a finite number of subgroups is finite.
+
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    % Solution here.
+    \begin{enumerate}[(a).]
+        \item True, according to Corollary 4.14. we can get that $gcd(r,60)=1$, $r$ is the generator of $\mathbb{Z}^{60}$. So all the generators of $\mathbb{Z}^{60}$ are prime.
+        \item True, because $\mathbb{Z}^{8}$ is cyclic, and according to Theorem 4.10. $U(8)$ is also cyclic.
+        \item False, suppose that $0<r<1$ is the generator of $\mathbb{Q}$, then $1$ can not be generated, if $r\geq 1$, then the number less than $1$ can not be generated.
+        \item False, every proper subgroup of $S_3$ is cyclic, however $S_3$ is not cyclic.
+        \item False, group $\mathbb{Z}^{+}$ has only one subgroup that is itself, however $\mathbb{Z}^{+}$ is infinite.
+    \end{enumerate}
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+\begin{problem}[TJ: 4.12]
+    Find a cyclic group with exactly one generator. Can you find cyclic groups with exactly two generators? Four generators? How about n generators?
+\end{problem}
+
+\begin{solution}
+    \noindent $\mathbb{Z}_{2}$ has only one generator that is $1$.\\
+    $\mathbb{Z}_{3}$ has two generators that are $1$ and $2$.\\
+    $\mathbb{Z}_{5}$ has four generators that are $1, 2, 3$ and $4$.\\
+    suppose that the $n-$th prime number is $x$, then $\mathbb{Z}_{x}$ has $n$ generators.
+
+\end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.2-6]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-3]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{proof}
+%
+% \end{proof}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.3-5]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%   % Solution here.
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29.4-2]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 29-1]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
+%%%%%%%%%%
+
+%%%%%%%%%%
+% \begin{problem}[TC: 22.5-7]
+%   % A problem here.
+% \end{problem}
+%
+% \begin{solution}
+%
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+\begincorrection    % begin the ``correction'' part (Optional)
+
+% %%%%%%%%%%
+% \begin{problem}[题号]
+%   题目。
+% \end{problem}
+
+% \begin{cause}
+%   简述错误原因（可选）。
+% \end{cause}
+
+% % Or use the ``solution'' environment
+% \begin{revision}
+%   正确解答。
+% \end{revision}
+% %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\beginfb    % begin the feedback section (Optional)
+
+% 你可以写：
+% \begin{itemize}
+%   \item 对课程及教师的建议与意见
+%   \item 教材中不理解的内容
+%   \item 希望深入了解的内容
+%   \item 等
+% \end{itemize}
+% %%%%%%%%%%%%%%%%%%%%
+\end{document}
+
+% 可使用如下命令插入图片：
+% \begin{figure}[!H]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+
+% 插入数学公式：
+% \begin{verbatim}
+%   $E = mc^2$
+% \end{verbatim}
+% 得到 $E = mc^2$。
+% \begin{verbatim}
+%   \[
+%     E = mc^2
+%   \]
+% \end{verbatim}
+% 得到
+% \[
+%   E = mc^2
+% \]
+
+% The ``remark'' environments (when needed) must be
+% put before the ``solution''/``revision''/``proof'' environments.
+% \begin{remark}    % Optional
+%   以下解答参考了书籍/网站/讲义 $\ldots$。
+
+%   \noindent 以下解答是与 XXX 同学讨论得到的。
+% \end{remark}
+
+% \newpage  % continue in a new page
+% 可使用如下代码插入伪代码
+% \begin{algorithm}
+% \caption{DFS(G)}
+% \label{alg1}
+% \begin{algorithmic}
+%     \STATE $time \gets time + 1$
+%     \STATE $u.d\gets time$
+%     \STATE $u.color \gets GRAY$
+%     \STATE $push(u)$
+%     \WHILE{$!empty(stack)$}
+%     \STATE $u \gets top()$
+%     \STATE $leaf \gets true$
+%     \FOR{ each $v\in Adj[u]$ }
+%     \IF{$v.color \gets WHITE$}
+%     \STATE $v.color \gets GRAY$
+%     \STATE $v.\pi \gets u$
+%     \STATE $time \gets time + 1$
+%     \STATE $v.d \gets time$
+%     \STATE $push(v)$
+%     \STATE $leaf \gets false$
+%     \STATE $break$
+%     \ENDIF
+%     \ENDFOR
+%     \IF{$leaf == true$}
+%     \STATE $u.color \gets BLACK$
+%     \STATE $time \gets time + 1$
+%     \STATE $u.f \gets time$
+%     \STATE $pop(u)$
+%     \ENDIF
+%     \ENDWHILE
+% \end{algorithmic}
+% \end{algorithm}
+
