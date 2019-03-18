@@ -1,0 +1,100 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-07 10:04
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxn 100005
+#define maxm 200005
+
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+const ll MOD=(1e9+7);
+int T = 0;
+int n, m = 0;
+// n means species
+// m means relationships
+int u, v = 0;
+// u is eaten by v
+ll ans = 0;
+ll indegree[maxn], degree[maxn];
+ll sum[maxn];
+queue<ll> que;
+vector<ll> vec[maxn];
+void init();
+void solve();
+
+int main() {
+    scanf("%d%*c", &T);
+    while(T--) {
+        init();
+        solve();
+    }
+    return 0;
+}
+
+void init() {
+    while(!que.empty()) {
+        que.pop();
+    }
+    memset(indegree, 0, sizeof(indegree));
+    memset(degree, 0, sizeof(degree));
+    memset(sum, 0, sizeof(sum));
+    u=0;
+    v=0;
+    ans=0;
+}
+
+void solve() {
+    scanf("%d%d%*c", &n, &m);
+    for(int i(0); i<m; ++i) {
+        scanf("%d%d%*c", &u, &v);
+        vec[u].push_back(v);
+        degree[u]++;
+        indegree[v]++;
+    }
+    for(int i(1); i<=n; ++i) {
+        if((degree[i]!=0) && (indegree[i]==0)) {
+            // if(indegree[i]==0) {
+            sum[i]=1;
+            que.push(i);
+        }
+    }
+    while(!que.empty()) {
+        int cur = que.front();
+        que.pop();
+        for(int i(0); i<vec[cur].size(); ++i) {
+            sum[vec[cur][i]]+=sum[cur];
+            sum[vec[cur][i]]=sum[vec[cur][i]]%MOD;
+            indegree[vec[cur][i]]--;
+            if(indegree[vec[cur][i]]==0)
+                que.push(vec[cur][i]);
+        }
+    }
+    for(int i(1); i<=n; ++i)
+        if(degree[i]==0)
+            ans+=sum[i];
+    ans = ans % MOD;
+    printf("%lld\n", ans);
+    for(int i(0); i<=n; ++i)
+        vec[i].clear();
+}
