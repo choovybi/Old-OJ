@@ -1,0 +1,88 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-10 20:35
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxn 40005
+#define maxm 100005
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+int n, k, m, dim, cnt = 0;
+int Xor[maxn], d[maxn];
+int f[maxm], bt[maxm];
+int c[23];
+int a[233], pos[233];
+
+void init() {
+    cnt = 0;
+    memset(f, INF, sizeof(f));
+    memset(d, INF, sizeof(d));
+    f[0] = 0, d[0] = 0;
+    for(int i(1); i<=m; ++i)
+        for(int j(a[i]); j<=n; ++j)
+            d[j] = min(d[j], d[j-a[i]]+1);
+    for(int i(1); i<=m; ++i)
+        for(int j(n-a[i]); j>=1; --j)
+            d[j] = min(d[j], d[j+a[i]]+1);
+    for(int i(1); i<=n; ++i)
+        if(Xor[i]==1)
+            pos[cnt++] = i;
+}
+
+void solve() {
+
+    for(int i(0); i<c[cnt]; ++i) {
+        if(bt[i]&1)
+            continue;
+        for(int j(0); j<cnt; ++j)
+            if(!(c[j]&i)) {
+                for(int k(j+1); k<cnt; ++k)
+                    if(!(c[k]&i)&&f[i]<5e8)
+                        f[i|c[j]|c[k]] = min(f[i|c[j]|c[k]],f[i]+d[abs(pos[k]-pos[j])]);
+                break;
+            }
+    }
+    printf("%d\n", f[c[cnt]-1]);
+}
+
+int main() {
+    c[0] = 1;
+    for(int i(1); i<=20; ++i)
+        c[i] = c[i-1]<<1;
+    for(int i(1); i<c[16]; ++i)
+        bt[i] = bt[i^(i&-i)]+1;
+    scanf("%d%d%d%*c", &n, &k, &m);
+    n++;
+    for(int i(0); i<k; ++i) {
+        scanf("%d", &dim);
+        Xor[dim]^=1;
+    }
+    for(int i(n); i>=1; --i)
+        Xor[i]^=Xor[i-1];
+    for(int i(1); i<=m; ++i)
+        scanf("%d", &a[i]);
+    init();
+    solve();
+    return 0;
+}
