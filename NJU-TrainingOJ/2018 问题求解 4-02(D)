@@ -1,0 +1,63 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-10 21:21
+* Filename      : D.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+const int maxn = 1e6+7;
+int n, m, cur = 0;
+int beg = INF;
+int dp[maxn][5][5];
+int a[maxn];
+int solve(int index, int occ, int occ_next);
+
+int main() {
+    scanf("%d%d%*c", &n, &m);
+    memset(dp, -1, sizeof(dp));
+    memset(a, 0, sizeof(a));
+    for(int i(1); i<=n; ++i) {
+        scanf("%d", &cur);
+        beg = min(beg, cur);
+        a[cur]++;
+    }
+    printf("%d\n", solve(beg, 0, 0));
+    return 0;
+}
+
+int solve(int index, int occ, int occ_next) {
+    int res = 0;
+    if(dp[index][occ][occ_next] != -1)
+        return dp[index][occ][occ_next];
+    if(index > m-2)
+        return dp[index][occ][occ_next] = (a[index] - occ)/3 + (a[index + 1] - occ_next)/3;
+    for(int i = 0; i < 3; ++i) {
+        if(a[index] - occ < i || a[index + 1] - occ_next < i || a[index + 2] < i)
+            break;
+        else if(res < (a[index] - occ - i)/3 + i + solve(index+1, occ_next+i, i))
+            res = (a[index] - occ - i)/3 + i + solve(index+1, occ_next+i, i);
+    }
+    dp[index][occ][occ_next] = res;
+    return res;
+}
