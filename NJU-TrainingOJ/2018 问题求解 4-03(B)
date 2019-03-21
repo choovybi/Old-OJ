@@ -1,0 +1,76 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-14 07:50
+* Filename      : B.cpp
+* Description   : Meet a problem that is dp[row-1][1] may be 0 when s=1, while may not be 0 when s=2
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define maxm 15
+#define maxn 5000
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = pow(10,8);
+const int INF = 0x3f3f3f3f;
+int M, N, sum = 0;
+int limit[15] = {0};
+int dp[maxm][maxn];
+int solve(int row, int s);
+
+int main() {
+    scanf("%d%d%*c", &M, &N);
+    for(int i(1); i<=M; ++i) {
+        for(int j(N-1); j>=0; --j) {
+            int tmp = 0;
+            scanf("%d", &tmp);
+            limit[i]+=tmp*pow(2,j);
+        }
+    }
+    sum = 0;
+    memset(dp, 0, sizeof(dp));
+    for(int j(0); j<pow(2,N); ++j) {
+        if(j!=0 && (j&(j<<1) || (j&limit[M])!=j)) {
+            dp[M][j] = 0;
+        } else if(dp[M][j]==0)
+            dp[M][j] = solve(M, j);
+        sum = (sum+dp[M][j])%MOD;
+        // cout<<"dp["<<M<<"]"<<"["<<j<<"]"<<"="<<dp[M][j]<<endl;
+    }
+    printf("%d\n", sum);
+    return 0;
+}
+
+int solve(int row, int s) {
+    if(row==1)
+        return 1;
+    int tmp, res = 0;
+    for(int j(0); j<pow(2,N); ++j) {
+        if(j!=0 && (j&(j<<1) || (j&limit[row-1])!=j || j&s))
+            dp[row-1][j] = 0;
+        else if(dp[row-1][j]==0)
+            dp[row-1][j] = solve(row-1, j);
+        // there are two types:
+        //     1. dp[row-1][j] has not been calculated
+        //     2. in last state s, dp[row-1][j] is not permitted
+        //     3. dp[row-1][j]'s value is just 0
+        res = (res+dp[row-1][j])%MOD;
+        // cout<<"dp["<<row-1<<"]"<<"["<<j<<"]"<<"="<<dp[row-1][j]<<endl;
+    }
+    return res;
+}
