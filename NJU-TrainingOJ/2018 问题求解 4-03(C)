@@ -1,0 +1,63 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-15 14:47
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define MAXN 205
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+int n, m, bias = 0;
+int a[MAXN];
+int b[MAXN];
+int d[MAXN];
+// d is diff
+int s[MAXN];
+// s is sum
+int dp[22][802];
+int main() {
+    scanf("%d%d%*c", &n, &m);
+    memset(dp,-1, sizeof(dp));
+    for (int i(0); i < n; ++i)
+        scanf("%d",&a[i]);
+    for (int i(0); i < n; ++i) {
+        scanf("%d",&b[i]);
+        d[i] = a[i] - b[i];
+        s[i] = a[i] + b[i];
+    }
+    bias = 20*m;
+    dp[0][bias] = 0;
+    for(int k(0); k < n; ++k)
+        for(int i(m-1); i >= 0; --i)
+            for(int j(0); j < 2*bias; ++j)
+                if(dp[i][j] >= 0)
+                    if(dp[i+1][j+d[k]] <= dp[i][j] + s[k])
+                        dp[i+1][j+d[k]] = dp[i][j] + s[k];
+    int t = 0;
+    for (t=0; t <= bias; ++t)
+        if(dp[m][bias+t] >= 0 || dp[m][bias-t] >= 0)
+            break;
+    int index = (dp[m][bias+t] > dp[m][bias-t]) ? bias+t : bias-t;
+    printf("%d %d\n",(dp[m][index]+index-bias)/2,(dp[m][index]-index+bias)/2);
+    return 0;
+}
