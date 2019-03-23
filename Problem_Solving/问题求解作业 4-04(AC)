@@ -43,158 +43,160 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[11pt, a4paper, UTF8]{ctexart}
 
-    \input{preamble}
+            \input{preamble}
 
-    \title{4-4：群同态基本定理与正规子群课后作业}
-    \me{毕秋宇}{171860624}
-    \date{\today}
+            \title{4-4：群同态基本定理与正规子群课后作业}
+            \me{毕秋宇}{171860624}
+            \date{\today}
 
-    \begin{document}
-    \maketitle
-    \noplagiarism
+            \begin{document}
+            \maketitle
+                \noplagiarism
 
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %                       Homework START!                        %
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \beginthishw
-    %%%%%%%%%%%%%%%%%%%%
-    \begin{problem}[TJ: 9.11]
-        Find five non-isomorphic groups of order $8$.
-    \end{problem}
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                %                       Homework START!                        %
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                \beginthishw
+                %%%%%%%%%%%%%%%%%%%%
+                \begin{problem}[TJ: 9.11]
+                    Find five non-isomorphic groups of order $8$.
+                \end{problem}
 
-    %\begin{remark}
-    %
-    %\end{remark}
+                %\begin{remark}
+                %
+                %\end{remark}
 
-    \begin{solution}
-        \begin{enumerate}
-            \item $\mathbb{Z}_{8}=\{0,1,2,3,4,5,6,7\}_{+}$
-            \item $D_{4}=\{e,\sigma,\sigma^{2},\sigma^{3},\tau,\tau\sigma,\tau\sigma^{2},\tau\sigma^{3}\}_{*}$
-            \item $\mathbb{Z}_{2}\times\mathbb{Z}_{4}=\{(0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2),(1,3)\}_{+}$
-            \item $\mathbb{Z}_{2}\times\mathbb{Z}_{2}\times\mathbb{Z}_{2}=\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)\}_{+}$
-            \item $\{1,-1,i,-i,j,-j,k,-k\}_{*} \forall x\in\{i,j,k\},x^{2}=-1,x^{3}=-x,x^{4}=1$
-        \end{enumerate}
-    \end{solution}
+            \begin{solution}
+                \begin{enumerate}
+                    \item $\mathbb{Z}_{8}=\{0,1,2,3,4,5,6,7\}_{+}$
+                    \item $D_{4}=\{e,\sigma,\sigma^{2},\sigma^{3},\tau,\tau\sigma,\tau\sigma^{2},\tau\sigma^{3}\}_{*}$
+                    \item $\mathbb{Z}_{2}\times\mathbb{Z}_{4}=\{(0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(1,2),(1,3)\}_{+}$
+                    \item $\mathbb{Z}_{2}\times\mathbb{Z}_{2}\times\mathbb{Z}_{2}=\{(0,0,0),(0,0,1),(0,1,0),(0,1,1),(1,0,0),(1,0,1),(1,1,0),(1,1,1)\}_{+}$
+                    \item $\{1,-1,i,-i,j,-j,k,-k\}_{*} \forall x\in\{i,j,k\},x^{2}=-1,x^{3}=-x,x^{4}=1$
+                \end{enumerate}
+            \end{solution}
 
-    \begin{problem}[TJ: 9.23]
-        Prove or disprove the following assertion. Let $G$, $H$, and $K$ be groups. If $G \times K \cong H \times K$, then $G \cong H$.
-    \end{problem}
+            \begin{problem}[TJ: 9.23]
+                Prove or disprove the following assertion. Let $G$, $H$, and $K$ be groups. If $G \times K \cong H \times K$, then $G \cong H$.
+            \end{problem}
 
-    %\begin{remark}
-    %
-    %\end{remark}
+            %\begin{remark}
+            %
+            %\end{remark}
 
-    \begin{solution}
-        $\because G\times K\cong H\times K$\\
-        Suppose $a,c\in G, b,d\in K,\phi(a),\phi(c)\in H,\phi(b),\phi(d)\in K$\\
-        $\exists\phi, \phi((a,b)(c,d))=\phi((a,b))\phi((c,d))$\\
-        $\Rightarrow\phi((a\cdot c,b\circ d))=(\phi(a,b))(\phi(c,d))$\\
-        $\Rightarrow(\phi(a\cdot c),\phi(b\circ d))=(\phi(a),\phi(b))(\phi(c),\phi(d))$\\
-        $\Rightarrow(\phi(a\cdot c),\phi(b\circ d))=(\phi(a)\phi(c),\phi(b)\phi(d))$\\
-        $\Rightarrow\exists\phi, \phi(a\cdot c)=\phi(a)\phi(c)$\\
-        $\because a,c\in G,\phi(a),\phi(c)\in H$\\
-        $\therefore G\cong H$.
-    \end{solution}
+            \begin{solution}
+                % $\because G\times K\cong H\times K$\\
+                % Suppose $a,c\in G, b,d\in K,\phi(a),\phi(c)\in H,\phi(b),\phi(d)\in K$\\
+                % $\exists\phi, \phi((a,b)(c,d))=\phi((a,b))\phi((c,d))$\\
+                % $\Rightarrow\phi((a\cdot c,b\circ d))=(\phi(a,b))(\phi(c,d))$\\
+                % $\Rightarrow(\phi(a\cdot c),\phi(b\circ d))=(\phi(a),\phi(b))(\phi(c),\phi(d))$\\
+                % $\Rightarrow(\phi(a\cdot c),\phi(b\circ d))=(\phi(a)\phi(c),\phi(b)\phi(d))$\\
+                % $\Rightarrow\exists\phi, \phi(a\cdot c)=\phi(a)\phi(c)$\\
+                % $\because a,c\in G,\phi(a),\phi(c)\in H$\\
+                % $\therefore G\cong H$.
+                If $K$ is an infinite group, then we may not get that $G\cong H$. We can let $G=Z_{2}$, $H=Z_{2}\times Z_{2}$ and $K$ is the group of all tuples, we get that $G\times K=Z_{2}\times K=<Z_{2},K> = K$ and $H\times K=<<Z_{2},Z_{2}>\times K>= K$. From above, we get that $G\times K\cong H\times K$. However, $G\ncong H$.
+            \end{solution}
 
-    \begin{problem}[TJ: 10.11]
-        If a group $G$ has exactly one subgroup $H$ of order $k$, prove that $H$ is normal in $G$.
-    \end{problem}
+            \begin{problem}[TJ: 10.11]
+                If a group $G$ has exactly one subgroup $H$ of order $k$, prove that $H$ is normal in $G$.
+            \end{problem}
 
-    %\begin{remark}
-    %
-    %\end{remark}
+            %\begin{remark}
+            %
+            %\end{remark}
 
-    \begin{solution}
-        Firstly, we can create a group $H^{\prime}$ whose elements are $\{ghg^{-1}|h\in H,g\in G\}$\\
-        We need to prove that $H^{\prime}$ is alse a subgroup of $G$
-        \begin{enumerate}
-            \item $\exists h=e,ghg^{-1}=geg^{-1}=gg^{-1}=e\in H^{\prime}$.
-            \item $\forall h_{1},h_{2}\in H,(gh_{1}g^{-1})(gh_{2}g^{-1})=g(h_{1}h_{2})g^{-1},\ \because H$ is a subgroup of $G\therefore h_{1}h_{2}\in H\therefore g(h_{1}h_{2})g^{-1}\in H^{\prime}$.
-            \item $\forall h\in H, \exists h^{-1}\in H, ghg^{-1}gh^{-1}g^{-1}=e$
-        \end{enumerate}
-        Above all, $H^{\prime}$ is also a subgroup of $G$, and we can know that if $gh_{1}g^{-1}=gh_{2}g^{-1}$, then $h_{1}=h_{2}$, so $|H^{\prime}|=|H|=k$.\\
-        $\because G$ has exactly one subgroup $H$ of order $k$, $\therefore H=H^{\prime}\Rightarrow \forall g\in G, gHg^{-1}=H\Rightarrow$ $H$ is normal in $G$ by Theorem 10.3.
-    \end{solution}
+            \begin{solution}
+                Firstly, we can create a group $H^{\prime}$ whose elements are $\{ghg^{-1}|h\in H,g\in G\}$\\
+                We need to prove that $H^{\prime}$ is alse a subgroup of $G$
+                \begin{enumerate}
+                    \item $\exists h=e,ghg^{-1}=geg^{-1}=gg^{-1}=e\in H^{\prime}$.
+                    \item $\forall h_{1},h_{2}\in H,(gh_{1}g^{-1})(gh_{2}g^{-1})=g(h_{1}h_{2})g^{-1},\ \because H$ is a subgroup of $G\therefore h_{1}h_{2}\in H\therefore g(h_{1}h_{2})g^{-1}\in H^{\prime}$.
+                    \item $\forall h\in H, \exists h^{-1}\in H, ghg^{-1}gh^{-1}g^{-1}=e$
+                \end{enumerate}
+                Above all, $H^{\prime}$ is also a subgroup of $G$, and we can know that if $gh_{1}g^{-1}=gh_{2}g^{-1}$, then $h_{1}=h_{2}$, so $|H^{\prime}|=|H|=k$.\\
+                $\because G$ has exactly one subgroup $H$ of order $k$, $\therefore H=H^{\prime}\Rightarrow \forall g\in G, gHg^{-1}=H\Rightarrow$ $H$ is normal in $G$ by Theorem 10.3.
+            \end{solution}
 
-    \begin{problem}[TJ: 11.5]
-        Describe all of the homomorphisms from $\mathbb{Z}_{24}$ to $\mathbb{Z}_{18}$.
-    \end{problem}
+            \begin{problem}[TJ: 11.5]
+                Describe all of the homomorphisms from $\mathbb{Z}_{24}$ to $\mathbb{Z}_{18}$.
+            \end{problem}
 
-    %\begin{remark}
-    %
-    %\end{remark}
+            %\begin{remark}
+            %
+            %\end{remark}
 
-    \begin{solution}
-        $gcd(18,24)=6$\\
-        So all the homomorphisms from $\mathbb{Z}_{24}$ to $\mathbb{Z}_{18}$ are as follows:
-        \begin{enumerate}
-            \item $order=1,\forall x\in Z_{24},\phi(x)=0$
-            \item $order=2,\phi(\{0,2,\cdots 22\})=0,\phi(\{1,3,\cdots 23\})=9$
-            \item $order=3,\phi(\{0,3,\cdots 21\})=0,\phi(\{1,4,\cdots 22\})=6,\phi(\{2,5,\cdots 23\})=12$
-            \item $order=6,\phi(\{0,6,\cdots 18\})=0,\phi(\{1,7,\cdots 19\})=3,\phi(\{2,8,\cdots 20\})=6,\phi(\{3,9,\cdots 21\})=9,\phi(\{4,10,\cdots 22\})=12,\phi(\{5,11,\cdots 23\})=15$
-        \end{enumerate}
-    \end{solution}
+            \begin{solution}
+                $gcd(18,24)=6$\\
+                        So all the homomorphisms from $\mathbb{Z}_{24}$ to $\mathbb{Z}_{18}$ are as follows:
+                        \begin{enumerate}
+                            \item $order=1,\forall x\in Z_{24},\phi(x)=0$
+                            \item $order=2,\phi(\{0,2,\cdots 22\})=0,\phi(\{1,3,\cdots 23\})=9$
+                            \item $order=3,\phi(\{0,3,\cdots 21\})=0,\phi(\{1,4,\cdots 22\})=6,\phi(\{2,5,\cdots 23\})=12$
+                            \item $order=6,\phi(\{0,6,\cdots 18\})=0,\phi(\{1,7,\cdots 19\})=3,\phi(\{2,8,\cdots 20\})=6,\phi(\{3,9,\cdots 21\})=9,\phi(\{4,10,\cdots 22\})=12,\phi(\{5,11,\cdots 23\})=15$
+                        \end{enumerate}
+            \end{solution}
 
-    \begin{problem}[optional question 1: TJ: 11.17]
-        Let $\phi: G_1 \rightarrow G_2$ be a surjective group homomorphism. Let $H_1$ be a normal subgroup of $G_1$ and suppose that $\phi(H_1) = H_2$. Prove or disprove that $G_1/H_1 \cong G_2/H_2$.
-    \end{problem}
+            \begin{problem}[optional question 1: TJ: 11.17]
+                Let $\phi: G_1 \rightarrow G_2$ be a surjective group homomorphism. Let $H_1$ be a normal subgroup of $G_1$ and suppose that $\phi(H_1) = H_2$. Prove or disprove that $G_1/H_1 \cong G_2/H_2$.
+            \end{problem}
 
-    %\begin{remark}
-    %
-    %\end{remark}
+            %\begin{remark}
+            %
+            %\end{remark}
 
-\begin{solution}
+            \begin{solution}
 
-\end{solution}
+            \end{solution}
 
-\begin{problem}[optional question 2]
-    在同构意义下, 给出所有的六阶群。(你可以再尝试给出所有的八阶群。)
-\end{problem}
+            \begin{problem}[optional question 2]
+                在同构意义下, 给出所有的六阶群。(你可以再尝试给出所有的八阶群。)
+            \end{problem}
 
-%\begin{remark}
-%
-%\end{remark}
+            %\begin{remark}
+            %
+            %\end{remark}
 
-\begin{solution}
+            \begin{solution}
 
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%
-%\newpage
-%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                      Correction START!                       %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begincorrection
-%%%%%%%%%%%%%%%%%%%%
-%\begin{problem}[]
-
-%\end{problem}
-
-%\begin{cause}
-%
-%\end{cause}
-
-%\begin{revision}
-
-%\end{revision}
-%%%%%%%%%%%%%%%%%%%%
-%\newpage
-%%%%%%%%%%%%%%%%%%%%
+            \end{solution}
+            %%%%%%%%%%%%%%%%%%%%
+            %\newpage
+            %%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                       Feedback START!                        %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\beginfb
-%\begin{itemize}
-%
-%\end{itemize}
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            %                      Correction START!                       %
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                \begincorrection
+                %%%%%%%%%%%%%%%%%%%%
+                %\begin{problem}[]
+
+                %\end{problem}
+
+                %\begin{cause}
+                %
+                %\end{cause}
+
+                %\begin{revision}
+
+                %\end{revision}
+                %%%%%%%%%%%%%%%%%%%%
+                %\newpage
+                %%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                        Homework END!                         %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{document}
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                %                       Feedback START!                        %
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                \beginfb
+                %\begin{itemize}
+                %
+                %\end{itemize}
+
+
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                %                        Homework END!                         %
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        \end{document}
+
 
