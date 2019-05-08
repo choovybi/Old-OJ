@@ -1,0 +1,106 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-04-15 14:03
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXM 200005
+#define MAXN 1005
+int N, M = 0;
+int f[MAXN] = {0};
+int r[MAXN] = {0};
+
+typedef struct {
+    int a;
+    int b;
+    double price;
+} Edge;
+Edge edge[MAXM];
+
+inline bool cmp(Edge a, Edge b) {
+    return a.price < b.price;
+}
+
+inline void init_set(int n) {
+    for(int i(1); i<=n; ++i) {
+        f[i] = i;
+        r[i] = 0;
+    }
+}
+
+inline int find_set(int x) {
+    if(f[x] != x)
+        f[x] = find_set(f[x]);
+    return f[x];
+}
+
+inline void union_set(int a, int b) {
+    int fa = find_set(a);
+    int fb = find_set(b);
+    if(r[a]>r[b])
+        f[fa] = fb;
+    else {
+        f[fb] = fa;
+        if(r[fa] == r[fb])
+            ++r[fa];
+    }
+}
+
+inline int Krustal(int m) {
+    sort(edge, edge+m, cmp);
+    int ans = 0;
+    int bias = 0;
+    // for(int i(0); i<m; ++i)
+    // cout<<edge[i].price<<endl;
+    for(int i(0); i<m; ++i) {
+        // cout<<i<<endl;
+        while(edge[i].price==edge[bias].price) {
+            if(find_set(edge[bias].a) != find_set(edge[bias].b))
+                ++ans;
+            ++bias;
+        }
+        // cout<<"ans="<<ans<<endl;
+        if(find_set(edge[i].a) != find_set(edge[i].b)) {
+            union_set(edge[i].a, edge[i].b);
+            --ans;
+        }
+        // cout<<"bias="<<bias<<endl;
+    }
+    return ans;
+}
+
+int main() {
+    scanf("%d%d%*c", &N, &M);
+    init_set(N);
+    int u, v, w;
+    for(int i(0); i<M; ++i) {
+        scanf("%d%d%d%*c", &u, &v, &w);
+        edge[i].a = u;
+        edge[i].b = v;
+        edge[i].price = w;
+    }
+    cout<<Krustal(M)<<endl;
+    return 0;
+}
