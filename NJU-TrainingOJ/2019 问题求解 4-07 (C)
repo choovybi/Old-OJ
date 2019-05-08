@@ -1,0 +1,138 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-04-15 14:04
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 100005
+
+int n, m, k, mid, ans = 0;
+
+struct union_find {
+    int r[MAXN];
+    int f[MAXN];
+
+    void make_set(int i) {
+        r[i] = 0;
+        f[i] = i;
+    }
+
+    void link(int x,int y) {
+        if(r[x] > r[y])
+            f[y] = x;
+        else {
+            f[x] = y;
+            if(r[x] == r[y]) r[y]++;
+        }
+    }
+
+    int find_set(int x) {
+        if(x != f[x])
+            f[x] = find_set(f[x]);
+        return f[x];
+    }
+
+    void unite(int x,int y) {
+        int a = find_set(x);
+        int b = find_set(y);
+        link(a,b);
+    }
+} node;
+
+
+struct Edge {
+    Edge(int f,int t,int w) {
+        from = f;
+        to = t;
+        price = w;
+    }
+    int from;
+    int to;
+    int price;
+};
+
+bool operator > (const Edge x, const Edge y) {
+    if (x.price == y.price) return x.from != 1;
+    return x.price > y.price;
+}
+vector<Edge> v;
+
+priority_queue<Edge,vector<Edge>,greater<Edge> > pq;
+
+int Kruskal() {
+    for (int i = 1; i <= n; ++i)
+        node.make_set(i);
+    while(!pq.empty())
+        pq.pop();
+    for (int i = 0; i < m; ++i) {
+        Edge temp = v[i];
+        if(temp.from == 1) temp.price += mid;
+        pq.push(temp);
+    }
+    int cnt, ret = 0;
+    ans = 0;
+    while(!pq.empty() && cnt != n-1) {
+        Edge temp = pq.top();
+        pq.pop();
+        if(node.find_set(temp.from) != node.find_set(temp.to)) {
+            ++cnt;
+            ans += temp.price;
+            if(temp.from == 1)
+                ++ret;
+            node.unite(temp.from,temp.to);
+        }
+    }
+    ans -= k*mid;
+    return ret;
+}
+
+int main() {
+    scanf("%d%d%d%*c", &n, &m, &k);
+    for (int i = 0; i < m; ++i) {
+        int node_u, node_v, price = 0;
+        scanf("%d%d%d%*c", &node_u, &node_v, &price);
+        if(node_u > node_v)
+            swap(node_v, node_u);
+        v.push_back(Edge(node_u, node_v, price));
+    }
+    int l = -1000005;
+    int r = 1000005;
+    while(l < r) {
+        mid = (l + r + 1) / 2;
+        int cnt = Kruskal();
+        if(cnt < k)
+            r = mid - 1;
+        else if(cnt > k)
+            l = mid;
+        else {
+            printf("%d\n", ans);
+            return 0;
+        }
+    }
+    mid = r;
+    Kruskal();
+    printf("%d\n", ans);
+    return 0;
+}
