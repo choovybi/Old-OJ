@@ -1,0 +1,208 @@
+%what is the homework? put it here.
+%2019-04-12 4-8 密码算法(OLD)
+%TJ第7章练习题7(a,b),9(b,d)
+%TC第31.7节练习1
+%TC第31章问题3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+%Math equation: \begin{align*}
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+\usepackage{clrscode3e}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{float}
+
+\title{4-8：密码算法课前作业}
+\me{}{}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ:7-7(a,b)]
+    Encrypt each of the following RSA messages $x$ so that $x$ is divided into blocks of
+    integers of length 2; that is, if $x = 142528$, encode 14, 25, and 28 separately.\\
+    (a) $n$ = 3551, $E$ = 629, $x$ = 31.\\
+    (b) $n$ = 2257, $E$ = 47, $x$ = 23.
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item[(a)] $x^{E}\mod n=31^{629}\mod 3551 = 2791$
+        \item[(b)] $x^{E}\mod n=23^{47}\mod 2257= 769$
+    \end{enumerate}
+\end{solution}
+
+\begin{problem}[TJ:7-9(b,d)]
+    Decrypt each of the following RSA messages y.\\
+    (b) $n$ = 5893, $D$ = 81, $y$ = 34.\\
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item[(b)] $y^{D}\mod n=34^{81}\mod 5893= 2014$
+    \end{enumerate}
+\end{solution}
+
+\begin{problem}[TC:31.7-1]
+    Consider an RSA key set with $p$ = 11, $q$ = 29, $n$ = 319, and $e$ = 3. What
+    value of $d$ should be used in the secret key? What is the encryption of the message
+    \textbf{$M$} = 100?
+\end{problem}
+
+\begin{solution}
+    $m=(p-1)(q-1)=280$\\
+    $\gcd(m,e)=\gcd(280, 3)=1$\\
+    $de=1\mod m=d\times 3=1\mod 280$, we get that $d=187$.\\
+    $M^{\prime}=100^{e}\mod n=100^{3}\mod 319=254$
+\end{solution}
+
+\begin{problem}[TC:31-3: Three algorithms for Fibonacci numbers]
+    This problem compares the efficiency of three methods for computing the $n$th Fibonacci number $F_n$ , given $n$. Assume that the cost of adding, subtracting,
+    or multiplying two numbers is $O(1)$, independent of the size of the numbers.\\
+    \textbf{a.} Show that the running time of the straightforward recursive method for computing $F_n$ based on recurrence (3.22) is exponential in $n$. (See, for example, the $\textsc{Fib}$ procedure on page 775.)\\
+    \textbf{b.} Show how to compute $F_n$ in $O(n)$ time using memoization.\\
+    \textbf{c.} Show how to compute $F_n$ in $O(\lg n)$ time using only integer addition and mul
+    tiplication. (Hint: Consider the matrix and its powers.)
+    $$\begin{pmatrix}
+        0&1\\
+        1&1\\
+    \end{pmatrix}$$
+    \textbf{d.} Assume now that adding two $\beta$-bit numbers takes $\Theta(\beta)$ time and that multiplying two $\beta$-bit numbers takes $\Theta(\beta^2)$ time. What is the running time of these
+    three methods under this more reasonable cost measure for the elementary arithmetic operations?
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item[a.] From the formula 27.1 in page 776, we know that the running time of $\textsc{Fib}$ denoted as $T(n)=\Theta(\phi^{n})=\Theta(\frac{1+\sqrt{5}}{2})^n$ which is exponential in $n$.
+        \item[b.]
+            \begin{algorithm}[h]
+                \caption{$\textsc{Fib-Memoization}$}
+                \label{alg:A}
+                \begin{algorithmic}[1]
+                    \IF{$n\leq 1$}
+                    \STATE{set $\textsc{Fib}[n]=n$}
+                    \RETURN{$\textsc{Fib}[n]$}
+                    \ELSE
+                    \IF{$\textsc{Fib}[n-1]=0$}
+                    \STATE{set $x=\textsc{Fib-Memoization}(n-1)$}
+                    \STATE{set $\textsc{Fib}[n-1]=x$}
+                    \ELSE
+                    \STATE{set $x=\textsc{Fib}[n-1]$}
+                    \ENDIF
+                    \IF{$\textsc{Fib}[n-2]=0$}
+                    \STATE{set $y=\textsc{Fib-Memoization}(n-2)$}
+                    \STATE{set $\textsc{Fib}[n-2]=y$}
+                    \ELSE
+                    \STATE{set $y=\textsc{Fib}[n-2]$}
+                    \ENDIF
+                    \STATE{set $\textsc{Fib}[n]=x+y$}
+                    \RETURN{$\textsc{Fib}[n]$}
+                    \ENDIF
+                \end{algorithmic}
+            \end{algorithm}
+        \item[c.] We know that $\left[\begin{matrix}
+                0 & 1 \\
+                1 & 1
+        \end{matrix}\right]\left[\begin{matrix}
+            F_{n-1}\\
+            F_n
+        \end{matrix}\right]=\left[
+            \begin{matrix}
+                F_n\\
+                F_{n-1}+F_{n}
+            \end{matrix}\right]=\left[
+            \begin{matrix}
+                F_n\\
+                F_{n+1}
+            \end{matrix}\right]$
+        So we can get that $\left[
+            \begin{matrix}
+                F_{n}\\
+                F_{n+1}
+            \end{matrix}\right]=\left[
+            \begin{matrix}
+                0 & 1\\
+                1 & 1
+            \end{matrix}\right]^{n}\left[
+            \begin{matrix}
+                F_1\\
+                F_2
+            \end{matrix}\right]$, And the running time of computing $\left[
+            \begin{matrix}
+                0 & 1\\
+                1 & 1\\
+            \end{matrix}\right]^{n}$ is $O(\lg n)$.
+    \item[d.]
+        method a. $\Theta(\phi^{n})$\\
+        method b. $\Theta(n\beta)$\\
+        method c. $\Theta(\beta^2\lg n)$
+\end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
