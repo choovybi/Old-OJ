@@ -1,0 +1,157 @@
+%what is the homework? put it here.
+%2019-04-27 22:00 4-9 代数编码
+%TJ第8章练习19,21,22,23
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+%Math equation: \begin{align*}
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+%\usepackage{clrscode3e}
+\usepackage{float}
+
+\title{4-9：代数编码课后作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ:8-19]
+    Let C be a linear code. Show that either every codeword has even weight or exactly
+    half of the codewords have even weight.
+\end{problem}
+
+\begin{solution}
+    If there exists no codeword has odd weight, then every code has even weight.\\
+    If there exists codeword has odd weight, then we denote codewords have odd weight as set $A$ and codewords have even weight as set $B$. For all $x\in A$ and $y\in B$, we get that $z=x+y$ is also a codeword, that is to say $\forall x\in A, y\in B,~ \exists z,~ x+z=y~~y+z=x$. There exists an bijection between $A$ and $B$.\\
+    Finally we get that either every codeword has even weight or exactly half of the codewords have even weight.
+\end{solution}
+
+\begin{problem}[TJ:8-21]
+    If we are to use an error-correcting linear code to transmit the 128 ascii characters,
+    what size matrix must be used? What size matrix must be used to transmit the extended
+    ascii character set of 256 characters? What if we require only error detection in both cases?
+\end{problem}
+
+\begin{solution}
+    We know that $2^7=128$, so the information bits is $7$ and we also know that if we want to correct the codeword, distance must be bigger than $3$. The size of matrix must be used is $10\times 7$.\\ The size of matrix must be used to transmit the extended ascii character set of $256$ is $11\times 8$\\
+    If we require only error detection, then the check bit is $1$.\\
+    The size of matrix to transmit the 128 ascii characters is $8\times7$\\
+    The size of matrix to transmit the 256 ascii characters is $9\times8$.
+\end{solution}
+
+\begin{problem}[TJ:8-22]
+    Find the canonical parity-check matrix that gives the even parity check bit code with
+    three information positions. What is the matrix for seven information positions? What are
+    the corresponding standard generator matrices?
+\end{problem}
+
+\begin{solution}
+    The canonical parity-check matrix that gives the even parity check bit code with three information positions is
+    $\left(\begin{matrix}
+        1&1&0&1&0\\
+        0&1&1&0&1\\
+    \end{matrix}\right)$\\
+    The generator matrix is
+    $\left(\begin{matrix}
+        1&0&0\\
+        0&1&0\\
+        0&0&1\\
+        1&1&0\\
+        0&1&1
+    \end{matrix}\right)$\\
+    The matrix for seven information positions is
+    $\left(\begin{matrix}
+        1&0&0&0&1&1&1&1&0&0\\
+        1&0&1&1&1&0&0&0&1&0\\
+        1&1&1&1&0&0&0&0&0&1
+    \end{matrix}\right)$
+    The generator matrix is
+    $\left(\begin{matrix}
+        1&0&0&0&0&0&0\\
+        0&1&0&0&0&0&0\\
+        0&0&1&0&0&0&0\\
+        0&0&0&1&0&0&0\\
+        0&0&0&0&1&0&0\\
+        0&0&0&0&0&1&0\\
+        0&0&0&0&0&0&1\\
+        1&0&0&0&1&1&1\\
+        1&0&1&1&1&0&0\\
+        1&1&1&1&0&0&0
+    \end{matrix}\right)$
+\end{solution}
+
+\begin{problem}[TJ:8-23]
+    How many check positions are needed for a single error-correcting code with 20
+    information positions? With 32 information positions?
+\end{problem}
+
+\begin{solution}
+    $2^4<20<2^5$, so we know that $5$ check positions can correct a single error.\\
+    $32=2^5$, so $5$ check positions can correct a single error.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
