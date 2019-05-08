@@ -1,0 +1,126 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-04-05 22:32
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+#include <assert.h>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int INF = 0x3f3f3f3f;
+#define MAXN 1000005
+
+struct Trie {
+    int nxt[MAXN+10][26], tot, root;
+    Trie() {
+        tot = 1;
+        root = newNode();
+    }
+    int newNode() {
+        memset(nxt[tot], 0, sizeof(nxt[tot]));
+        return (tot++);
+    }
+    void append(char *s) {
+        int cur = root;
+        for(; *s != 0; ++s) {
+            int id = *s - 'a';
+            if(nxt[cur][id] == 0)
+                nxt[cur][id] = newNode();
+            cur = nxt[cur][id];
+        }
+    }
+} T;
+
+struct SeqAM {
+    int nxt[MAXN+10][26], tot, root, val[MAXN+10];
+    SeqAM() {
+        tot = 1;
+        root = newNode();
+    }
+    int newNode() {
+        memset(nxt[tot], 0, sizeof(nxt[tot]));
+        val[tot] = 0;
+        return (tot++);
+    }
+    void build(char *s, int *v) {
+        int n = strlen(s);
+        for(int i(0); i<n; ++i)
+            val[newNode()] = v[i];
+        for(int i(n-2); i>=-1; --i) {
+            memcpy(nxt[i+2], nxt[i+3], sizeof(nxt[i+3]));
+            nxt[i+2][s[i+1]-'a'] = i+3;
+        }
+    }
+} S;
+
+inline ll qpow(ll a, ll n, ll mod) {
+    ll ans = 1;
+    a %= mod;
+    while(n>0) {
+        if(n&1)
+            (ans *= a) %= mod;
+        (a *= a) %= mod;
+        n >>= 1;
+    }
+    return ans;
+}
+
+ll dfs(ll *num, ll cur, ll len, ll loc, ll mod) {
+    ll answer = 0;
+    for(int i(0); i < 26; ++i) {
+        if(T.nxt[cur][i] != 0) {
+            *num += 1;
+            if(S.nxt[loc][i] != 0) {
+                answer += (S.val[S.nxt[loc][i]] * len % mod) + dfs(num, T.nxt[cur][i], len+1, S.nxt[loc][i], mod);
+                answer %= mod;
+            } else
+                dfs(num, T.nxt[cur][i], len+1, S.nxt[loc][i], mod);
+        }
+    }
+    return answer;
+}
+
+char s[MAXN+10];
+int v[MAXN+10];
+
+int main() {
+    s[0] = '\0';
+    scanf("%s", s);
+    int len = (int)strlen(s);
+    for(int i(0); i<len; ++i)
+        scanf("%d", &v[i]);
+    S.build(s, v);
+
+    ll n = 0;
+    ll MOD = 0;
+    scanf("%lld%lld", &n, &MOD);
+    for(int i(0); i<n; ++i) {
+        s[0] = '\0';
+        scanf("%s", s);
+        T.append(s);
+    }
+
+    ll num = 0;
+    ll answer = dfs(&num, T.root, 1, S.root, MOD);
+    // cout<<answer<<endl;
+    printf("%lld\n", (answer*qpow(num, (MOD-2), MOD))%MOD);
+    return 0;
+}
