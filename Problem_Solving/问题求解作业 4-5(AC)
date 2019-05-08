@@ -1,0 +1,189 @@
+%what is the homework? put it here.
+%2017-03-20 4-4：群同态基本定理与正规子群
+%理解抽象代数结构的基本概念
+%理解群同态基本思想
+%TJ第9、10、11章
+%群同态、同构基本思想
+%课后作业(截止日期: 2019-03-23 22:00)
+%TJ第9章练习 11、23
+%TJ第10章练习 11
+%TJ第11章练习 5
+%(选做) TJ第11章练习 17
+%(选做) 在同构意义下, 给出所有的六阶群。
+%(你可以再尝试给出所有的八阶群。)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+
+%Math equation: \begin{align*}
+
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+
+    \input{preamble}
+
+    \title{4-5：串匹配课后作业}
+    \me{毕秋宇}{171860624}
+    \date{\today}
+
+    \begin{document}
+    \maketitle
+    \noplagiarism
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %                       Homework START!                        %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \beginthishw
+    %%%%%%%%%%%%%%%%%%%%
+    \begin{problem}[TC 32.1-4]
+        Suppose we allow the pattern $P$ to contain occurrences of a gap character $\diamond$ that can match an arbitrary string of characters (even one of zero length). For example, the pattern $ab\diamond ba\diamond c$ occurs in the text $cabccbacbacab$ as
+
+        $$c \underbrace{ab}_{ab} \underbrace{cc}_{\diamond} \underbrace{ba}_{ba} \underbrace{cba}_{\diamond} \underbrace{c}_{c} ab$$
+
+        and as
+
+        $$c \underbrace{ab}_{ab} \underbrace{ccbac}_{\diamond} \underbrace{ba}_{ba} \underbrace{\text{ }}_{\diamond} \underbrace{c}_{c} ab$$
+
+        Note that the gap character may occur an arbitrary number of times in the pattern but not at all in the text. Give a polynomial-time algorithm to determine whether such a pattern $P$ occurs in a given text $T$, and analyze the running time of your algorithm.
+    \end{problem}
+
+    %\begin{remark}
+
+    %\end{remark}
+
+    \begin{solution}
+        We denote that $\diamond$ divide the pattern into $k$ parts.
+            \begin{algorithm}
+                \caption{字符串匹配}
+                \begin{algorithmic}[1] %每行显示行号
+                    % \Require $Array$数组，$n$数组大小
+                    % \Ensure 逆序数
+                    \Function {String-Matcher}{$T, P$}
+                    \State{$n$ = T.$length$}
+                    \State{$m$ = P.$length$}
+                    \State{$tmp = 0$}
+                    \State\For each j in [1,k]
+                    \State\For each s in [tmp,n-m]
+                    \State\If{P[$m_{j-1}\cdots m_{j}$] == T[$s+1\cdots (s+m_{j}-m_{j-1})$]}
+                    \State print("ok")
+                    % \EndIF
+                    \State $tmp=s+m_{j}-m_{j-1}$
+                    % \EndFor
+                    % \EndFor
+                    \EndFunction
+                \end{algorithmic}
+            \end{algorithm}
+    \end{solution}
+    %%%%%%%%%%%%%%%%%%%%%
+    \begin{problem}[TC 32.2-4]
+        Alice has a copy of a long $n$-bit file $A = \langle a_{n - 1}, a_{n - 2}, \ldots, a_0 \rangle$, and Bob similarly has an $n$-bit file $B = \langle b_{n - 1}, b_{n - 2}, \ldots, b_0 \rangle$. Alice and Bob wish to know if their files are identical. To avoid transmitting all of $A$ or $B$, they use the following fast probabilistic check. Together, they select a prime $q > 1000n$ and randomly select an integer $x$ from $\{ 0, 1, \ldots, q - 1 \}$. Then, Alice evaluates
+
+        $$A(x) = (\sum_{i = 0}^{n - 1} a_i x^i) \mod q$$
+
+        and Bob similarly evaluates $B(x)$. Prove that if $A \ne B$, there is at most one chance in $1000$ that $A(x) = B(x)$, whereas if the two files are the same, $A(x)$ is necessarily the same as $B(x)$. ($\textit{Hint:}$ See Exercise 31.4-4.)
+    \end{problem}
+
+    %\begin{remark}
+
+    %\end{remark}
+
+    \begin{solution}
+        We can know that
+        \[A(x)-B(x)=\sum_{i=0}^{n-1}(a_{i}-b_{i})x^{i}\ \mathrm{mod}\ q\]
+        Assume that $A\neq B$ while $A(x)=B(x)$, that is
+        \[\sum_{i=0}^{n-1}(a_{i}-b_{i})x^{i}\ \textrm{mod}\ q=0\ \textrm{and}\ \sum_{i=0}^{n-1}(a_{i}-b_{i})x^{i}\neq0\]
+        From Exercise 31.4-4, we get that there are at most $n$ number that mod $q$ is 0, so the probability is $P\leq \frac{n}{q}\leq\frac{n}{1000n}=\frac{1}{1000}$.\\
+        If $A=B$, then we get that
+        \[\sum_{i=0}^{n-1}(a_{i}-b_{i})x^{i}=\sum_{i=0}^{n-1}0=0\ \textrm{and}\ 0\ \textrm{mod}\ q=0\]
+        $A(x)$ is necessarily the same as $B(x)$.
+    \end{solution}
+    %%%%%%%%%%%%%%%%%%%%%
+    \begin{problem}[TC 32.3-5]
+        Given a pattern $P$ containing gap characters (see Exercise 32.1-4), show how to build a finite automaton that can find an occurrence of $P$ in a text $T$ in $O(n)$ matching time, where $n = |T|$.
+    \end{problem}
+
+    %\begin{remark}
+
+    %\end{remark}
+
+    \begin{solution}
+        We still divide pattern $P$ into $m$ parts that are $P_{1}*\cdots *P_{m}$, where $*$ is gap.\\
+        Then we give every $P_{i}$ a state. When we at state $P_{i}$, if we meet the part $P_{i+1}$ we choose to go to state $P_{i+1}$. Otherwise, we go to itself.\\
+        If we at the state $P_{m}$, we can say we find an occurrence of $P$ in a text $T$. And the matching time is $O(|T|)=O(n)$.
+
+    \end{solution}
+    %%%%%%%%%%%%%%%%%%%%%
+    \begin{problem}[TC 32.3-4(optional)]
+        Given two patterns $P$ and $P'$, describe how to construct a finite automaton that determines all occurrences of either pattern. Try to minimize the number of states in your automaton.
+    \end{problem}
+
+    %\begin{remark}
+
+    %\end{remark}
+
+\begin{solution}
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
