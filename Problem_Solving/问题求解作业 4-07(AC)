@@ -1,0 +1,162 @@
+%what is the homework? put it here.
+%2017-03-26 4-5
+%TC第31.1节练习 13
+%TC第31.2节练习 9
+%TC第31.5节练习 3
+%TC第31.6节练习 3
+% 选做 解同余方程组:
+% x = 3 (mod 8), x = 11 (mod 20), x = 1 (mod 15)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+%Math equation: \begin{align*}
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\title{4-7：数论算法课后作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.1.13]
+    Give an efficient algorithm to convert a given $\beta$-bit (binary) integer to a decimal
+    representation. Argue that if multiplication or division of integers whose length
+    is at most $\beta $ takes time $M(\beta )$, then we can convert binary to decimal in time  $\theta(M(\beta)\lg\beta)$. (Hint: Use a divide-and-conquer approach, obtaining the top and
+    bottom halves of the result with separate recursions.)
+\end{problem}
+
+\begin{solution}
+    \
+
+    \begin{algorithm}[H]
+        \caption{$\textsc{Divide-and-conquer}(l, r)$}
+        \label{alg:A}
+        \begin{algorithmic}[1]
+            \IF{$l=r$}
+            \RETURN{$bit[r]\cdot 2^{r}$}
+            \ENDIF
+            \STATE{set $x=\textsc{Divide-and-conquer}(\frac{l+r}{2}, r)$}
+            \STATE{set $y=\textsc{Divide-and-conquer}(l, \frac{l+r}{2})$}
+            \RETURN{$y+x$}
+        \end{algorithmic}
+    \end{algorithm}
+    We can easily see that the running time is $\theta(M(\beta)\lg\beta)$
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.2.9]
+    Prove that $n_1, n_2, n_3$, and $n_4$ are pairwise relatively prime if and only if
+    $$\gcd(n_1n_2,n_3n_4)=\gcd(n_1n_3,n_2n_4)=1$$
+    More generally, show that $n_1,n_2,...n_k$ are pairwise relatively prime if and only
+    if a set of $\lceil\lg k\rceil$ pairs of numbers derived from the $n_i$ are relatively prime.
+\end{problem}
+
+\begin{proof}
+    $\Rightarrow\because n_1,n_2,n_3,n_4$ are pairwise relatively prime. $\therefore n_4 \nmid n_1,n_2,n_3.\ \therefore n_4\nmid n_1n_2, n_4\nmid n_1n_3.\ \therefore n_3n_4\nmid n_1n_2,n_2n_4\nmid n_1n_3.\ \therefore \gcd(n_1n_2,n_3n_4)=1=\gcd(n_1n_3,n_2n_4)$.\\
+    $\Leftarrow$ We can assume that if $n_4\mid n_1$ with no loss of generality, then $\gcd(n_1n_3,n_2n_4)>\gcd(n_1,n_4)\neq 1$ which is impossible.\\
+    To promote it, $\Rightarrow$ is easily to proved. And if there exists a set of $\lceil\lg k\rceil$ pairs of numbers derived from the $n_i$ are relatively prime. We can assume that $n_{i}\mid n_{j}$ with no loss of generality, there are $\lceil\lg k\rceil$ pairs of numbers are relatively prime, so must exist a case that is $\gcd(n_{i}\cdots ,n_{j}\cdots)=1$ which is contrary to $n_{i}\mid n_{j}$. So $n_{1},n_{2},\cdots,n_{k}$ are pairwise relatively prime.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.5.3]
+    Argue that, under the definitions of Theorem 31.27, if $\gcd(a,n)=1$, then
+    $$(a^{-1}~mod ~n)\leftrightarrow ((a_{1}^{-1}~mod ~n_1),(a_{2}^{-1}~mod ~n_2),...,(a_{k}^{-1}~mod ~n_k))$$
+\end{problem}
+
+\begin{solution}
+    We know that $a\leftrightarrow (a_1,a_2,\cdots,a_k)$ so $(a~mod ~n)\leftrightarrow ((a_1~mod ~n_1),(a_2~mod ~n_2),\cdots,(a_k~mod ~n_k))$.\\
+    Then we can assume that $(a^{-1}~mod ~n)\nleftrightarrow ((a_{1}^{-1}~mod ~n_1),(a_{2}^{-1}~mod ~n_2),...,(a_{k}^{-1}~mod ~n_k))$\\
+    So we get that $((a\cdot a^{-1})~mod ~n)\nleftrightarrow ((a_1\cdot a_1^{-1}~mod ~n_1),(a_2\cdot a_2^{-1}~mod ~n_2),\cdots,(a_k\cdot a_k^{-1}~mod ~n_k))$ by 31.30.\\
+    That is to say $(1~mod ~n)\nleftrightarrow ((1~mod ~n_1),(1~mod ~n_2),\cdots,(1~mod ~n_k))$ whic contrary to $\gcd(a,n)=1$.\\
+    Thus, $(a^{-1}~mod ~n)\leftrightarrow ((a_{1}^{-1}~mod ~n_1),(a_{2}^{-1}~mod ~n_2),...,(a_{k}^{-1}~mod ~n_k))$
+
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.6.3]
+    Assuming that you know $\phi(n)$, explain how to compute $a^{-1}$ mod $n$ for any $a\in \mathbb{Z}_n^{*}$\\
+    using the procedure $\textsc{Modular-Exponentiation}$.
+\end{problem}
+\begin{solution}
+    According to Theorem 31.33 Discrete logarithm theorem, $a^{-1}\equiv a^{x}(\textrm{mod}\ n)$ holds if and only if the equation $-1\equiv x(\textrm{mod}\ \phi(n))$ holds.\\
+    That is to say $x\equiv \phi(n)-1$, So we just need to compute $a^{\phi(n)-1}$.\\
+    By using the precedure $\textsc{Modular-Exponentiation}(a,\phi(n-1),n)$, then we can easily solve the problem.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[选做]
+    解同余方程组:\\ x = 3 (mod 8), x = 11 (mod 20), x = 1 (mod 15)
+\end{problem}
+\begin{solution}
+    The solution is $331+2400k,k\in \mathbb{Z}$.
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
