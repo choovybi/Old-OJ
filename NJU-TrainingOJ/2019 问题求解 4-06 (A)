@@ -1,0 +1,77 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-04-05 11:26
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define MAXM 10005
+#define MAXN 1000005
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+int nxt[MAXM];
+char T[MAXN], P[MAXM];
+int tlen, plen;
+
+inline void get_nxt() {
+    nxt[0] = 0;
+    nxt[1] = 0;
+    for(int i(2); i<=plen; ++i) {
+        int k = nxt[i-1];
+        while(k>0 && P[i]!=P[k+1])
+            k = nxt[k];
+        if(P[i]==P[k+1])
+            ++k;
+        nxt[i] = k;
+    }
+}
+
+inline void KMP() {
+    bool flag = false;
+    int k = 0;
+    for(int i(1); i<=tlen; ++i) {
+        while(k>0 && P[k+1]!=T[i])
+            k = nxt[k];
+        if(P[k+1]==T[i])
+            ++k;
+        if(k==plen) {
+            // k = 0;
+            printf("%d\n",i-plen+1);
+            flag = true;
+        }
+    }
+    if(!flag)
+        printf("nmdwsm\n");
+    return;
+}
+
+int main() {
+    scanf("%s", T+1);
+    scanf("%s", P+1);
+    tlen = strlen(T+1);
+    plen = strlen(P+1);
+    // cout<<tlen<<endl;
+    // cout<<plen<<endl;
+    get_nxt();
+    KMP();
+    return 0;
+}
