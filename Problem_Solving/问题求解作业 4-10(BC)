@@ -1,0 +1,114 @@
+%what is the homework? put it here.
+%2019-04-25 22:00 4-9 代数编码(OLD)
+%TJ第8章练习6(b,d),7(c,d),9,11(b,d),13
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+%Math equation: \begin{align*}
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+%\usepackage{clrscode3e}
+\usepackage{float}
+\usepackage{enumerate}
+\title{4-10：问题的形式化描述课前作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH2.3.1.8]
+    Design a representation of weighted graphs,
+    where weights are some positive integers,
+    using the alphabet $\{0, 1, \#\}$.
+\end{problem}
+
+\begin{solution}
+    We know that the weight of road is positive, so it can be denoted as $a_{ij1}\cdots a_{ijn}$.
+    And so the weighted graph is
+    \[a_{111}\cdots a_{11n}\#\cdots \#a_{mk1}\cdots a_{mkn}\#\#.\]
+    $\#$ is the end of word and $\#\#$ is the end of one line.
+\end{solution}
+
+
+\begin{problem}[JH2.3.3.8]
+    Describe a polynomial-time verifier for
+    \begin{enumerate}[(i)]
+        \item HC,
+        \item VC, and
+        \item C$_\text{LIQUE}$.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{enumerate}[(i)]
+        \item Firstly, we check all the nodes to see whether the number of them equals to the graph.\\
+            What's more, we need to check whether they are unique and path is connected.\\
+            Finally, we check whether every edge exists in the original graph.
+        \item We need to check all the adjacent nodes.
+        \item We need to check those nodes which are connected with all other nodes.
+    \end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
