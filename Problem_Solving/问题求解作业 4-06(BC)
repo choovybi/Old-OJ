@@ -1,0 +1,190 @@
+%what is the homework? put it here.
+%2017-03-20 4-4：群同态基本定理与正规子群
+%理解抽象代数结构的基本概念
+%理解群同态基本思想
+%TJ第9、10、11章
+%群同态、同构基本思想
+%课后作业(截止日期: 2019-03-23 22:00)
+%TJ第9章练习 11、23
+%TJ第10章练习 11
+%TJ第11章练习 5
+%(选做) TJ第11章练习 17
+%(选做) 在同构意义下, 给出所有的六阶群。
+%(你可以再尝试给出所有的八阶群。)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+
+%Math equation: \begin{align*}
+
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+
+%Picture
+%\begin{figure}[!H]
+% \centering
+% \includegraphics[scale=0.6]{1.png}
+% % \caption{this is a figure demo}
+% \label{fig:label}
+% \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+
+\input{preamble}
+
+\title{4-6：数论基础课前作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ: 2-15(b)(f)]
+    For each of the following pairs of numbers $a$ and $b$, calculate $\gcd(a, b)$ and find integers $r$ and $s$ such that $\gcd(a, b) = ra + sb$.\\
+    (b) 234 and 165\\
+    (f) -4357 and 3754
+\end{problem}
+\begin{solution}
+    (b). $\gcd(234, 165)=3$, $r=12, s=-17$.\\
+    (f). $\gcd(-4357,3754)=1$, $r=1463, s=1698$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ: 2-16]
+    Let $a$ and $b$ be nonzero integers.
+    If there exist integers $r$ and $s$ such that $ar + bs = 1$, show that $a$ and $b$ are relatively prime.
+\end{problem}
+\begin{proof}
+    We suppose the $a$ and $b$ are not relatively prime, then we can assume that $b=a\times x$.
+    \[ar+bs=1\Rightarrow ar+(a\times x)s=1\Rightarrow r+xs=\frac{1}{a}.\]
+    Where $r,x,s$ are all integers, so the equation is impossible.\\
+    That's why $a$ and $b$ are relatively prime.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ: 2-19]
+    Let $x, y \in \mathbb{N}$ be relatively prime.
+    If $xy$ is a perfect square, prove that $x$ and $y$ must both be perfect squares.
+\end{problem}
+\begin{proof}
+    We know that $xy$ is a perfect square, that means $xy=a^{2}$.\\
+    According to Theorem 2.15, we get that $a=p_{1}\cdots p_{k}$, where $p_{1},\cdots,p_{k}$ are primes.\\
+    That means $xy=p_{1}^{2}\cdots p_{k}^{2}$.\\
+    Assume that there exist a prime $p_{i}$ whick has $p_{i}|x$, then we can get that $p_{i}|y$ must be confirmed.\\
+    So we have $\gcd(x,y)\geq p_{i}\neq 1$, which conflict the premise.
+    Then we have that for every $i$ in $[1\cdots k]$, either $p_{i}^{2}|x$ or $p_{i}^{2}|y$.\\
+    It's obvious that $x$ can be rewrited as $p_{1_1}^{2}\cdots p_{k_1}^{2}$, and $y$ can be rewrited as $p_{1_{2}}^{2}\cdots p_{k_{2}}^{2}$, which proves that $x$ and $y$ are all perfect square.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-2]
+    If $a \cdot 133 − 2m \cdot 277 = 1$, does this guarantee that $a$ has an inverse mod $m$?
+    If so, what is it?
+    If not, why not?
+\end{problem}
+\begin{solution}
+    According to Lemma 2.8, there exists an inverse of $a$ mod $m$.\\
+    $a\cdot133-2m\cdot277=1\Rightarrow a\cdot_{m}133=1$ has a solution.\\
+    So by then definition, the inverse $a^{\prime}=133$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-4]
+    How many elements a are there such that $a · _{31} 22 = 1$?
+    How many elements a are there such that $a · _{10} 2 = 1$?
+\end{problem}
+\begin{solution}
+    (1). $a\cdot22+31y=1$, because $22$ and $31$ are relatively prime. So there are only one solution, that means only one element $a$ meets the requirement.\\
+    (2). $a\cdot2+10y=1$, there is no solution. So the number of element $a$ is zero.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-6]
+    If $a · 133 − m · 277 = 1$, what can you say about all possible common divisors of $a$ and $m$?
+\end{problem}
+\begin{solution}
+    According to Lemma 2.11, $\gcd(a, m)=1$. So there is only one common divisors of $a$ and $m$ that is $1$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-8]
+    If $k = jq + r$, as in Euclid’s division theorem, is there a relationship between $\gcd(q, k)$ and $\gcd(r, q)$?
+    If so, what is it?
+\end{problem}
+\begin{solution}
+    $\gcd(q,k)=\gcd(r,q)$
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-16]
+    Notice that if m is negative, then −m is positive.
+    Thus, by Theorem 2.12, $−m = qn + r$ for $0 \leq r<n$.
+    This gives $m = −qn − r$.
+    If $r = 0$, then $m = q\prime n + r\prime$ for $0 \leq r\prime <n$ and $q\prime = −q$.
+    However, if $r > 0$, then you cannot take $r\prime = −r$ and have $0 \leq r\prime < n$.
+    Notice, though, that because you have already finished the case in which $r = 0$, you may assume that $0 \leq n − r<n$.
+    This suggests that if you were to take $r\prime$ to be $n − r$, you might be able to find a $q\prime$ so that $m = q\prime n + r\prime$, with $0 \leq r\prime \leq n$, which would let you conclude that Euclid’s division theorem is valid for negative values $m$ as well as for nonnegative values $m$.
+    Find a $q\prime$ that works, and explain how you have extended Euclid’s division theorem from the version in Theorem 2.12 to the version in Theorem 2.1.
+\end{problem}
+\begin{solution}
+    We can let $r^{\prime}=n-r$, so if $r>0$, $m=-qn-r=(-q-1)n+n-r=(-q-1)n+r^{\prime}$. We can also make $q^{\prime}=-q-1$, so we get that $m=q^{\prime}n+r^{\prime}$, where $0\leq r^{\prime}=n-r<n$ and $q^{\prime}=-q-1$.\\
+    That means Euclid's division theorem is valid for negative values $m$ as well as for nonnegative and we extend it to Theorem 2.1.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+
