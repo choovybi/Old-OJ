@@ -1,0 +1,103 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-04 09:53
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cctype>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 505
+
+struct Pair {
+    Pair(int x, int y, int w, int n) {
+        this->x = x;
+        this->y = y;
+        this->w = w;
+        this->n = n;
+    }
+    int x;
+    int y;
+    int w;
+    int n;
+};
+
+int t[MAXN][MAXN], check[MAXN][MAXN], num[MAXN][MAXN];
+int d[8][2] = { {-1, 2}, { 1, 2}, { 2, 1}, { 2, -1}, { 1, -2}, {-1, -2}, {-2, -1}, {-2, 1} };
+int h, w, answer, sum = 0;
+bool flag = false;
+
+int main() {
+    scanf("%d %d", &h, &w);
+    for(int i(0); i < h; ++i) {
+        for(int j(0); j < w; ++j) {
+            char c;
+            scanf("%c", &c);
+            while(!isdigit(c) && c != '#' && c != ' ')
+                scanf("%c", &c);
+            check[i][j] = false;
+            if(c == ' ')
+                t[i][j] = 0;
+            else if(c == '#')
+                t[i][j] = -1;
+            else
+                t[i][j] = c-'0';
+        }
+    }
+    queue<Pair> q;
+    q.push(Pair(0, 0, t[0][0], 0));
+    check[0][0] = 1;
+    while(!q.empty()) {
+        int x = q.front().x;
+        int y = q.front().y;
+        int wei = q.front().w;
+        int nig = q.front().n;
+        q.pop();
+        if(x == h-1 && y == w-1) {
+            flag = true;
+            answer = nig;
+            sum = check[x][y];
+            break;
+        }
+        if(wei > 0) {
+            q.push(Pair(x, y, wei-1, nig+1));
+            continue;
+        }
+        for(int i(0); i < 8; ++i) {
+            int xi = x+d[i][0];
+            int yi = y+d[i][1];
+            if(xi >= 0 && xi < h && yi >= 0 && yi < w && t[xi][yi] != -1) {
+                if(check[xi][yi] == 0) {
+                    q.push(Pair(xi, yi, t[xi][yi], nig+1));
+                    check[xi][yi] = check[x][y];
+                    num[xi][yi] = nig;
+                } else if(num[xi][yi] == nig)
+                    check[xi][yi] += check[x][y];
+            }
+        }
+    }
+    if(flag)
+        printf("%d %d\n", answer, sum);
+    else
+        printf("endless nightmare...\n");
+}
