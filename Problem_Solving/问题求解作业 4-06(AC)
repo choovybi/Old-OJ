@@ -1,0 +1,138 @@
+%what is the homework? put it here.
+%2017-03-20 4-4：群同态基本定理与正规子群
+%理解抽象代数结构的基本概念
+%理解群同态基本思想
+%TJ第9、10、11章
+%群同态、同构基本思想
+%课后作业(截止日期: 2019-03-23 22:00)
+%TJ第9章练习 11、23
+%TJ第10章练习 11
+%TJ第11章练习 5
+%(选做) TJ第11章练习 17
+%(选做) 在同构意义下, 给出所有的六阶群。
+%(你可以再尝试给出所有的八阶群。)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+
+%Math equation: \begin{align*}
+
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+
+\input{preamble}
+
+\title{4-6：数论基础课后作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ: 2-29]
+    Prove that there are an infinite number of primes of the form $6n + 5$.
+\end{problem}
+%\begin{remark}
+
+%\end{remark}
+
+\begin{solution}
+    Suppose that there are only a finite number of primes whose form is $6n+5$, say $p_{1},\cdots,p_{n}$. We also know that $p_{i}p_{j}=6n+1$.\\
+    If $n$ is odd, Let $P=p_{1}\cdots p_{n}$ which is also in the form $6n+5$ and bigger than every $p_{i}$, which contradicts the assumption.\\
+    If $n$ is even, Let $P=p_{1}\cdots p_{n}+4$. There $P$ must be divided by $p_{i},i\in [1,n]$. In this case, $p_{i}$ muse divide $P-p_{n-1}p_{n}=4$, which is impossible because $p_{i}$ is in the form of $6n+5$.\\
+    That is to say, there are an infinite number of primes of the form $6n+5$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TJ: 2-30]
+    Prove that there are an infinite number of primes of the form $4n − 1$.
+\end{problem}
+%\begin{remark}
+%\end{remark}
+
+\begin{solution}
+    Suppose that there are only a finite number of primes whose form is $4n-1$, say $p_{1},\cdots,p_{n}$. We also know that $p_{i}p_{j}=4n+1$.\\
+    If $n$ is odd, Let $P=p_{1}\cdots p_{n}$ which is also in the form $4n-5$ and bigger than every $p_{i}$, which contradicts the assumption.\\
+    If $n$ is even, Let $P=p_{1}\cdots p_{n}+2$. There $P$ must be divided by $p_{i},i\in [1,n]$. In this case, $p_{i}$ muse divide $P-p_{n-1}p_{n}=2$, which is impossible because $p_{i}$ is in the form of $4n-1$.\\
+    That is to say, there are an infinite number of primes of the form $4n-1$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[CS: 2.2-19]
+    The least common multiple (LCM) of two positive integers $x$ and $y$ is the smallest positive integer $z$ such that $z$ is an integer multiple of both $x$ and $y$.\\
+    Give a formula for the least common multiple that involves the GCD.
+\end{problem}
+%\begin{remark}
+
+%\end{remark}
+
+\begin{solution}
+    $\mathrm{lcm}(x,y)=\gcd(x,y)(x/\gcd(x,y))(y/\gcd(x,y))$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \end{document}
+
