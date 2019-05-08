@@ -1,0 +1,190 @@
+%what is the homework? put it here.
+%2017-04-6  4-7 数论算法
+%TC第31.1节练习 12
+%TC第31.2节练习 5
+%TC第31.3节练习 5
+%TC第31.4节练习 2
+%TC第31.5节练习 2
+%TC第31.6节练习 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         My Template:                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Code(C++): \begin{lstlisting}
+%Algorithm:
+%\begin{breakablealgorithm}
+%  \caption{?statement}
+%  \begin{algorithmic}[?number]
+%    \Require ?input
+%    \Ensure ?output
+%    \Procedure{Equal}{?parameters}
+%      \State ?blabla
+%    \EndProcedure
+%  \end{algorithmic}
+%\end{breakablealgorithm}
+%Itemlisting: \begin{itemize} or \begin{enumerate}[label=(\alph*)]
+%Math equation: \begin{align*}
+%Table: \begin{tabular}{|c|c|c|}
+%           blabla | blabla | blabla \\
+%           ......
+%Picture: \centerline{\includegraphics[scale=X]{FileName}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Title START!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsmath}
+
+\title{4-7：数论算法课前作业}
+\me{毕秋宇}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.1.12]
+    Give efficient algorithms for the operations of dividing a $\beta$-bit integer by a shorter
+    integer and of taking the remainder of a $\beta$-bit integer when divided by a shorter
+    integer. Your algorithms should run in time $\theta(\beta^{2})$.
+\end{problem}
+
+\begin{solution}
+    We exchange division by multiplication, and using the divide-and-conquer method. When we meet the condition that $val=1$ and the last multiplication is bigger than $a$, we should leave the loop. And the runing time is $\theta(\beta^{2})$.
+    \begin{algorithm}[H]
+        \caption{Beta-Bits}
+        \label{alg:A}
+        \begin{algorithmic}[1]
+            \STATE {set $quot=0$, $val=a>>1$}
+            \REPEAT
+            \IF{$(b*(quot+val)) == a$}
+            \STATE {set $quot = quot+value$}
+            \STATE {set $remain = 0$}
+            \ELSIF{$(b*(quot+val)) > a$}
+            \IF{$val==1$}
+            \STATE {break}
+            \ELSE
+            \STATE {set $val = val >> 1$}
+            \ENDIF
+            \ELSE
+            \STATE {set $quot = quot + value$}
+            \IF{$val != 1$}
+            \STATE {set $val = val>>1$}
+            \ENDIF
+            \ENDIF
+            \UNTIL{$true$}
+            \STATE {set $remain=a-(b*quot)$}
+            \RETURN{$remain, quot$}
+        \end{algorithmic}
+    \end{algorithm}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.2.5]
+    If $a>b\geq 0$,show that the call $\mathbf{EUCLID}$ makes at most 1 + $\mathrm{log}_{\phi} \mathrm{b}$ recursive
+    calls. Improve this bound to 1+$\mathrm{log}_{\phi}(b/\gcd(a,b))$
+\end{problem}
+\begin{proof}
+    Suppose that the number of recursive calls is more than $1+\log_{\phi}b$. According to Lemma 31.10, $a>F_{(3+\log_{\phi}b)}, b>F_{(2+\log_{\phi}b)}$. That is to say $b>\frac{\phi^{2+\log_{\phi}b}}{\sqrt{5}}=\frac{\phi^{2}\cdot b}{\sqrt{5}}=\frac{(\frac{1+\sqrt{5}}{2})^2\cdot b}{\sqrt{5}}=\frac{5+3\sqrt{5}}{10}\cdot b>b$, which is impossible. So the number of recursive calls is at most $1+\log_{\phi}b$.\\
+    Assume that the number of recursive calls is more than $1+\log_{\phi}(b/\gcd(a,b))$. And we know that the recursive ends with mod equaling to 0, so $\frac{a}{\gcd(a,b)},\frac{b}{\gcd(a,b)}$ run the same time as $a,b$. According to Lemma 31.10, $\frac{b}{\gcd(a,b)}>F_{(2+\log_{\phi}(b/\gcd(a,b)))}=\frac{b}{\gcd(a,b)}$ which is impossible. So the bound is $1+\log_{\phi}(b/\gcd(a,b))$.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.3.5]
+    Show that for any integer $n>1$ and for any $a\in \mathbb{Z}_{n}^{*}$,the function $f_a:\mathbb{Z}_{n}^{*} \rightarrow \mathbb{Z}_{n}^{*}  $ defined by $f_a (x)=ax$ mod $n$ is a permutation of $\mathbb{Z}_{n}^{*}$
+\end{problem}
+\begin{solution}
+    According to Corollary 31.19, we know that $e=a^{|\mathbb{Z}^{*}_{n}|}=a\cdot a^{|\mathbb{Z}^{*}_{n}|-1}$. So, if $x\in [a^{|\mathbb{Z}^{*}_{n}|-1}]$, then $f_{a}(x)=e$. That is to say, $\forall y\in \mathbb{Z}^{*}_{n}, \exists xy\in \mathbb{Z}^{*}_{n}$ where $x\in [a^{|\mathbb{Z}^{*}_{n}|-1}]$ makes $f_{a}(xy)=a\cdot a^{|\mathbb{Z}^{*}_{n}|-1}y=ey=y$. Thus, function $f_{a}$ is a permutation of $\mathbb{Z}^{*}_{n}$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.4.2]
+    Prove that the equation $ax\equiv ay $ (mod $n$) implies $x\equiv y $ (mod $n$) whenever
+    $\gcd (a,n)=1$. Show that the condition $\gcd (a,n) = 1$ is necessary by supplying a
+    counterexample with $\gcd (a,n) > 1$.
+\end{problem}
+\begin{solution}
+    We can assume that $ax\equiv ay\equiv b(\mathrm{mod}\ n)$. According to $\gcd(a,n)=1$ and Corollary 31.25, we know that solution is unique, modulo $n$. That is to say $[x]=[y]$ is unique, $x\equiv y(\mathrm{mod}\ n)$.\\
+    We can set $a=4$ and $n=2,\gcd(a,n)=2>1$. $2x\equiv 2y\equiv 0(\mathrm{mod}\ 2)$. However, $x,y$ can be one even and the other odd, which can not imply $x\equiv y$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.5.2]
+    Find all integers x that leave remainders 1, 2, 3 when divided by 9, 8, 7 respectively.
+\end{problem}
+\begin{solution}
+    According to the Chinese remainder theorem, all the integers $x=10+504k, k\in\mathbb{N}$.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC: 31.6.2]
+    Give a modular exponentiation algorithm that examines the bits of b from right to
+    left instead of left to right.
+\end{problem}
+\begin{solution}
+    \begin{algorithm}[H]
+        \caption{Bits-Examine}
+        \label{alg:B}
+        \begin{algorithmic}[1]
+            \STATE{set $d=1$}
+            \REPEAT
+            \IF{$b_{i}=1$}
+            \STATE{set $d=(d\cdot a)\ \mathrm{mod}\ n$}
+            \ENDIF
+            \STATE{set $a=(a\cdot a)\ \mathrm{mod}\ n$}
+            \STATE{set $i=i+1$}
+            \UNTIL{$i=k$}
+        \end{algorithmic}
+    \end{algorithm}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[TC: 31.1.12]
+
+%\end{problem}
+%\begin{solution}
+
+%\end{solution}
+%%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[TC: 31.1.12]
+
+%\end{problem}
+%\begin{solution}
+
+%\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      Correction START!                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begincorrection
+%%%%%%%%%%%%%%%%%%%%
+%\begin{problem}[]
+
+%\end{problem}
+
+%\begin{cause}
+%
+%\end{cause}
+
+%\begin{revision}
+
+%\end{revision}
+%%%%%%%%%%%%%%%%%%%%
+%\newpage
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Feedback START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\beginfb
+%\begin{itemize}
+%
+%\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Homework END!                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
