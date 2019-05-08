@@ -1,0 +1,135 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-04-05 14:35
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+#define MAXH 1005
+#define MAXW 1005
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const ll MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+
+ll H, W, t, h, w, tlen, plen, cnt = 0;
+ll text[MAXH][MAXW], T[MAXH][MAXW], pattern[MAXH][MAXW];
+ll nxt[MAXW], P[MAXW];
+bool flag = false;
+
+inline void get_nxt() {
+    nxt[0] = 0;
+    nxt[1] = 0;
+    for(int i(2); i<=plen; ++i) {
+        ll k = nxt[i-1];
+        while(k>0 && P[i]!=P[k+1])
+            k = nxt[k];
+        if(P[i]==P[k+1])
+            ++k;
+        nxt[i] = k;
+    }
+}
+
+inline bool KMP(ll index) {
+    ll k = 0;
+    for(int i(1); i<=tlen; ++i) {
+        while(k>0 && P[k+1]!=T[index][i])
+            k = nxt[k];
+        if(P[k+1]==T[index][i])
+            ++k;
+        if(k==plen)
+            return true;
+    }
+    return false;
+}
+
+inline bool violence(ll index) {
+    int cmp = 0;
+    for(int s(0); s<=W-w; ++s) {
+        for(int j(1); j<=w; ++j) {
+            if(T[index][s+j]==P[j])
+                ++cmp;
+            else {
+                cmp = 0;
+                break;
+            }
+            if(cmp==w)
+                return true;
+        }
+    }
+    return false;
+}
+
+inline bool solve() {
+    ll d = 2;
+    for(int i(1); i<=w; ++i) {
+        P[i] = 0;
+        for(int j(1); j<=h; ++j)
+            P[i] = P[i]*d+pattern[j][i];
+    }
+    get_nxt();
+
+    if(!flag) {
+        for(int i(1); i<=W; ++i) {
+            T[0][i] = 0;
+            for(int j(1); j<=h; ++j)
+                T[0][i] = T[0][i]*d+text[j][i];
+        }
+        for(int i(1); i<=H-h; ++i)
+            for(int j(1); j<=W; ++j)
+                T[i][j] = T[i-1][j]*d-text[i][j]*(1LL<<h)+text[i+h][j];
+        flag = true;
+    }
+    for(int i(0); i<=H-h; ++i)
+        if(KMP(i))
+            return true;
+    return false;
+}
+
+int main() {
+    scanf("%lld%lld%lld%lld%lld%*c", &H, &W, &t, &h, &w);
+    plen = w;
+    tlen = W;
+    cnt = 0;
+    memset(text,0,sizeof(text));
+    memset(T,0,sizeof(T));
+    for(int i(1); i<=H; ++i) {
+        char tmp[MAXW];
+        scanf("%s", tmp+1);
+        for(int j(1); j<=W; ++j)
+            text[i][j] = (ll)(tmp[j]-'0');
+    }
+
+    while(t--) {
+        memset(nxt, 0, sizeof(nxt));
+        memset(pattern,0,sizeof(pattern));
+        memset(P,0,sizeof(P));
+        for(int i(1); i<=h; ++i) {
+            char tmp[MAXW];
+            scanf("%s", tmp+1);
+            for(int j(1); j<=w; ++j)
+                pattern[i][j] = (ll)(tmp[j]-'0');
+        }
+        if(solve())
+            ++cnt;
+    }
+    printf("%lld\n", cnt);
+    return 0;
+}
