@@ -1,0 +1,121 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-03-29 10:07
+* Filename      : C.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 1005
+int n, m, k = 0;
+bool nb[MAXN];
+bool edge[MAXN][MAXN];
+int f[MAXN];
+int r[MAXN];
+
+inline void init_set(int x) {
+    for(int i(1); i<=x; ++i) {
+        f[i] = i;
+        r[i] = 0;
+        edge[i][i] = true;
+    }
+}
+inline int find_set(int x) {
+    if(f[x]!=x) {
+        int fx = f[x];
+        f[x] = find_set(fx);
+        r[x] = (r[x]+r[fx])%2;
+    }
+    return f[x];
+}
+inline void union_set(int a, int b) {
+    int fa = find_set(a);
+    int fb = find_set(b);
+    if(nb[fb] == true) {
+        f[fa] = fb;
+        r[fa] = (r[a]+r[b]+1)%2;
+    } else {
+        f[fb] = fa;
+        r[fb] = (r[a]+r[b]+1)%2;
+    }
+}
+
+int main() {
+    scanf("%d%d%d%*c", &n, &m, &k);
+    memset(nb, false, sizeof(nb));
+    memset(edge, false, sizeof(edge));
+    for(int i(0); i<k; ++i) {
+        int tmp = 0;
+        scanf("%d", &tmp);
+        nb[tmp] = true;
+    }
+    // cout<<"n="<<n<<";m="<<m<<";k="<<k<<endl;
+    init_set(n);
+    for(int i(0); i<m; ++i) {
+        int u, v = 0;
+        scanf("%d%d%*c", &u, &v);
+        union_set(u, v);
+        edge[u][v] = true;
+        edge[v][u] = true;
+    }
+    // for(int i(1); i<=n; ++i) {
+    // for(int j(1); j<=n; ++j)
+    // cout<<edge[i][j]<<" ";
+    // cout<<endl;
+    // }
+    int cnt = 0;
+    for(int i(1); i<=n; ++i) {
+        for(int j(1); j<=n; ++j) {
+            int fi = find_set(i);
+            int fj = find_set(j);
+            // cout<<"f["<<i<<"]="<<fi<<" ";
+            // cout<<"f["<<j<<"]="<<fj<<endl;
+            if(fi==fj) {
+                if(edge[i][j]==false && edge[j][i]==false) {
+                    union_set(i, j);
+                    edge[i][j] = true;
+                    edge[j][i] = true;
+                    ++cnt;
+                    // cout<<"case1"<<endl;
+                }
+            } else {
+                if(nb[fi]==false || nb[fj]==false) {
+                    union_set(i, j);
+                    edge[i][j] = true;
+                    edge[j][i] = true;
+                    ++cnt;
+                    // cout<<"case2"<<endl;
+                }
+            }
+        }
+    }
+    // cout<<endl;
+    // for(int i(1); i<=n; ++i) {
+    // for(int j(1); j<=n; ++j)
+    // cout<<edge[i][j]<<" ";
+    // cout<<endl;
+    // }
+    printf("%d\n", cnt);
+
+    return 0;
+}
