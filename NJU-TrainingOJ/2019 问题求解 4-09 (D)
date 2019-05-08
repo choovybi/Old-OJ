@@ -1,0 +1,97 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-05 10:30
+* Filename      : D.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 135
+
+int mat[MAXN][MAXN];
+bool ban[MAXN], vis[MAXN];
+int N, M, PO, CR, YD, SG;
+int dis[MAXN], e[MAXN];
+
+void dijkstra(int a[], int s) {
+    for (int i = 1; i <= N; i++) {
+        vis[i] = ban[i];
+        a[i] = INF;
+    }
+
+    a[s] = (ban[s] ? INF : 0);
+
+    int i, j;
+    for (;;) {
+        for (i = 1; i <= N && vis[i]; i++);
+        for (j = i + 1; j <= N; j++)
+            if (!vis[j] && a[j] < a[i])
+                i = j;
+
+        if (i > N || a[i] >= INF)
+            break;
+        vis[i] = true;
+        for (j = 1; j <= N; j++) {
+            if (a[i] + mat[i][j] < a[j])
+                a[j] = a[i] + mat[i][j];
+        }
+    }
+
+    for (i = 1; i <= N; i++)
+        if (ban[i])
+            a[i] = INF;
+}
+
+int main() {
+    scanf("%d%d%d%d%d%d%*c", &N, &M, &PO, &CR, &YD, &SG);
+    for(int i(1); i<= N; ++i)
+        for(int j(1); j<= N; ++j)
+            mat[i][j] = INF;
+
+    for(int i(0); i<M; ++i) {
+        int u, v, w = 0;
+        scanf("%d%d%d%*c", &u, &v, &w);
+        if(mat[u][v] > w)
+            mat[u][v] = mat[v][u] = w;
+    }
+
+    for (int i(1); i <= N; ++i)
+        ban[i] = false;
+    dijkstra(dis, PO);
+    dijkstra(e, CR);
+
+    for (int i = 1; i <= N; ++i)
+        for (int j = 1; j <= N; ++j)
+            if (mat[i][j] != INF && dis[i] + mat[i][j] + e[j] == dis[CR])
+                mat[i][j] = mat[j][i] = INF;
+
+    for (int i = 1; i <= N; ++i)
+        ban[i] = (dis[i] + e[i] == dis[CR]);
+
+    dijkstra(dis, YD);
+    if (dis[SG] >= INF)
+        printf("SNAFU\n");
+    else
+        printf("%d\n", dis[SG]);
+    return 0;
+}
