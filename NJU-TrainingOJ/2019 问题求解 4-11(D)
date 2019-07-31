@@ -1,0 +1,84 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-17 11:38
+* Filename      : D.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 500005
+struct Edge {
+    int t;
+    int nex;
+} edge[2*MAXN];
+int depth[MAXN],fa[MAXN][22],lg[MAXN],head[MAXN];
+int tot;
+int n,m,s;
+
+inline void add(int x,int y) {
+    edge[++tot].t=y;
+    edge[tot].nex=head[x];
+    head[x]=tot;
+}
+
+inline void dfs(int f,int fath) {
+    depth[f]=depth[fath]+1;
+    fa[f][0]=fath;
+    for(int i=1; (1<<i)<=depth[f]; ++i)
+        fa[f][i]=fa[fa[f][i-1]][i-1];
+    for(int i=head[f]; i; i=edge[i].nex)
+        if(edge[i].t!=fath)
+            dfs(edge[i].t,f);
+}
+
+inline int lca(int x,int y) {
+    if(depth[x]<depth[y])
+        swap(x,y);
+    while(depth[x]>depth[y])
+        x=fa[x][lg[depth[x]-depth[y]]-1];
+    if(x==y)
+        return x;
+    for(int k=lg[depth[x]]-1; k>=0; k--)
+        if(fa[x][k]!=fa[y][k])
+            x=fa[x][k], y=fa[y][k];
+    return fa[x][0];
+}
+
+int main() {
+    scanf("%d%d%d",&n,&m,&s);
+    for(int i=1; i<=n-1; ++i) {
+        int x,y;
+        scanf("%d%d",&x,&y);
+        add(x,y);
+        add(y,x);
+    }
+    dfs(s,0);
+    for(int i=1; i<=n; ++i)
+        lg[i]=lg[i-1]+(1<<lg[i-1]==i);
+    for(int i=1; i<=m; ++i) {
+        int x,y;
+        scanf("%d%d",&x,&y);
+        printf("%d\n",lca(x,y));
+    }
+    return 0;
+}
