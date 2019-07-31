@@ -1,0 +1,137 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-17 11:36
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 20005
+
+struct Tarjan {
+    int n;
+
+    vector<int>e[MAXN];
+    int dfn[MAXN], low[MAXN], stk[MAXN];
+    bool ins[MAXN];
+    int top, index;
+
+    vector<vector<int> >ans;
+
+    void init(int N) {           //初始化
+        n = N;
+
+        ans.clear();
+        for (int i = 1; i <= n; ++i)
+            e[i].clear();
+        top = 0;
+        index = 0;
+
+        memset(dfn, -1, sizeof(dfn));
+        memset(ins, 0, sizeof(ins));
+    }
+
+    void add_edge(int u, int v) {//添加边
+        e[u].push_back(v);
+    }
+
+    void dfs(int u) {
+        dfn[u] = low[u] = ++index;
+        stk[top++] = u;
+        ins[u] = true;
+
+        for (int i = 0; i < e[u].size(); ++i) {
+            int v = e[u][i];
+            if (dfn[v] == -1) {
+                dfs(v);
+                low[u] = min(low[u], low[v]);
+            } else if (ins[v])
+                low[u] = min(low[u], dfn[v]);
+        }
+        if (dfn[u] == low[u]) {
+            vector<int>q;
+            int v = stk[top - 1];
+            while (u != v) {
+                q.push_back(v);
+                ins[v] = false;
+                top--;
+                v = stk[top - 1];
+            }
+            q.push_back(u);
+            ins[u] = false;
+            top--;
+            ans.push_back(q);
+        }
+    }
+
+    void solve() {
+        for (int i = 1; i <= n; ++i)
+            if (dfn[i] == -1)
+                dfs(i);
+    }
+} T;
+int num[MAXN];
+bool vis[MAXN];
+vector<int> e[MAXN];
+int n, m;
+int main() {
+    while (~scanf("%d%d",&n,&m)) {
+        int u, v;
+        T.init(n);
+        while(m--) {
+            scanf("%d%d", &u, &v);
+            T.add_edge(v, u);
+        }
+        T.solve();
+
+        for (int i = 1; i<=n; ++i)
+            e[i].clear();
+        for (int i = 0; i< T.ans.size(); ++i)
+            for (int j = 0; j< T.ans[i].size(); ++j)
+                num[T.ans[i][j]] = i + 1;
+
+        for (int i = 1; i<=n; ++i)
+            for (int j = 0; j < T.e[i].size(); ++j) {
+                if (num[i] == num[T.e[i][j]])
+                    continue;
+                e[num[i]].push_back(num[T.e[i][j]]);
+            }
+        n = T.ans.size();
+
+        memset(vis, 0, sizeof(vis));
+        int zin = 0, zout = 0;
+        for (int i = 1; i <= n; ++i) {
+            if (e[i].size() == 0)zout++;
+            for (int j = 0; j < e[i].size(); ++j)
+                vis[e[i][j]] = true;
+        }
+        for(int i=1; i<=n; ++i)
+            if(!vis[i])
+                ++zin;
+        if (n != 1)
+            printf("%d\n", max(zin, zout));
+        else
+            printf("0\n");
+    }
+    return 0;
+}
