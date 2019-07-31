@@ -1,0 +1,87 @@
+%TC第34.1节练习 5
+%TC第34.2节练习 3、4
+%TC第34.3节练习 2
+%TC第34.4节练习 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-11：NP完全理论初步 [课前]}
+\me{毕秋宇}{计算机科学与技术系}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.1-5]
+    Show that if an algorithm makes at most a constant number of calls to polynomial time
+    subroutines and performs an additional amount of work that also takes polynomial
+    time, then it runs in polynomial time. Also show that a polynomial number of
+    calls to polynomial-time subroutines may result in an exponential-time algorithm.
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item[(1)]
+            Suppose the algorithm makes at most $c$ calls to subroutines, and the running time of polynomial time subroutines is $O(n^{k})$ for some constant number $k$. The running time is at most $O((n^k)^c)=O(n^{kc})$ is polynomial time.
+        \item[(2)]
+            We can assume that there exist two functions, functino $A$ and $B$, function $A$ receive an input $x$, and call $O(x)$ time to function $B$. Function receive an input $y$ which is in direct proportion to the time of calling $B$, that is to say $y=k,k\in[1,\cdots,O(x)]$. And function $B$ is to computer $y+y$, so the function is to compute number $2^{x}$, so the running time of function $B$ is $O(2^{x})$ which is an exponential-time algorithm.
+    \end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.2-3]
+    Show that if $\textsc{Ham-Cycle} \in \text{P}$, then the problem of listing the vertices of a
+    hamiltonian cycle, in order, is polynomial-time solvable.
+\end{problem}
+\begin{solution}
+    Firstly, we can choose a vertice $u$, and then traverse those edges that are adjacent to vertive $u$, we can denote the edge as $uv$.\\
+    We attempt to delete the edge $uv$, if the left graph is all a hamiltonian cycle, then $uv$ is not in the hamiltonian cycle, we move to vertice $v$ can continue the previous process otherwise.\\
+    So the running time is at most $O(VE)$. So the question is polynomial-time solvable.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.2-4]
+    Prove that the class NP of languages is closed under union, intersection, concatenation,
+    and Kleene star. Discuss the closure of NP under complement.
+\end{problem}
+\begin{solution}
+    Suppose that $L_1,L_2\in\text{NP}$. And $A_1$ and $A_2$ are verification algorithms for $L_1$ and $L_2$.
+    \begin{enumerate}
+        \item[(1)] Let $L_3=L_1\cup L_2\in\text{NP}$. And we have the algorithm $A_3$ , $x\in L_3$ and certificate $c$, that $A_{3}$ accept $(x,c)$ if $A_1$ or $A_2$ accept $(x,c)$. We run $A_1$ and $A_2$ at first, therefore $L_3$ can be vertified in polynomial time.
+        \item[(2)] Let $L_4=L_1\cap L_2\in\text{NP}$. And we have the algorithm $A_4$, $x\in L_4$ and certificate $c$, that $A_{4}$ accept $(x,c)$ if $A_1$ and $A_2$ accept $(x,c)$. We run $A_1$ and $A_2$ at first, therefore $L_4$ can be vertified in polynomial time.
+        \item[(3)] Let $L_5=L_1L_2\in\text{NP}$ with length $k$ which is a constant number. And we have the algorithm $A_5$, $x\in L_5$ and certificate $c$, that $A_5$ will seperate the original intersection at the $i$-th place, $i$ from $1$ to $k$. And $A_5$ accept $(x,c)$ if for one $i$, $A_1$ and $A_2$ accept $(x,c)$. For all the seperates, we run $A_1$ and $A_2$, therefore the running time is at most $O(kO(A_1)+kO(A_2))$, therefore $L_5$ can be vertified in polynomial time.
+        \item[(4)] Let $L_6=L_1^{*}\in\text{NP}$. And we have the algorithm $A_6$, $x\in L_6$ and certificate $c$. Because we know that $\forall x\in L_1^{*}$, there exists a constant number $k$ which makes $x\in L_1^{k}$. We run $A_1$ at most $k$ times so the running time of $A_6$ is $O(kO(A_1))$, therefore $L_6$ can be vertified in polynomial time.
+    \end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.3-2]
+    Show that the $\leq_\text{P}$ relation is a transitive relation on languages. That is, show that if
+    $L_1 \leq_\text{P} L_2$ and  $L_2 \leq_\text{P} L_3$, then  $L_1 \leq_\text{P} L_3$.
+\end{problem}
+\begin{solution}
+    By the definition, we get that $L_1 \leq_\text{P} L_2$ means that there exits a polynomial-time function. $\forall x\in\{0,1\}^{*}$, $x\in L_1$ if and only if $f_1(x)\in L_2$.\\
+    $L_2 \leq_\text{P} L_3$ means that there exits a polynomial-time function. $\forall y\in\{0,1\}^{*}$, $y\in L_2$ if and only if $f_2(y)\in L_3$.\\
+    So we can construct a function $f_3=f_2\cdot f_1$, the new function is also a polynomial-time function. and $\forall x\in\{0,1\}^{*}$, $x\L_1$ if and only if $f_{1}(x)=y\in L_2$, if and only if $f_2(f_1(x))=f_2(y)\in L_3$. Therefore we get that $L_1 \leq_\text{P} L_3$.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.4-3]
+    Professor Jagger proposes to show that $\textsc{SAT} \leq_{\text{P}} \textsc{3-CNF-SAT}$ by using only the
+    truth-table technique in the proof of Theorem 34.10, and not the other steps. That
+    is, the professor proposes to take the boolean formula $\phi$, form a truth table for
+    its variables, derive from the truth table a formula in 3-DNF that is equivalent
+    to $\neg \phi$, and then negate and apply DeMorgan's laws to produce a 3-CNF formula
+    equivalent to $\phi$. Show that this strategy does not yield a polynomial-time reduction.
+\end{problem}
+\begin{solution}
+    Suppose that the truth-table has $n$ variables, then truth-table has at most $2^n$ situations, beacause every variable has only two values that are $\{0,1\}$. And we also know that we can search the truth-table derictly and the time of constructing it is $O(2^n)$. Therefore this strategy does not yield a polynomial-time reduction.
+\end{solution}
+
+\end{document}
