@@ -1,0 +1,101 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-24 14:58
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 25
+int n;
+int s[MAXN];
+ll a[MAXN], m[MAXN];
+
+ll GCD(ll a, ll b, ll &x, ll &y) {
+    if (a == 0 && b == 0)
+        return -1;
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    ll d = GCD(b, a % b, y, x);
+    y -= a / b * x;
+    return d;
+}
+
+ll MULT(ll a, ll k, ll m) {
+    ll res = 0;
+    while (k) {
+        if (k & 1ll)
+            res = (res + a) % m;
+        k >>= 1;
+        a = (a << 1) % m;
+    }
+    return res;
+}
+
+ll CRT(ll l, ll r) {
+    ll M = 1, ans = 0;
+    for (int i = 0; i <= n; ++i)
+        if (s[i]) M *= m[i];
+    for (int i = 0; i <= n; ++i) {
+        if (s[i]) {
+            ll Mi = M / m[i];
+            ll x, y;
+            GCD(Mi, m[i], x, y);
+            x = (x % m[i] + m[i]) % m[i];
+            ans = (ans + MULT(a[i] * Mi % M, x, M)) % M;
+        }
+    }
+    return (r + M - ans) / M - (l - 1 + M - ans) / M;
+}
+
+int main() {
+    int T, cnt = 0;
+    scanf("%d%*c", &T);
+    while(T--) {
+        ll l, r;
+        scanf("%d%lld%lld", &n, &l, &r);
+        memset(s, 0, sizeof(s));
+        m[n] = 7;
+        a[n] = 0;
+        s[n] = 1;
+        for (int i = 0; i < n; ++i)
+            scanf("%lld%lld", &m[i], &a[i]);
+        ll ans = 0;
+        int all = 1 << n;
+        for (int i = 0; i < all; ++i) {
+            int t = i, k = 0;
+            for (int j = 0; j < n; ++j) {
+                s[j] = t & 1;
+                t >>= 1;
+                k += s[j];
+            }
+            k = k & 1 ? -1 : 1;
+            ans += 1ll * k * CRT(l, r);
+        }
+        printf("Case #%d: %lld\n", ++cnt, ans);
+    }
+    return 0;
+}
