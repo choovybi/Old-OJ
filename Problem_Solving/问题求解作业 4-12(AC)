@@ -1,0 +1,71 @@
+%TC第34.2节练习 11
+%TC第34.4节练习 7
+%TC第34.5节练习 6
+%(选做) TC第34.5节练习 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-12：近似算法的基本概念(AC)}
+% \me{}{}{}
+\me{毕秋宇}{计算机科学与技术}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH 4.2.3.3]
+    Prove that the functions $dist$, $dist_k$, and $distance$ (defined in Example 4.2.3.2) are distance functions for TSP according to $L_{\Delta}$.
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item[(1)] Because $\forall G\in L_{\Delta}$, $G$'s weight satisfies triangle inequality. That is to say, $\forall u,v,p\in V(G),c(\{u,v\})\leq c(\{u,p\})+c(\{p,v\})$. So, we get that $\frac{c(\{u,v\})}{c(\{u,p\})+c(\{p,v\})}\leq 1$, which means $\max\{0,\max\{\frac{c(\{u,v\})}{c(\{u,p\})+c(\{p,v\})}-1\}\}=0$.\\
+            We can easily find that time of solving $\frac{c(\{u,v\})}{c(\{u,p\})+c(\{p,v\})}$ is polynomial.
+        \item[(2)] Because $\forall G\in L_{\Delta}$, $G$'s weight satisfies triangle inequality. That is to say, $\forall u,v,p\in V(G),c(\{u,v\})\leq c(\{u,p\})+c(\{p,v\})$. So, we get that $c(\{u,v\}\leq\sum_{i=1}^{m}c(\{p_i,p_{i+1}\})$ and $\frac{c(\{u,v\}}{\sum_{i=1}^{m}c(\{p_i,p_{i+1}\})}\leq 1$, which means $\max\{0,\max\{\frac{c(\{u,v\}}{\sum_{i=1}^{m}c(\{p_i,p_{i+1}\})}-1\}\}=0$\\
+            We can easily find that time of solving $\frac{c(\{u,v\}}{\sum_{i=1}^{m}c(\{p_i,p_{i+1}\})}$ is polynomial.
+        \item[(3)] Because $disk_{k}(G,c)=0$, so we get that $distance(G,c)=0$.
+            We can easily find that time of solving $disk_{k}$ is at most $|V(G)-1|$ which is absolutely polynomial.
+    \end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH 4.2.3.4]
+    Let $U = (\Sigma_I, \Sigma_O, L, L_I , M, cost, goal)$ and $\bar{U}=(\Sigma_I, \Sigma_O, L, L, M, cost, goal)\in$ NPO. Let $h_{index}$ be defined as follows:
+    \begin{enumerate}
+        \item[(i)] $h_{index}(w)=0$ for every $w\in L_I$, and
+        \item[(ii)] $h_{index}(u)$ is equal to the order of $u$ according to the canonical order of words in $\Sigma_{I}^{*}$.
+    \end{enumerate}
+    Prove that
+    \begin{enumerate}
+        \item[a)] $h_{index}$ is a distance function of $\bar{U}$ according to $L_I$.
+        \item[b)] For every $\delta-$approximation algorithm $A$ for $U$, if $A$ is consistent for $\bar{U}$, then $A$ is stable according to $h_{index}$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \begin{enumerate}
+        \item[a)] According to the character (i), we get that $\forall w\in L_1, h_{index}=0$. We can denote $u_{i,j}$ as the substring of $u$, and $u_k$ as the $k-$th character of $u$. So we get that $order(u_{i,j})=|\Sigma|order(u_{i+1,j})+order(u_i)$. We can get $order(u)$ recursively, and we can easily find that the time of calculating it is polynomial. Thus, we proved that $h_{index}$ is a distance function.
+        \item[b)] We know that $|\mathrm{Ball}_{r},h_{index}(L_1)|<\infty$. So if $r<q$, then it can be found in any $q\in\mathbb{R}^{+}$. We can let $\delta_{r,\epsilon}=\max\{R_{A}(x)|x\in\mathrm{Ball}_{r},h_{index}(L_1)\}$ and $A$ is a stable algorithm according to $h_{index}$.
+    \end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.5-6]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[(Optional) 34.5-2]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+\end{document}
+
