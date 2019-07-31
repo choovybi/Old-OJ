@@ -1,0 +1,64 @@
+%TC第34.2节练习 11
+%TC第34.4节练习 7
+%TC第34.5节练习 6
+%(选做) TC第34.5节练习 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-11：NP完全理论初步 [课后]}
+\me{毕秋宇}{计算机科学与技术}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.2-11]
+    Let $G$ be a connected, undirected graph with at least 3 vertices, and let $G^3$ be the
+    graph obtained by connecting all pairs of vertices that are connected by a path in $G$
+    of length at most $3$. Prove that $G^3$ is hamiltonian. (Hint: Construct a spanning tree
+    for $G$, and use an inductive argument.)
+\end{problem}
+\begin{solution}
+    Firstly, we know that if $G$ has $3$ vertices, $G^3$ is obvious hamiltonian.\\
+    Then, we suppose that $G$ has $k$ vertices, $G^3$ is hamiltonian.\\
+    For $G$ has $k+1$ vertices, we can choose a vertice $u$ and seperate it from the graph $G$. Now, we get a graph with $k$ vertices and it is hamiltonian. So we have a hamiltonian path $v_1\to\cdots\to v_k\to\cdots\to v_1$. There must exists a vertice that is adjacent to $u$ in the original graph, so we can add vertice $u$ to the hamiltonian-path, then we get a new hamiltonian-path. So we prove that $G^3$ is hamiltonian.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.4-7]
+    Let \textsc{2-CNF-SAT} be the set of satisfiable boolean formulas in CNF with exactly 2
+    literals per clause. Show that $\textsc{2-CNF-SAT} \in \text{P}$. Make your algorithm as efficient as
+    possible. (Hint: Observe that $x \wedge y$ is equivalent to $\neg x \rightarrow y$. Reduce \textsc{2-CNF-SAT}
+    to an efficiently solvable problem on a directed graph.)
+\end{problem}
+\begin{solution}
+    We can assume that the formula has $n$ variables, so we can create a graph with $2n$ vertices. the $i-$th vertice denotes the variable $x_i$ and the $2i-$th vertice denotes the variable $\neg x_i$.\\
+    Then we get that for every clause $x_i \wedge x_j$, we create an edge from $\neg x_i$ to $x_j$.\\
+    Finally, we can the strong connected component for every variable. If there exists a variable whose negative is not in the same strong connected component with itself, the formula is satisfiable. However, if all the variables and its negative are in the same strong connected compoent. We can get that the formula is unsatisfiable.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[TC 34.5-6]
+    Show that the hamiltonian-path problem is NP-complete.
+\end{problem}
+\begin{solution}
+    Firstly, we know that Hamiltonian-path and Hamiltonian-cycle are NP problems because if given a graph we can vertify it in $O(V)$ time.\\
+    Then, we need to prove that $\textsc{Hamiltonian-cycle}\leq_{P}\textsc{Hamiltonian-path}$. We can add a new vertice $u$ and connect it to all the original vertices. If original graph has a hamiltonian-path, then the new graph with vertice $u$ has a hamiltonian-cycle. If original graph doesn't has a hamiltonian-path, then the new graph doesn't has a hamiltonian-cycle. So, we proved that $\textsc{Hamiltonian-cycle}\leq_{P}\textsc{Hamiltonian-path}$.\\
+    And we also know that $\textsc{Hamiltonian-cycle}$ is a NP problem, so $\textsc{Hamiltonian-path}$ problem is a NP problem.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[(Optional) 34.5-2]
+    Given an integer $m \times n$ matrix $A$ and an integer $m$-vector $b$, the \textbf{0-1 integer programming problem} asks whether there exists an integer $n$-vector $x$ with elements in the set $\{0, 1\}$ such that $Ax \leqslant b$. Prove that 0-1 integer programming is NP-complete. (Hint: Reduce from \textsc{3-CNF-SAT}.)
+\end{problem}
+\begin{solution}
+\end{solution}
+
+\end{document}
