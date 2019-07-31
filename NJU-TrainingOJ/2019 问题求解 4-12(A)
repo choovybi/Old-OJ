@@ -1,0 +1,118 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-24 14:58
+* Filename      : A.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+int t,k;
+ll nn,mm;
+ll p[15],fac[100050],inv[100050];
+
+ll pow_mod(ll a, int n, int mod) {
+    ll ret = 1;
+    while (n) {
+        if (n&1) ret = ret * a % mod;
+        a = a * a % mod;
+        n >>= 1;
+    }
+    return ret;
+}
+
+void init(int n) {
+    fac[0] = 1;
+    for (int i = 1; i < n; i++) fac[i] = fac[i-1] * i % n;
+    inv[n-1] = pow_mod(fac[n-1], n-2, n);
+    for (int i = n - 2; i >= 0; i--) inv[i] = inv[i+1] * (i+1) % n;
+}
+
+ll C (int n, int m, int mod) {
+    if (m > n || m < 0 || n < 0) return  0;
+    return fac[n] * inv[m] % mod * inv[n-m] % mod;
+}
+
+ll lucas(ll n, ll m, int mod) {
+    if (m == 0) return 1;
+    return lucas(n / mod, m / mod, mod) * C(n % mod, m % mod, mod) % mod;
+}
+
+void extend_Euclid(ll a, ll b, ll &x, ll &y) {
+    if(b == 0) {
+        x = 1;
+        y = 0;
+        return;
+    }
+    extend_Euclid(b, a % b, x, y);
+    ll tmp = x;
+    x = y;
+    y = tmp - (a / b) * y;
+}
+
+ll mul(ll a, ll b, ll mod) {
+    a = (a % mod + mod) % mod;
+    b = (b % mod + mod) % mod;
+    ll ret = 0;
+    while(b) {
+        if(b&1) {
+            ret += a;
+            if(ret >= mod)
+                ret -= mod;
+        }
+        b >>= 1;
+        a <<= 1;
+        if(a >= mod) a -= mod;
+    }
+    return ret;
+}
+
+ll china(ll a[],ll m[],int n) {
+    ll M = 1;
+    ll ans = 0;
+    for(int i=1; i<=n; i++)
+        M *= m[i];
+    for(int i=1; i<=n; i++) {
+        ll x, y;
+        ll Mi = M / m[i];
+        extend_Euclid(Mi, m[i], x, y);
+        ans = (ans + mul(mul(Mi,x,M),a[i],M));
+    }
+    return (ans+M)%M;
+}
+
+int main() {
+    ll a[15];
+    scanf("%d",&t);
+    while(t--) {
+        memset(a,0,sizeof(a));
+        scanf("%lld%lld%d",&nn,&mm,&k);
+        for(int i=1; i<=k; i++) {
+            scanf("%lld",&p[i]);
+            init(p[i]);
+            a[i]=lucas(nn,mm,p[i]);
+        }
+        ll res=china(a,p,k);
+        printf("%lld\n",res);
+    }
+    return 0;
+}
