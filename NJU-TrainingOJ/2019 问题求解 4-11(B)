@@ -1,0 +1,75 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-05-17 11:37
+* Filename      : B.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double EPS = 1e-6;
+const int MOD = 1e9+7;
+const int INF = 0x3f3f3f3f;
+#define MAXN 10010
+
+vector<int> G[MAXN];
+int n, m, dfs_clock;
+int cut[MAXN], low[MAXN], pre[MAXN];
+
+inline int tarjan(int u,int fa) {
+    int lowu = pre[u]= ++dfs_clock;
+    for(int i=0; i<G[u].size(); ++i) {
+        int v=G[u][i];
+        if(!pre[v]) {
+            int lowv=tarjan(v,u);
+            lowu=min(lowv,lowu);
+            if(lowv>=pre[u])
+                cut[u]++;
+        } else if(pre[v]<pre[u] && v!=fa)
+            lowu = min(lowu,pre[v]);
+    }
+    return low[u]=lowu;
+}
+int main() {
+    while(scanf("%d%d",&n,&m)==2&&n) {
+        dfs_clock=0;
+        memset(cut,0,sizeof(cut));
+        memset(pre,0,sizeof(pre));
+        for(int i(0); i<n; ++i)
+            G[i].clear();
+        for(int i(0); i<m; ++i) {
+            int u,v;
+            scanf("%d%d",&u,&v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        int sum=0;
+        int max_cut = -INF;
+        for(int i(0); i<n; ++i)
+            if(!pre[i]) {
+                sum++;
+                tarjan(i,-1);
+                cut[i]--;
+            }
+        for(int i(0); i<n; ++i)
+            max_cut=max(max_cut,cut[i]);
+        printf("%d\n", sum+max_cut);
+    }
+    return 0;
+}
