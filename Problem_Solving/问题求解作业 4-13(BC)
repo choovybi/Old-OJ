@@ -1,0 +1,62 @@
+%TC第34.1节练习 5
+%TC第34.2节练习 3、4
+%TC第34.3节练习 2
+%TC第34.4节练习 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-13：随机算法的概念(BC)}
+% \me{}{}{}
+\me{毕秋宇}{计算机科学与技术系}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH 5.2.2.7]
+    Change the first step of the one-way protocol $(R_{I},R_{II})$ by choosing randomly a prime from the set $\{2,3,\dots,n^c\}$ for a positive integer $c\geq 3$. Analyze
+    \begin{enumerate}
+        \item[(i)] the communication complexity of this protocol, and
+        \item[(ii)] $\mathrm{Prob}((R_{I},R_{II})$ accepts $(x,y))$ for every input $(x,y)$ with $x\neq y.$
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item[(i)] It's obviously that the communication complexity is $2c\lceil\log_{2}n\rceil$
+        \item[(ii)] We know that the probability of $R_{I}$ choosing a prime randomly for the given input $(x, y)$ is at most $\frac{\ln n^c(n-1)}{n^c}\leq\frac{\ln n^c}{n^{c-1}}$.\\
+            So we get that for every input $(x,y)$, we have $\mathrm{Prob}((R_{I},R_{II})\ \mathrm{accepts}\ (x,y))\geq 1-\frac{\ln n^c}{n^{c-1}}$.
+    \end{enumerate}
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[JH 4.2.1.5]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.2-4]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.3-2]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.4-3]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+\end{document}
