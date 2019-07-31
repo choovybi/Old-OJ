@@ -1,0 +1,44 @@
+%TC第34.2节练习 11
+%TC第34.4节练习 7
+%TC第34.5节练习 6
+%(选做) TC第34.5节练习 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-13：随机算法的概念(AC)}
+% \me{}{}{}
+\me{毕秋宇}{计算机科学与技术系}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+
+\begin{problem}[JH 5.2.2.8]
+    Consider the one-way protocol model used in Examples 5.2.2.5 and 5.2.2.6, and, for every $n\in\mathbf{N}^+$, the function
+    $$Equality_n:\{0,1\}^n\times\{0,1\}^n\rightarrow\{0,1\},$$
+    defined by
+    $$Equality_n(x,y)=1 \textbf{  iff  } x\equiv y$$
+    \begin{enumerate}
+        \item[(i)] Prove, for every $n\in\mathbb{N}^+$, that every deterministic one-way protocol computing $Equality_n$ has a communication complexity of at least n.
+        \item[(ii)] Design a two-sided-error Monte Carlo one-way protocol that computes $Equality_n$ within $O(\log_2n)$ communication complexity.
+        \item[(iii)] Prove that every one-sided-error Monte Carlo one-way protocol that commputes $Equality_n$ must have a communication complexity of at least $n$.
+    \end{enumerate}
+\end{problem}
+\begin{solution}
+    \begin{enumerate}
+        \item[(i)] We can assume that for some $x\neq y$, we get $R_{I}(x)=R_{I}(y)$. Then we get that $R_{II}(R_{I}(x))=R_{II}(R_{I}(y))$, which means that $Equality_n(x,y)=1$. By the defination, we know that $x\equiv y$, which conflict with $x\neq y$. So the communication complexity is at least $n$.
+        \item[(ii)] We can change the random inequality algorithm as follows:\\
+            (1). If $q=s$, $R_{II}$ outputs 1.\\
+            (2). If $q\neq s$, $R_{II}$ outputs 0.\\
+            We can easily prove that the communication complexity is $O(\log_{2}n)$
+        \item[(iii)] For every one-sided-error Monte Carlo one-way protocol, we must keep that $Equality_n(x,y)=0$. That is to say, $x\neq y$ for $\forall x,y\in \{0,1\}^{n}$. The following proof is same as those in (i), therefore we get that every one-sided-error Monte Carlo one-way protocol that commputes $Equality_n$ must have a communication complexity of at least $n$.
+    \end{enumerate}
+\end{solution}
+
+\end{document}
