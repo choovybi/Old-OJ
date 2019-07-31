@@ -1,0 +1,75 @@
+%TC第34.1节练习 5
+%TC第34.2节练习 3、4
+%TC第34.3节练习 2
+%TC第34.4节练习 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\title{4-14：启发式算法(BC)}
+% \me{}{}{}
+\me{毕秋宇}{计算机科学与技术系}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[1]
+    选择一道典型 "难题", 给出一种启发式算法。
+\end{problem}
+\begin{solution}
+    I wanna to describe Ant Colony Optimization(ACO) which is a heuristic method to solve the Traveling salesman problem(TSP).\\
+    The pseudocode of ACO is as follows:
+    \begin{algorithm}
+        \begin{algorithmic}
+            \caption {蚁群优化}
+            \Function {ACO}{}
+            \State $Schedule\ Activities$
+            \State $Construct\ Ants\ Solution$
+            \State $Update\ Pheromones$
+            \State $Daemon\ Action$
+            \State $End-schedule\ Activities$
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}\\
+    By the pseudocode, we can get that the probability of ant $k$ in city $i$ goes to city $j$ is $p_{ij}^{k}=\frac{[\tau_{ij}]^{\alpha}[\eta_{ij}]^{\beta}}{\sum_{l\in N_{i}^{k}}[\tau_{il}^{\alpha}][\eta_{il}]^{\beta}}$.\\
+    Where $\eta_{ij}=\frac{1}{d_{ij}}$ present a message that is given before as the heuristics, $d_{ij}$ is the distance between city $i$ and $j$; $\alpha$ and $\beta$ are the weight of pheromone and heuristic information.$N_{i}^{k}$ represents the set of citys that ant $k$ in city $i$ can reach.\\
+    In this situation, the probability that ant $k$ choose edge $(i,j)$ is decided by pheromone $\tau_{ij}$ and heuristic information $\eta_{ij}$.
+    Above is the solution of ACO to solve the TSP.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[JH 4.2.1.5]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.2-4]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.3-2]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.4-3]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+\end{document}
