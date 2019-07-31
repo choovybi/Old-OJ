@@ -1,0 +1,69 @@
+%TC第34.1节练习 5
+%TC第34.2节练习 3、4
+%TC第34.3节练习 2
+%TC第34.4节练习 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, a4paper, UTF8]{ctexart}
+\input{preamble}
+
+\title{4-12：近似算法的基本概念(BC)}
+% \me{}{}{}
+\me{毕秋宇}{计算机科学与技术系}{171860624}
+\date{\today}
+
+\begin{document}
+\maketitle
+\noplagiarism
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       Homework START!                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beginthishw
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH 4.2.1.4]
+    Change the greedy strategy of the algorithm GMS to an arbitrary choice, i.e., without sorting $p_1, p_2, \cdots ,p_n$ (removing Step 1 of GMS), assign the jobs in the on-line manner as described in Step 2 and 3 of GMS. Prove that this simple algorithm, called $\textsc{Graham's}$ $\textsc{algorithm}$, is a 2-approximation algorithm for MS, too.
+\end{problem}
+\begin{solution}
+    We can denote $p_l$ as the last thing to do among the input, and $T_l$ be the time beginning to do $p_l$. We also know that when $p_l$ comming, all machines must be busy and they are processing the rest $n-1$ jobs on average. So the time to proce $p_l$ will be less than $\frac{(\sum_{i=1}^{n}p_i)-p_l}{m}$.\\
+    So we know that the total time of processing the input will be $cost(GMS(I))=T_l+p_l\leq \frac{(\sum_{i=1}^{n}p_i)-p_l}{m}+p_l=\frac{\sum_{i=1}^{n}p_i}{m}+\frac{(m-1)}{m}p_l=Opt_{MS}(I)+\frac{(m-1)}{m}p_l$.\\
+    We can easily prove that $\frac{(m-1)}{m}p_l\leq Opt_{MS}(I)$ because it is even less than $p_l$ which is a part of $Opt_{MS}(I)$.\\
+    Finally, we proce that $\textsc{Graham's}$ $\textsc{algorithm}$ is a $2-$approximation algorithm for MS, too.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+\begin{problem}[JH 4.2.1.5]
+    Find, for every integer $m \geq 2$, an input instance $I_m$ of MS such that $R_{GMS}(I)=\frac{cost(GMS(I))}{Opt_{MS}(I)}$ is as large as possible.
+\end{problem}
+\begin{solution}
+    $n=2m+1$
+    \[
+        a_{k}=\left\{
+            \begin{matrix}
+                2m-\lfloor\frac{k+1}{2}\rfloor & 1\leq k\leq 2m\\
+                m & k=2m+1\\
+            \end{matrix}
+            \right.
+        \]
+        The input $I_{m}=\{a_1,\cdots,a_{2m+1}\}$\\
+        And the $R_{GMS}(I)=\frac{4}{3}-\frac{1}{3n}$ which is as large as I can.
+\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.2-4]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.3-2]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+%%%%%%%%%%%%%%%%%%%%
+% \begin{problem}[TC 34.4-3]
+% \end{problem}
+% \begin{solution}
+% \end{solution}
+
+\end{document}
