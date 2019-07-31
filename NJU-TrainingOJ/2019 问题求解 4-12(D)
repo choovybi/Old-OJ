@@ -1,0 +1,62 @@
+/*********************************************************
+* Author        : ArthurBi
+* Email         : Arthurbqy1999@gmail.com
+* Last modified : 2019-06-07 18:34
+* Filename      : D.cpp
+* Description   : Pls contact me if you have questions.
+*********************************************************/
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stack>
+#include <bitset>
+#include <cstdlib>
+#include <cmath>
+#include <set>
+#include <list>
+#include <deque>
+#include <map>
+#include <queue>
+using namespace std;
+typedef long long ll;
+const double PI = acos(-1.0);
+const double eps = 1e-6;
+const int INF = 0x3f3f3f3f;
+#define MAXN 1000002
+
+vector<int> v[MAXN];
+bool vis[5002];
+int n;
+
+inline int find(int x) {
+    int ans = 0;
+    for(int a : v[x]) {
+        if(!vis[a]) {
+            vis[a] = true;
+            ans = max(ans,find(x+1)+1);
+            vis[a] = false;
+        }
+    }
+    return ans;
+}
+
+int main() {
+    scanf("%d%*c",&n);
+    for (int i(1); i < MAXN; ++i)
+        v[i].clear();
+    for (int i(1); i <= n; ++i) {
+        int tmp = 0;
+        for (int j(0); j < 6; ++j) {
+            scanf("%d",&tmp);
+            v[tmp].push_back(i);
+        }
+    }
+    int ans = 0;
+    for (int i(0); i < MAXN; ++i)
+        ans = max(ans,find(i));
+    printf("%d\n",ans);
+    return 0;
+}
